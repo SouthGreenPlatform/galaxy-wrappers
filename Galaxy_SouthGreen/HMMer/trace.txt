@@ -1,0 +1,1 @@
+/work/GALAXY/galaxy_dev/database/tmp/001/dataset_1587.dat /bank/genfam/genome_data/MAIZE/MAIZE-MGDB5b60-polypeptide-genfam.faa

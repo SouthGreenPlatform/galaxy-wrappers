@@ -1,0 +1,97 @@
+<tool id="multihmmsearch" name="HMM search multi species">
+	<description></description>
+	<command interpreter="python">multi_hmmsearch.py $profile 
+		$output_file
+		#if $specie_list.data_type=="base_list"
+		'base_list'
+		#for $a in $specie_list.bases
+		${a.database.fields.path}
+		#end for
+		#end if
+		#if $specie_list.data_type=="file"
+		'file'
+		$specie_list.specie_file
+		#end if
+		</command>
+<inputs>
+		<param format="txt" name="profile" type="data" label="HMM profile file"/>
+		
+		<!--  	<command interpreter="python">./multi_hmmsearch.py $profile 
+		$output_file 
+		#if $specie_list.data_type=="bases"
+		bases
+		#for $a in $bases
+		${a.database.fields.path}
+		#end for
+		#end if
+		#if $specie_list.data_type=="file"
+		file
+		$specie_list
+		</command>
+		
+		
+			<inputs>
+		<param format="txt" name="profile" type="data" label="HMM profile file"/>
+        <repeat name="bases" title="Species" min="1" max="50"> 
+                    <param name="database" type="select" label="Protein database">
+                        <options from_file="HMMdb_p_annot.loc">
+                            <column name="value" index="0"/>
+                            <column name="name" index="1"/>
+                            <column name="path" index="2"/>
+                        </options>
+                    </param>
+                    <param name="subject" type="hidden" value="" />
+        </repeat> 
+		
+	</inputs>
+		
+		
+		-->
+		 <conditional name="specie_list">
+            <param name="data_type" type="select" label="Add specie through">
+                <option value="base_list">In Galaxy options</option>
+                <option value="file">File</option>
+            </param>
+            <when value="base_list">
+                <repeat name="bases" title="Species" min="1" max="50"> 
+                    <param name="database" type="select" label="Protein database">
+                        <options from_file="HMMdb_p_annot.loc">
+                            <column name="value" index="0"/>
+                            <column name="name" index="1"/>
+                            <column name="path" index="2"/>
+                        </options>
+                    </param>
+                    <param name="subject" type="hidden" value="" />
+                </repeat> 
+     
+            </when>
+            <when value="file">
+		 		<param format="txt" name="specie_file" type="data" label="Species List File"/>
+            </when>
+        </conditional> 
+		
+	</inputs>
+	<outputs>
+		<data format="txt" name="output_file"/>
+	</outputs>
+	<help>
+
+.. class:: infomark
+
+**Program encapsulated in Galaxy by Southgreen**
+
+.. class:: infomark
+
+**HMMER Search 3.0 (March 2010)**
+
+-----
+Specie List file must contains the specie codes separated by commmas.
+==============
+ Please cite: 
+==============
+		
+Profile Hidden Markov Models. S. R. Eddy. Bioinformatics, 14:755-763, 1998.
+		
+	</help>
+	
+</tool>

@@ -1,0 +1,13 @@
+#!/bin/bash
+
+#$ -N test_sge
+#$ -cwd
+#$ -q normal.q
+#$ -t 1-21
+#$ -tc 21
+#$ -S /bin/bash
+#$ -b y
+#$ -V
+#$ -l hostname=cc2-n11
+
+pwd

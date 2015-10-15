@@ -1,0 +1,81 @@
+<tool id="hmmsearch_output_to_fasta" name="HMM search to fasta">
+	<description>Extract fasta file from an HMM search output</description>
+	<command interpreter="bash">extract_fasta_from_hmmsearch.sh $hmmer_outfile 
+		#if $db_opts.db_opts_selector == "db":
+		"${db_opts.database.fields.path}"
+		#else:
+		"$db_opts.subject"
+		#end if
+		$threshold.threshold_type $threshold.value $output_file
+	</command>
+	
+	<inputs>
+		<param format="txt" name="hmmer_outfile" type="data" label="HMM search output"/>
+		<!--<param format="fasta" name="reference_fastafile" type="data" label="Protein FASTA file"/>-->
+	
+		<conditional name="db_opts">
+			<param name="db_opts_selector" type="select" label="Protein file">
+				<option value="db" selected="True">Protein Database</option>
+				<option value="file">Protein FASTA file</option>
+			</param>
+			<when value="db">
+				<param name="database" type="select" label="Protein database">
+					<options from_file="HMMdb_p_annot.loc">
+						<column name="value" index="0"/>
+						<column name="name" index="1"/>
+						<column name="path" index="2"/>
+					</options>
+				</param>
+				<param name="subject" type="hidden" value="" />
+			</when>
+			<when value="file">
+				<param name="database" type="hidden" value="" />
+				<param name="subject" type="data" format="fasta" label="Protein FASTA file"/>
+			</when>
+       		</conditional>
+		
+		<conditional name="threshold">
+            <param name="threshold_type" type="select" label="Filter on: ">
+                <option value="number">Number of proteins to be kept</option>
+                <option value="evalue">E-value</option>
+            </param>
+            <when value="number">
+                <param value="5" name="value" type="text" label="Number of proteins to be kept"/>
+            </when>
+            <when value="evalue">
+		 		<param value="0.001" name="value" type="text" label="Evalue threshold"/>
+            </when>
+        </conditional>
+	</inputs>
+	<outputs>
+		<data format="fasta" name="output_file"/>
+	</outputs>
+	<help>
+	
+.. class:: infomark
+
+**Program encapsulated in Galaxy by Southgreen**
+
+.. class:: infomark
+
+**extract_fasta_from_hmmsearch version 1.0, 2012**
+
+-----
+
+==========
+ Authors:
+==========
+
+**Droc G**
+
+-----
+
+===========
+ Overview:
+===========
+
+Extract fasta file from an HMM Search output.  
+
+
+	</help>
+</tool>

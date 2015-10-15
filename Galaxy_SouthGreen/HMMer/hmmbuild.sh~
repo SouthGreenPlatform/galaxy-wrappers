@@ -1,0 +1,2 @@
+#!/bin/bash
+$HOME/galaxy_dist/tools/hmmer/hmmer-3.0/src/hmmbuild $*;

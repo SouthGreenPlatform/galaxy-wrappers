@@ -1,0 +1,63 @@
+<tool id="multihmmtofasta" name="HMM to fasta multi species">
+	<description></description>
+	<command interpreter="python">multi_hmmertofasta.py $hmmer_outfile 
+	    $threshold.threshold_type
+	    $threshold.value
+		$output_file 	
+
+	</command>
+	<inputs>
+		<param format="txt" name="hmmer_outfile" type="data" label="HMM search output"/>
+       
+        <conditional name="threshold">
+            <param name="threshold_type" type="select" label="Filter on: ">
+                <option value="number">Number of proteins to be kept</option>
+                <option value="evalue">E-value</option>
+            </param>
+            <when value="number">
+                <param value="5" name="value" type="text" label="Number of proteins to be kept"/>
+            </when>
+            <when value="evalue">
+		 		<param value="0.001" name="value" type="text" label="Evalue threshold"/>
+            </when>
+        </conditional> 
+        
+<!--        		#for $a in $bases
+		${a.database.fields.path}
+		#end for
+            <repeat name="bases" title="Species" min="1" max="50"> 
+            <param name="database" type="select" label="Protein database">
+                <options from_file="HMMdb_p_annot.loc">
+                    <column name="value" index="0"/>
+                    <column name="name" index="1"/>
+                    <column name="path" index="2"/>
+                </options>
+            </param>
+            <param name="subject" type="hidden" value="" />
+        </repeat> -->
+	</inputs>
+	
+	<outputs>
+		<data format="fasta" name="output_file"/>
+	</outputs>
+	<help>
+		
+		.. class:: infomark
+		
+		**Program encapsulated in Galaxy by Southgreen**
+		
+		.. class:: infomark
+		
+		**HMMER Search 3.0 (March 2010)**
+		
+		-----
+		
+		==============
+		Please cite: 
+		==============
+		
+		Profile Hidden Markov Models. S. R. Eddy. Bioinformatics, 14:755-763, 1998.
+		
+	</help>
+	
+</tool>

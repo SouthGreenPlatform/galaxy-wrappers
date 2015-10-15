@@ -1,0 +1,50 @@
+<tool id="hmmbuild" name="HMM build">
+	<description>Build a profile HMM from an input multiple alignment.</description>
+	<command interpreter="bash">./hmmbuild.sh --informat afa $hmm_output $fasta_alignment</command>
+	<inputs>
+		<param format="fasta" name="fasta_alignment" type="data" label="Alignment FASTA file"/>
+	</inputs>
+	<outputs>
+		<data format="txt" name="hmm_output"/>
+	</outputs> 
+	<help>
+	
+.. class:: infomark
+
+**Program encapsulated in Galaxy by Southgreen**
+
+.. class:: infomark
+
+**HMMER Build 3.0 (March 2010)**
+	
+-----
+
+==============
+ Please cite: 
+==============
+
+"The theory behind profile HMMs.", **Durbin R., Eddy S., Krogh A., and Mitchison G.**, Biological sequence analysis: probabilistic models of proteins and nucleic acids, Cambridge University Press, 1998.
+
+-----	
+	
+==========
+ Overview
+==========	
+
+HMMER is used for searching sequence databases for homologs of protein sequences, and for making protein sequence alignments. It implements methods using probabilistic models called "profile hidden Markov models" (profile HMMs).
+
+Compared to BLAST, FASTA, and other sequence alignment and database search tools based on older scoring methodology, HMMER aims to be significantly more accurate and more able to detect remote homologs because of the strength of its underlying mathematical models. In the past, this strength came at significant computational expense, but in the new HMMER3 project, HMMER is now essentially as fast as BLAST.
+
+.. class:: infomark
+
+**Tip:** HMM build is part of the HMMER package, and its design is to built a HMM file from a Fasta alignment.
+
+-----
+
+For further informations, please visite the HMMER_ website.
+
+.. _HMMER: http://hmmer.janelia.org/
+
+
+	</help>
+</tool>
