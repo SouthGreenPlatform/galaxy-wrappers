@@ -1,0 +1,21 @@
+<tool id="cleanfasta" name="Format Fasta Locus Tag" version="1.0">
+	<description>Format genes locus tag, add specie codes if absent and remove alternative transcripts</description>
+	<command interpreter="python">clean_name.py $transcript.alter $input $output </command>
+	<inputs>
+		<param name="input" type="data" format="fasta" label="Fasta file"/>
+	<conditional name="transcript">
+            <param name="alter" type="select" label="Remove alternative transcripts">
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </param>
+    </conditional>
+		
+	</inputs>
+	<outputs>
+		<data name="output" format="fasta"/>
+	</outputs>
+
+	<help>
+		
+	</help>
+</tool>

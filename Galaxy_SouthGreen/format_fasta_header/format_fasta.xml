@@ -1,0 +1,33 @@
+<tool id="formatfasta" name="Format fasta header" version="1.0">
+	<description>Add the code of species at the end of gene name</description>
+	<command interpreter="python">format_fasta.py 
+	#if $specie.mult == "sing":
+	$code
+	#else:
+	"NONE"
+	#end if 
+	$input 
+	$output </command>
+	<inputs>
+		<param name="input" type="data" format="fasta" label="Convert these sequences"/>
+		
+		
+	<conditional name="specie">
+            <param name="mult" type="select" label="Multi or Single Specie: ">
+                <option value="sing">Single Species</option>
+                <option value="multi">Multi Species</option>
+            </param>
+            <when value="sing">
+                <param name="code" type="text" label="What species extension do you want to add?"/>
+            </when>
+    </conditional>
+		
+	</inputs>
+	<outputs>
+		<data name="output" format="fasta"/>
+	</outputs>
+
+	<help>
+		
+	</help>
+</tool>
