@@ -1,0 +1,54 @@
+<!-- file hosted online: https://github.com/SouthGreenPlatform/galaxy-wrappers -->
+<tool id="gemma_relmat" name="GEMMA" version="0.94">
+  <description> to estimate the relatedness matrix for genome-wide association studies</description>
+  
+  <command interpreter="bash">
+    ./gemma_relmat.sh $relmatfile $logfile $outprefix -g $genofile -p $phenofile -a $annotfile -gk
+  </command>
+  
+  <inputs>
+    <param format="text" name="genofile" type="data" label="GenoFile, BIMBAM format" help="mean genotype file"/>
+    <param format="text" name="phenofile" type="data" label="PhenoFile, BIMBAM format" help="phenotype file"/>
+    <param format="text" name="annotfile" type="data" label="AnnotFile, text format" help="SNP annotation file"/>
+    <param name="outprefix" type="text" label="OutPrefix, text format" help="output prefix"/>
+  </inputs>
+  
+  <outputs>
+    <data format="text" name="relmatfile" label="relatedness matrix file"/>
+    <data format="text" name="logfile" label="log file"/>
+  </outputs>
+  
+  <help>
+.. class:: infomark
+
+**Program encapsulated in Galaxy by the South Green platform**
+
+.. class:: infomark
+
+**GEMMA v0.94**
+
+-----
+
+==============
+Please cite: 
+==============
+
+Zhou, X. &amp; Stephens, M. Genome-wide efficient mixed-model analysis for association studies. Nature Genetics 44, 821-824 (2012). URL http://dx.doi.org/10.1038/ng.2310.
+
+Zhou, X., Carbonetto, P. &amp; Stephens, M. Polygenic modeling with bayesian sparse linear mixed models. PLoS Genetics 9, e1003264+ (2013). URL http://dx.doi.org/10.1371/journal.pgen.1003264.
+
+Zhou, X. &amp; Stephens, M. Efficient multivariate linear mixed model algorithms for genome-wide association studies. Nature Methods 11, 407-409 (2014). URL http://dx.doi.org/10.1038/nmeth.2848.
+
+-----
+
+===========
+Overview:
+===========
+
+GEMMA is the software implementing the Genome-wide Efficient Mixed Model Association algorithm for a standard linear mixed model and some of its close relatives for genome-wide association studies (GWAS). It fits a univariate linear mixed model (LMM) for marker association tests with a single phenotype to account for population stratication and sample structure, and for estimating the proportion of variance in phenotypes explained (PVE) by typed genotypes (i.e. "chip heritability"). It fits a multivariate linear mixed model (mvLMM) for testing marker associations with multiple phenotypes simultaneously while controlling for population stratication, and for estimating genetic correlations among complex phenotypes. It fits a Bayesian sparse linear mixed model (BSLMM) using Markov chain Monte Carlo (MCMC) for estimating PVE by typed genotypes, predicting phenotypes, and identifying associated markers by jointly modeling all markers while controlling for population structure. It is computationally efficient for large scale GWAS and uses freely available open-source numerical libraries.
+
+For further informations, please visite the GEMMA_ website.
+
+.. _GEMMA: http://www.xzlab.org/software.html
+  </help>
+</tool>
