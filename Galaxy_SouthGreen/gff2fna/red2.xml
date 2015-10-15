@@ -1,0 +1,57 @@
+<tool id="red2" name="red2" version="1.0">
+	<description>get flanking sequence and expression file</description>
+	<stdio>
+		<exit_code range="1:" level="fatal" />
+	</stdio>
+	<command>
+	source $__tool_directory__/module_load.txt;
+	red2 -s $seq_file -e $expression_file -o red2_out/
+	
+	&amp;&amp; mv red2_out/motifs_clean.txt ${txt_outfile}
+    </command>
+	<inputs>
+		<param format="txt" name="seq_file" type="data" label="sequence file" help="MultiFASTA format"/>		
+		<param format="txt" name="expression_file" type="data" label="expression_file" help="expression_file"/>		
+	</inputs>
+	<outputs>
+		<data format="txt" name="txt_outfile" label="${tool.name} on ${on_string} (motif)"/>
+	</outputs>
+	<help>
+	
+
+.. class:: infomark
+
+**Program encapsulated in Galaxy by Southgreen**
+
+.. class:: infomark
+
+**red2 version 1.0, 2015**
+
+-----	
+
+==========
+ Authors:
+==========	
+
+**Lorenzo J**
+
+-----	
+
+===========
+ Overview:
+===========	
+
+Input gene fna file::
+
+
+Output results:
+
+-----
+
+.. class:: warningmark
+
+**No support website**
+
+	</help>
+
+</tool>

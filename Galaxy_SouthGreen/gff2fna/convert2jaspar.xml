@@ -1,0 +1,67 @@
+<tool id="convert2jaspar" name="convert2jaspar" version="1.0">
+	<description>convert2jaspar</description>
+	<stdio>
+		<exit_code range="1:" level="fatal" />
+	</stdio>
+	<command>
+	source $__tool_directory__/module_load.txt;
+	perl $__tool_directory__/pwm_genome_map.pl -t $format.type -o $output
+	$format.input
+    </command>
+	<inputs>		
+		<conditional name="format">
+			<param type="select" name="type" label="Transfac,Place or Dreme format">
+				<option value="dreme">Dreme</option>
+				<option value="red2">Red2</option>
+				<option value="transfac">Transfac</option>
+				<option value="place">Place</option>								
+			</param> 
+			<when value="dreme">		
+				<param name="input" type="data" label="Dreme format" help="Dreme format"/>					
+			</when>
+			<when value="red2">		
+				<param name="input" type="data" label="Red2 format" help="Red2 format"/>					
+			</when>
+			<when value="transfac">
+				<param name="input" type="data" label="Transfac format" help="Transfac format"/>
+			</when>
+			<when value="place">		
+				<param name="input" type="data" label="Place format" help="Place format"/>					
+			</when>			
+		</conditional>
+	</inputs>
+	<outputs>
+		<data format="txt" name="output" label="${tool.name} on ${on_string} (tar file)"/>
+	</outputs>
+	<help>
+	
+
+.. class:: infomark
+
+**Program encapsulated in Galaxy by Southgreen**
+
+.. class:: infomark
+
+**convert2jaspar version 1.0, 2015**
+
+-----	
+
+==========
+ Authors:
+==========	
+
+**Lorenzo J**
+
+-----	
+
+===========
+ Overview:
+===========	
+
+.. class:: warningmark
+
+**No support website**
+
+	</help>
+
+</tool>

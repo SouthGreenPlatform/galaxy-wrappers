@@ -1,0 +1,1 @@
+module load system/python/2.7.9_build2 system/java/jre8 compiler/gcc/4.9.2 mpi/openmpi/1.6.5 bioinfo/bedtools/2.17.0 bioinfo/exonerate/2.4.7 bioinfo/meme/4.10.1_MPI bioinfo/red2/1.0.1

@@ -1,0 +1,115 @@
+<tool id="pwm_genome_map" name="pwm_genome_map" version="1.0">
+	<description>get flanking sequence</description>
+	<stdio>
+		<exit_code range="1:" level="fatal" />
+	</stdio>
+	<command>
+	source $__tool_directory__/module_load.txt;
+	perl $__tool_directory__/pwm_genome_map.pl -g $input_fasta -o $output -p $probability 
+	#if $db.coreornot == "no":
+	/bank/genfam/promoter_data/*.pfm
+	#if $db.allornot.aon == "no":
+	#for $a in $db.allornot.bases
+	${a.input.fields.value}
+	#end for
+	#end if
+	#if $db.allornot.aon == "yes":
+	'all'
+	#end if
+	#end if
+	#if $db.coreornot == "yes":
+	-d $input_db -t discover
+	all
+	#end if	
+    </command>
+	<inputs>
+		<param format="txt" name="input_fasta" type="data" label="MultiFASTA format" help="MultiFASTA format"/>		
+		<param type="float" name="probability" help="threshold for moods mapper default=0.001" value="0.001" label="Probability"/>
+		<conditional name="db">
+			<param type="select" name="coreornot" label="Core database or other">
+				<option value="no">Select core database</option>
+				<option value="yes">Select other database</option>
+			</param>  
+			<when value="yes">
+				<param format="txt" name="input_db" type="data" label="Other database" help="Other database"/>		
+			</when>
+			<when value="no">	
+				<conditional name="allornot">
+			<param type="select" name="aon" label="All TF or not">
+				<option value="no">Select one or more TF</option>
+				<option value="yes">Select all TF</option>
+			</param>  
+			<when value="yes">
+			</when>
+			<when value="no">		
+				<repeat name="bases" title="Transcription Factor" min="1" max="50">	
+				<param name="input" type="select" label="Transcription Factor name">
+					<options from_file="promoter_data.loc">
+						<column name="value" index="2"/>
+						<column name="name" index="3"/>
+					</options>
+				</param>
+				</repeat> 					
+			</when>
+		</conditional>								
+			</when>
+		</conditional>
+		
+		
+	</inputs>
+	<outputs>
+		<data format="txt" name="output" label="${tool.name} on ${on_string} (TFBS position)"/>
+	</outputs>
+	<help>
+	
+
+.. class:: infomark
+
+**Program encapsulated in Galaxy by Southgreen**
+
+.. class:: infomark
+
+**pwm_genome_map version 1.0, 2015**
+
+-----	
+
+==========
+ Authors:
+==========	
+
+**Lorenzo J**
+
+-----	
+
+===========
+ Overview:
+===========	
+
+Input flancking region:
+>AT1G75490.1_ARATH
+TTCAAATTTTTAAAAAGTTCTATCTGAGAATACTAGAGATAATATTTAGAACAAAAAATAAGTTAGATAAATTGGAACCGGAGCTTTGTAGTTATCGGTTAAAAAGGCCGCCTTTTCACGTGTGTCTCGGCCACAAATGTTCTAAGACAGAGAAGTAAGATTCAGTGAACTTTGTTTGTCTCTTATCGAGGAACCTTCGGGTCCCGTACGTTTAATTTGCGTGGACATATTGCCGCCACATGACTGACCCTTACACACATTCATACTTGTACTTTGCTATAATTTCCCACGTGGCAATTAAAAAGCCTGGAGAAATGGATAACATCAAGAAAGAAAATGGTGACTCTATGAACGAATTAAAAAAAAAACTACAATTCTTTCTCAATGTTTATGCATTAGATGATGATTCTTTTTTTACAAAAGGAGAGATTACATGACTCATAGAGAAAAGCTTTATAAATCTAAAGGCTTTTTAATTAAAAAAGTTTGTATATATAAGAAAAATCATGTATTTTTTTCTTTCTTTTTAGCTATTTGAAATTATAATTAAGTTAAAGCCATAGCTTGATTTTGTTTTCTGATGAATAAAGCCATAGCTTGATATTAGATAGAAGCATTCACATGACGAGCCATTAATTCATAGTGATAAATCTTTTTATATTTCCCCAATCGCGGATGACCTTATCCATATCTCTCTCTCTCTTTTCTTTTTTTTTTTGGAAAAATCTCAAACTCATCAATCTCTCTGCTGGTTTTACGATTACTGTTGCCAAAAAAAGAAGGGTCTCTCGAGACAAGTGTTAGGATTACAAACACAACACCAGCTTCCTCCTCTCGACACGACCCTCCGTCATGTCTGCGCCAGCTATATCTTCTCCTCGCCACGTTTCATCACTCTCTTCTAGTATATATACACACCTAACCATTACCTCATGTCTTTGCCTTATCACTCACCAAAAGTCGTCACATAATATCACTTTCGAGTTATCAACATCCGTAC
+>AT2G38340.1_ARATH
+GTGTTCCCACCTTAATTTCTGAAGGCTCTGGTGAATTCTAGGACAATCTATGCAGACAAAAATTTATAGTTTATTGTTTGGTTTTATGTTCGAAATTTAATAGTGATTGTACTGCGCTCCGTAATATTTTCTACAGTTTGTACGTGTTGTGTTTTTCCA
+
+Output results:
+csv files
+AT1G46264_ARATH;;1;1000
+AT1G46264_ARATH;;1001;1501
+AT1G46264_ARATH;HSELIKENTGLN2;77;86
+AT1G46264_ARATH;HSELIKENTGLN2;77;86
+AT1G67970_ARATH;;1;1000
+AT1G67970_ARATH;;1001;1501
+AT1G67970_ARATH;HSE;398;411
+AT1G67970_ARATH;HSE;398;411
+AT1G67970_ARATH;HSELIKENTGLN2;540;549
+AT1G67970_ARATH;HSELIKENTGLN2;540;549
+
+-----
+
+.. class:: warningmark
+
+**No support website**
+
+	</help>
+
+</tool>
