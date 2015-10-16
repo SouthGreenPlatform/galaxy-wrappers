@@ -1,0 +1,767 @@
+This is pdfeTeX, Version 3.141592-1.21a-2.2 (Web2C 7.5.4) (format=pdflatex 2010.4.8)  11 JUN 2010 14:40
+entering extended mode
+**EuGeneDoc.tex
+(./EuGeneDoc.tex
+LaTeX2e <2003/12/01>
+Babel <v3.8d> and hyphenation patterns for american, french, german, ngerman, b
+ahasa, basque, bulgarian, catalan, croatian, czech, danish, dutch, esperanto, e
+stonian, finnish, greek, icelandic, irish, italian, latin, magyar, norsk, polis
+h, portuges, romanian, russian, serbian, slovak, slovene, spanish, swedish, tur
+kish, ukrainian, nohyphenation, loaded.
+(/usr/share/texmf/tex/latex/base/report.cls
+Document Class: report 2004/02/16 v1.4f Standard LaTeX document class
+(/usr/share/texmf/tex/latex/base/size10.clo
+File: size10.clo 2004/02/16 v1.4f Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@chapter=\count80
+\c@section=\count81
+\c@subsection=\count82
+\c@subsubsection=\count83
+\c@paragraph=\count84
+\c@subparagraph=\count85
+\c@figure=\count86
+\c@table=\count87
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+(/usr/share/texmf/tex/latex/base/t1enc.sty
+Package: t1enc 1994/06/01 Standard LaTeX package
+)
+(/usr/share/texmf/tex/latex/graphics/graphicx.sty
+Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texmf/tex/latex/graphics/keyval.sty
+Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
+\KV@toks@=\toks14
+)
+(/usr/share/texmf/tex/latex/graphics/graphics.sty
+Package: graphics 2001/07/07 v1.0n Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texmf/tex/latex/graphics/trig.sty
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+)
+(/usr/share/texmf/tex/latex/graphics/graphics.cfg
+File: graphics.cfg 2005/02/03 v1.3 graphics configuration of teTeX/TeXLive
+)
+Package graphics Info: Driver file: pdftex.def on input line 80.
+
+(/usr/share/texmf/tex/latex/graphics/pdftex.def
+File: pdftex.def 2002/06/19 v0.03k graphics/color for pdftex
+\Gread@gobject=\count88
+))
+\Gin@req@height=\dimen103
+\Gin@req@width=\dimen104
+)
+(/usr/share/texmf/tex/latex/psnfss/times.sty
+Package: times 2004/09/15 PSNFSS-v9.2 (SPQR) 
+)
+(/usr/share/texmf/tex/latex/a4wide/a4wide.sty
+Package: a4wide 1994/08/30
+
+(/usr/share/texmf/tex/latex/ntgclass/a4.sty
+Package: a4 2004/04/15 v1.2g A4 based page layout
+))
+(/usr/share/texmf/tex/latex/hyperref/hyperref.sty
+Package: hyperref 2003/11/30 v6.74m Hypertext links for LaTeX
+\@linkdim=\dimen105
+\Hy@linkcounter=\count89
+\Hy@pagecounter=\count90
+
+(/usr/share/texmf/tex/latex/hyperref/pd1enc.def
+File: pd1enc.def 2003/11/30 v6.74m Hyperref: PDFDocEncoding definition (HO)
+)
+(/usr/share/texmf/tex/latex/hyperref/hyperref.cfg
+File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive and teTeX
+)
+Package hyperref Info: Hyper figures OFF on input line 1880.
+Package hyperref Info: Link nesting OFF on input line 1885.
+Package hyperref Info: Hyper index ON on input line 1888.
+Package hyperref Info: Plain pages ON on input line 1893.
+Package hyperref Info: Backreferencing OFF on input line 1900.
+
+Implicit mode ON; LaTeX internals redefined
+Package hyperref Info: Bookmarks ON on input line 2004.
+(/usr/share/texmf/tex/latex/url/url.sty
+\Urlmuskip=\muskip10
+Package: url 2004/03/15  ver 3.1  Verb mode for urls, etc.
+)
+LaTeX Info: Redefining \url on input line 2143.
+\Fld@menulength=\count91
+\Field@Width=\dimen106
+\Fld@charsize=\dimen107
+\Choice@toks=\toks15
+\Field@toks=\toks16
+Package hyperref Info: Hyper figures OFF on input line 2618.
+Package hyperref Info: Link nesting OFF on input line 2623.
+Package hyperref Info: Hyper index ON on input line 2626.
+Package hyperref Info: backreferencing OFF on input line 2633.
+Package hyperref Info: Link coloring OFF on input line 2638.
+\c@Item=\count92
+\c@Hfootnote=\count93
+)
+*hyperref using default driver hpdftex*
+(/usr/share/texmf/tex/latex/hyperref/hpdftex.def
+File: hpdftex.def 2003/11/30 v6.74m Hyperref driver for pdfTeX
+
+(/usr/share/texmf/tex/latex/psnfss/pifont.sty
+Package: pifont 2004/09/15 PSNFSS-v9.2 Pi font support (SPQR) 
+LaTeX Font Info:    Try loading font information for U+pzd on input line 63.
+
+(/usr/share/texmf/tex/latex/psnfss/upzd.fd
+File: upzd.fd 2001/06/04 font definitions for U/pzd.
+)
+LaTeX Font Info:    Try loading font information for U+psy on input line 64.
+
+(/usr/share/texmf/tex/latex/psnfss/upsy.fd
+File: upsy.fd 2001/06/04 font definitions for U/psy.
+))
+\Fld@listcount=\count94
+\@outlinefile=\write3
+)
+(/usr/share/texmf/tex/latex/fancyvrb/fancyvrb.sty
+Package: fancyvrb 1998/07/17
+
+Style option: `fancyvrb' v2.6, with DG/SPQR fixes <1998/07/17> (tvz)
+\FV@CodeLineNo=\count95
+\FV@InFile=\read1
+\FV@TabBox=\box26
+\c@FancyVerbLine=\count96
+\FV@StepNumber=\count97
+\FV@OutFile=\write4
+
+No file fancyvrb.cfg.
+) (/usr/share/texmf/tex/latex/multind/multind.sty)
+\CmdFlags@idxfile=\write5
+\openout5 = `CmdFlags.idx'.
+
+
+Writing index file CmdFlags.idx 
+(./EuGeneDoc.aux)
+\openout1 = `EuGeneDoc.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Try loading font information for T1+ptm on input line 29.
+ (/usr/share/texmf/tex/latex/psnfss/t1ptm.fd
+File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
+)
+(/usr/share/texmf/tex/context/base/supp-pdf.tex
+(/usr/share/texmf/tex/context/base/supp-mis.tex
+loading : Context Support Macros / Miscellaneous (2004.10.26)
+\protectiondepth=\count98
+\scratchcounter=\count99
+\scratchtoks=\toks17
+\scratchdimen=\dimen108
+\scratchskip=\skip43
+\scratchmuskip=\muskip11
+\scratchbox=\box27
+\scratchread=\read2
+\scratchwrite=\write6
+\zeropoint=\dimen109
+\onepoint=\dimen110
+\onebasepoint=\dimen111
+\minusone=\count100
+\thousandpoint=\dimen112
+\onerealpoint=\dimen113
+\emptytoks=\toks18
+\nextbox=\box28
+\nextdepth=\dimen114
+\everyline=\toks19
+\!!counta=\count101
+\!!countb=\count102
+\recursecounter=\count103
+)
+loading : Context Support Macros / PDF (2004.03.26)
+\nofMPsegments=\count104
+\nofMParguments=\count105
+\MPscratchCnt=\count106
+\MPscratchDim=\dimen115
+\MPnumerator=\count107
+\everyMPtoPDFconversion=\toks20
+)
+Package hyperref Info: Link coloring OFF on input line 29.
+ (/usr/share/texmf/tex/latex/hyperref/nameref.sty
+Package: nameref 2003/12/03 v2.21 Cross-referencing by name of section
+\c@section@level=\count108
+)
+LaTeX Info: Redefining \ref on input line 29.
+LaTeX Info: Redefining \pageref on input line 29.
+ (./EuGeneDoc.out)
+(./EuGeneDoc.out)
+\openout3 = `EuGeneDoc.out'.
+
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 31.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 31.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 31.
+ [1
+
+{/usr/share/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <24.88> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 31.
+
+(./EuGeneDoc.toc
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <10> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 1.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 2.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 2.
+LaTeX Font Info:    Try loading font information for T1+pcr on input line 10.
+ (/usr/share/texmf/tex/latex/psnfss/t1pcr.fd
+File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
+)
+! pdfTeX warning (ext4): destination with the same identifier (name{page.1}) ha
+s been already used, duplicate ignored
+<to be read again> 
+                   \penalty 
+l.157 ...AnnotaStruct}}{43}{subsubsection.2.3.5.1}
+                                                   [1
+
+])
+\tf@toc=\write7
+\openout7 = `EuGeneDoc.toc'.
+
+ [2]
+! pdfTeX warning (ext4): destination with the same identifier (name{page.1}) ha
+s been already used, duplicate ignored
+<to be read again> 
+                   \penalty 
+l.63  \end{abstract}
+                     [1]
+Chapter 1.
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <20.74> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 65.
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <14.4> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 67.
+LaTeX Font Info:    Try loading font information for OMS+ptm on input line 107.
+
+(/usr/share/texmf/tex/latex/psnfss/omsptm.fd
+File: omsptm.fd 
+)
+LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 107.
+
+Underfull \hbox (badness 10000) in paragraph at lines 110--111
+
+ []
+
+! pdfTeX warning (ext4): destination with the same identifier (name{page.1}) ha
+s been already used, duplicate ignored
+<to be read again> 
+                   \penalty 
+l.125 ...NetGene2)...........forward, reverse done
+                                                   [1
+
+]
+! pdfTeX warning (ext4): destination with the same identifier (name{page.2}) ha
+s been already used, duplicate ignored
+<to be read again> 
+                   \penalty 
+l.210 
+       [2] [3] [4] [5] [6]
+Chapter 2.
+LaTeX Font Info:    Font shape `T1/ptm/bx/sc' in size <14.4> not available
+(Font)              Font shape `T1/ptm/b/sc' tried instead on input line 502.
+[7
+
+]
+Overfull \hbox (9.97385pt too wide) in paragraph at lines 533--539
+[]\T1/pcr/m/n/10 EuGene.ExonPrior\T1/ptm/m/n/10 , \T1/pcr/m/n/10 EuGene.IntronP
+rior\T1/ptm/m/n/10 , \T1/pcr/m/n/10 EuGene.InterPrior\T1/ptm/m/n/10 , \T1/pcr/m
+/n/10 EuGene.FivePri-
+ []
+
+
+Overfull \hbox (24.47385pt too wide) in paragraph at lines 540--549
+[]\T1/pcr/m/n/10 EuGene.InitExDist\T1/ptm/m/n/10 , \T1/pcr/m/n/10 EuGene.IntrEx
+Dist\T1/ptm/m/n/10 , \T1/pcr/m/n/10 EuGene.TermExDist\T1/ptm/m/n/10 , \T1/pcr/m
+/n/10 EuGene.SnglExDist\T1/ptm/m/n/10 ,
+ []
+
+
+Overfull \hbox (18.75374pt too wide) in paragraph at lines 540--549
+\T1/pcr/m/n/10 EuGene.IntronDist\T1/ptm/m/n/10 , \T1/pcr/m/n/10 EuGene.InterDis
+t\T1/ptm/m/n/10 , \T1/pcr/m/n/10 EuGene.5PrimeDist\T1/ptm/m/n/10 , \T1/pcr/m/n/
+10 EuGene.3PrimeDist\T1/ptm/m/n/10 :
+ []
+
+
+Overfull \hbox (4.36061pt too wide) in paragraph at lines 550--555
+[]\T1/pcr/m/n/10 EuGene.SplicedStopPen\T1/ptm/m/n/10 : in-di-cates the penalty 
+for pre-dict-ing genes con-tain-ing in-frame spliced
+ []
+
+[8]
+Overfull \hbox (63.79378pt too wide) in paragraph at lines 662--668
+[]\T1/pcr/m/n/10 Fitness.wsng\T1/ptm/m/n/10 , \T1/pcr/m/n/10 Fitness.wsne\T1/pt
+m/m/n/10 , \T1/pcr/m/n/10 Fitness.wsnn\T1/ptm/m/n/10 , \T1/pcr/m/n/10 Fitness.w
+spg\T1/ptm/m/n/10 , \T1/pcr/m/n/10 Fitness.wspe\T1/ptm/m/n/10 , \T1/pcr/m/n/10 
+Fitness.wsspn\T1/ptm/m/n/10 :
+ []
+
+[9] [10] [11]
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <12> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 849.
+ [12]
+LaTeX Font Info:    Font shape `T1/pcr/bx/n' in size <12> not available
+(Font)              Font shape `T1/pcr/b/n' tried instead on input line 920.
+
+Overfull \hbox (34.41376pt too wide) in paragraph at lines 929--930
+[][]\T1/pcr/m/n/10 <seqid> <source> <type> <start> <end> <score> <strand> <phas
+e><attributes> 
+ []
+
+
+Overfull \hbox (45.13272pt too wide) in paragraph at lines 931--936
+\T1/ptm/m/n/10 cific at-tributes: \T1/pcr/m/n/10 is_full_length, target_length,
+ target_sequence, database, frame_hit,
+ []
+
+[13] (./Doc_EuStop.tex
+LaTeX Font Info:    Font shape `T1/pcr/bx/n' in size <10> not available
+(Font)              Font shape `T1/pcr/b/n' tried instead on input line 3.
+) (./Doc_FrameShift.tex [14]) (./Doc_GSplicer.tex
+Overfull \hbox (45.20212pt too wide) in paragraph at lines 27--31
+\T1/ptm/m/n/10 Gene-S-plicer). The for-mat of a line is : \T1/pcr/m/n/10 <End5>
+ <End3> <Score> <confidence> <splice_site_type> 
+ []
+
+[15]
+Underfull \hbox (badness 10000) in paragraph at lines 76--77
+
+ []
+
+
+Overfull \hbox (20.53099pt too wide) in paragraph at lines 81--84
+\T1/ptm/m/n/10 the AG/GT nu-cleotides (this is checked). Here an ex-tract of \T
+1/pcr/m/n/10 seq14ac002535g4g5.tfa.Gsplicer.gff3 
+ []
+
+) (./Doc_NG2.tex [16]
+Underfull \hbox (badness 10000) in paragraph at lines 69--70
+
+ []
+
+[17]) (./Doc_NStart.tex [18]
+Underfull \hbox (badness 10000) in paragraph at lines 62--63
+
+ []
+
+) (./Doc_PatConst.tex [19]
+Overfull \hbox (18.7199pt too wide) in paragraph at lines 40--44
+ \T1/ptm/b/n/10 In-te-gra-tion of in-for-ma-tion[] \T1/ptm/m/n/10 All pre-dic-t
+ions that use a pre-dicted sig-nal re-ceive the cor-re-spond-ing \T1/pcr/m/n/10
+ PatConst-
+ []
+
+) (./Doc_PepSignal.tex
+Overfull \hbox (33.16821pt too wide) in paragraph at lines 7--10
+ \T1/ptm/b/n/10 De-scrip-tion[] \T1/ptm/m/n/10 This plu-gin in-jects pos-si-ble
+ trans-la-tion starts as pre-dicted by the Pre-do-tar pro-gram (http://genoplan
+te-
+ []
+
+[20]
+Underfull \hbox (badness 10000) in paragraph at lines 57--58
+
+ []
+
+) (./Doc_SMachine.tex [21]
+Overfull \hbox (32.59003pt too wide) in paragraph at lines 21--27
+\T1/ptm/m/n/10 ram-e-ter file. The score for start, ac-cep-tor and donor pre-di
+c-tion is rescaled by the pa-ram-e-ters \T1/pcr/m/n/10 SMachine.startP*
+ []
+
+[22]
+Underfull \hbox (badness 10000) in paragraph at lines 84--85
+
+ []
+
+
+Overfull \hbox (29.90015pt too wide) in paragraph at lines 91--94
+\T1/ptm/m/n/10 AG/GT nu-cleotides (splices) or ATG (start). Here an ex-tract of
+ \T1/pcr/m/n/10 seq14ac002535g4g5.tfa.spliceM.gff3\T1/ptm/m/n/10 . 
+ []
+
+) (./Doc_SpliceWAM.tex [23]
+Overfull \hbox (4.94092pt too wide) in paragraph at lines 20--31
+\T1/ptm/m/n/10 spec-ify in the pa-ram-e-ter file the base name (pre-fix) of the
+ model files (\T1/pcr/m/n/10 SpliceWAM.donmodelfilename
+ []
+
+
+Overfull \hbox (16.30206pt too wide) in paragraph at lines 20--31
+\T1/ptm/m/n/10 mo-tifs), and the scal-ing pa-ram-e-ters \T1/pcr/m/n/10 SpliceWA
+M.DonScaleCoef*\T1/ptm/m/n/10 , \T1/pcr/m/n/10 SpliceWAM.DonScalePenalty*\T1/pt
+m/m/n/10 ,
+ []
+
+
+Overfull \hbox (2.66081pt too wide) in paragraph at lines 51--65
+\T1/ptm/m/n/10 tif po-si-tion and for each type so sites. These files have to b
+e present in the path given by \T1/pcr/m/n/10 SpliceWAM.don-
+ []
+
+
+Overfull \hbox (0.36252pt too wide) in paragraph at lines 51--65
+\T1/pcr/m/n/10 modelfilename \T1/ptm/m/n/10 and \T1/pcr/m/n/10 SpliceWAM.donmod
+elfilename \T1/ptm/m/n/10 from the plu-g-ins di-rec-tory (see \T1/pcr/m/n/10 Eu
+Gene.-
+ []
+
+
+Overfull \hbox (3.95172pt too wide) in paragraph at lines 51--65
+\T1/pcr/m/n/10 PluginsDir \T1/ptm/m/n/10 pa-ram-e-ter). These mod-els can be ge
+n-er-ated us-ing \T1/pcr/m/n/10 WAMbuilder.cc \T1/ptm/m/n/10 (see \T1/pcr/m/n/1
+0 eugene/src/-
+ []
+
+[24]
+Overfull \hbox (0.25214pt too wide) in paragraph at lines 108--113
+[]\T1/ptm/m/n/10 This score is then scaled with the \T1/pcr/m/n/10 SpliceWAM.Do
+nScaleCoef*\T1/ptm/m/n/10 /\T1/pcr/m/n/10 SpliceWAM.AccScaleCoef*
+ []
+
+
+Overfull \hbox (0.13254pt too wide) in paragraph at lines 108--113
+\T1/ptm/m/n/10 and the \T1/pcr/m/n/10 SpliceWAM.DonScalePenalty*\T1/ptm/m/n/10 
+/\T1/pcr/m/n/10 SpliceWAM.AccScalePenalty* \T1/ptm/m/n/10 pa-ram-e-ters, fol-lo
+w-
+ []
+
+) (./Doc_SPred.tex [25]
+Underfull \hbox (badness 10000) in paragraph at lines 66--67
+
+ []
+
+) (./Doc_StartWAM.tex [26] [27]) (./Doc_Transcript.tex
+Overfull \hbox (34.49107pt too wide) in paragraph at lines 7--11
+\T1/ptm/m/n/10 the same uni-form cost. These costs are re-spec-tively set by th
+e \T1/pcr/m/n/10 Transcript.Start* \T1/ptm/m/n/10 and \T1/pcr/m/n/10 Transcript
+.Stop*
+ []
+
+) (./Doc_BlastX.tex [28] [29]
+Overfull \hbox (15.77957pt too wide) in paragraph at lines 86--89
+\T1/ptm/m/n/10 These files can be ob-tained di-rectly from the out-put BlastX f
+iles by pars-ing them with the \T1/pcr/m/n/10 blast_parser.pl
+ []
+
+
+Overfull \hbox (65.42119pt too wide) in paragraph at lines 100--102
+[]\T1/ptm/m/n/10 For more ex-pla-na-tion, see the README file in the di-rec-tor
+y \T1/pcr/m/n/10 eugene/src/SensorPlugins/BlastX/GetData\T1/ptm/m/n/10 . 
+ []
+
+
+Overfull \hbox (131.94691pt too wide) in paragraph at lines 113--114
+[]\T1/pcr/m/n/10 <sequence name> <program> <sofa feature> <$\OML/cmm/m/it/10 b[
+]$\T1/pcr/m/n/10 > <$\OML/cmm/m/it/10 e[]$\T1/pcr/m/n/10 > <$\OML/cmm/m/it/10 v
+[]$\T1/pcr/m/n/10 > <strand> <.> ID=...;Target=<protein
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 115--117
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 122--123
+
+ []
+
+[30]
+Underfull \hbox (badness 10000) in paragraph at lines 165--166
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 176--177
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 206--207
+
+ []
+
+[31]
+Underfull \hbox (badness 10000) in paragraph at lines 212--213
+
+ []
+
+) (./Doc_Est.tex [32] [33] [34] [35]) (./Doc_Homology.tex [36]
+Underfull \hbox (badness 10000) in paragraph at lines 78--80
+
+ []
+
+[37]
+Overfull \hbox (107.94691pt too wide) in paragraph at lines 118--119
+[]\T1/pcr/m/n/10 <sequence name> <program> <sofa feature> <$\OML/cmm/m/it/10 b[
+]$\T1/pcr/m/n/10 > <$\OML/cmm/m/it/10 e[]$\T1/pcr/m/n/10 > <$\OML/cmm/m/it/10 v
+[]$\T1/pcr/m/n/10 > <strand> <.> ID=...;Target=<est
+ []
+
+
+Overfull \hbox (19.2501pt too wide) in paragraph at lines 146--150
+ \T1/ptm/b/n/10 Fil-ter-ing in-put in-for-ma-tion[] \T1/ptm/m/n/10 Note that si
+m-i-lar-i-ties which have a length higher than \T1/pcr/m/n/10 Homology.MaxHitLe
+n
+ []
+
+
+Overfull \hbox (6.65811pt too wide) in paragraph at lines 146--150
+\T1/ptm/m/n/10 pa-ram-e-ter value are re-jected. A mes-sage ``Sim-i-lar-ity of 
+ex-treme length re-jected. Check tblastx file <NAME>''
+ []
+
+[38]) (./Doc_MarkovConst.tex
+Overfull \hbox (18.10873pt too wide) in paragraph at lines 7--17
+ \T1/ptm/b/n/10 De-scrip-tion[] \T1/ptm/m/n/10 A sim-u-lated con-tent sen-sor t
+hat gives con-stant prob-a-bil-i-ties (as in-di-cated in the \T1/pcr/m/n/10 Mar
+kovConst-
+ []
+
+
+Overfull \hbox (15.2138pt too wide) in paragraph at lines 7--17
+\T1/pcr/m/n/10 .Coding*\T1/ptm/m/n/10 , \T1/pcr/m/n/10 MarkovConst.Intron*\T1/p
+tm/m/n/10 , \T1/pcr/m/n/10 MarkovConst.UTR5*\T1/ptm/m/n/10 , \T1/pcr/m/n/10 Mar
+kovConst.UTR3* \T1/ptm/m/n/10 and \T1/pcr/m/n/10 Markov-
+ []
+
+) (./Doc_MarkovIMM.tex
+Overfull \hbox (11.399pt too wide) in paragraph at lines 7--18
+ \T1/ptm/b/n/10 De-scrip-tion[] \T1/ptm/m/n/10 This plu-gin in-jects cod-ing/in
+tronic/utr/intergenic like-li-hood as mod-eled by in-ter-po-lated Markov
+ []
+
+[39]) (./Doc_MarkovProt.tex
+Overfull \hbox (5.29036pt too wide) in paragraph at lines 7--14
+\T1/ptm/m/n/10 These mod-els are de-fined in a ma-tri-ces file (lo-cated in the
+ di-rec-tory spec-i-fied by the \T1/pcr/m/n/10 EuGene.PluginsDir
+ []
+
+
+Overfull \hbox (28.21152pt too wide) in paragraph at lines 7--14
+\T1/ptm/m/n/10 model must be given in \T1/pcr/m/n/10 MarkovProt.maxorder \T1/pt
+m/m/n/10 while the ac-tual or-der to use is set by \T1/pcr/m/n/10 MarkovProt.or
+der\T1/ptm/m/n/10 . 
+ []
+
+
+Overfull \hbox (3.84114pt too wide) in paragraph at lines 15--20
+[]\T1/ptm/m/n/10 The plu-gin is con-trolled by two fur-ther pa-ram-e-ters: \T1/
+pcr/m/n/10 MarkovProt.minGC \T1/ptm/m/n/10 and \T1/pcr/m/n/10 MarkovProt.maxGC
+ []
+
+[40]) (./Doc_Repeat.tex [41]
+Underfull \hbox (badness 10000) in paragraph at lines 55--56
+
+ []
+
+
+Overfull \hbox (64.91069pt too wide) in paragraph at lines 59--61
+\T1/ptm/m/n/10 If the fea-ture used isn't one of those, the line will be re-jec
+ted. Here an ex-tract of \T1/pcr/m/n/10 seq14ac002535g4g5.tfa.ig.gff3\T1/ptm/m/
+n/10 . 
+ []
+
+) (./Doc_NStretch.tex
+Overfull \hbox (72.41933pt too wide) in paragraph at lines 7--8
+ \T1/ptm/b/n/10 De-scrip-tion[] \T1/ptm/m/n/10 A con-tent sen-sor that pe-nal-i
+zes the stretchs of 'N' longer than \T1/pcr/m/n/10 NStretch-.maxLengthWithoutPe
+nalty\T1/ptm/m/n/10 . 
+ []
+
+
+Overfull \hbox (78.38947pt too wide) in paragraph at lines 23--24
+ \T1/ptm/b/n/10 In-te-gra-tion of in-for-ma-tion[] \T1/ptm/m/n/10 All po-si-tio
+ns that oc-cur in a stretch of N are pe-nal-ized us-ing the \T1/pcr/m/n/10 NStr
+etch[]stretchPenalty
+ []
+
+[42]) (./Doc_AnnotaStruct.tex [43] [44]
+Overfull \hbox (5.76154pt too wide) in paragraph at lines 179--181
+[]\T1/pcr/m/n/10 Intron\T1/ptm/m/n/10 : equiv-a-lent to \T1/pcr/m/n/10 intron \
+T1/ptm/m/n/10 ex-cept that the weight used comes from the \T1/pcr/m/n/10 Annota
+Struct.CDS*
+ []
+
+[45] [46]
+Overfull \hbox (28.6923pt too wide) in paragraph at lines 302--304
+\T1/ptm/m/n/10 (rRNA) or SO:0000253 (tRNA). See \T1/pcr/m/n/10 http://www.seque
+nceontology.org/wiki/index.php/
+ []
+
+<SO.png, id=610, 732.336pt x 322.806pt>
+File: SO.png Graphic file (type png)
+ <use SO.png>
+Overfull \hbox (59.1106pt too wide) in paragraph at lines 309--310
+[][] 
+ []
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[47]) (./Doc_IfElse.tex
+Overfull \hbox (15.7419pt too wide) in paragraph at lines 13--18
+[]\T1/ptm/m/n/10 The plu-gin needs only two pa-ram-e-ters to be in-formed: \T1/
+pcr/m/n/10 IfElse.SensorIf \T1/ptm/m/n/10 and \T1/pcr/m/n/10 IfElse.SensorElse
+ []
+
+[48 <./SO.png>]) (./Doc_Riken.tex [49]
+Underfull \hbox (badness 10000) in paragraph at lines 67--69
+
+ []
+
+[50]) (./Doc_NcRNA.tex [51]) (./Doc_GCPlot.tex [52]) (./Doc_GFF.tex [53]
+Underfull \hbox (badness 10000) in paragraph at lines 59--60
+
+ []
+
+
+Overfull \hbox (45.14125pt too wide) in paragraph at lines 66--69
+\T1/ptm/m/n/10 fea-ture , par-ent fea-ture must be de-fine be-fore chil-dren. H
+ere an ex-tract of \T1/pcr/m/n/10 seq14ac002535g4g5.tfa.gff.gff3\T1/ptm/m/n/10 
+. 
+ []
+
+) (./Doc_Plotter.tex) (./Doc_Tester.tex [54]
+Underfull \hbox (badness 10000) in paragraph at lines 7--12
+
+ []
+
+
+Overfull \hbox (27.72127pt too wide) in paragraph at lines 7--12
+\T1/ptm/m/n/10 Depending of the value of the pa-ram-e-ter \T1/pcr/m/n/10 Tester
+.Make\T1/ptm/m/n/10 , two in-de-pen-dant tests could be done. If \T1/pcr/m/n/10
+ Tester.Make
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 37--47
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 37--47
+
+ []
+
+
+Overfull \hbox (28.57056pt too wide) in paragraph at lines 37--47
+\T1/ptm/m/n/10 The sen-sor is ac-ti-vated by the value 1 for the pa-ram-e-ter \
+T1/pcr/m/n/10 Sensor.Tester.use\T1/ptm/m/n/10 . A pa-ram-e-ter \T1/pcr/m/n/10 T
+ester.Sensor
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 37--47
+
+ []
+
+[55]
+Underfull \hbox (badness 10000) in paragraph at lines 79--80
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 100--102
+
+ []
+
+[56]
+Overfull \hbox (9.64153pt too wide) in paragraph at lines 125--131
+ \T1/ptm/b/n/10 Out-put files for-mat[] \T1/ptm/m/n/10 For the pa-ram-e-ter \T1
+/pcr/m/n/10 Tester.Make \T1/ptm/m/n/10 set to TEST, a file (\T1/pcr/m/n/10 test
+.<sensorName.gff>\T1/ptm/m/n/10 )
+ []
+
+[57]) [58] <ParaOptimization.pdf, id=710, 335.2525pt x 372.39125pt>
+File: ParaOptimization.pdf Graphic file (type pdf)
+
+<use ParaOptimization.pdf>
+Overfull \hbox (1.9203pt too wide) in paragraph at lines 1100--1103
+[]\T1/ptm/m/n/10 The op-ti-miza-tion can be lauched with the \T1/pcr/m/n/10 -Z 
+\T1/ptm/m/n/10 ar-gu-ment []on the com-mand line or with the \T1/pcr/m/n/10 Par
+aOptimi-
+ []
+
+
+Overfull \hbox (0.33159pt too wide) in paragraph at lines 1104--1111
+\T1/ptm/m/n/10 ware cre-ates a new pa-ram-e-ter file called \T1/pcr/m/n/10 euge
+ne.<date>.OPTI.par \T1/ptm/m/n/10 (for ex-am-ple, \T1/pcr/m/n/10 eugene.30Sep-
+ []
+
+
+Overfull \hbox (62.62021pt too wide) in paragraph at lines 1122--1124
+[]\T1/ptm/m/n/10 it is pos-si-ble to in-clude a reg-uliz-ing term in the cri-te
+-ria op-ti-mized us-ing the \T1/pcr/m/n/10 ParaOptimization.Regularizer
+ []
+
+[59] [60 <./ParaOptimization.pdf>] [61]
+Overfull \hbox (0.68028pt too wide) in paragraph at lines 1267--1272
+[]\T1/pcr/m/n/10 l\T1/ptm/m/n/10 : con-trols the num-ber of nu-cleotides that w
+ill ap-pear on a sin-gle im-age (pa-ram-e-ter \T1/pcr/m/n/10 Output.glen\T1/ptm
+/m/n/10 ).
+ []
+
+[62]
+Overfull \hbox (24.8798pt too wide) in paragraph at lines 1346--1349
+[]\T1/pcr/m/n/10 x\T1/ptm/m/n/10 : con-trols the hor-i-zon-tal res-o-lu-tion of
+ the PNG im-ages gen-er-ated by Eu-Gene (pa-ram-e-ter \T1/pcr/m/n/10 Output.res
+x\T1/ptm/m/n/10 ).
+ []
+
+[63] (./CmdFlags.ind [64
+
+
+])
+LaTeX Font Info:    Try loading font information for T1+phv on input line 1362.
+
+ (/usr/share/texmf/tex/latex/psnfss/t1phv.fd
+File: t1phv.fd 2001/06/04 scalable font definitions for T1/phv.
+)
+[65
+
+] (./EuGeneDoc.aux) ) 
+Here is how much of TeX's memory you used:
+ 3598 strings out of 94500
+ 48861 string characters out of 1176767
+ 98941 words of memory out of 1000000
+ 6336 multiletter control sequences out of 10000+50000
+ 65058 words of font info for 70 fonts, out of 500000 for 2000
+ 580 hyphenation exceptions out of 1000
+ 27i,6n,36p,392b,309s stack positions out of 1500i,500n,5000p,200000b,5000s
+PDF statistics:
+ 751 PDF objects out of 300000
+ 291 named destinations out of 131072
+ 395 words of extra memory for PDF output out of 65536
+{/usr/share/texmf/fonts/enc/dvips/psnfss/8r.enc}</usr/shar
+e/texmf/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texmf/fonts/type1/blues
+ky/cm/cmr7.pfb></usr/share/texmf/fonts/type1/bluesky/cm/cmex10.pfb></usr/share/
+texmf/fonts/type1/bluesky/cm/cmsy7.pfb></usr/share/texmf/fonts/type1/bluesky/cm
+/cmmi7.pfb></usr/share/texmf/fonts/type1/urw/courier/ucrb8a.pfb></usr/share/tex
+mf/fonts/type1/urw/times/utmri8a.pfb></usr/share/texmf/fonts/type1/bluesky/cm/c
+mmi10.pfb></usr/share/texmf/fonts/type1/bluesky/cm/cmr10.pfb></usr/share/texmf/
+fonts/type1/bluesky/cm/cmsy10.pfb></usr/share/texmf/fonts/type1/urw/courier/ucr
+r8a.pfb></usr/share/texmf/fonts/type1/urw/times/utmb8a.pfb></usr/share/texmf/fo
+nts/type1/urw/times/utmr8a.pfb>
+Output written on EuGeneDoc.pdf (69 pages, 491825 bytes).

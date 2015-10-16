@@ -1,0 +1,34 @@
+<tool id="fgenesh" name="FGenesH" version="1.0.0"> 
+	<description>A gene finding software</description> 
+	<command interpreter="perl">fgenesh.pl $input_fasta $models $output_fgenesh</command> 
+        <inputs>
+			<param format="fasta" name="input_fasta" type="data" label="Fasta file"/>  
+			<param  name="models" type="select" label="Models">
+				<option value="Monocots" selected="True">Monocots</option>
+				<option value="Dicots">Dicots</option>
+				<option value="MEDICAGO">Medicago</option> 
+				<option value="Magnaporthe">Magnaporthe</option>
+				<option value="Sclerotinia">Sclerotinia</option>
+			</param>
+        </inputs> 
+        <outputs>
+			<data format="txt" name="output_fgenesh" label="FGenesH result"/> 
+        </outputs>
+        <help>
+
+**FGenesH : A Gene Finding Software**
+
+-----
+
+**What it does**
+
+FGenesH : HMM-based gene structure prediction (multiple genes, both chains) 
+
+-----
+
+**Output format**
+
+FGenesH raw data 
+
+</help>
+</tool>

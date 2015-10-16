@@ -1,0 +1,19 @@
+To build a .tblastx file :
+(NCBI BLAST package required)
+formatdb -i NUCLEIC_SEQUENCES_SUBJECT_SET_MULTIFASTA_FILE -pF
+
+blastall -p tblastx -i -i QUERY_GENOMIC_SEQUENCE_FASTA
+-d DATABASE_MULTIFASTA_FILE -F T -M SUBSTITUTION_MATRIX_FILE
+-e 1e-6 -b 50000 -m 7 > TEMPORY_BLAST_RESULT_FILE
+
+ParseBlastXML.pl TEMPORY_BLAST_RESULT_FILE > QUERY_GENOMIC_SEQUECE_FASTA.tblastx
+
+-----
+OR... with the blast_parser.pl script (see the BlastX sensor) and without the XML output of TBlastX:
+blastall -p tblastx -i QUERY_GENOMIC_SEQUENCE_FASTA -d DATABASE_MULTIFASTA_FILE -F T -M SUBSTITUTION_MATRIX_FILE -e 1e-6 -b 50000 > TEMPORY_BLAST_RESULT_FILE
+
+and
+blast_parser.pl TEMPORY_BLAST_RESULT_FILE > QUERY_GENOMIC_SEQUECE_FASTA.tblastx
+
+Note: for readability, .tblastx files lines can be sorted by  sort -n -k1,1 | rt -s -k6,6
+

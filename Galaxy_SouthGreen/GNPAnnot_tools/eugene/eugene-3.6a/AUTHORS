@@ -1,0 +1,15 @@
+Authors of eugene.
+See also the files THANKS and ChangeLog.
+
+Thomas Schiex <tschiex@toulouse.inra.fr> designed and implemented eugene.
+
+Other INRA persons contributed to the software:
+Philippe Bardou <bardou@toulouse.inra.fr>
+Marie-Josée Cros <cros@toulouse.inra.fr>
+Sylvain Foissac <foissac@toulouse.inra.fr>
+Jérome Gouzy <gouzy@toulouse.inra.fr>
+Annick Moisan <moisan@toulouse.inra.fr>
+
+Non permanent INRA staff:
+Céline Noirot <cnoirot@toulouse.inra.fr>
+Lucien Duret (implementation in 1999 of the User sensor and the first parameters optimization process)

@@ -1,0 +1,97 @@
+<tool id="gbshapmapfilter4" name="GBSHapMapFilter4" version="4.0">
+	<description>Reads HapMap format genotype files and filters out SNPs with low taxon coverage</description>
+	<command>
+		source $__tool_directory__/module_tassel4.sh;
+		$__tool_directory__/GBSHapMapFilter4.sh 
+	#if $type.source == "hapmap":
+  	 	$type.file 
+  	#else:
+  	 	$type.file  
+  	#end if 
+  	$type.source $mnTCov $mnSCov $mnF $mnMAF $mxMAF $hLD $mnR2 $mnBonP $sC $eC $maxAlleleVCF $output $snpLog</command>
+	<inputs>
+		<conditional name="type">
+			<param name="source" type="select" label="Input file format:">
+				<option value="hapmap" selected="True">HapMap file</option>
+				<option value="vcf">VCF file</option>
+			</param>
+			<when value="hapmap">
+				<param name="file" type="data" format="txt" label="HapMap file" /> 
+			</when>
+			<when value="vcf">
+				<param name="file" type="data" format="txt" label="VCF file" /> 
+			</when>
+		</conditional>  		
+		
+		<param name="mnTCov" type="float" value="0.1" label="Minimum taxa coverage (default: 0.1) "/>
+		<param name="mnSCov"  type="float" value="0.01" label="Minimum F (inbreeding coefficient)  (default: 0.01) "/>
+		<param name="mnF"  type="float" value="0.5" label=" Minimum F (inbreeding coefficient) (default 0.5) "/>
+		<param name="mnMAF" type="float" value="0.05" label="Minimum minor allele frequency (default: 0.05)"/>
+		<param name="mxMAF" type="float" value="0.95" label="Maximum minor allele frequency (default: 0.95)"/>
+		<param name="hLD" type="boolean" checked="false" label="Filter for high LD (default: false) "/>
+		<param name="mnR2" type="float" value="0.01"  label="Minimum R-square value for the LD filter (default: 0.01) "/>
+		<param name="mnBonP" type="float" value="0.01"  label="Minimum Bonferroni-corrected p-value for the LD filter (default: 0.01) "/>
+		<param name="sC" type="integer" value="1" label="Start chromosome" />
+    	<param name="eC" type="integer" value="10" label="End chromosome" />   	
+		<param name="maxAlleleVCF" type="boolean" checked="false" label="Maximum number of alleles allowed in vcf file." /> 
+    </inputs>
+	<outputs>
+		<data format="txt" name="output" label="Filter ${type.source} file (.tar.gz) (Input for BiParentalErrorCorrection Plugin) "/>
+		<data format="txt" name="snpLog" label="SNPs Removed Log file name for ${type.source} "/>
+  	</outputs>   
+  	<help>
+  
+  .. class:: infomark
+
+**Program encapsulated in Galaxy by South Green**
+
+.. class:: infomark
+
+**Tassel**
+
+-----
+  		
+==========
+ Overview
+==========
+
+**TASSEL-GBS: A High Capacity Genotyping by Sequencing Analysis Pipeline**
+
+**GBSHapMapFilter Plugin (Tassel 4.0)**
+
+Reads HapMap format genotype files (one per chromosome) and filters out SNPs with low taxon coverage (missing data at most taxa), high heterozygosity, low (and/or high) minor allele frequency, or that are not in LD with at least one neighboring SNP. Taxa with low SNP coverage (missing data at most SNPs) can also be
+removed.
+
+Options -hmp and -vcf are mutual exclusive
+	
+    -hmp				Input GBS genotype file (in HapMap format)
+	-vcf				Input GBS genotype file (in VCF format).
+	-o					Output HapMap file
+	-mnTCov				Minimum taxa coverage (default: 0.1)
+	-mnSCov			Minimum F (inbreeding coefficient) (default: 0.01)
+	-mnF		 Minimum F (inbreeding coefficient) (default: 0.5)
+	-mnMAF		Minimum minor allele frequency (default: 0.05)
+	-mxMAF		Maximum minor allele frequency (default: 0.95)
+	-hLD		Filter for high LD
+	-mnR2		Minimum R-square value for the LD filter (default: 0.01)
+	-mnBonP		Minimum Bonferroni-corrected p-value for the LD filter (default: 0.01) 
+ 	-sC					Start chromosome
+	-eC					End chromosome
+	-maxAlleleVCF		Maximum number of alleles allowed in vcf file	
+	-snpLog				SNPs Removed Log file name
+
+-----
+
+For further informations, please visite the website of TASSEL_.
+
+.. _TASSEL: http://www.maizegenetics.net/#!tassel/c17q9
+
+	</help>
+	<citations>
+    	<citation type="doi">10.1371/journal.pone.0090346</citation> 
+  	</citations>
+</tool>
+
+
+
+

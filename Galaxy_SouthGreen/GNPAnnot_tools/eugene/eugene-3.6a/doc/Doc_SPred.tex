@@ -1,0 +1,101 @@
+% Documentation of the SPred sensor
+
+\subsubsection{\texttt{Sensor.SPred}}
+
+\paragraph{Description}
+
+This plugin injects possible splice sites as predicted by the
+SplicePredictor program. 
+
+The sensor is activated by setting the value 1 for the parameter
+\texttt{Sensor.SPred.use} in the parameter file. The score for acceptor
+and donor prediction is rescaled by the parameters {\tt SPred.accP*} and
+{\tt SPred.accB*} for acceptors and {\tt SPred.donP*} and {\tt SPred.donB*} for
+donors (see below).
+
+Here is an example of SPred parameters definition.
+\begin{Verbatim}[fontsize=\small]
+SPred.accP*        0.987
+SPred.accB*        3.850
+SPred.donP*        0.929
+SPred.donB*        10.800
+Sensor.SPred.use   1
+Sensor.SPred       1      # Sensor priority
+\end{Verbatim}
+
+\paragraph{Native input files format}
+The plugin reads the prediction of
+the program from two files whose names are derived from the sequence
+name by adding the \texttt{.spliceP} and \texttt{.splicePR} suffixes
+(respectively prediction for the forward and reverse strand).
+
+The files with \texttt{.spliceP} and \texttt{.splicePR} suffix are
+obtained by running SplicePredictor which can be obtained at
+\texttt{http://bioinformatics.iastate.edu/cgi-bin/sp.cgi}.
+
+Here is an extract from \texttt{SYNO\_ARATH.fasta.spliceP}:
+\begin{Verbatim}[fontsize=\small]
+[...]
+A     <- 568 tgacttcggatgcAGaa   0.006 0.000 0.000  3 (1 1 1) IAEEEDA-E-EEEDIAD
+A     <- 571 cttcggatgcagaAGgg   0.001 0.000 0.000  3 (1 1 1) AEEEDAE-E-EEDIADI
+D -->    573           aggGTatga 0.176 0.009 0.000  6 (2 3 1) EEEDAEE-E-EDIADII
+A     <- 582 gaagggtatgatcAGgt   0.003 0.000 0.000  3 (1 1 1) EEDAEEE-E-DIADIII
+D -----> 583           cagGTaatt 0.964 0.256 0.788 15 (5 5 5) EDAEEEE-D-IAEEEED
+A     <- 658 tatgataatccttAGac   0.001 0.000 0.000  3 (1 1 1) DAEEEED-I-AEEEEDI
+A   <--- 698 ttgggtggataatAGgt   0.273 0.049 0.266 10 (3 3 4) AEEEEDI-A-EEEEDII
+D ->     699           tagGTagaa 0.006 0.000 0.000  3 (1 1 1) AEEEDIA-E-EEEDIII
+A     <- 702 gtggataataggtAGaa   0.001 0.000 0.000  3 (1 1 1) IIADIAD-I-IIIIIAD
+D ->     709           ctgGTtcga 0.005 0.000 0.000  3 (1 1 1) IADIADI-I-IIIIAED
+A     <- 744 cagtatctgtacaAGgt   0.007 0.000 0.000  3 (1 1 1) ADIADII-I-IIIAEDI
+D ->     745           aagGTacta 0.042 0.000 0.000  3 (1 1 1) DIADIII-I-IIAEDIA
+A     <- 756 aaggtactattgtAGct   0.007 0.000 0.000  3 (1 1 1) IADIIII-I-IAEDIIA
+A     <- 760 tactattgtagctAGcc   0.002 0.000 0.000  3 (1 1 1) ADIIIII-I-AEDIIAE
+A     <- 764 attgtagctagccAGgg   0.025 0.000 0.023  4 (1 1 2) DIIIIII-A-EDIIAEE
+D ->     792           aagGTggag 0.057 0.001 0.000  3 (1 1 1) IIIIIIA-E-DIIAEEE
+[...]
+\end{Verbatim}
+
+\paragraph{Gff3 input file format}
+
+The gff3 input mode is activated by setting the value \texttt{GFF3}
+for the parameter \texttt{SPred.format} in the parameter file.  The
+plugin reads the predictions of the program from one file which name
+is derived from the sequence name by adding the \texttt{.spliceP.gff3}
+extension.
+
+Accepted features (third column):\\
+\begin{itemize}
+\item  SO:0000164 or splice\_acceptor\_site 
+\item  SO:0000163 or splice\_donor\_site 
+\end{itemize}
+If the feature used isn't one of those, the line will be rejected. The
+expected coordinates must match the AG/GT nucleotides.
+
+Here an extract of \texttt{seq14ac002535g4g5.tfa.spliceP.gff3}.
+\begin{Verbatim}[fontsize=\tiny]
+seq14   SPred   SO:0000164      922     923     0.002   +       .       ID=SO:0000164:seq14.16;
+seq14   SPred   SO:0000163      1098    1099    0.137   +       .       ID=SO:0000163:seq14.8;
+\end{Verbatim}
+
+\paragraph{Filtering input information}
+
+No filtering.
+
+\paragraph{Integration of information}
+
+One of the SplicePredictor scores $s$ for a given position is
+rescaled using the $\log(\alpha.s^\beta)$ function. The four parameters
+\texttt{SPred.accP*}, \texttt{SPred.accB*}, \texttt{SPred.donP*},
+\texttt{SPred.donB*} indicates the values of these $\alpha$ and $\beta$
+parameters for acceptor sites and donor sites respectively.  These
+parameters have been estimated on existing data.
+
+\paragraph{Post analyse}
+
+No post analyse.
+
+\paragraph{Graph}
+
+Predicted splice sites are visible on the intronic tracks as green
+(donor) and magenta (acceptor) vertical lines whose length indicates
+the site score.

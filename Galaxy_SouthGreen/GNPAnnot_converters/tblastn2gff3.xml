@@ -1,0 +1,56 @@
+<tool id="tblastn2gff3" name="GNPAnnot Converter : tBlastn" version="1.0.0">
+    <description>Convert output in GFF3</description>
+    <command interpreter="perl">./tblastn2gff3.pl $input $__tool_data_path__ $output_gff3 $output_exonerate</command> 
+    <inputs>
+		<param format="txt" name="input" type="data" label="tBlastn result"/> 
+    </inputs>
+    <outputs>
+         <data format="gff3" name="output_gff3" label="TBLASTN (GFF3)" />
+         <data format="txt" name="output_exonerate" label="TBLASTN (output for exonerate)" />
+    </outputs>
+    <help>
+  
+.. class:: infomark
+
+**Program encapsulated and developed in Galaxy by Southgreen**
+
+.. class:: infomark
+
+**Part of the GNPAnnot Converters package**
+
+-----
+
+==============
+Author: 
+==============
+
+Gaetan Droc
+
+-----
+
+==============
+What it does: 
+==============
+
+Convert result in GFF3.
+
+Create specific input to launch exonerate.
+
+-----
+
+==============
+Output format:
+==============
+
+GFF3
+
+Tab-delimited file
+
+-----
+
+.. class:: warningmark
+
+**No support website**
+
+    </help>
+</tool>

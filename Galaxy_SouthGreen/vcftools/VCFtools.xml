@@ -1,0 +1,84 @@
+<tool id="vcftools" name="VCFtools" version="0.1.12b">
+	<description>Utilities for the variant call format (VCF) and binary variant call format (BCF)</description>
+	<command>
+		source $__tool_directory__/module_tassel4.sh;
+		vcftools
+                #if str($basic) == "gzvcf":
+					--gzvcf
+                #elif str($basic) == "bcf":
+					--bcf
+                #else: 
+					--vcf
+                #end if
+                $input
+                #if (str($maf) and float(str($maf)) > 0):
+                	--maf $maf
+                #end if
+                #if (str($minDP) and int(str($minDP)) > 0):
+                	--minDP $minDP
+                #end if 
+                #if (str($max_missing) and float(str($max_missing)) > 0):
+                	--max-missing $max_missing
+                #end if 
+                #if str($output_format) == "vcf":
+					--recode
+                #elif str($output_format) == "bcf":
+					--recode
+                #end if
+                -c
+                --stdout 
+                > out.recode.vcf 2>/dev/null;
+                #if str($output_format) == "bcf":
+                 	 cat out.recode.vcf | gzip -c > out.recode.vcf.gz 2>/dev/null
+               	#end if
+    </command>
+	<inputs>
+		<param name="input" type="data" label="Input vcf file" format="vcf" />
+		<param name="basic" type="select" label="Basic Options" value="vcf">
+			<option value="vcf">Decompressed vcf file (default)</option>
+			<option value="gzvcf">Compressed (gzipped) vcf file</option>
+			<option value="bcf">Compressed (bgzf) bcf file</option>
+		</param>
+    	<param name="minDP" optional="true"  type="integer" value="-1" label="Minimum minor allele count (ignored when -1) (--minDP)." />
+    	<param name="maf" optional="true"  type="float" value="-1" label="Minor Allele Frequency (ignored when -1)(--maf)" />
+    	<param name="max_missing" optional="true"  type="float" value="-1" label="Exclude sites on the basis of the proportion of missing data (ignored when -1) (defined to be between 0 and 1, where 0 allows sites that are completely missing and 1 indicates no missing data allowed ( --max-missing)" />
+		<param name="output_format" type="select" label="Output VCF format" value="vcf">
+			<option value="vcf">Decompressed vcf file (default)</option> 
+			<option value="bcf">Compressed (bgzf) bcf file</option>
+		</param> 
+  	</inputs>
+	<outputs>
+    	<data format="vcf" name="output" from_work_dir="out.recode.vcf"> 
+   			<change_format>
+                <when input="output_format" value="bcf" format="vcf" from_work_dir="out.recode.vcf.gz" />
+   			</change_format>
+   		</data>
+  	</outputs> 
+  	<help>
+  .. class:: infomark
+
+**Program encapsulated in Galaxy by South Green**
+
+.. class:: infomark 
+
+-----
+
+==========
+ Overview
+==========
+
+**VCF Filter**
+ 
+-----
+
+For further informations, please visite the website of VCFtools_
+
+.. _VCFtools: http://vcftools.sourceforge.net/
+
+
+
+	</help>
+	<citations>
+    	<citation type="doi">10.1093/bioinformatics/btr330</citation> 
+  	</citations>
+</tool>

@@ -1,0 +1,41 @@
+<tool id="uclust1" name="UClust">
+	<description>, a seed-based clustering method</description>
+	  <command>
+        source $__tool_directory__/module_uclust.sh ;
+        $__tool_directory__/uclust.sh $input $__tool_directory__ $output_stats $output_clusters --id $similarity</command>
+	<inputs>
+		<param format="txt" name="input" type="data" label="Source file" help="Fasta sequence file"/>
+		<param type="text" name="similarity" help="Ratio between 0 and 1" value="0.50" label="Minimum similarity ratio" />	
+	</inputs>
+	<outputs>
+		<data format="txt" name="output_stats" />
+		<data format="txt" name="output_clusters" />
+	</outputs>
+	<help>
+
+.. class:: infomark
+
+**Program encapsulated in Galaxy by South Green**
+
+.. class:: infomark
+
+**UClustClust version 3.0.617, 2010**
+	
+==========
+ Overview
+==========	
+
+UBLAST and USEARCH are algorithms designed to enable high-throughput, sensitive search of very large sequence databases. UBLAST searches for local alignments, USEARCH for global alignments. UBLAST and USEARCH are orders of magnitude faster than BLAST for some applications. UCLUST is a clustering algorithm that uses USEARCH as a subroutine to achieve exceptional high speed and sensitivity. The algorithms are described in this paper:
+
+-----
+
+For further informations, please visite the UClust_ website.
+
+.. _UClust: http://www.drive5.com/usearch/
+
+	</help>
+	<citations>
+        <citation type="doi">10.1093/bioinformatics/btq461</citation> 
+    </citations>
+
+</tool>

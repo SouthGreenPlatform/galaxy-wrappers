@@ -1,0 +1,131 @@
+<tool id="fastqtotagcount4" name="FastqToTagCount4" version="4.0">
+	<description>Derives a tagCount list for each FASTQ file </description>
+	<command>
+		source $__tool_directory__/module_tassel4.sh;
+		$__tool_directory__/FastqToTagCount4.sh $input $keyfile $enzym $max_number_of_good_barcoded $min_tag_number $cnt_file
+	</command>
+	<inputs>
+    	<param name="input" type="data" format="fastqsanger" label="FASTQ file (-i option)"  />
+		<param format="txt" name="keyfile" type="data" label="Key file listing barcodes for each sample and plate layout. (-k option)"/>
+		<param name="enzym" type="select" label="Enzyme used to create the GBS library (-e option)"> 
+			<options from_file="enzym.loc">
+       	 		<column name="value" index="0"/>
+			</options>
+		</param>
+		<param name="max_number_of_good_barcoded" value="500000000" type="integer" label="Maximum number of good, barcoded reads per lane. Default: 500000000. (-s option)"/>
+		<param name="min_tag_number" type="integer" value="5" label="Minimum number of times a tag must be present to be output. Default 5 (-c option)"/> 
+  	</inputs>
+	<outputs>
+		<data format="txt" name="cnt_file" label="Tassel4 : Master TagCount files (.cnt binary file) (Input for TagCountToFastq Plugin) "/> 
+  	</outputs>  
+  	<help>
+  
+  .. class:: infomark
+
+**Program encapsulated in Galaxy by South Green**
+
+.. class:: infomark
+
+**Tassel**
+
+-----
+
+==========
+ Overview
+==========
+
+**TASSEL-GBS: A High Capacity Genotyping by Sequencing Analysis Pipeline**
+
+**FastqToTagCount Plugin (Tassel 4.0)**
+
+Derives a tagCount list for each FASTQ file in the input directory (and all subdirectories thereof). Keeps only
+good reads having a barcode and a cut site and no N in the useful part of the sequence. Trims off the barcodes
+and truncates sequences that (1) have a second cut site, or (2) read into the common adapter.
+
+ .. class:: warningmark
+
+**Accessing your input files**
+
+Please ensure that your data is already accessible in the cluster CC2 and has been made available to galaxy. Contact admin.bioinfo@cirad.fr
+
+Also note that your files will require a precise name detailed further in this documentation.
+
+**Please ensure that the extentions of your libraries end  with "_fastq.gz"**
+
+The following extentions **will NOT be recognized by TASSEL**::
+
+	.fastq
+	.fastq.gz
+
+
+**The commonly used parameters with default value setting**::
+
+    -i    Input directory containing FASTQ text (_fastq.txt) or gzipped FASTQ (_fastq.gz) text files.
+    -k    Key file listing barcodes for each sample and plate layout (-k option)
+    -e    Enzyme used to create the GBS library
+    -s    Maximum number of good, barcoded reads per lane. Default: 500000000
+    -c    Minimum number of times a tag must be present to be output. Default: 5
+    -o    Master TagCount files (Input for TagCountToFastq Plugin)
+
+After reading the key file the FastqToTagCountsPlugin then recursively searches the specified input directory (-i
+option) and all of its subdirectories for FASTQ files matching one of the flowcell/lane combinations in the key
+file and with one of the following acceptable file naming conventions::
+
+    FLOWCELL_LANE_fastq.txt            (example: 42A87AAXX_2_fastq.txt)
+    FLOWCELL_LANE_fastq.txt.gz         (example: 42A87AAXX_2_fastq.txt.gz)
+    FLOWCELL_LANE_sequence.txt         (example: 42A87AAXX_2_sequence.txt)
+    FLOWCELL_LANE_sequence.txt.gz      (example: 42A87AAXX_2_sequence.txt.gz)
+    FLOWCELL_s_LANE_fastq.txt          (example: 42A87AAXX_s_2_fastq.txt)
+    FLOWCELL_s_LANE_fastq.txt.gz       (example: 42A87AAXX_s_2_fastq.txt.gz)
+    code_FLOWCELL_s_LANE_fastq.txt     (example: 10225395_42A87AAXX_s_2_fastq.txt)
+    code_FLOWCELL_s_LANE_fastq.txt.gz  (example: 10225395_42A87AAXX_s_2_fastq.txt.gz)
+
+The restriction enzyme used to create the GBS library is indicated via mandatory option -e. Currently, our
+pipeline only accepts the enzymes (or pairs of enzymes) in the table below combined with the indicated common
+adapter sequence. Also provided in the table are the initial cut site remnant(s) expected to occur in each read
+immediately after the barcode, and the full cut sites that are diagnostic of either incomplete restriction digestion or
+chimera formation. Reads that contain either a full cut site or the beginning of the common adapter sequence are
+truncated appropriately. The first few bases of the common adapter (not shown in the table) are defined by the
+restriction enzyme sticky end. The Y-adapter employed by Poland et al. (2012) as the common (nonbarcoded)
+adapter ensures unidirectional cloning of doubly digested restriction fragments. Pairs of restriction
+enzymes are specified in the -e option separated by a hyphen (for example -e PstI-MspI).
+
+===================== ==================================== ================================ ====================
+Enzyme or Enzyme Pair Initial Cut Site Remnant(s)          Full Cut Site(s)                 Common Adapter 
+--------------------- ------------------------------------ -------------------------------- --------------------
+                ApeKI                         CAGC or CTGC                   GCAGC or GCTGC  Elshire et al. 2011
+                 ApoI                       AATTC or AATTT AAATTT, AAATTC, GAATTC or GAATTT  Elshire et al. 2011
+                BamHI                                GATCC                           GGATTC  Elshire et al. 2011
+              EcoT22I                                TGCAT                           ATGCAT  Elshire et al. 2011
+               HinP1I                                  CGC                             GCGC  Elshire et al. 2011
+                HpaII                                  CGG                             CCGG  Elshire et al. 2011
+                 MseI                                  TAA                             TTAA  Elshire et al. 2011
+                 MspI                                  CCG                             CCGG  Elshire et al. 2011
+                 NdeI                                 TATG                           CATATG  Elshire et al. 2011
+                 PasI                       CAGGG or CTGGG               CCCAGGG or CCCTGGG  Elshire et al. 2011
+                 PstI                                TGCAG                           CTGCAG  Elshire et al. 2011
+               Sau3AI                                 GATC                             GATC  Elshire et al. 2011
+                 SbfI                               TGCAGG                         CCTGCAGG  Elshire et al. 2011
+           AsiSI-MspI                                ATCGC                 CCGG or GCGATCGC  Poland et al. 2012
+          BssHII-MspI                                CGCGC                   CCGG or GCGCGC  Poland et al. 2012
+            FseI-MspI                               CCGGCC                 CCGG or GGCCGGCC  Poland et al. 2012
+          PaeR7I-HhaI                                TCGAG                   GCGC or CTCGAG  Poland et al. 2012
+           PstI-ApeKI                                TGCAG          GCAGC, GCTGC, or CTGCAG  Poland et al. 2012
+         PstI-EcoT22I                       TGCAG or TGCAT                 CTGCAG or ATGCAT  Elshire et al. 2011
+            PstI-MspI                                TGCAG                   CCGG or CTGCAG  Poland et al. 2012
+            PstI-TaqI                                TGCAG                   TGCA or CTGCAG  Poland et al. 2012
+            SalI-MspI                                TCGAC                   CCGG or GTCGAC  Poland et al. 2012
+            SbfI-MspI                               TGCAGG                 CCGG or CCTGCAGG  Poland et al. 2012
+===================== ==================================== ================================ ====================
+
+-----
+
+For further informations, please visite the website of TASSEL_.
+
+.. _TASSEL: http://www.maizegenetics.net/#!tassel/c17q9
+
+	</help>
+	<citations>
+    	<citation type="doi">10.1371/journal.pone.0090346</citation> 
+  	</citations>
+</tool>

@@ -1,0 +1,55 @@
+% Documentation of the MarkovConst sensor
+
+\subsubsection{\texttt{Sensor.MarkovConst}}
+
+\paragraph{Description}
+
+A simulated content sensor that gives constant probabilities (as
+indicated in the \texttt{MarkovConst\-.Coding*},
+\texttt{MarkovConst.Intron*}, \texttt{MarkovConst.UTR5*},
+\texttt{MarkovConst.UTR3*} and \texttt{Markov\-Const.Inter*} parameters).
+to all positions for each region type. As the MarkovIMM sensor, the
+plugin is controlled by two further parameters:
+\texttt{MarkovConst.minGC} and \texttt{MarkovConst.maxGC} which
+indicate the GC scope of the contents sensor. If the GC\% of the
+sequence is out of the scope, the plugin will give an equal null
+loglikelihood to all types of regions.
+
+Used for testing purposes and for simulating the exponential length
+distributions of HMM.
+
+Here is an example of MarkovConst parameters definition.
+\begin{Verbatim}[fontsize=\small]
+MarkovConst.Coding*     1.0
+MarkovConst.Intron*     1.0
+MarkovConst.UTR5*       0.999
+MarkovConst.UTR3*       0.999
+MarkovConst.Inter*      1.0
+MarkovConst.minGC[0]    0
+MarkovConst.maxGC[0]    100
+Sensor.MarkovConst.use  1   # Use MarkovConst sensor
+Sensor.MarkovConst      1      # Sensor priority
+\end{Verbatim}
+
+\paragraph{Input files format}
+
+No input files  needed.
+
+\paragraph{Integration of information}
+
+If the GC\% of the sequence handled is between
+\texttt{MarkovConst.minGC} and \texttt{MarkovConst.maxGC} then in
+every position, in all possible states, the prediction is penalized by
+the logarithm of the corresponding parameter:
+\texttt{MarkovConst.Coding*}, \texttt{MarkovConst.Intron*},
+\texttt{MarkovConst.UTR5*}, \texttt{MarkovConst.UTR3*} and
+\texttt{MarkovConst.Inter*}.
+
+\paragraph{Post analyse}
+
+No post analyse.
+
+\paragraph{Graph}
+
+No plotting.
+

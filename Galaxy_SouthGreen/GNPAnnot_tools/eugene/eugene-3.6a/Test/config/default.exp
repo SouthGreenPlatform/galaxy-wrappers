@@ -1,0 +1,40 @@
+# ------------------------------------------------------------------
+# Copyright (C) 2004 INRA <eugene@ossau.toulouse.inra.fr>
+#
+# This program is open source; you can redistribute it and/or modify
+# it under the terms of the Artistic License (see LICENSE file).
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+#
+# You should have received a copy of Artistic License along with
+# this program; if not, please see http://www.opensource.org
+#
+# $Id: default.exp,v 1.4 2005-03-17 13:50:50 cros Exp $
+# ------------------------------------------------------------------
+# File:     default.exp
+# Contents: First file executed by runtest
+# ------------------------------------------------------------------
+
+############################# Environment variables ##########################
+# Set for execution in the root directory
+set action "Test"
+set timeout 1000 ;# DejaGnu variable, time out if no response for spawn
+source Test/config/TestVar.tcl
+source Test/config/TestProc.tcl
+exec cp -f cfg/eugene.par ${EUGENE_TEST_PAR}
+##############################################################################
+
+# Init parameters values
+InitParameterFile ${EUGENE_TEST_PAR} $AllSensorsList $EUGENE_DIR
+
+# Remove all EuGene trace files 
+# but not DejaGnu trace files that are yet the current ones
+foreach f [exec ls ${TRACE_DIR}] {
+    if {![string match *.sum $f] && \
+	![string match *.log $f] && \
+        ![string match CVS $f]} {
+	exec rm ${TRACE_DIR}/$f
+    }
+}

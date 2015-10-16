@@ -1,0 +1,76 @@
+% Documentation of the AnnotaStruct sensor
+
+\subsubsection{\texttt{Sensor.NcRNA}}
+\label{ncrna}
+\paragraph{Description}
+
+The plugin allows to take into account information from non protein coding RNA. 
+For each reading ncRNA region, it rewards the ncRNA tracks, and the ncRNA transcription start and stop signals at the region extemities.
+
+To activate the sensor, put the number of NcRNA instances you want to create to the parameter
+\texttt{Sensor.NcRNA.use} in the parameter file.
+
+Here is an example of NcRNA parameters definition:
+\begin{Verbatim}[fontsize=\small]
+NcRNA.FileExtension[0]  ncrna
+NcRNA.NpcRna*[0]        1 
+NcRNA.TStartNpc*[0]     1
+NcRNA.TStopNpc*[0]      1	
+NcRNA.format[0]         GFF3 # Mandatory
+
+Sensor.NcRNA.use        1
+Sensor.NcRNA            1
+\end{Verbatim}
+
+
+\paragraph{Gff3 input files format}
+
+The gff3 input mode is activated by setting the value \texttt{GFF3}
+for the parameter \texttt{NcRNA.format} in the parameter file.
+Note that for the moment, it is mandatory because gff3 is the only reading input format.
+The plugin reads its information from the file whose name is the concatenation
+of the sequence file name, the \texttt{NcRNA.FileExtension} parameter 
+and the \texttt{.gff3} extension.
+The accepted features (third column) are:
+\begin{itemize}
+ \item SO:0000655 or ncRNA
+ \item all the terms derived from SO:0000655. For instance, SO:0000252 or rRNA, SO:0000253 or tRNA. 
+For details, see  \texttt{http://www.sequenceontology.org/wiki/index.php/Category:} \texttt{SO:0000655\_!\_ncRNA}.
+\end{itemize}
+
+If the feature used isn't one of those, the line will be rejected.
+
+Here an extract of \texttt{seq14ac002535g4g5.tfa.ncrna.gff3}:
+\begin{Verbatim}[fontsize=\tiny]
+seq14	tRNAscan-SE	tRNA	4809	6126	.	+	.	ID=trna:seq14.5;
+seq14	tRNAscan-SE	tRNA	7000	7100	.	+	.	ID=trna:seq14.5;
+\end{Verbatim}
+
+\paragraph{Filtering input information}
+
+No filtering.
+
+\paragraph{Integration of information}
+
+At each position of a ncRNA region, the ncRNA content edge is reweighted according to the 
+\texttt{NcRNA.NpcRna*} parameter value. ncRNA transcription start and stop signals 
+are generated at each respective extremity according to the \texttt{NcRNA.TStartNpc*} and \texttt{NcRNA.TStopNpc*} parameter values.
+
+
+\paragraph{Post analyse}
+
+No post analyse.
+
+\paragraph{Graph}
+
+No plotting.
+
+
+
+
+
+
+
+
+
+

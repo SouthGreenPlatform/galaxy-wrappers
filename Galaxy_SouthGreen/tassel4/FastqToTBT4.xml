@@ -1,0 +1,74 @@
+<tool id="fastqtotbt4" name="FastqToTBT4" version="4.0">
+	<description>Generates a TagsByTaxa file for each FASTQ file</description>
+	<command>
+		source $__tool_directory__/module_tassel4.sh;
+		$__tool_directory__/FastqToTBT4.sh $input $keyfile $enzym $topm $min_taxa_number $max_number_of_tags $merge_tag_count $output $logfile
+	</command>
+	<inputs>
+    	<param name="input" type="data" format="fastq" label="FASTQ file" />
+		<param format="txt" name="keyfile" type="data" label="Key file listing barcodes for each sample and plate layout."/>
+		<param name="enzym" type="select" label="Enzyme used to create the GBS library"> 
+			<options from_file="enzym.loc">
+       	 		<column name="value" index="0"/>
+			</options>
+		</param>	
+		<param name="topm" type="data" label="TagsOnPhysicalMap (.topm) file containing the tags of interest."/> 
+		<param name="min_taxa_number" type="integer" value="5" label="Minimum taxa count within a FASTQ file for a tag to be output."/> 
+  		<param name="max_number_of_tags" value="200000000" type="integer" label="Maximum number of tags the TBT can hold while merging  (default:200000000). Reduce this only if you run out of memory. (-s option)"/>	
+		<param name="merge_tag_count" type="boolean" checked="false" label="Merges tag counts of taxa with identical short names. Not performed by default (-x option)" /> 
+  
+  	</inputs>
+	<outputs>
+		<data format="txt" name="output" label="Tassel4 Merged tagsByTaxa file (.tbt.byte)"/>
+		<data format="txt" name="logfile" label="Tassel4 FastqToTBT Logfile"/>
+  	</outputs>   
+  	<help>
+  
+  .. class:: infomark
+
+**Program encapsulated in Galaxy by South Green**
+
+.. class:: infomark
+
+**Tassel**
+
+-----
+
+==========
+ Overview
+==========
+
+**TASSEL-GBS: A High Capacity Genotyping by Sequencing Analysis Pipeline**
+
+**FastqToTBT Plugin (Tassel 4.0)**
+
+Generates a TagsByTaxa file for each FASTQ file in the input directory (or in subfolders thereof). One
+TagsByTaxa file is produced per FASTQ file. Requires a master list of tags of interest, which may come 
+from a tagsOnPhysicalMap (.topm) file.
+Merges all .tbt.byte files
+
+
+**The commonly used parameters with default value setting (FastqToTBT Plugin option)**::
+
+    -i    Input directory containing .fastq files
+    -k    Barcode key file
+    -e 	  Enzyme used to create the GBS library, if it differs from the one listed in the key file.
+    -o    Output file name
+    -c    Minimum taxa count within a fastq file for a tag to be output (default 1)
+	-m    TagsOnPhysicalMap (.topm) file containing the tags of interest.
+          
+**The commonly used parameters with default value setting (MergeTagsByTaxaFiles Plugin option)**::
+    -s    Maximum number of tags the TBT can hold while merging (default: 200000000)
+    -x    Merge tag counts of taxa with identical names (default: false)
+
+-----
+
+For further informations, please visite the website of TASSEL_.
+
+.. _TASSEL: http://www.maizegenetics.net/#!tassel/c17q9
+
+	</help>
+	<citations>
+    	<citation type="doi">10.1371/journal.pone.0090346</citation> 
+  	</citations>
+</tool>

@@ -1,0 +1,134 @@
+The WAM sensors are designed to predict and score potential functional
+sites like splices or start sites in a genomic sequence. The
+SplicePlantWAM sensor was developped in order to offer an alternative
+to non free softwares (NetGene2 and SplicePredictor).
+
+The general purpose is to attribute a score to a potential site (GT
+for splice donor and AG for splice acceptor, or ATG for start site)
+depending on its context. The more the context is similar to a typical
+fonctional site, the more the score is expected to be high.
+
+For this, we need to detect the potential site (simple seq read) and to
+evaluate the sequence around it, by comparing it with models built with
+expertised data.
+A Weight Array Model is an inhomogenous markovian model.  At each site
+position two markovian probabilities distributions are assigned, one
+for the positive signal and one for negative signal. The ratio of the
+log of the two probs is computed and cumulated for each position of
+the site, resulting in a general score for the site.
+
+-----------------------------------------------------
+HOW TO BUILD A WAM SENSOR?
+
+Example of a Mammal Splice Sensor development:
+
+1 BUILDING THE MODELS
+
+The score of a site needs a log-likelihood ratio using two models, a
+true positive and a false positive.  A model is built from a set of
+sequences. 
+
+1.1 Get multifasta alignment
+
+1.1.1 True positive: 
+
+From the SpliceDB file SpliceDB.Mamm.Canon.ESTsupp+corr, all donor
+sites are collected in a multifasta format with a simple command:
+
+awk '{print ">"$1;print $11}' SpliceDB.Mamm.Canon.ESTsupp+corr > SpliceDB.mamm.don.fasta
+
+and $13 instead of $11 for acceptor sites.
+
+1.1.2 False positive:
+
+From the EID (Exons-Introns Database), extract all exons and introns
+of mammals species in exons and introns files:
+
+Remove all non-standard splice sites:
+cat gb115.exp_mrna.dEID |  ./filter_splice.pl splice_motif.gtag > gb115.exp_mrna.gtag.dEID
+and same command with hEID and pEID instead of dEID
+
+EID mammal species can be listed in gb132.ORG by:
+grep Mammalia gb132.ORG | awk '/sp/{print $3" "$4}' | sort | uniq | perl -n -e 'if($_ =~ /\;sp=(\w+\s\w+)\)/){print "$1\n"}' | uniq > species.mammal.list
+
+Generate a mammals subsection:
+./extract_species.pl gb115.exp_mrna.gtag mammals species.mammal.list
+
+Remove seuqneces with non-complete introns:
+./filter_unknown-introns.pl gb115.exp_mrna.gtag.mammals.dEID >  gb115.exp_mrna.gtag.mammals.knownintrons.dEID
+
+extract exons and introns:
+./get_exons.pl gb115.exp_mrna.gtag.mammals.knownintrons
+./get_introns.pl gb115.exp_mrna.gtag.mammals.knownintrons
+
+Extract false positives donor and acceptor sites from these regions (GT and AG di-nt
+with a context of 20 bp) with EMBOSS dreg:
+dreg -sequence  gb115.exp_mrna.gtag.mammals.knownintrons.exons_EID -pattern ....................GT.................... -outfile tmp
+
+parse to obtain false positives in multifasta format:
+awk '(length($3)==42){print ">"$1;print $3}' tmp > donor.fp.mammals.exons.fasta
+
+Same manip with introns and AG sites:
+~/EMBOSS/EMBOSS-1.9.1/emboss/dreg -sequence gb115.exp_mrna.gtag.mammals.knownintrons.exons_EID -pattern ....................AG.................... -outfile tmp
+awk '(length($3)==42){print ">"$1;print $3}' tmp > acceptor.fp.mammals.exons.fasta
+~/EMBOSS/EMBOSS-1.9.1/emboss/dreg -sequence gb115.exp_mrna.gtag.mammals.knownintrons.introns_EID -pattern ....................GT.................... -outfile tmp
+awk '(length($3)==42){print ">"$1;print $3}' tmp > donor.fp.mammals.introns.fasta
+~/EMBOSS/EMBOSS-1.9.1/emboss/dreg -sequence gb115.exp_mrna.gtag.mammals.knownintrons.introns_EID -pattern ....................AG.................... -outfile tmp
+awk '(length($3)==42){print ">"$1;print $3}' tmp > acceptor.fp.mammals.introns.fasta
+
+Concatenation of all False Positives:
+cat donor.fp.mammals.exons.fasta donor.fp.mammals.introns.fasta > donor.fp.mammals.fasta
+cat acceptor.fp.mammals.exons.fasta acceptor.fp.mammals.introns.fasta > acceptor.fp.mammals.fasta
+
+1.2 Build binary models from multifasta
+
+in eugene/src/SensorPlugins/0_SensorTk/GetData, use WAMbuilder.cc:
+WAMbuild 1 22 31 SpliceDB.mamm.don.fasta WAM.MAM.DON.L22.TP.  >  WAM.mam.don.l22.countinfo.txt
+WAMbuild 1 22 31 SpliceDB.mamm.acc.fasta WAM.MAM.ACC.L22.TP. > WAM.mam.acc.l22.countinfo.txt
+WAMbuild 1 22 11 /Annotation/ExternalData/EID/donor.fp.mammals.fasta WAM.MAM.DON.L22.FP. > WAM.mam.don.l22.fp.countinfo.txt
+WAMbuild 1 22 11 /Annotation/ExternalData/EID/acceptor.fp.mammals.fasta WAM.MAM.ACC.L22.FP. > WAM.mam.acc.l22.fp.countinfo.txt
+
+
+-------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------
+
+Production of a splice site predictor, NG2-SP-GS independant.
+
+It's a WAM (Weight Array Model) based predictor.
+
+1rst, build signal model (true splices site modeling):
+with splice_sites_extract.pl, extract splice sites (consensus GT-AG or GC-AG or AT-AC) + N bp on each side.
+For donor site, the context [-3;+6] is taken (3 nt before GT, 4 after) see Burge thesis) and for the acceptor site, the [-4;+3] interval (2 nt before AG and 3 after).
+Extraction from expertised data set (araclean, araset, rice sequence from Genoplante?, other?  ---- search Plant SS DB?).
+
+2d, build a false positive model:
+extract with EMBOSS command dreg all the GT and AG (and GC-AG and AT-AC?) + the N bp context in exons and introns (and UTR, and IG ---- possible?) of the data sets.
+
+The results of the models productions is a set of binary matrix files (one per position, ie. 2+N files, per model!).
+
+3d, development of a WAM sensor, to score at ea
+~/EMBOSS/EMBOSS-1.9.1/emboss/dreg -sequence araclean.exons.fasta -pattern ..GT.. -outfile tmpdon
+ awk '/ [0-9]/{print ">"$1;print $3}' tmpdon > araclean.don.fp.exons
+nettoyage "manuel" pour enlever les sites non consensus; les reperer avec
+grep -n -E ..GC.. araset.don.fasta
+
+concatenation de tous les sites et sites fauxpositifs:
+e.g. cat araclean.acc.fp.exons araclean.acc.fp.introns araset.acc.fp.exons araset.acc.fp.introns > ARA.ACC6.FP.fasta
+
+construction des matrices:
+(dans repertoire eugene/src/PLUGINS/WAMsensor)
+ WAMbuild ARA.ACC6.fasta
+non non, sans argument, WAMbuild tout court!
+(modifier le WAMbuilder.cc, et recompiler a chq fois... pas beau mais pour l'instant c'est comme ca!)
+
+MODELS construction from multi-fasta-files:
+see WAMbuilder.cc and countings results in txt format in WAM.countinfo.txt
+
+warning: remember that pseudocounts have not the same influence ouence on the probs computing for the True vs False Positives. For the GT/AG column (theoricaly with the same score), FP are privilegiated.
+
+Same operation for building WAM.START;
+TP model from araclean+araset, FP model from araclean+araset exons+introns
+
+(number of FP are very big, so I take only 1000 for each category (araclean/set - exons/introns),
+total 4000 sites (head -500, tail -500 on each file)
+sorry, only 2000 sites and not 4000 (lines including multifasta headers)

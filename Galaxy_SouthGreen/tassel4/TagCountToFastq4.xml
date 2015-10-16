@@ -1,0 +1,53 @@
+<tool id="tagcounttofastq4" name="TagCountToFastq4" version="4.0">
+	<description>Converts a master tagCount file containing all the tags of interest for your species/experiment from binary (.cnt) format into a FASTQ format file (.fq) that can then be used as input to one of the aligners BWA or bowtie2</description>
+	<command>
+		source $__tool_directory__/module_tassel4.sh;
+		$__tool_directory__/TagCountToFastq4.sh $input $min_tag_number $fastq </command>
+	<inputs>
+    	<param name="input" type="data" format="txt" label="Input binary tag count (.cnt) file (-i option)" /> 
+		<param name="min_tag_number" type="integer" value="5" label="Minimum number of times a tag must be present to be output. Default 5 (-c option)" /> 
+  	</inputs>
+	<outputs>
+    	<data name="fastq" format="fastqsanger" label="Tassel4 master tag list in FASTQ format (.fq) to use as input for BWA or bowtie2" /> 
+  	</outputs>   
+  	<help>
+  
+  .. class:: infomark
+
+**Program encapsulated in Galaxy by South Green**
+
+.. class:: infomark
+
+**Tassel**
+
+-----
+
+==========
+ Overview
+==========
+
+**TASSEL-GBS: A High Capacity Genotyping by Sequencing Analysis Pipeline**
+
+**TagCountToFastq Plugin (Tassel 4.0)**
+
+Converts a master tagCount file containing all the tags of interest for your species/experiment (i.e., all of the tags
+with a minimum count greater than the -c parameter used in the MergeMultipleTagCountPlugin) from binary
+(.cnt) format into a FASTQ format file (.fq) that can then be used as input to one of the aligners BWA or bowtie2. 
+
+**The commonly used parameters with default value setting**::
+
+    -i    Input binary tag count (.cnt) file
+    -c    Minimum number of times a tag must be present to be output. Default: 5
+    -o    Output FASTQ file to use as input for BWA or bowtie2
+
+-----
+
+For further informations, please visite the website of TASSEL_.
+
+.. _TASSEL: http://www.maizegenetics.net/#!tassel/c17q9
+
+	</help>
+	<citations>
+    	<citation type="doi">10.1371/journal.pone.0090346</citation> 
+  	</citations>
+</tool>

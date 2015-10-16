@@ -1,0 +1,27 @@
+window_sizes 1565 1146 361 1198 1055 0
+diagrams
+  active  classdiagram_ref 129154 // classDiagram_optimization
+    956 856 115 4 0 0
+  classdiagram_ref 129282 // classDiagram_hitSensors
+    764 684 100 4 0 0
+  classdiagram_ref 129410 // classDiagram_gff3
+    764 684 100 4 300 0
+  sequencediagram_ref 130562 // seqDiagram_eugene
+    764 684 100 15 44 1
+  sequencediagram_ref 131714 // seqDiagram_blastx_gff3
+    764 684 100 15 0 0
+  classdiagram_ref 132866 // classDiagram_sensors
+    720 678 100 4 0 0
+end
+show_stereotypes
+selected classdiagram_ref 128002 // classDiagram_eugene
+open
+  class_ref 128258 // DATA
+  class_ref 132098 // Feature
+  class_ref 143362 // State
+  deploymentview_ref 128002 // src
+  
+package_ref 128258 // SensorPlugins
+end
+end
+verbose

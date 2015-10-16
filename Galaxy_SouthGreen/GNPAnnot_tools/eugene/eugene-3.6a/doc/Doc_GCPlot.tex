@@ -1,0 +1,50 @@
+% Documentation of the GCPlot sensor
+
+\subsubsection{\texttt{Sensor.GCPlot}}
+
+\paragraph{Description}
+
+The GCPlot sensor allows to add to the graphical representation a plot
+of basic composition statistics on the sequence. The sensor is
+activated by setting the parameter \texttt{Sensor.GCPlot.use} to
+\texttt{1} in the parameter file. The composition statistics
+represented can be arbitrarily chosen. For example, the
+GC\%=$\frac{G+C}{A+T+G+C}$ is selected by setting \texttt{GCPlot.Up}
+to \texttt{GC} and \texttt{GCPlot.Over} to \texttt{ATGC}. Statistics
+on the 3rd base of each codon are automatically computed and plotted.
+
+The color (integer between 0 and 8), the smoothing window width and
+specific zooming factors can be given. The zooming factor for the 3rd base
+in each codon is zoomed using specific zooming factor
+\texttt{GCPlot.Zoom3}
+
+Here is an example of a GCPlot parameter definition :
+\begin{Verbatim}[fontsize=\small]
+GCPlot.Up          GC
+GCPlot.Over        ATGC
+GCPlot.Smooth      98
+GCPlot.Color       5     # light green
+GCPlot.Zoom        2.0
+GCPlot.Zoom3       1.0
+Sensor.GCPlot.use  1  # use GCPlot sensor
+Sensor.GCPlot      1     # sensor priority
+\end{Verbatim}
+
+\paragraph{Input files format}
+
+No input file.
+
+\paragraph{Integration of information}
+
+This sensor does not influence prediction.
+
+\paragraph{Post analyse}
+
+No post analyse.
+
+\paragraph{Graph}
+
+The composition statistics is plotted on the intergenic (IG) track.
+The same statistics computed on the 3rd position of each codon is
+plotted on the 6 exonic tracks.
+

@@ -1,0 +1,76 @@
+<tool id="biparentalerrorcorrection4" name="BiParentalErrorCorrection4" version="4.0">
+	<description>Derives a tagCount list for each FASTQ file </description>  
+	<command>
+		source $__tool_directory__/module_tassel4.sh;
+		$__tool_directory__/BiParentalErrorCorrection4.sh $input $pedF $sC $eC $mxE $mnD $mnPLD -kpUT $output</command>
+	<inputs>
+    	<param name="input" type="data" format="txt" label="Input directory containing multiple tagsByTaxa files " />
+    	<param name="pedF" type="data" format="txt" label="Pedigree file: lists the population (family) names " />
+		<param name="sC" type="integer" value="1" label="Start chromosome" />
+    	<param name="eC" type="integer" value="10" label="End chromosome" /> 
+		<param name="mxE" value="0.05" type="float" label="Maximum error (default: 0.05)"/>
+		<param name="mnD" value="2.5" type="float" label="Minimum distortion (default: 2.5)"/>
+		<param name="mnPLD" value="-1.0" type="float" label="Minimum median population LD (R^2)	(default: -1.0)"/>
+		<param name="kpUT" type="boolean" checked="false" label="Keep untested SNPs for error"/>
+	</inputs>
+	<outputs>
+		<data format="txt" name="output" label="Error correction Hapmap files (.tar.gz)"/> 
+  	</outputs>   
+  	<help>
+  
+  .. class:: infomark
+
+**Program encapsulated in Galaxy by South Green**
+
+.. class:: infomark
+
+**Tassel**
+
+-----
+
+==========
+ Overview
+==========
+
+**TASSEL-GBS: A High Capacity Genotyping by Sequencing Analysis Pipeline**
+
+**BiParentalErrorCorrection Plugin (Tassel 4.0)**
+
+This plugin filter SNP that either display high rates of genotyping error or are not in LD with ither neaby SNPs on the same chromosome.
+ 
+**The commonly used parameters with default value setting (BiParentalErrorCorrection Plugin option)**::
+    
+    -hmp				Input GBS genotype file (in HapMap format) 
+	-o					Output HapMap file
+
+	One of the following::
+    
+    -popM		Population mask: a regular expression specifying the prefixes of each biparental population.  Defaults to all taxa.
+    -popF		Population file: the name of a file containing the prefixes of each biparental population, one population prefix per line.
+    -pedF		Pedigree file: lists the population (family) names, the full names, parents, parental contributions and the expected F for each taxon in the input HapMap file. Taxa that are not part of a biparental family have NA as their family name.
+    -sC			Start chromosome
+	-eC			End chromosome
+	-mxE		Maximum error
+	-mnD		Minimum distortion 
+	-mnPLD  	Minimum median population LD (R^2)	
+	-kpUT		Keep untested SNPs for error (default remove)
+
+
+-----
+
+For further informations, please visite the website of TASSEL_.
+
+
+.. _TASSEL: http://www.maizegenetics.net/#!tassel/c17q9
+
+-------
+
+	</help>
+	<citations>
+    	<citation type="doi">10.1371/journal.pone.0090346</citation> 
+  	</citations>
+</tool>
+
+
+
+

@@ -1,0 +1,51 @@
+<tool id="check_fasta" name="GNPAnnot format sequence: Fasta" version="1.0.0">
+    <description>Format and check nucleotide fasta sequence</description>
+    <command interpreter="perl">./check_fasta.pl  $input_file $output_file</command> 
+    <inputs>
+		<param format="fasta" name="input_file" type="data" label="Fasta file"/>
+    </inputs>
+    <outputs>
+		<data format="fasta" name="output_file" label="Formated fasta file"/>
+    </outputs>
+    <help>
+ 
+ .. class:: infomark
+
+**Program encapsulated and developed in Galaxy by Southgreen**
+
+.. class:: infomark
+
+**Part of the GNPAnnot Converters package**
+
+-----
+
+==============
+Author: 
+==============
+
+Gaetan Droc
+
+-----
+
+==============
+What it does: 
+==============
+
+Convert lower cases in upper cases, write 60 nucleoties per line, compute the length of sequence, the GC content and count the number of the different bases
+
+-----
+
+==============
+Output format:
+==============
+
+fasta
+
+-----
+
+.. class:: warningmark
+
+**No support website**    
+
+    </help>
+</tool>

@@ -1,0 +1,33 @@
+\begin{theindex}
+
+  \item [BlastX   postprocessing activation] B, 32
+  \item [BlastX activation] b, 29
+  \item [EST activation]     d, 32
+  \item [EST postprocessing activation] E, 36
+  \item [FrameShift activation] f, 14
+  \item [GFF activation] G, 53
+  \item [Homology activation] t, 36
+  \item [MarkovIMM Markov models file] m, 40
+  \item [MarkovProt Markov matrix file] M, 41
+  \item [Remove fragmentary proteins] F, 8
+  \item [Repeat activation] r, 41
+  \item [Riken activation] R, 49
+  \item [eugene PNG graph higher bound] v, 8
+  \item [eugene PNG graph lower bound] u, 8
+  \item [eugene PNG graph overlapping] c, 9
+  \item [eugene PNG graph required] g, 8
+  \item [eugene PNG graph smoothing window] w, 9
+  \item [eugene graphical score normalization] n, 62
+  \item [eugene help] h, 62
+  \item [eugene image horizontal resolution] x, 63
+  \item [eugene image size] l, 62
+  \item [eugene image vertical resolution] y, 63
+  \item [eugene non partial gene mode] s, 62
+  \item [eugene nucleotide position offset] o, 9
+  \item [eugene output directory] O, 9
+  \item [eugene parameter definition] D, 62
+  \item [eugene textual output format] p, 9
+  \item [parameters optimization] Z, 59
+  \item [splice isoform prediction] a, 10
+
+\end{theindex}

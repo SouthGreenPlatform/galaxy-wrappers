@@ -1,0 +1,136 @@
+% Documentation of the GSplicer sensor
+
+\subsubsection{\texttt{Sensor.GSplicer}}
+
+\paragraph{Description}
+
+The GSplicer sensor injects possible splice sites as predicted by the
+GeneSplicer program. The sensor is
+activated by the value 1 for the parameter
+\texttt{Sensor.GSplicer.use} in the parameter file.  Here is an
+example of GSplicer parameters definition :
+\begin{Verbatim}[fontsize=\small]
+GSplicer.coefAcc*    0.8300      #
+GSplicer.penAcc*     7.7000      # GSplicer parameters (rescaling)
+GSplicer.coefDon*    1.3153      # See the Integration of
+GSplicer.penDon*     10.1600     # information section.
+Sensor.GSplicer.use  1        # Use GSplicer sensor
+Sensor.GSplicer      1           # Sensor priority
+\end{Verbatim}
+
+\paragraph{Native input files format}
+The plugin reads the prediction of the
+program from one file whose name is derived from the sequence name by
+adding the \texttt{.Gsplicer} suffix. This file describes the predicted
+splice sites for the forward and reverse strand.
+
+The files \texttt{.Gsplicer} describe the predicted splice sites
+sorted by position on the sequence (as given by GeneSplicer).
+The format of a line is : \texttt{<End5> <End3> <Score> <confidence>
+  <splice\_site\_type>}
+
+Here is an extract from \texttt{SYNO\_ARATH.fasta.Gsplicer} :
+\begin{Verbatim}[fontsize=\small]
+422 423 17.275659 High donor
+512 513 15.534963 High acceptor
+583 584 9.516534 Medium donor
+697 698 6.432014 Medium acceptor
+745 746 2.028095 Medium donor
+810 811 9.255683 Medium donor
+896 897 9.772425 Medium acceptor
+1019 1020 10.580889 Medium donor
+1105 1106 5.318046 Medium acceptor
+1177 1178 7.345249 Medium acceptor
+1203 1204 3.989773 Medium donor
+1269 1270 15.249301 High acceptor
+[...]
+\end{Verbatim}
+
+These files can be obtained by launching the GeneSplicer software
+available at:
+\begin{itemize}
+\item  web site : \texttt{http://www.tigr.org/tdb/GeneSplicer/index.shtml}.
+\item  ftp serveur : \texttt{ftp://ftp.tigr.org/pub/software/GeneSplicer}.
+\end{itemize}
+
+GeneSplicer is launched with the command:
+\begin{Verbatim}[fontsize=\small]
+genesplicer SEQ_FASTA GENOME_TRAINING_DIRECTORY [options] > SEQ_FASTA.Gsplicer
+\end{Verbatim}
+where options are:
+\begin{itemize}
+\item $-a$ $t$ : Choose $t$ as a threshold for the acceptor sites
+\item $-d$ $t$ : Choose $t$ as a threshold for the donor sites
+\item $-e$ $n$ : The maximum acceptor score within $n$ bp is chosen
+\item $-i$ $n$ : The maximum donor score within $n$ bp is chosen
+\end{itemize}
+
+\paragraph{Gff3 input file format}
+
+The gff3 input mode is activated by setting the value \texttt{GFF3}
+for the parameter \texttt{Gsplicer.format} in the parameter file.  The
+plugin reads the predictions of the program from one file which name
+is derived from the sequence name by adding the
+\texttt{.Gsplicer.gff3} extension.
+
+Accepted features (third column):\\
+\begin{itemize}
+\item  SO:0000164 or splice\_acceptor\_site 
+\item  SO:0000163 or splice\_donor\_site 
+\end{itemize}
+If the feature used isn't one of those, the line will be rejected. The
+expected coordinates must correspond to the AG/GT nucleotides (this is
+checked).  Here an extract of \texttt{seq14ac002535g4g5.tfa.Gsplicer.gff3}
+\begin{Verbatim}[fontsize=\tiny]
+seq14	GSplicer	SO:0000164	210	211	9.013469	-	.	ID=SO:0000164:seq14.1
+seq14	GSplicer	SO:0000163	244	245	3.350242	-	.	ID=SO:0000163:seq14.1
+seq14	GSplicer	SO:0000163	307	308	4.115466	-	.	ID=SO:0000163:seq14.2
+\end{Verbatim}
+
+\paragraph{Filtering input information}
+
+No filter.
+
+\paragraph{Integration of information}
+
+The procedure consists in weigthing the graph used by \EuGene. For
+each predicted site the edge corresponding to the good transition is
+weighted by: $(s_i * coef) - pen$.  Where $s_i$ is the score given by
+GeneSplicer, $coef$ and $pen$ are given in the parameter
+file.
+
+\shrink{
+A set of 8 vectors is used. The vectors are:
+\begin{itemize}
+\item $vPosAccF$ the forward acceptor predicted positions
+\item $vValAccF$ the forward acceptor score at position $vPosAccF$
+\item $vPosAccR$ the reverse acceptor predicted positions
+\item $vValAccR$ the reverse acceptor score at position $vPosAccR$
+\item $vPosDonF$ the forward donor predicted positions
+\item $vValDonF$ the forward donor score at position $vPosDonF$
+\item $vPosDonR$ the reverse donor predicted positions
+\item $vValDonR$ the reverse donor score at position $vPosDonR$
+\end{itemize}
+
+For each position if one of the 4 ``position vectors'' contains the
+query position:
+\begin{itemize}
+\item for forward and reverse acceptor sites : $(vValAcc * coefAcc) -
+  penAcc$ is added to the corresponding transition (intron track to exon
+  track according to the phase)
+\item for forward and reverse donor sites : $(vValDon * coefDon) -
+  penDon$ is added to the corresponding transition (exon track to intron
+  track according to the phase)
+\end{itemize}
+}
+
+\paragraph{Post analyse}
+
+No post analyse.
+
+\paragraph{Graph}
+
+Predicted splice sites are visible on the intronic tracks as green
+(donor) and magenta (acceptor) vertical lines whose length indicates
+the site score.
+

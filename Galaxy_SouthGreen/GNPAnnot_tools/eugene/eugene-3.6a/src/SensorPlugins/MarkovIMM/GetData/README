@@ -1,0 +1,23 @@
+eugene/src/SensorPlugins/MarkovIMM/GetData directory content
+----------------------------------------------------------------------
+
+TrainIMM.cc
+     	create IMM from .list files (see Glimmer)
+	The basic usage is:
+	      TrainIMM <exonfile> <intronfile> 
+	 where <exonfile> and <intronfile> are exon/intron sequences
+	 with one identifier followed by the sequence per ligne.
+
+	 Optionnal arguments:
+	 -5 <utr5file>: a set of UTR5 sequences
+	 -3 <utr3file>: a set of UTR3 sequences
+	 -I <igfile>: a set of intergenic sequences
+	 -h: when no <igfile> is available, TrainIMM use introns+their
+	 reverse complement to estimate the IG model. The -h flag
+	 halves the k-mer counts in this case.
+
+	 NB: if a UTR5 file is provided, the UTR 3 must also be provided.
+	 
+strarray.h
+	A trimmed down version of Glimmer IMM that use integers
+	instead of floats.

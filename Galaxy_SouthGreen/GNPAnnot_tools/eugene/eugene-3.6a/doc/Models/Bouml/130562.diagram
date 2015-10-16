@@ -1,0 +1,288 @@
+format 58
+
+classinstancecanvas 128002 classinstance_ref 128002 // 
+  xyz 14 4 2005 life_line_z 2000
+end
+classinstancecanvas 128130 classinstance_ref 128130 // 
+  xyz 126 4 2005 life_line_z 2000
+end
+classinstance 129922 class_ref 131842 // MasterSensor
+  name ""   xyz 338 11 2005 life_line_z 2000
+classinstance 130818 class_ref 129922 // SensorLoader
+  name ""   xyz 550 95 2005 life_line_z 2000
+classinstance 131330 class_ref 130050 // Sensor
+  name ""   xyz 712 149 2000 life_line_z 2000
+classinstancecanvas 134658 classinstance_ref 128258 // 
+  xyz 262 360 2005 life_line_z 2000
+end
+fragment 136066 "loop"
+  color transparent xyzwh 9 484 3005 763 128
+end
+fragment 136194 "loop"
+  color transparent xyzwh 330 136 2030 482 214
+end
+classinstance 139266 class_ref 128386 // Prediction
+  name ""   xyz 936 594 2000 life_line_z 2000
+classinstance 139394 class_ref 129154 // Track
+  name ""   xyz 829 594 2000 life_line_z 2000
+durationcanvas 128258 classinstance_ref 128002 // :Main
+  xyzwh 33 52 2010 11 352
+end
+durationcanvas 128386 classinstance_ref 128130 // :Parameters
+  xyzwh 145 52 2010 11 42
+end
+durationcanvas 130050 classinstance_ref 129922 // :MasterSensor
+  xyzwh 393 113 2010 11 258
+  overlappingdurationcanvas 130306
+    xyzwh 399 157 2020 11 152
+    overlappingdurationcanvas 132610
+      xyzwh 405 192 2030 11 47
+    end
+  end
+end
+durationcanvas 131458 classinstance_ref 131330 // :Sensor
+  xyzwh 741 314 2010 11 32
+end
+durationcanvas 132098 classinstance_ref 128002 // :Main
+  xyzwh 33 355 2010 11 490
+end
+durationcanvas 133122 classinstance_ref 130818 // :SensorLoader
+  xyzwh 604 167 2010 11 70
+end
+durationcanvas 133762 classinstance_ref 130818 // :SensorLoader
+  xyzwh 604 253 2010 11 55
+end
+durationcanvas 134018 classinstance_ref 131330 // :Sensor
+  xyzwh 741 265 2010 11 30
+end
+durationcanvas 134786 classinstance_ref 134658 // :DAG
+  xyzwh 281 410 2010 11 28
+end
+durationcanvas 137218 classinstance_ref 134658 // :DAG
+  xyzwh 281 449 2010 11 30
+end
+durationcanvas 137858 classinstance_ref 129922 // :MasterSensor
+  xyzwh 393 499 2010 11 51
+end
+durationcanvas 138114 classinstance_ref 131330 // :Sensor
+  xyzwh 741 507 2010 11 28
+end
+durationcanvas 138626 classinstance_ref 134658 // :DAG
+  xyzwh 281 567 2010 11 29
+end
+durationcanvas 139010 classinstance_ref 134658 // :DAG
+  xyzwh 281 646 2010 11 57
+end
+durationcanvas 139522 classinstance_ref 139394 // :Track
+  xyzwh 853 652 2010 11 45
+end
+durationcanvas 139778 classinstance_ref 139266 // :Prediction
+  xyzwh 976 660 2010 11 27
+end
+durationcanvas 140418 classinstance_ref 139266 // :Prediction
+  xyzwh 976 717 2010 11 27
+end
+durationcanvas 140802 classinstance_ref 139266 // :Prediction
+  xyzwh 976 762 2010 11 25
+end
+durationcanvas 141186 classinstance_ref 129922 // :MasterSensor
+  xyzwh 393 796 2010 11 30
+end
+msg 128514 synchronous
+  from durationcanvas_ref 128258
+  to durationcanvas_ref 128386
+  yz 52 2015 msg operation_ref 152578 // "initParam(in  : int, inout  : char) : void"
+  show_full_operations_definition default drawing_language default
+  label_xy 52 34
+msg 128642 return
+  from durationcanvas_ref 128386
+  to durationcanvas_ref 128258
+  yz 75 2015 unspecifiedmsg
+  show_full_operations_definition default drawing_language default
+msg 130178 synchronous
+  from durationcanvas_ref 128258
+  to durationcanvas_ref 130050
+  yz 122 2025 msg operation_ref 150914 // "InitMaster(inout X : DNASeq) : void"
+  show_full_operations_definition default drawing_language default
+  label_xy 145 104
+reflexivemsg 130434 synchronous
+  to durationcanvas_ref 130306
+  yz 157 2025 msg operation_ref 151682 // "MakeSensor(in name : std::string, in n : int, inout X : DNASeq) : Sensor"
+  show_full_operations_definition default drawing_language default
+  label_xy 407 141
+msg 131586 synchronous
+  from durationcanvas_ref 130050
+  to durationcanvas_ref 131458
+  yz 320 3015 msg operation_ref 165634 // "Init(inout X : DNASeq) : void"
+  show_full_operations_definition default drawing_language default
+  label_xy 555 309
+msg 131970 return
+  from durationcanvas_ref 131458
+  to durationcanvas_ref 130050
+  yz 335 3020 unspecifiedmsg
+  show_full_operations_definition default drawing_language default
+msg 132226 return
+  from durationcanvas_ref 130050
+  to durationcanvas_ref 132098
+  yz 355 2015 unspecifiedmsg
+  show_full_operations_definition default drawing_language default
+reflexivemsg 132738 synchronous
+  to durationcanvas_ref 132610
+  yz 192 2035 msg operation_ref 150658 // "LoadSensor(in name : std::string) : int"
+  show_full_operations_definition default drawing_language default
+  label_xy 407 176
+msg 133250 synchronous
+  from durationcanvas_ref 132610
+  to durationcanvas_ref 133122
+  yz 205 2040 msg operation_ref 138882 // "SensorLoader(in fname : char, in func_name : char = 0)"
+  show_full_operations_definition default drawing_language default
+  label_xy 453 192
+msg 133378 return
+  from durationcanvas_ref 133122
+  to durationcanvas_ref 132610
+  yz 223 2045 unspecifiedmsg
+  show_full_operations_definition default drawing_language default
+msg 133890 synchronous
+  from durationcanvas_ref 130306
+  to durationcanvas_ref 133762
+  yz 256 2025 msg operation_ref 139138 // "MakeSensor(in n : int, inout X : DNASeq) : Sensor"
+  show_full_operations_definition default drawing_language default
+  label_xy 451 238
+msg 134146 synchronous
+  from durationcanvas_ref 133762
+  to durationcanvas_ref 134018
+  yz 265 2030 msg operation_ref 165378 // "Sensor(in n : int)"
+  show_full_operations_definition default drawing_language default
+  label_xy 654 247
+msg 134274 return
+  from durationcanvas_ref 134018
+  to durationcanvas_ref 133762
+  yz 280 2035 unspecifiedmsg
+  show_full_operations_definition default drawing_language default
+msg 134402 return
+  from durationcanvas_ref 133762
+  to durationcanvas_ref 130306
+  yz 290 2040 unspecifiedmsg
+  show_full_operations_definition default drawing_language default
+msg 134914 synchronous
+  from durationcanvas_ref 132098
+  to durationcanvas_ref 134786
+  yz 410 2020 msg operation_ref 136578 // "DAG(in start : int, in end : int, inout PAR : Parameters, inout Seq : DNASeq)"
+  show_full_operations_definition default drawing_language default
+  label_xy 113 391
+msg 136706 return
+  from durationcanvas_ref 134786
+  to durationcanvas_ref 132098
+  yz 422 3010 unspecifiedmsg
+  show_full_operations_definition default drawing_language default
+msg 137346 synchronous
+  from durationcanvas_ref 132098
+  to durationcanvas_ref 137218
+  yz 449 2015 msg operation_ref 137090 // "LoadDistLength() : void"
+  show_full_operations_definition default drawing_language default
+  label_xy 79 431
+msg 137474 return
+  from durationcanvas_ref 137218
+  to durationcanvas_ref 132098
+  yz 468 2015 unspecifiedmsg
+  show_full_operations_definition default drawing_language default
+msg 137986 synchronous
+  from durationcanvas_ref 132098
+  to durationcanvas_ref 137858
+  yz 506 2015 msg operation_ref 151170 // "GetInfoAt(inout X : DNASeq, in pos : int, inout d : DATA) : void"
+  show_full_operations_definition default drawing_language default
+  label_xy 176 488
+msg 138242 asynchronous
+  from durationcanvas_ref 137858
+  to durationcanvas_ref 138114
+  yz 507 2015 msg operation_ref 165762 // "GiveInfo(inout  : DNASeq, in  : int, inout  : DATA) : void"
+  show_full_operations_definition default drawing_language default
+  label_xy 534 489
+msg 138370 return
+  from durationcanvas_ref 138114
+  to durationcanvas_ref 137858
+  yz 524 2015 unspecifiedmsg
+  show_full_operations_definition default drawing_language default
+msg 138498 return
+  from durationcanvas_ref 137858
+  to durationcanvas_ref 132098
+  yz 539 2015 unspecifiedmsg
+  show_full_operations_definition default drawing_language default
+msg 138754 synchronous
+  from durationcanvas_ref 132098
+  to durationcanvas_ref 138626
+  yz 567 2015 msg operation_ref 137218 // "ShortestPathAlgoForward(in position : int, in Data : DATA) : void"
+  show_full_operations_definition default drawing_language default
+  label_xy 43 549
+msg 138882 return
+  from durationcanvas_ref 138626
+  to durationcanvas_ref 132098
+  yz 585 2020 unspecifiedmsg
+  show_full_operations_definition default drawing_language default
+msg 139138 synchronous
+  from durationcanvas_ref 132098
+  to durationcanvas_ref 139010
+  yz 646 2015 msg operation_ref 137602 // "BuildPrediction(in From : int, in To : int, in Forward : int = 1) : double"
+  show_full_operations_definition default drawing_language default
+  label_xy 83 628
+msg 139650 synchronous
+  from durationcanvas_ref 139010
+  to durationcanvas_ref 139522
+  yz 652 2020 msg operation_ref 135298 // "BackTrace(in From : int, in To : int, in Forward : int = 1) : Prediction"
+  show_full_operations_definition default drawing_language default
+  label_xy 548 634
+msg 139906 synchronous
+  from durationcanvas_ref 139522
+  to durationcanvas_ref 139778
+  yz 660 2025 msg operation_ref 159874 // "Prediction(in From : int, in To : int, in vPos : std::vector<int>, in vState : std::vector<signed char>)"
+  show_full_operations_definition default drawing_language default
+  label_xy 868 642
+msg 140034 return
+  from durationcanvas_ref 139778
+  to durationcanvas_ref 139522
+  yz 674 2015 unspecifiedmsg
+  show_full_operations_definition default drawing_language default
+msg 140162 return
+  from durationcanvas_ref 139522
+  to durationcanvas_ref 139010
+  yz 684 2015 unspecifiedmsg
+  show_full_operations_definition default drawing_language default
+msg 140290 return
+  from durationcanvas_ref 139010
+  to durationcanvas_ref 132098
+  yz 689 2015 unspecifiedmsg
+  show_full_operations_definition default drawing_language default
+msg 140546 synchronous
+  from durationcanvas_ref 132098
+  to durationcanvas_ref 140418
+  yz 717 2015 msg operation_ref 160258 // "TrimAndUpdate(inout  : DNASeq) : void"
+  show_full_operations_definition default drawing_language default
+  label_xy 430 699
+msg 140674 return
+  from durationcanvas_ref 140418
+  to durationcanvas_ref 132098
+  yz 729 2020 unspecifiedmsg
+  show_full_operations_definition default drawing_language default
+msg 140930 synchronous
+  from durationcanvas_ref 132098
+  to durationcanvas_ref 140802
+  yz 762 2025 msg operation_ref 160898 // "PlotPred() : void"
+  show_full_operations_definition default drawing_language default
+  label_xy 457 749
+msg 141058 return
+  from durationcanvas_ref 140802
+  to durationcanvas_ref 132098
+  yz 775 2030 unspecifiedmsg
+  show_full_operations_definition default drawing_language default
+msg 141314 synchronous
+  from durationcanvas_ref 132098
+  to durationcanvas_ref 141186
+  yz 800 2015 msg operation_ref 151554 // "PostAnalyse(inout pred : Prediction, inout MISC_INFO : FILE) : void"
+  show_full_operations_definition default drawing_language default
+  label_xy 166 782
+msg 141570 return
+  from durationcanvas_ref 141186
+  to durationcanvas_ref 132098
+  yz 815 2020 unspecifiedmsg
+  show_full_operations_definition default drawing_language default
+end

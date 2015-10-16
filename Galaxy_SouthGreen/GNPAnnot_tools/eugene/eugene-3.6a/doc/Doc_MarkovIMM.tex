@@ -1,0 +1,96 @@
+% Documentation of the MarkovIMM sensor
+
+\subsubsection{\texttt{Sensor.MarkovIMM}}
+
+\paragraph{Description}
+
+This plugin injects coding/intronic/utr/intergenic likelihood as
+modeled by interpolated Markov models (introduced in Glimmer, see S.
+Salzberg, A. Delcher, S. Kasif, and O. White.{\em Microbial gene
+  identification using interpolated Markov models} Nucleic Acids
+Research 26:2 (1998), 544-548). These models are defined in a
+so-called matrices file (located in the directory specified by the
+\texttt{EuGene.PluginsDir} parameter) whose name is indicated by the
+\texttt{MarkovIMM.matname} parameter. Depending on the matrices file,
+this may contain IMM for exons, introns and intergenic data and also
+optionnally 5' and 3' UTR regions. If these 2 last IMMs are absent
+from the matrices file, intronic models are used for UTR.
+
+The plugin is controlled by two further parameters:
+\texttt{MarkovIMM.minGC} and \texttt{MarkovIMM.maxGC} which indicate
+the GC scope of the matrices. If the GC\% of the sequence is out of
+the scope, the plugin will give an equal null loglikelihood to all types
+of regions.
+
+By instanciating multiple \texttt{MarkovIMM} plugins (see
+section~\ref{plug}), this enables the use of several IMM according to
+the GC\% of the input sequence. 
+
+The intergenic track can receive score in three possible ways
+according to the \texttt{IntergenicModel} parameter value~:
+\begin{enumerate}
+\item[0] In this case, a $O^{th}$ order Markov model that is directly
+  estimated from the frequencies in the sequence is used.
+\item[1] The intergenic IMM matrix is directly used on the forward
+  strand. This model will give a slightly different score to the
+  sequence and to its reverse complement but is simple and works well
+  on some organisms.
+\item [2] The intergenic model is used on both strands and the mean of
+  the two prababilities (forward and reverse) is used as the
+  estimation. This is the default model to use. It has the advantage
+  of giving the same score to a sequence and its reverse complement.
+\end{enumerate}
+
+The sensor is activated by either:
+\begin{itemize}
+\item the \texttt{-m} argument followed by the filename of the set of Markov models.
+  \index{CmdFlags}{[MarkovIMM Markov models file] m}
+\item the value 1 for the parameter \texttt{[Sensor.MarkovIMM.use} in
+  the parameter file.
+\end{itemize}
+
+Here is an example of MarkovIMM parameters definition.
+\begin{Verbatim}[fontsize=\small]
+MarkovIMM.matname    Ara2UTR.mat
+MarkovIMM.minGC      0
+MarkovIMM.maxGC      100
+MarkovIMM.UseM0asIG  FALSE
+Sensor.MarkovIMM.use 1
+Sensor.MarkovIMM     1      # Sensor priority
+\end{Verbatim}
+
+
+\paragraph{Input files format}
+
+No input files needed beyond the IMM matrix file. 
+
+\paragraph{Integration of information}
+
+On the forward intronic, exonic and UTR tracks, the probability that
+the nucleotide at position $i$ appears given the nucleotides that
+follow him is fetched in the IMM matrix file. The logarithm of this
+probability is used as a penalty on the corresponding track.
+
+For reverse tracks, the same process is used but the probability used
+is the probability that the nucleotide at position $i$ appears given
+the nucleotides that precede him.
+
+For the intergenic track, the probability used is the mean of the
+probability that the nucleotide at position $i$ appears given the
+nucleotides that precede him and the probability that the nucleotide
+at position $i$ appears given the nucleotides that follow him.  This
+guarantees that a sequence and its reverse complement will receive the
+same weights exactly.
+
+\paragraph{Post analyse}
+
+No post analyse.
+
+\paragraph{Graph}
+
+The likelihood of a subsequence of width \texttt{Output.window} is
+computed for each IMM model and normalized over all these. The
+corresponding normalized likelihood is plotted as a thin black line on
+each track of the graphical output.
+
+

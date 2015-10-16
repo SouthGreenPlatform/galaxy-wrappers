@@ -1,0 +1,52 @@
+<tool id="gth" name="Genome Threader">
+	<description>Gene Prediction Software</description>
+	<command>
+        source $__tool_directory__/module_gth.sh;
+		gth -genomic $input -cdna $database  -o $output -bssm $species -force yes -createindicesonly;
+		gth -genomic $input -cdna $database  -o $output -bssm $species -force yes
+	</command>
+	<inputs>	
+		<param format="fasta" name="input" type="data" label="Nucleotide query sequence"/>
+		<param name="species" type="select" label="Model species">
+			<option value="rice">rice</option>
+			<option value="human">human</option>
+			<option value="mouse">mouse</option>
+			<option value="rat">rat</option>
+			<option value="chicken">chicken</option>
+			<option value="drosophila">drosophila</option>
+			<option value="nematode">nematode</option>
+			<option value="fission_yeast">fission_yeast</option>
+			<option value="aspergillus">aspergillus</option>
+			<option value="arabidopsis">arabidopsis</option>
+			<option value="maize">maize</option>
+			<option value="medicago">medicago</option>
+		</param>  
+		<param name="database" type="select" label="Nucleotide database">	
+			<options from_file="blastdb.loc">
+				<column name="name" index="1"/>
+				<column name="value" index="2"/>
+			</options>
+		</param>
+	</inputs>
+	<outputs>
+		<data format="txt" name="output" label="GenomeThreader on ${database.value_label}" /> 
+	</outputs>
+	<help>
+    
+**GenomeThreader**
+
+-----
+
+**What it does**
+
+GenomeThreader is a software tool to compute gene structure predictions. 
+The gene structure predictions are calculated using a similarity-based approach where additional cDNA/EST and/or protein sequences are used to predict gene structures via spliced alignments. 
+ Compute similarity-based gene structure predictions (spliced alignments)
+using cDNA/EST and/or protein sequences and assemble the resulting spliced
+alignments to consensus spliced alignments.
+
+	</help>
+	<citations>
+        <citation type="doi">10.1016/j.infsof.2005.09.005</citation> 
+	</citations>
+</tool>

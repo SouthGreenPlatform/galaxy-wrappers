@@ -1,0 +1,80 @@
+% Documentation of the ATGpr sensor
+
+\subsubsection{\texttt{Sensor.ATGpr}}
+
+\paragraph{Description}
+
+This plugin injects possible translation starts as predicted by the
+ATGpr program. This program is not available anymore and the plugin is 
+no more supported and has been removed from recent versions of EuGene.
+
+The plugin reads the prediction of the programs from two files whose
+names are derived from the sequence name by adding the \texttt{.atgpr}
+and \texttt{.atgprR} suffix (respectively prediction for the forward
+and reverse strand).
+
+The sensor is activated by setting the value 1 for the parameter
+\texttt{Sensor.ATGpr.use} in the parameter file. The score for acceptor
+and donor prediction is rescaled by the parameters {\tt ATGpr.startP*} and
+{\tt ATGpr.startB*} (see below).
+
+Here is an example of ATGpr parameters definition.
+\begin{Verbatim}[fontsize=\small]
+ATGpr.startP*      0.002
+ATGpr.startB*      0.001
+Sensor.ATGpr.use   1       # Use ATGpr sensor
+Sensor.ATGpr       1       # Sensor priority
+\end{Verbatim}
+
+\paragraph{Input files format}
+
+The files with \texttt{.atgpr} and \texttt{.atgprR} suffix are
+obtained by running ATGpr which can be obtained at
+\texttt{http://www.hri.co.jp/atgpr/} and using the
+detailed output of the software.
+
+Here is an extract from \texttt{SYNO\_ARATH.fasta.atgpr}:
+\begin{Verbatim}[fontsize=\small]
+1       0.26    2       AXXATGG 29      460     144     Yes     
+2       0.12    3       tXXATGc 168     302     45      Yes     
+3       0.04    1       GXXATGc 196     234     13      Yes     
+4       0.04    3       GXXATGG 237     302     22      Yes     
+5       0.04    2       AXXATGG 371     460     30      Yes     
+6       0.04    2       tXXATGa 518     550     11      Yes     
+7       0.04    2       AXXATGG 521     550     10      Yes     
+8       0.04    3       tXXATGc 528     575     16      Yes     
+9       0.04    3       GXXATGt 546     575     10      Yes     
+10      0.04    1       GXXATGa 553     597     15      Yes     
+11      0.04    2       cXXATGc 563     583     7       Yes     
+12      0.04    2       GXXATGa 575     583     3       Yes     
+13      0.04    3       cXXATGa 645     692     16      Yes     
+14      0.04    1       GXXATGt 661     699     13      Yes     
+15      0.04    2       GXXATGt 812     910     33      Yes     
+[...]
+\end{Verbatim}
+
+\paragraph{Filtering input information}
+
+No filtering.
+
+\paragraph{Integration of information}
+
+The integrated score for start prediction is read (column 2).  The
+score read $s$ is rescaled using the {\tt ATGpr.startP*} (\emph{P}) and {\tt
+ATGpr.startB*} (\emph{B}) as follows:
+
+\[s' = e^{-P}*s^B\]
+
+All predictions that use a predicted start receive a $\log(s')$
+penalty while those that go through a predicted start while they
+could have used it receive a $\log(1-s')$ penalty.
+
+
+\paragraph{Post analyse}
+
+No post analyse.
+
+\paragraph{Graph}
+
+Predicted starts are visible on exonix tracks as blue vertical lines
+whose length indicates the site score.

@@ -1,0 +1,107 @@
+% Documentation of the NStart sensor
+
+\subsubsection{\texttt{Sensor.NStart}}
+
+\paragraph{Description}
+
+This plugin injects possible translation starts as predicted by the
+NetStart program. 
+
+The sensor is activated by setting the value \texttt{1} for the parameter
+\texttt{Sensor.NStart.use} in the parameter file. The score for acceptor
+and donor prediction is rescaled by the parameters {\tt NStart.startP*} and
+{\tt NStart.startB*} (see below).
+
+Here is an example of NetStart parameters definition.
+\begin{Verbatim}[fontsize=\small]
+NStart.startP*     0.052
+NStart.startB*     0.308
+Sensor.NStart.use  1       # Use NStart sensor
+Sensor.NStart      1       # Sensor priority
+\end{Verbatim}
+
+\paragraph{Native input files format}
+The plugin reads the prediction of the
+program from two files whose names are derived from the sequence name
+by adding the \texttt{.starts} and \texttt{.startsR} suffixes
+(respectively prediction for the forward and reverse strand).
+
+The files with \texttt{.starts} and \texttt{.startsR} suffix are
+obtained by running NetStart which can be obtained at
+\texttt{http://www.cbs.dtu.dk/services/NetStart/} and using the
+detailed output of the software.
+
+Here is an extract from \texttt{SYNO\_ARATH.fasta.starts}:
+\begin{Verbatim}[fontsize=\small]
+  1089    0.256     -
+  1146    0.214     -
+  1251    0.618     Yes
+  1299    0.197     -
+  1474    0.526     Yes
+  1535    0.112     -
+  1559    0.490     -
+  1638    0.401     -
+  1674    0.569     Yes
+  1678    0.147     -
+  1740    0.299     -
+  1752    0.187     -
+[...]
+\end{Verbatim}
+
+To run NetStart, the following parameters are used (for \emph{Arabidopsis
+thaliana}): \texttt{netstart -at <Fasta sequence>}.
+
+\paragraph{Gff3 input file format}
+
+The gff3 input mode is activated by setting the value \texttt{GFF3}
+for the parameter \texttt{NStart.format} in the parameter file.  Then,
+the plugin reads the predictions of the program from one file which
+name is derived from the sequence name by adding the
+\texttt{.nstart.gff3} extension.
+
+Accepted features (third column):\\
+\begin{itemize}
+\item  SO:0000318 or start\_codon
+\end{itemize}
+
+If the feature used isn't one of those, the line will be rejected. The
+expected coordinates must correspond to the first nucleotide of the
+start codon.
+
+Here an extract of \texttt{seq14ac002535g4g5.tfa.starts.gff3}:
+\begin{Verbatim}[fontsize=\tiny]
+seq14	NStart	SO:0000318	64	64	0.299	+	.	ID=SO:0000318:seq14.0;
+seq14	NStart	SO:0000318	74	74	0.249	+	.	ID=SO:0000318:seq14.1;
+\end{Verbatim}
+
+
+\paragraph{Filtering input information}
+
+No filtering.
+
+\paragraph{Integration of information}
+
+The integrated score for start prediction is read (column 2).  The
+score read $s$ is rescaled using the {\tt NStart.startP*} (\emph{P}) and {\tt
+NStart.startB*} (\emph{B}) as follows:
+
+\[s' = e^{-P}*s^B\]
+
+All predictions that use a predicted start receive a $\log(s')$
+penalty while those that go through a predicted start while they
+could have used it receive a $\log(1-s')$ penalty.
+
+
+\paragraph{Post analyse}
+
+No post analyse.
+
+\paragraph{Graph}
+
+Predicted starts are visible on exonix tracks as blue vertical lines
+whose length indicates the site score.
+
+
+
+
+

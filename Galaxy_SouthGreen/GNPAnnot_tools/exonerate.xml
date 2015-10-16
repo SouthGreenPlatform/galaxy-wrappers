@@ -1,0 +1,65 @@
+<tool id="exonerate" name="Exonerate">
+	<description>a generic tool for sequence alignment</description>
+	<command>
+        source $__tool_directory__/module_exonerate.sh ;
+        $__tool_directory__/exonerate.pl $input_exonerate $db_opts.db_opts_selector
+        #if $db_opts.db_opts_selector == "nuc":
+	${db_opts.database_nuc} 
+#else:
+	${db_opts.database_prot}  
+#end if
+	$input_region $output_exonerate</command>
+	<inputs>
+		<param format="txt" name="input_exonerate" type="data" label="Source file"/>
+		<conditional name="db_opts">
+			<param  name="db_opts_selector" type="select" label="Database">
+				<option value="nuc" selected="True">Nucleotide database</option>
+				<option value="prot">Protein database</option>
+			</param>
+			<when value="nuc">                        
+				<param name="database_nuc" type="select" label="Nucleotide database">	
+					<options from_file="blastdb.loc">
+						<column name="name" index="1"/>
+						<column name="value" index="2"/>
+					</options>
+				</param>
+				<param name="database_prot" type="hidden" value=""/>
+			</when>
+			<when value="prot">
+				<param name="database_nuc" type="hidden" value=""/>
+				<param name="database_prot" type="select" label="Protein database">
+					<options from_file="blastdb_p.loc">
+						<column name="name" index="1"/>
+						<column name="value" index="2"/>
+					</options>
+				</param>
+			</when>
+		</conditional>
+		<param format="fasta" type="data" name="input_region" label="Nucleotide region arroud gene"/>
+	</inputs>
+	<outputs>
+		<data format="txt" name="output_exonerate" label="Exonerate vs ${db_opts.database_prot.value_label}" />
+	</outputs>
+	<help>
+	
+.. class:: infomark
+
+**Program encapsulated and developed in Galaxy by Southgreen**
+	
+**Exonerate**
+
+-----
+
+**What it does**
+
+Exonerate is a generic tool for pairwise sequence comparison.
+
+It allows you to align sequences using a many alignment models, using either exhaustive dynamic programming, or a variety of heuristics. 
+
+ 
+	</help>
+	<citations>
+        <citation type="doi">10.1186/1471-2105-6-31</citation> 
+	</citations>
+
+</tool>

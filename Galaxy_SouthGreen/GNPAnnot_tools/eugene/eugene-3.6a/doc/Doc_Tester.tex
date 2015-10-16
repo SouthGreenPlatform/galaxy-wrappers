@@ -1,0 +1,184 @@
+% Documentation of the Tester sensor
+
+\subsubsection{\texttt{Sensor.Tester}}
+
+\paragraph{Description}
+
+The Tester sensor allows to evaluate signal sensors. For a sequence,
+the plugin reads the truth gene coordinates (note only one complete gene) in GFF format from one file whose name
+is derived from the sequence name by adding the \texttt{.gff} suffix.\\
+\\
+Depending of the value of the parameter \texttt{Tester.Make}, two independant tests could be done. If \texttt{Tester.Make} is set to TEST, the positive positions (where the sensor detects a signal) are analysed (compared to the thruth). The results are written in a file \texttt{test.<sensorName.gff>}. 
+
+If the parameter \texttt{Tester.Make} is set to SPSN, the positions of the canonical coding of the considered signal (ATG for Start; TAG, TAA, TGA for Stop; AG for acceptor; GT, GC for donors) are analysed. The considering signal is defined following the value given at the \texttt{Tester.SPSN.Eval} parameter. Four variables are computed:
+\begin{itemize} 
+\item TP, number of True Positive
+\item FN, number of False Negative
+\item FP, number of False Positive
+\item TN, number of True Negative
+\end {itemize}
+With these variables, two others are evaluated:
+\begin {itemize}
+\item Sn = TP/(TP+FN), sensitivity
+\item Sp = TP/(TP+FP), specificity
+\end {itemize}
+
+All these variables are computed for all score value given by the sensor. Each value is in turn considered as a threshold (if the score is higher than the threshold the information is considered as positive).\\
+The values of the variables are put on stdout. Here is an example.
+
+\begin{Verbatim}[fontsize=\small]
+Thres.          Nb      TP      FP      TN      FN      Sens.           Spec.
+-3.7297         1       144     16776   230     0       0.851064        100
+-3.68888        1       144     16775   231     0       0.851114        100
+-3.61192        1       144     16774   232     0       0.851164        100
+-3.57555        1       144     16773   233     0       0.851215        100
+[...]
+\end{Verbatim}
+Where Thres. is the threshold value, Nb is the number of observation of the threshold as a score.\\ 
+\\ 
+To be plotted, specificity and sensibility are also written in the file \texttt{Sensor.<sensorName>.SpSn} and if the \texttt{Tester.SPSN.Eval} parameter is set to SPLICE, in the files 
+\texttt{Sensor.<sensorName>.Acc} (for acceptor only), \texttt{Sensor.<sensorName>.Don} (for donor only).\\ 
+Note that specificity and sensitivity are written in the \texttt{.SpSn}, \texttt{.Acc}, \texttt{.Don} files, only if TP+FP and TP+FN are higher than \texttt{Tester.SPSN.MinNumbers}. This to avoid Sp and Sn based on small effective.\\
+\\
+The sensor is activated by the value 1 for the parameter
+\texttt{Sensor.Tester.use}. A parameter \texttt{Tester.Sensor} indicates which sensor to test. An other parameter \texttt{Tester.Sensor.Instance} defines wich instance (see the 2.2.1 Loading plugins section) of sensor to consider.\\
+\\
+Here is an example of Tester parameters definition:
+\begin{Verbatim}[fontsize=\small]
+Tester.Make             SPSN      # SPSN, TEST
+Tester.Sensor           EuStop
+Tester.Sensor.Instance  0
+Tester.SPSN.MinNumbers  100       # greater than 0
+Tester.SPSN.Eval        STOP      # START, STOP, SPLICE
+Sensor.Tester.use       1         # use Tester sensor
+Sensor.Tester           1         # sensor priority
+\end{Verbatim}
+
+\paragraph{Native input files format}
+
+The file \texttt{.gff} describes the truth coordinates of only one complete gene in GFF format. The format of a
+line is :\texttt{<seqname> <source> <feature> <start> <end> <score> <strand> <frame>}. Seqname, source, score and frame fields are ignored.
+
+Example:
+\begin{Verbatim}[fontsize=\small]
+seqName EuGene  UTR5    866     885     0       +       .
+seqName EuGene  E.Init  886     931     0       +       0
+seqName EuGene  E.Intr  1014    2366    0       +       1
+seqName EuGene  E.Term  2444    2481    0       +       1
+seqName EuGene  UTR3    2482    2632    0       +       .
+\end{Verbatim}
+Note : Feature field must be UTR5, UTR3, E.Init, E.Intr, E.Term or E.Sngl (UTR states are optional).
+
+\paragraph{Gff3 input files format}
+
+The gff3 input mode is activated by setting the value \texttt{GFF3}
+for the parameter \texttt{Tester.format} in the parameter file.  The
+plugin reads the predictions from a file named from the sequence name
+by adding the \texttt{.gff.gff3} extension.
+
+Accepted features (third column):\\
+\begin{itemize}
+\item  SO:0000316 or CDS
+\item  SO:0000204 or five\_prime\_UTR
+\item  SO:0000205 or three\_prime\_UTR
+\end{itemize}
+If the feature used isn't one of those, the line will be rejected.
+You must define the ontology\_term for CDS features in order to
+identify the different types of exons (E.Init, E.Intr, E.Term,
+E.Sngl).  Here is the matching between Eugene native feature name and
+Sofa feature:
+
+\begin{itemize}
+\item  UTR5 :  SO:0000204 (five\_prime\_UTR) ; Ontology term : not necessary
+\item  UTR3 :  SO:0000205 (three\_prime\_UTR); Ontology term : not necessary
+\item  E.Init : SO:0000316 (CDS)	     ; Ontology term : SO:0000196 	(five\_prime\_coding\_exon\_region)
+\item  E.Intr : SO:0000316 (CDS)	     ; Ontology term : SO:0000004	(interior\_coding\_exon)
+\item  E.Term : SO:0000316 (CDS)	     ; Ontology term : SO:0000197	(three\_prime\_coding\_exon\_region)
+\item  E.Sngl : SO:0000316 (CDS)	     ; Ontology term : SO:0005845	(single\_exon)
+\end{itemize}
+
+Gff3 attributes specifications:\\
+Required attributes:\\ 
+	\begin{itemize}
+	\item ID
+	\item Ontology\_term (Required for CDS feature)
+	\end{itemize}
+
+Here an extract of \texttt{seq14ac002535g4g5.tfa.gff.gff3}:
+\begin{Verbatim}[fontsize=\tiny]
+seq25   EuGene  five_prime_UTR  1       2787    0       +       .       ID=five_prime_UTR:seq25.0;Ontology_term=SO:0000204
+seq25   EuGene  CDS     2788    2836    0       +       0       ID=CDS:seq25.1;Ontology_term=SO:0000196
+seq25   EuGene  CDS     8356    8471    0       +       2       ID=CDS:seq25.2;Ontology_term=SO:0000004
+seq25   EuGene  CDS     8576    8667    0       +       1       ID=CDS:seq25.3;Ontology_term=SO:0000004
+seq25   EuGene  CDS     9006    9061    0       +       0       ID=CDS:seq25.4;Ontology_term=SO:0000004
+seq25   EuGene  CDS     9567    9655    0       +       1       ID=CDS:seq25.5;Ontology_term=SO:0000004
+seq25   EuGene  CDS     10520   10535   0       +       1       ID=CDS:seq25.6;Ontology_term=SO:0000004
+seq25   EuGene  CDS     10896   11134   0       +       1       ID=CDS:seq25.7;Ontology_term=SO:0000004
+seq25   EuGene  CDS     11544   12005   0       +       2       ID=CDS:seq25.8;Ontology_term=SO:0000004
+seq25   EuGene  CDS     12088   12900   0       +       0       ID=CDS:seq25.9;Ontology_term=SO:0000197
+seq25   EuGene  three_prime_UTR 12901   14900   0       +       .       ID=three_prime_UTR:seq25.10;Ontology_term=SO:0000205
+\end{Verbatim}
+
+
+\paragraph{Output files format}
+
+For the parameter \texttt{Tester.Make} set to TEST, a file
+(\texttt{test.<sensorName.gff>}) is created if it does not exist.  For each
+predicted signals the Tester sensor write one line in the output file.
+The format of this line is : \texttt{<seqname> <source> <feature>
+  <score>
+  <start> <end> <strand> <frame> <T/F> <state>}.
+
+Where:
+\begin{itemize}
+\item <seqname> is the 7 first characters of the sequence file name.
+\item <source> is the name of the tested sensor.
+\item <feature> is the feature type name (can be `Start', `Acc', `Don' and
+`Stop').
+\item <start> is the predicted signal position.
+\item <end> is always `.'.
+\item <score> is the score given by the tested sensor.
+\item <strand> is `+' for forward and `-' for reverse.
+\item <frame> is always `.'.
+\item <T/F> is `True' for real site and `False' for the others.
+\item <state> is the real state according to the predicted signal
+  position (can
+  be `IG', `UTR', `ExonF', `ExonR', `IntronF' or `IntronR').
+\end{itemize}
+Here is an extract of \texttt{test.NG2.gff} :
+\begin{Verbatim}[fontsize=\small]
+[...]
+seqName     NG2     Acc     835       .   -2.26       -       .   False      IG
+seqName     NG2     Acc     869       .  -15.03       +       .   False     UTR
+seqName     NG2     Acc     918       .  -10.96       -       .   False   ExonF
+seqName     NG2     Don     931       .   -0.02       +       .    True   ExonF
+seqName     NG2     Don     962       .  -33.06       -       .   False IntronF
+seqName     NG2     Don     973       .  -27.76       +       .   False IntronF
+seqName     NG2     Don    1011       .   -4.10       -       .   False IntronF
+seqName     NG2     Acc    1013       .   -0.10       +       .    True IntronF
+seqName     NG2     Acc    1050       .   -7.52       +       .   False   ExonF
+seqName     NG2     Don    1050       .  -27.76       +       .   False   ExonF
+[...]
+\end{Verbatim}
+
+For the parameter \texttt{Tester.Make} set to SPSN, the file \texttt{Sensor.<sensorName>.SpSn} contains on each line a value of specificity and sensitivity for a threshold 
+taken from the lowest to the highest.\\ 
+For splice detectors sensors, two other files are also written \texttt{Sensor.<sensorName>.Acc} (acceptor only), \texttt{Sensor.<sensorName>.Don} (donor only) with the same format.
+
+
+\paragraph{Filtering input information}
+
+No filter.
+
+\paragraph{Integration of information}
+
+This sensor does not affect prediction.
+
+\paragraph{Post analyse}
+
+No post analyse.
+
+\paragraph{Graph}
+
+No plot.
+

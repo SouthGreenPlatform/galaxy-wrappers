@@ -1,0 +1,222 @@
+LOCUS       ATH011613               4920 bp    DNA     linear   PLN 30-SEP-1999
+DEFINITION  Arabidopsis thaliana (ecotype Columbia) spl7 gene, exons 1-10.
+ACCESSION   AJ011613
+VERSION     AJ011613.1  GI:5931636
+KEYWORDS    spl7 gene; squamosa promoter binding protein-like 7.
+SOURCE      Arabidopsis thaliana (thale cress)
+  ORGANISM  Arabidopsis thaliana
+            Eukaryota; Viridiplantae; Streptophyta; Embryophyta; Tracheophyta;
+            Spermatophyta; Magnoliophyta; eudicotyledons; core eudicots;
+            rosids; eurosids II; Brassicales; Brassicaceae; Arabidopsis.
+REFERENCE   1
+  AUTHORS   Cardon,G.H., Hohmann,S., Nettesheim,K., Saedler,H. and Huijser,P.
+  TITLE     Functional analysis of the Arabidopsis thaliana SBP-box gene SPL3:
+            a novel gene involved in the floral transition
+  JOURNAL   Plant J. 12 (2), 367-377 (1997)
+  MEDLINE   97446501
+   PUBMED   9301089
+REFERENCE   2
+  AUTHORS   Cardon,G., Hohmann,S., Klein,J., Nettesheim,K., Saedler,H. and
+            Huijser,P.
+  TITLE     Molecular characterisation of the Arabidopsis SBP-box genes
+  JOURNAL   Gene 237 (1), 91-104 (1999)
+  MEDLINE   99453765
+   PUBMED   10524240
+REFERENCE   3  (bases 1 to 4920)
+  AUTHORS   Cardon,G.H.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (26-SEP-1998) Cardon G.H., Molecular Plant Genetics,
+            Max-Planck-Institut fuer Zuechtungsforschung, Carl-von-Linne-Weg
+            10, Koeln, D-50829, GERMANY
+FEATURES             Location/Qualifiers
+     source          1..4920
+                     /organism="Arabidopsis thaliana"
+                     /mol_type="genomic DNA"
+                     /cultivar="Columbia"
+                     /db_xref="taxon:3702"
+                     /chromosome="5"
+                     /clone="G7-1"
+                     /clone_lib="lambda GEM11"
+     gene            99..4687
+                     /gene="spl7"
+     mRNA            join(99..669,1066..1238,1390..1616,1690..1764,1867..1974,
+                     2291..2408,2525..2660,2886..3039,3114..3674,3928..4687)
+                     /gene="spl7"
+     exon            99..669
+                     /gene="spl7"
+                     /number=1
+     5'UTR           99..118
+                     /gene="spl7"
+     CDS             join(119..669,1066..1238,1390..1616,1690..1764,1867..1974,
+                     2291..2408,2525..2660,2886..3039,3114..3674,3928..4230)
+                     /gene="spl7"
+                     /codon_start=1
+                     /product="squamosa promoter binding protein-like 7"
+                     /protein_id="CAB56575.1"
+                     /db_xref="GI:5931637"
+                     /db_xref="GOA:Q9S723"
+                     /db_xref="TrEMBL:Q9S723"
+                     /translation="MSSLSQSPPPPEMDIQPPALVNDDPSTYSSALWDWGDLLDFAAD
+                     ERLLVDQIHFPPVLSPPLPPLIPTQTPAESELDPSPEESGSGSDRVRKRDPRLICSNF
+                     IEGMLPCSCPELDQKLEDAELPKKKRVRGGSGVARCQVPDCEADISELKGYHKRHRVC
+                     LRCATASFVVLDGENKRYCQQCGKFHLLPDFDEGKRSCRRKLERHNNRRKRKPVDKGG
+                     VAAEQQQVLSQNDNSVIDVEDGKDITCSSDQRAEEEPSLIFEDRHITTQGSVPFTRSI
+                     NADNFVSVTGSGEAQPDEGMNDTKFERSPSNGDNKSAYSTVCPTGRISFKLYDWNPAE
+                     FPRRLRHQIFQWLANMPVELEGYIRPGCTILTVFIAMPEIMWAKLSKDPVAYLDEFIL
+                     KPGKMLFGRGSMTVYLNNMIFRLIKGGTTLKRVDVKLESPKLQFVYPTCFEAGKPIEL
+                     VVCGQNLLQPKCRFLVSFSGKYLPHNYSVVPAPDQDGKRSCNNKFYKINIVNSDPSLF
+                     GPAFVEVENESGLSNFIPLIIGDAAVCSEMKLIEQKFNATLFPEGQEVTACSSLTCCC
+                     RDFGERQSTFSGLLLDIAWSVKVPSAERTEQPVNRCQIKRYNRVLNYLIQNNSASILG
+                     NVLHNLETLVKKMEPDSLVHCTCDCDVRLLHENMDLASDIHRKHQSPIESKVNPPSSG
+                     CCCVSSQKDIPSRILNFNKDPEAGLDCKERIQADCSPDSGGKETDPLLNKEVVMNVND
+                     IGDWPRKSCIKTHSALAFRSRQTMFLIATFAVCFAVCAVLYHPNKVTQLAVAIRMRLV
+                     HKI"
+     misc_feature    530..669
+                     /gene="spl7"
+                     /note="SBP-box/SBP-domain"
+                     /citation=[1]
+     intron          670..1065
+                     /gene="spl7"
+                     /number=1
+     exon            1066..1238
+                     /gene="spl7"
+                     /number=2
+     misc_feature    1066..1153
+                     /gene="spl7"
+                     /note="SBP-box/SBP-domain"
+                     /citation=[1]
+     intron          1239..1389
+                     /gene="spl7"
+                     /number=2
+     exon            1390..1616
+                     /gene="spl7"
+                     /number=3
+     intron          1617..1689
+                     /gene="spl7"
+                     /number=3
+     exon            1690..1764
+                     /gene="spl7"
+                     /number=4
+     intron          1765..1866
+                     /gene="spl7"
+                     /number=4
+     exon            1867..1974
+                     /gene="spl7"
+                     /number=5
+     intron          1975..2290
+                     /gene="spl7"
+                     /number=5
+     exon            2291..2408
+                     /gene="spl7"
+                     /number=6
+     intron          2409..2524
+                     /gene="spl7"
+                     /number=6
+     exon            2525..2660
+                     /gene="spl7"
+                     /number=7
+     intron          2661..2885
+                     /gene="spl7"
+                     /number=7
+     exon            2886..3039
+                     /gene="spl7"
+                     /number=8
+     intron          3040..3113
+                     /gene="spl7"
+                     /number=8
+     exon            3114..3674
+                     /gene="spl7"
+                     /number=9
+     intron          3675..3927
+                     /gene="spl7"
+                     /number=9
+     exon            3928..4687
+                     /gene="spl7"
+                     /number=10
+     3'UTR           4231..4687
+                     /gene="spl7"
+ORIGIN      
+        1 atgttgatga ctttgtgcaa aattacctaa aaccttcaac caaaatcacc aacttcctca
+       61 acaaccgatg gacctttcaa tatttctctg aattttatca gaaattgaag actctcagat
+      121 gtcttctctg tcgcaatcgc caccaccgcc ggagatggat atccaacccc cggcattggt
+      181 taacgatgat ccttccactt attcctccgc tttatgggat tggggagatc tccttgactt
+      241 cgccgcagac gaacgccttc tcgtcgatca aattcatttc cctcccgttc tctctcctcc
+      301 tctaccgcct ctgattccga cgcaaactcc ggcggaatct gaattagatc cttctccgga
+      361 agaatcgggt tctggttcgg atcgggttag gaagcgagac ccgaggttga tttgttccaa
+      421 tttcattgaa ggtatgcttc cttgttcgtg tcctgagctt gatcagaaat tggaagacgc
+      481 cgagcttccg aagaagaaac gggttcgcgg cgggtcgggc gtggctcgat gtcaggttcc
+      541 ggattgtgaa gcggatatta gcgagctcaa agggtaccat aagaggcata gggtttgtct
+      601 ccgttgcgct accgccagct ttgttgtgct tgatggagag aataagagat actgtcaaca
+      661 gtgtggaaag tatgttactt ttcttggctt tgagaataag aattggattt gataggtgaa
+      721 tccagcggga actgtcttag ttaacctcct atgcatcctc ctgggatttt tgtgtgtgtt
+      781 tgacttaggt gttgttcaga tttgatttgc agcacaaaat gatcgaagat cgggatgggt
+      841 ttctgttgtc tgtttgattg ggatagagac tttgaatcta ttgttaagaa attggataac
+      901 tttgggagag actgttgatc agtttgaatg atcccacgga atttacttag tctctttgtt
+      961 gagcataagc tgagcttaac ttctgtttag cagtattatt gtttgtatta attctttcaa
+     1021 tctatgctgt tatccatcat tatagtgagt agtactatct ggcaggtttc atttgctccc
+     1081 ggactttgat gaaggaaaac gcagctgtcg gagaaagcta gagcgtcaca acaacagacg
+     1141 gaaaaggaaa cctgtagata aaggaggtgt tgctgcagaa caacagcaag tgctttcaca
+     1201 gaatgataac agcgtcattg atgttgagga tggaaaaggt ataagtgaac tgcgcaaatc
+     1261 tcaaatcata tcaccatgtg gtttctttgt tttagttgtt tgctttgcat attttgctag
+     1321 ttaccaacgt ttagagttct cttggaaatt caagctgatt cgattgtcaa tgctatcatt
+     1381 ttgaagcaga tatcacatgc tctagtgacc agagagctga agaagagcct tcattgattt
+     1441 ttgaagatcg gcatattacc actcagggtt ctgtaccttt tacccgaagc atcaacgcag
+     1501 acaactttgt ctctgttaca ggttcgggtg aagctcaacc agatgaagga atgaatgaca
+     1561 caaaatttga acgttcacct tctaatggcg acaacaaaag tgcttactca actgtggtga
+     1621 gtttctcttc agcctctaac atcaaaaaca tcggtgcact taatgaacta atttcccatt
+     1681 tcattgcagt gtccaactgg tcggatctct tttaagctct acgattggaa tccagcggag
+     1741 ttcccacgga gactacgtca tcaagtattc tcaagaatta tatattacag tttagtgttc
+     1801 aaagactatg tttaccttct cagaatctca aagaactaat atcttgcgat taatttgaat
+     1861 ttgcagatat ttcaatggtt ggccaacatg cctgttgagc tggagggcta tatccgccca
+     1921 ggatgtacaa ttttgactgt ctttatagca atgccagaga ttatgtgggc gaaggtacat
+     1981 cctgttatct tttactcatc attttcatgt tcatgatgcc gcgacacaac ataagaaatt
+     2041 gtttattttc agtaggttgt agtctcgaga tatgctctat ttctctatgc accttaccct
+     2101 cttaagtacc atatacacat taaagctctt acgtttttgt gtgacctgaa gttcttttgt
+     2161 tactaaaaat tgtccattat ttggaagctt ttgccctgga gggagaaaat gcaaacttag
+     2221 tatctcttcc cgtgaactct cttttgactt tgcactgtaa taaacttttc caatttgttc
+     2281 ctgtaaacag ttatctaaag atcctgtggc atatctggat gaatttattc ttaaacctgg
+     2341 aaagatgctg tttggaagag gctcgatgac tgtctatttg aacaacatga ttttccgtct
+     2401 tattaaaggc aagttggtgt gctttacttg ttttctctgg attttttcac tctatcatat
+     2461 tggataacca taatgtcgtg agctattaat gtgaactaat acttatttgt cttggttttg
+     2521 acaggtggaa caactttaaa gagagtcgat gtaaaattag agtcgccgaa acttcagttt
+     2581 gtgtatccta catgttttga agctggaaaa ccaattgaac tcgttgtatg tggacaaaac
+     2641 cttctgcaac ctaaatgccg gtattaatgt caaccctttt tttgagctat gcttcagaca
+     2701 tctctcgcat ttctagttct gtcttatttc tcatatgagg aagctgatat tgcaagaact
+     2761 ttcaaaatgt tgcatttcga ttactaccca tcatttgttg gtttgatttt tatcacttgt
+     2821 gattactaaa ctgttccata tacgaaagaa aaacatgctg cttacagata atggtttcat
+     2881 tgtaggtttc tcgtgtcttt ttctgggaag tacttgccac ataactattc tgttgtacct
+     2941 gcaccggacc aggatgggaa gcgttcttgt aataacaagt tctacaagat caatattgtg
+     3001 aattctgacc ctagtctctt tggccctgcc tttgtcgagg tacccatttg tttgatgata
+     3061 tacagtttag aagtagctca tttcaatacg atcctcatct aatccttttg taggttgaaa
+     3121 atgaatctgg cctatcaaat ttcatacctc taattattgg agatgcagct gtttgttccg
+     3181 aaatgaaact aatagagcag aagttcaatg ctacactctt tccagaggga caagaagtta
+     3241 ctgcttgctc ttctttgact tgctgttgca gggattttgg ggagagacag agcaccttta
+     3301 gtggcctctt gttagatatt gcatggtcgg tgaaggtacc ctctgcagaa cgcactgagc
+     3361 aacctgtgaa ccgatgtcag ataaaaagat acaacagagt gttgaattat ctgatacaga
+     3421 ataactcagc gtcgatctta ggaaacgtac tgcacaattt ggaaactttg gtgaagaaaa
+     3481 tggagccaga cagtcttgtt cactgtacct gtgactgcga cgtgaggctt ctacatgaaa
+     3541 atatggattt ggcgagtgat attcacagaa agcatcaaag ccctatagag tcaaaggtga
+     3601 atcctccttc gtcaggttgc tgttgtgtga gtagtcagaa ggacatacca tcaagaatat
+     3661 taaacttcaa taaggttttt cactattatc tgacttcccc tattttcctg tttgatctat
+     3721 actggactct gcccacaatc tatacttgtc ttgcacattt ggtttcttgc tccactcctg
+     3781 agtgctgaac actaactttt gtgtgtttat ggtatatttg gcacattgtg acaatattac
+     3841 aggagtctgc gcacaatatt gtgtctgttt cttggtttat ttgcatagtt tctgttattt
+     3901 aatgtttgcc atttattatg tttacaggat cctgaagcag gattagattg taaagagaga
+     3961 atacaggcag actgttcacc agatagcggc ggaaaagaga ctgatcctct gttaaacaaa
+     4021 gaggttgtca tgaacgtaaa tgacatagga gactggccaa ggaagtcgtg tataaaaacg
+     4081 cactcagctt tagcattcag gtcccgtcaa actatgttct taatcgctac gttcgctgtc
+     4141 tgttttgctg tctgtgcggt tctctaccat ccaaacaagg tcacacagct tgcagtggca
+     4201 atccgaatga gattggtaca caaaatttga atataagttc aacggcagag actctcatta
+     4261 acgtgtgtgc atcaaaaagc tcgaagagag ctgtaagagt gttcaacaga gctcagccac
+     4321 aacagcttct cagagagttt cccttcagaa agagacagga tatgatcaga tgaggtcttg
+     4381 ctctttctgt gtgttcttct tcccaatttc tataagaccg gtgatgctgc aactgtaata
+     4441 acaagaaatg ctcagatcag tgattaatta tctctagtcg aatagtgttt tatgtatatt
+     4501 agggtttact tttgctcact gtaacctgtt ttttctttgt ttcttggtct aagaaatgat
+     4561 tcttgaacaa atcctaatcg taactttatg caattttcta cttcaagcaa tgtcttggct
+     4621 cttgagatct ctctaaactc tgtttggtca cctctattat caaatgttat ctttgacttt
+     4681 tcttattatt attgtcagtc caatagatta actagtactc aagtagcata ataatttgag
+     4741 atggttttat tcttttcttc tctttttgaa gtacaactgt attaagatgc atgttggatt
+     4801 gagaaatcgg cactgagatt gattgcaaca tagaaggcaa atgggtagaa aaagacagag
+     4861 aagatgagat ttgaaaacaa cgaagagaca cacatataag gaaatgcgtc agtctgagtc
+//
+

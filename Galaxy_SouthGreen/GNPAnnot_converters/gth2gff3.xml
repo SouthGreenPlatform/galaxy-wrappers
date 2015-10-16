@@ -1,0 +1,56 @@
+<tool id="gth2gff3" name="GNPAnnot Converter : GenomeThreader" version="1.0.0">
+    <description>Convert output in GFF3 and EMBL format</description>   
+    <command interpreter="perl">./gth2gff3.pl $output $__tool_data_path__ $percent_identity $percent_coverage $output_gff $output_gth_eugene</command>
+    <inputs>
+		<param format="txt" name="output" type="data" label="GenomeThreader Result"/> 
+		<param type="integer" name="percent_identity" value="80" label="identity"/>
+		<param type="integer" name="percent_coverage" value="70" label="coverage"/>
+    </inputs>
+    <outputs>
+		<data format="gff3" name="output_gff" label="GenomeThreader (GFF3)"/> 
+		<data format="txt" name="output_gth_eugene" label="GenomeThreader (output for EuGene)" />
+    </outputs>
+    <help>
+   
+.. class:: infomark
+
+**Program encapsulated and developed in Galaxy by Southgreen**
+
+.. class:: infomark
+
+**Part of the GNPAnnot Converters package**
+
+-----
+
+==============
+Author: 
+==============
+
+Gaetan Droc
+
+-----
+
+==============
+What it does: 
+==============
+
+Convert GenomeThreader output in GFF3.
+
+-----
+
+==============
+Output format:
+==============
+
+GFF3
+
+EuGene combiner
+
+-----
+
+.. class:: warningmark
+
+**No support website**
+
+    </help>
+</tool>

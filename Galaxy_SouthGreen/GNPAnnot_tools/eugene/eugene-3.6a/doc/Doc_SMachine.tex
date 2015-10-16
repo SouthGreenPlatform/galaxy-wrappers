@@ -1,0 +1,144 @@
+% Documentation of the SMachine sensor
+
+\subsubsection{\texttt{Sensor.SMachine}}
+
+
+\paragraph{Description}
+
+This plugin injects possible start and splice sites as predicted by
+the SpliceMachine program. For more detail, see the publication
+Degroeve, S., Saeys, Y., De Baets, B., Rouzé, P., Van de Peer, Y.
+(2004) Predicting splice sites from high-dimensional local context
+representations Bioinformatics.
+
+There are two possible outputs for this program, the direct raw output
+directly outputs SVM values (positive or negative real numbers with
+arbitrary magnitude) or a rescaled output (fitting to a sigmoid) with
+a positive ouput between 0 and 1 (with a probabilistic
+interpretation). The two different outputs may lead to different
+prediction performances in \EuGene.
+
+The sensor is activated by setting the value 1 for the parameter \texttt{Sensor.SMachine.use}
+in the parameter file. The score for start, acceptor and donor
+prediction is rescaled by the parameters {\tt SMachine.startP*} and
+{\tt SMachine.startB*} for starts, {\tt SMachine.accP*} and {\tt
+  SMachine.accB*} for acceptors and {\tt SMachine.donP*} and {\tt
+  SMachine.donB*} for donors (see below).  
+
+The parameter {\tt SMachine.isScaled} indicates how the scores of
+SpliceMachine are integrated in \EuGene\ (the details of the scaling
+used in each case is given below. Note that this is the second rescaling
+if the sigmoid fitting has been used in SpliceMachine).  The parameter
+{\tt SMachine.cmd} contains the command which is launch if the
+predictions files do not exist.
+
+Here is an example of SMachine parameters definition.
+\begin{Verbatim}[fontsize=\small]
+SMachine.cmd            "splicemachine.pl "
+SMachine.isScaled       1
+SMachine.accP*          0.102032725565
+SMachine.accB*          5.585
+SMachine.donP*          0.020202707318
+SMachine.donB*          27.670
+SMachine.startP*        0.052
+SMachine.startB*        0.308
+Sensor.SMachine.use     1                # Use SMachine sensor
+Sensor.SMachine         10               # Sensor priority
+\end{Verbatim}
+
+\paragraph{Native input files format}
+The plugin reads the predictions of the program from two files whose
+names are derived from the sequence name by adding the
+\texttt{.spliceMSt} and \texttt{.spliceMAD} suffixes (respectively
+prediction for the starts and splices sites)
+
+The files with \texttt{.spliceMSt} and \texttt{.spliceMAD} suffixes are
+obtained by running SpliceMachine which can be obtained at \\
+\texttt{http://bioinformatics.psb.ugent.be/webtools/splicemachine/}
+
+Here is an extract from a \texttt{.spliceMSt} file:
+\begin{Verbatim}[fontsize=\small]
+175 start_rev 0.024083
+188 start 0.000151
+195 start_rev 0.010081
+261 start 0.001628
+270 start 0.000026
+[...]
+\end{Verbatim}
+
+Here is an extract from a \texttt{.spliceMAD} file:
+\begin{Verbatim}[fontsize=\small]
+210 acceptor_rev 0.066414
+245 donor_rev 0.001345
+628 acceptor 0.066414
+1309 donor 0.000039
+[...]
+\end{Verbatim}
+
+\paragraph{Gff3 input file format}
+The gff3 input mode is activated by setting the value \texttt{GFF3}
+for the parameter \texttt{SMachine.format} in the parameter file.  The
+plugin reads the predictions of the program from one file which name
+is derived from the sequence name by adding the \texttt{.spliceM.gff3} extension.
+
+Accepted features (third column):\\
+\begin{itemize}
+\item  SO:0000318 or start\_codon, the expected coordinates must correspond to the first nucleotide of the start codon.
+\item  SO:0000164 or splice\_acceptor\_site, the expected coordinates must correspond to the AG/GT nucleotides.
+\item  SO:0000163 or splice\_donor\_site, the expected coordinates must correspond to the AG/GT nucleotides.
+\end{itemize}
+
+If the feature used isn't one of those, the line will be rejected. The
+expected coordinates must match the AG/GT nucleotides (splices) or ATG (start).
+Here an extract of \texttt{seq14ac002535g4g5.tfa.spliceM.gff3}.
+\begin{Verbatim}[fontsize=\tiny]
+seq14	SMachine	start_codon	175	175	0.024083	-	.	ID=start_codon:seq14.1;
+seq14	SMachine	start_codon	188	188	0.000151	+	.	ID=start_codon:seq14.2;
+seq14	SMachine	acceptor_splice_site	210	211	0.066414	-	.	ID=acceptor_splice_site:seq14.1;
+seq14	SMachine	donor_splice_site	244	245	0.001345	-	.	ID=donor_splice_site:seq14.1;
+\end{Verbatim}
+
+
+\paragraph{Filtering input information}
+
+No filtering.
+
+\paragraph{Integration of information}
+
+The integrated score for start and donor/acceptor prediction is read
+(columns 3).  The score read $s$ is rescaled using the {\tt
+  SMachine.startP*} (\emph{P}) and {\tt SMachine.startB*} (\emph{B})
+parameters for starts, {\tt SMachine.accP*} (\emph{P}) and {\tt
+  SMachine.accB*} (\emph{B}) parameters for acceptors and {\tt
+  SMachine.donP*} (\emph{P}) and {\tt SMachine.donB*} (\emph{B})
+parameters for donors.
+
+
+If ({\tt SMachine.isScaled} is set to {\tt 0}) then the rescaled score  $s'$ is:
+\[s' = B*s-P\]
+used when the signal is used. If the signal is not used, no penalty occurs.
+
+If ({\tt SMachine.isScaled} is set to {\tt 1}) then the rescaled score  $s'$ is:
+\[s' = B\log(s)-P\]
+when the signal is used, and $\log(1.0-s^B*e^{-P})$ otherwise. 
+
+If  ({\tt SMachine.isScaled} is set to {\tt 2}) then the rescaled score  $s'$ is
+\[s' = B\log(s)-P\]
+when the signal is used, nothing otherwise.
+
+
+\paragraph{Post analyse}
+
+No post analyse.
+
+\paragraph{Graph}
+
+Predicted starts are visible on exonix tracks as blue vertical lines
+whose length indicates the site score.
+Predicted splice sites are visible on the intronic tracks as green
+(donor) and magenta (acceptor) vertical lines whose length indicates
+the site score.
+
+
+
+

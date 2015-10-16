@@ -1,0 +1,54 @@
+<tool id="exonerate2gff3" name="GNPAnnot Converter : Exonerate" version="1.0.0">
+    <description>Convert output in gff3 and EMBL format</description>
+    <command interpreter="perl">./exonerate2gff3.pl $input $output_gff3 $output_embl</command> 
+    <inputs>
+         <param format="txt" name="input" type="data" label="Exonerate result"/> 
+    </inputs>
+    <outputs>
+         <data format="gff3" name="output_gff3" label="Exonerate on (gff3)"/>
+         <data format="txt" name="output_embl" label="Exonerate (EMBL)" />
+    </outputs>
+    <help>
+    
+.. class:: infomark
+
+**Program encapsulated and developed in Galaxy by Southgreen**
+
+.. class:: infomark
+
+**Part of the GNPAnnot Converters package**
+
+-----
+
+==============
+Author: 
+==============
+
+Gaetan Droc
+
+-----
+
+==============
+What it does: 
+==============
+
+Convert Exonerate output in gff3 and EMBL file
+
+-----
+
+==============
+Output format:
+==============
+
+EMBL
+
+gff3
+
+-----
+
+.. class:: warningmark
+
+**No support website**    
+
+    </help>
+</tool>

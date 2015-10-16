@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/svn/eugene/!svn/ver/1/pipeline/lib/GFF
+END
+GeneFeatureSet.pm
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/eugene/!svn/ver/1/pipeline/lib/GFF/GeneFeatureSet.pm
+END
+GifGFF.pm
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/eugene/!svn/ver/1/pipeline/lib/GFF/GifGFF.pm
+END
+Sequence.pm
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/eugene/!svn/ver/1/pipeline/lib/GFF/Sequence.pm
+END
+HomolGeneFeature.pm
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/eugene/!svn/ver/1/pipeline/lib/GFF/HomolGeneFeature.pm
+END
+GeneFeature.pm
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/eugene/!svn/ver/1/pipeline/lib/GFF/GeneFeature.pm
+END
+Analysis.pm
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/eugene/!svn/ver/1/pipeline/lib/GFF/Analysis.pm
+END

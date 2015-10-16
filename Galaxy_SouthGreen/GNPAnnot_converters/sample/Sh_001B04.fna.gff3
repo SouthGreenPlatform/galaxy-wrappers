@@ -1,0 +1,34 @@
+FT   CDS             join(480..811,1221..1263)
+FT                   /locus_tag="fgenesh_Sh_001B04_g000010"
+FT   CDS             join(9946..10033,11270..13263)
+FT                   /locus_tag="fgenesh_Sh_001B04_g000020"
+FT   CDS             complement(join(14122..14427,14591..14714,15032..15093,15182..15279,15378..15414,15500..15771,16117..16177))
+FT                   /locus_tag="fgenesh_Sh_001B04_g000030"
+FT   CDS             join(16695..16772,16878..16977,17036..17142,17498..17515)
+FT                   /locus_tag="fgenesh_Sh_001B04_g000040"
+FT   CDS             19029..23195
+FT                   /locus_tag="fgenesh_Sh_001B04_g000050"
+FT   CDS             complement(join(23920..24266,24399..24912,24987..25558,25652..25971,26042..26748,26827..27744))
+FT                   /locus_tag="fgenesh_Sh_001B04_g000060"
+FT   CDS             join(30597..30825,30968..31066,32036..32039,32729..33062)
+FT                   /locus_tag="fgenesh_Sh_001B04_g000070"
+FT   CDS             complement(join(36073..38123,38580..39356,39387..39488,39652..39679,40198..40377,43154..43234,43368..43453,44879..45146))
+FT                   /locus_tag="fgenesh_Sh_001B04_g000080"
+FT   CDS             complement(45819..46475)
+FT                   /locus_tag="fgenesh_Sh_001B04_g000090"
+FT   CDS             join(47752..47841,47977..48050,48150..48292,49016..49066,49164..49385,49509..49611,49993..50503)
+FT                   /locus_tag="fgenesh_Sh_001B04_g000100"
+FT   CDS             complement(51215..52399)
+FT                   /locus_tag="fgenesh_Sh_001B04_g000110"
+FT   CDS             join(52758..53090,53233..53395,53614..53708,53866..54081)
+FT                   /locus_tag="fgenesh_Sh_001B04_g000120"
+FT   CDS             complement(56403..57455)
+FT                   /locus_tag="fgenesh_Sh_001B04_g000130"
+FT   CDS             58430..58645
+FT                   /locus_tag="fgenesh_Sh_001B04_g000140"
+FT   CDS             complement(join(61625..62287,62346..62741,63684..63829,63908..63959,64190..64204))
+FT                   /locus_tag="fgenesh_Sh_001B04_g000150"
+FT   CDS             complement(join(78539..78945,80421..80493))
+FT                   /locus_tag="fgenesh_Sh_001B04_g000160"
+FT   CDS             join(85659..86133,86602..86884,87244..87628)
+FT                   /locus_tag="fgenesh_Sh_001B04_g000170"

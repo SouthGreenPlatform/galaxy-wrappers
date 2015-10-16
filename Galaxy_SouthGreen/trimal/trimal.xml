@@ -1,0 +1,35 @@
+<tool id="trimal" name="Trimal">
+	<description>, A tool for automated alignment trimming</description>
+	<command>
+	source $__tool_directory__/module_trimal.sh;
+	trimal -in $input -out $output1 -htmlout $output2
+			-gt $gtin
+		#if $stin
+			-st $stin
+		#end if
+		#if $consin
+			-cons $consin
+		#end if
+	</command>
+	<inputs>
+		<param format="fasta" name="input" type="data" label="Source file"/>
+		<param name="gtin" type="text" label="gt option" value="0.0" help="0 to 1, with 1 will remove all columns with any gap"/>
+		<param name="stin" type="float" label="st option" optional="true" help="0 to 1, for example 0.001 value will remove all columns with a similarity score lower than 0.001"/>
+		<param name="consin" type="integer" label="cons option" optional="true" help="0 to 100, for example 60 value will conserve at least 60% of the columns"/>
+	</inputs>
+	<outputs>
+		<data format="input" name="output1" />
+		<data format="html" name="output2" label="htmlout"/>
+	</outputs>
+	<help>	
+	
+.. class:: infomark
+
+**Program encapsulated in Galaxy and developed by South Green**
+
+	</help>
+
+        <citations>
+                <citation type="doi">10.1093/bioinformatics/btp348</citation>
+        </citations>
+</tool>

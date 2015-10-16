@@ -1,0 +1,293 @@
+#
+# Opt.29_Sep_2006.AbIniSMFHBX.2_Est.1_GENETIC_LINESEARCH.1.Par 
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#################################################################
+###################### GENERAL PARAMETERS #######################
+#################################################################
+EuGene.version                           3.2
+EuGene.organism                          Rice
+EuGene.sloppy                            0
+#
+##### Lengths #####
+EuGene.InitExDist                        init.dist
+EuGene.IntrExDist                        intr.dist
+EuGene.TermExDist                        term.dist
+EuGene.SnglExDist                        sngl.dist
+EuGene.IntronDist                        intron.dist
+EuGene.InterGDist                        intergenic.dist
+EuGene.5PrimeDist                        utr.dist
+EuGene.3PrimeDist                        utr.dist
+#
+##### Priors #####
+EuGene.SplicedStopPen                    1e999.0
+EuGene.ExonPrior                         0.33            # Prior on the initial states
+EuGene.IntronPrior                       0.17            # Sato et al 1999 / Terryn et al. 1999
+EuGene.InterPrior                        0.4
+EuGene.FivePrimePrior                    0.03
+EuGene.ThreePrimePrior                   0.07
+#
+##### Output control ######
+Output.MinCDSLen                         99
+Output.truncate                          0
+Output.stepid                            1
+Output.graph                             FALSE           # Don't produce a graphical output
+Output.resx                              900
+Output.resy                              400
+Output.glen                              -1
+Output.golap                             -1
+Output.gfrom                             -1
+Output.gto                               -1
+Output.window                            48
+Output.format                            l
+Output.offset                            0
+Output.normopt                           1
+Output.Prefix                            ./
+Output.webdir                            http://www.inra.fr/bia/T/EuGene/
+#
+#
+##### Transcript parameters #####
+#
+Transcript.Start*                        3.914128
+Transcript.Stop*                         3.914128
+#
+Sensor.Transcript.use                    TRUE
+#
+##### EuStop parameters #####
+#
+EuStop.stopP*                            3.914128
+#
+Sensor.EuStop.use                        TRUE
+#
+##### Interpolated Markov Models parameters #####
+#
+MarkovIMM.matname[0]                     Oryzanew.mat
+MarkovIMM.minGC[0]                       0
+MarkovIMM.maxGC[0]                       100
+MarkovIMM.useM0asIG[0]                   0
+MarkovIMM.maxOrder[0]                    2
+#MarkovIMM.matname[1]	./EuAdaptOutput/matrice.mat
+#MarkovIMM.minGC[1]	50
+#MarkovIMM.maxGC[1]	100
+#MarkovIMM.useM0asIG[1]	0
+#MarkovIMM.maxOrder[1]	8
+#
+Sensor.MarkovIMM.use                     TRUE
+#
+##### State penalties (exp length distributions) #####
+#
+MarkovConst.minGC[0]                     -1
+MarkovConst.maxGC[0]                     100
+MarkovConst.Coding*                      1.0
+MarkovConst.Intron*                      1.0
+MarkovConst.UTR5*                        0.999
+MarkovConst.UTR3*                        0.999
+MarkovConst.Inter*                       1.0
+MarkovConst.IntronUTR*                   0.999
+#
+Sensor.MarkovConst.use                   TRUE
+#
+##### Sensor priorities  #####
+Sensor.ATGpr                             1
+Sensor.EuStop                            1
+Sensor.FrameShift                        1
+Sensor.GSplicer                          1
+Sensor.NG2                               1
+Sensor.NStart                            1
+Sensor.PatConst                          1
+Sensor.PepSignal                         1
+Sensor.SMachine                          1
+Sensor.SpliceWAM                         1
+Sensor.SPred                             1
+Sensor.StartWAM                          1
+Sensor.Transcript                        1
+#
+Sensor.BlastX                            10
+Sensor.Est                               30
+Sensor.Homology                          10
+Sensor.MarkovConst                       5
+Sensor.MarkovIMM                         5
+Sensor.MarkovProt                        5
+Sensor.Repeat                            10
+#
+Sensor.AnnotaStruct                      1
+Sensor.IfElse                            1
+Sensor.Riken                             10
+Sensor.User                              20
+#
+Sensor.GCPlot                            10
+Sensor.GFF                               10
+Sensor.Plotter                           10
+Sensor.Tester                            1
+#
+#
+ParaOptimization.Use		FALSE
+#
+#
+#### Invariants #####
+#
+#
+#
+#
+#
+#
+##### SpliceMachine parameters #####
+#
+SMachine.cmd                             "/usr/local/bioinfo/splicemachine/splicemachineMT_1.0_Oct2004.pl "
+SMachine.isScaled[0]                     0
+SMachine.accP*[0]                        -8.625568
+SMachine.accB*[0]                        22.000000
+SMachine.donP*[0]                        -6.814917
+SMachine.donB*[0]                        19.323158
+SMachine.startP*[0]                      -10.000000
+SMachine.startB*[0]                      20.068583
+#
+Sensor.SMachine.use                      TRUE
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+##### AnnotaStruct sensor parameters #####
+#
+AnnotaStruct.FileExtension[0]            fgenesh.gff
+AnnotaStruct.Start*[0]                   8.287926
+AnnotaStruct.StartType[0]                s      # p: probability  s: score
+AnnotaStruct.Stop*[0]                    0.000000
+AnnotaStruct.StopType[0]                 s
+AnnotaStruct.Acc*[0]                     5.938158
+AnnotaStruct.AccType[0]                  s
+AnnotaStruct.Don*[0]                     4.977595
+AnnotaStruct.DonType[0]                  s
+AnnotaStruct.TrStart*[0]                 0
+AnnotaStruct.TrStartType[0]              s
+AnnotaStruct.TrStop*[0]                  0
+AnnotaStruct.TrStopType[0]               s
+AnnotaStruct.Exon*[0]                    0
+AnnotaStruct.Intron*[0]                  0
+AnnotaStruct.CDS*[0]                     0.064953
+#
+Sensor.AnnotaStruct.use                  TRUE
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+##### Proteic similarity sensor parameters #####
+#
+BlastX.minIn                             50
+BlastX.PPNumber                          5
+BlastX.PostProcess                       FALSE
+BlastX.levels                            01
+BlastX.level0*                           0.418916
+BlastX.level1*                           0.357729
+BlastX.level2*                           0
+BlastX.level3*                           0
+BlastX.level4*                           0
+BlastX.level5*                           0
+BlastX.level6*                           0
+BlastX.level7*                           0
+BlastX.level8*                           0
+BlastX.level9*                           0
+BlastX.blastxM*                          9
+#
+Sensor.BlastX.use                        TRUE
+#
+#
+#
+#
+#
+#
+#
+#
+#
+##### Est sensor parameters #####
+#
+#Est.PostProcess 2     # FALSE TRUE OR 2
+Est.PostProcess                          FALSE
+Est.PPNumber                             5     # For PostProcess = "2"
+Est.estP*	-0.144439
+#Est.estP*      -1e4  # forces EuGene to match with est
+Est.estM                                 6
+Est.utrP*                                0.35
+Est.utrM                                 5
+Est.SpliceBoost*	9.509001
+Est.StrongDonor                          0.95
+Est.MinDangling                          10
+Est.MaxIntron                            15000
+#
+Sensor.Est.use                           TRUE
+#
+#
+################## Genetic ######################################
+#
+Genetic.NbRun                            9
+Genetic.NbGeneration                     45
+Genetic.NbElement                        30
+Genetic.CrossOverProbability             0.6
+Genetic.MutationProbability              0.2
+Genetic.SelectionType                    1
+#                                 1:stochastic remainder without replacement
+Genetic.ScalingType                      1
+#                                 1: Sigma Truncation scaling 
+#                                 2: Power Law scaling
+Genetic.Sharing                          0.99
+#                                 1: sharing, looking for clusters which best 
+#                                    elt fitness is at least n% of the overall 
+#                                    best element of the population
+Genetic.Clustering                       TRUE
+Genetic.Elitism                          0.9
+#                                 n: elitism; keeps the best elt if no sharing,
+#                                    and keeps the best elt of each cluster 
+#                                    which best_elt fitness is at
+#                                    least n% of the overallbest elt if sharing
+Genetic.SA.Mutation                      FALSE
+Genetic.SA.CrossOver                     FALSE
+Genetic.Seed                             4
+#
+################## LineSearch ######################################
+#
+#
+#
+Sensor.ATGpr.use                         FALSE
+Sensor.FrameShift.use                    FALSE
+Sensor.GSplicer.use                      FALSE
+Sensor.NG2.use                           FALSE
+Sensor.NStart.use                        FALSE
+Sensor.PatConst.use                      FALSE
+Sensor.PepSignal.use                     FALSE
+Sensor.SpliceWAM.use                     FALSE
+Sensor.SPred.use                         FALSE
+Sensor.StartWAM.use                      FALSE
+Sensor.Homology.use                      FALSE
+Sensor.MarkovProt.use                    FALSE
+Sensor.Repeat.use                        FALSE
+Sensor.IfElse.use                        FALSE
+Sensor.Riken.use                         FALSE
+Sensor.User.use                          FALSE
+Sensor.GCPlot.use                        FALSE
+Sensor.GFF.use                           FALSE
+Sensor.Plotter.use                       FALSE
+Sensor.Tester.use                        FALSE

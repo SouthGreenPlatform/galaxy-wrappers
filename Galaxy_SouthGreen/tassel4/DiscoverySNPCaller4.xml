@@ -1,0 +1,107 @@
+<tool id="discoverysnpcaller4" name="DiscoverySNPCaller4" version="4.0">
+	<description>Generates a TagsByTaxa file for each FASTQ file</description>
+	<command>
+		source $__tool_directory__/module_tassel4.sh;
+		$__tool_directory__/DiscoverySNPCaller4.sh $input $useTBTByte $topm $mUpd $vcf $mxSites $mnF $mnMAF $mnMAC $mnLCov $errRate $sC $eC $inclRare $inclGaps $callBiSNPsWGap
+  #if $reference_genome.source == "indexed":
+  	 $reference_genome.database.fields.path
+  #else:
+  	 $reference_genome.database 
+  #end if
+  	  $output_hapmap 
+	</command>
+	<inputs>  
+    	<param name="input" type="data" format="txt" label="Input TagsByTaxa (TBT) file (-i option)" />
+    	<param name="useTBTByte" type="boolean" checked="true"  label="Use byte-formatted TBT file (*.tbt.byte)" />
+    	<param name="topm" type="data" format="txt" label="TagsOnPhysicalMap (TOPM) file containing genomic positions of tags (-m option)" />
+		<param name="mUpd" type="boolean" checked="false"  label="Update TagsOnPhysicalMap file with allele calls for Production Pipeline, save to specified file  (default: false)" />
+    	<param name="vcf" type="boolean" checked="true"  label="Output a VCF file (*.vcf) as well as the default HapMap (*.hmp.txt)  (default: false)" />
+    	<param name="mxSites" type="integer" value="200000" label="Maximum number of sites (SNPs) output per chromosome (Default: 200000)" />
+    	<param name="mnF" type="float" value="-2.0" label="Minimum F (inbreeding coefficient) (Default: -2.0)" />
+    	 
+		<param name="mnMAF" type="float" value="0.01" label="Minimum minor allele frequency (Default: 0.01)" />
+    	<param name="mnMAC" type="integer" value="10" label="Minimum minor allele count (default: 10)." />
+    	<param name="mnLCov" type="float" value="0.1" label="Minimum locus coverage (proportion of Taxa with a genotype) (Default: 0.1)" />
+    	<param name="errRate" type="float" value="0.01" label="Average sequencing error rate per base (used to decide between heterozygous and homozygous calls) (Default: 0.01)" />
+  		<param name="sC" type="integer" value="1" label="Start chromosome" />
+    	<param name="eC" type="integer" value="10" label="End chromosome" />
+    	<param name="inclRare" type="boolean" checked="false" label="Include the rare alleles at site (3 or 4th states) (default: false)" />
+    	<param name="inclGaps" type="boolean" checked="false"  label="Include sites where major or minor allele is a GAP (default: false)" />
+    	<param name="callBiSNPsWGap" type="boolean" checked="false" label="Include sites where the third allele is a GAP (default: false))" />
+  		<conditional name="reference_genome">
+			<param name="source" type="select" label="Will you select a reference genome from your history or use a built-in index?:">
+				<option value="indexed" selected="True">Use a built-in genome index</option>
+				<option value="history">Use a genome from the history and build index</option>
+			</param>
+			<when value="indexed">
+				<param name="database" type="select" label="Select reference genome">
+					<options from_file="gbs.loc">
+						<column name="value" index="0"/>
+						<column name="name" index="1"/>
+						<column name="path" index="2"/>
+					</options>
+				</param>
+			</when>
+			<when value="history">
+				<param name="database" type="data" format="fasta" label="Select reference genome" /> 
+			</when>
+		</conditional>
+  	</inputs>
+	<outputs>
+		<data format="txt" name="output_hapmap" label="Tassel4 DiscoverySNP files (tar.gz) (Input for MergeDuplateSNP Plugin)" /> 
+  	</outputs>   
+  	<help>
+  
+  .. class:: infomark
+
+**Program encapsulated in Galaxy by South Green**
+
+.. class:: infomark
+
+**Tassel**
+
+-----
+
+==========
+ Overview
+==========
+
+**TASSEL-GBS: A High Capacity Genotyping by Sequencing Analysis Pipeline**
+
+**DiscoverySNPCaller Plugin (Tassel 4.0)**
+
+Aligns tags from the same physical location against one another, calls SNPs from each alignment, and then
+outputs the SNP genotypes to a HapMap format file (one file per chromosome).
+
+**The commonly used parameters with default value setting**::
+
+	-i		Input .tbt file
+	-y		Use byte-formatted TBT file (*.tbt.byte)
+	-m		TagsOnPhysicalMap file containing genomic positions of tags
+	-mUpd		Update TagsOnPhysicalMap file with allele calls for Production Pipeline, save to specified file (default: false)
+	-o		Output HapMap file. Use a plus sign (+) as a wild card character in place of the chromosome number
+	-vcf		Output a VCF file (*.vcf) as well as the default HapMap (*.hmp.txt)  (default: false)
+  	-mxSites	Maximum number of sites (SNPs) output per chromosome (default: 200000)
+	-mnF		Minimum F (inbreeding coefficient)	
+	-mnMAF		Minimum minor allele frequency (default: 0.01)
+   	-mnMAC		Minimum minor allele count (default: 10)
+   	-mnLCov		Minimum locus coverage (proportion of Taxa with a genotype) (default: 0.1)
+	-errRate	Average sequencing error rate per base (used to decide between heterozygous and homozygous calls) (default: 0.01)
+	-ref		Path to reference genome in fasta format. 
+	-inclRare	Include the rare alleles at site (3 or 4th states) (default: false)
+	-inclGaps	Include sites where major or minor allele is a GAP (default: false)
+	-callBiSNPsWGap	Include sites where the third allele is a GAP (default: false) (mutually exclusive with inclGaps)
+ 	-sC		Start chromosome	
+	-eC		End chromosome
+
+-----
+
+For further informations, please visite the website of TASSEL_.
+
+.. _TASSEL: http://www.maizegenetics.net/#!tassel/c17q9
+
+	</help>
+	<citations>
+    	<citation type="doi">10.1371/journal.pone.0090346</citation> 
+  	</citations>
+</tool>

@@ -1,0 +1,266 @@
+class String_Array
+!!!204802.cpp!!!	String_To_Sub(in S : char, in L : int) : int
+  int  i, Sub;
+  
+  myassert (L <= Max_Str_Len);
+  
+  if  (L == 0)
+    return  0;
+  
+  Sub = 0;
+  for  (i = 0;  i < L;  i ++)  
+    Sub = Sub * Alphabet_Size + Value (S [i]);
+  
+  Sub += int (pow (Alphabet_Size, L) - 1) / (Alphabet_Size - 1);
+  
+  return  Sub;
+!!!204930.cpp!!!	AntiString_To_Sub(in S : char, in L : int) : int
+  int  i, Sub;
+  
+  myassert (L <= Max_Str_Len);
+  
+  if  (L == 0)
+    return  0;
+  
+  Sub = 0;
+  for  (i = L-1;  i >=0;  i --)
+    Sub = Sub * Alphabet_Size + AntiValue (S [i]);
+  
+  Sub += int (pow (Alphabet_Size, L) - 1) / (Alphabet_Size - 1);
+  
+  return  Sub;
+!!!205058.cpp!!!	String_Array()
+  Val = NULL;
+  Num_Entries = Max_Str_Len = Alphabet_Size = 0;
+!!!205186.cpp!!!	String_Array(in L : int, in S : int)
+  int  i;
+  
+  myassert (L > 0 && S > 0);
+  
+  Max_Str_Len = L;
+  Alphabet_Size = S;
+  
+  Num_Entries = int (pow (S, L + 1) - 1) / (S - 1);
+  Val = (float *) Safe_malloc (Num_Entries * sizeof (float));
+  
+  Val [0] = 1.0;
+  for  (i = 1;  i < Num_Entries;  i ++)
+    Val [i] = 0.0;
+!!!205314.cpp!!!	~String_Array()
+  free (Val);
+!!!205442.cpp!!!	Condense(inout L : String_Array) : void
+  long int  i, Ct, Prev_i, Prev_i_Start, Prev_Size;
+  long int  Size, Sub;
+  
+  myassert (Max_Str_Len == L . Max_Str_Len + 1);
+  
+  Val [0] = 1.0;
+  
+  Ct = Prev_i = Prev_i_Start = Sub = 0;
+  Prev_Size = 1;
+  Size = Alphabet_Size;
+  
+  for  (i = 1;  i < Num_Entries;  i ++) {
+    Val [i] = L . Val [Sub] * Val [i]
+      + (1.0 - L . Val [Sub]) * Val [Prev_i_Start + Prev_i];
+    
+    if  (++ Ct == Size) {
+      Ct = 0;
+      Prev_i_Start += Prev_Size;
+      Prev_Size  = Size;
+      Size *= Alphabet_Size;
+      Prev_i = 0;
+    }
+    else
+      Prev_i = (Prev_i + 1) % Prev_Size;
+    
+    if  (i % Alphabet_Size == 0)
+      Sub ++;
+  }
+   
+  return;
+!!!205570.cpp!!!	Incr(in S : char, in L : int, in D : double) : void
+  int  i;
+  
+   i = String_To_Sub (S, L);
+   Val [i] += D;
+   
+   return;
+!!!205698.cpp!!!	Min_Val() : double
+  double  Min;
+  int  i;
+  
+  Min = Val [0];
+  
+  for  (i = 1;  i < Num_Entries;  i ++) {
+    if  (Val [i] < Min)
+      Min = Val [i];
+  }
+  
+  return  Min;
+!!!205826.cpp!!!	Normalize() : void
+  double  Sum;
+  long int  j, Ct, Prev_Size, Prev_Start, Prev_Sub, Size, Start;
+  
+  Val [0] = 1.0;
+  
+  Ct = 0;
+  Prev_Size = 1;
+  Prev_Start = 0;
+  Prev_Sub = 0;
+  Size = Alphabet_Size;
+  
+  for  (Start = 1;  Start < Num_Entries;  Start += Alphabet_Size)  {
+    if  (Prev_Size > 1)
+      for  (j = 0;  j < Alphabet_Size;  j++) {
+	//	 printf("P %d %f %f\n", Start+j,Val [Start + j],Val [Prev_Start + Prev_Sub + j]);
+	Val [Start + j] += Val [Prev_Start + Prev_Sub + j];
+      }
+    
+    Sum = 0.0;
+    for  (j = 0;  j < Alphabet_Size;  j++) {
+      Sum += Val [Start + j];
+      //       printf("A %d %d %f\n", Start,j,Val [Start + j]);
+    }
+    
+    if  (Sum == 0.0)  {
+      for  (j = 0;  j < Alphabet_Size;  j++)
+	Val [Start + j] = 0.0;
+    }
+    else  {
+      for  (j = 0;  j < Alphabet_Size;  j++) {
+	Val [Start + j] /= Sum;
+	if  (Val [Start + j] < MINIMUM_DELTA_VAL)
+	  Val [Start + j] = MINIMUM_DELTA_VAL;
+      }
+    }
+    // Bug ?
+    //    if  ((Ct += Alphabet_Size) == Size) {
+    if  (++ Ct == Size) {
+      Ct = 0;
+      Prev_Start += Prev_Size;
+      Prev_Size = Size;
+      Size *= Alphabet_Size;
+      Prev_Sub = 0;
+    }
+    else
+      Prev_Sub = (Prev_Sub + Alphabet_Size) % Prev_Size;
+  }
+  return;
+!!!205954.cpp!!!	Set(in X : double = 0.0) : void
+  int  i;
+  
+  Val [0] = 1.0;
+  for  (i = 1;  i < Num_Entries;  i ++)
+    Val [i] = X;
+  
+  return;
+!!!206082.cpp!!!	Set_Lambda(inout D : String_Array) : void
+  float  * Prob, Sum;
+  int  Len;
+  long int  Prev_Start, Prev_Sub, Size, Sub;
+  long int  i, Ct, Prev_Size, Used;
+  
+  myassert (Max_Str_Len == D . Max_Str_Len - 1);
+  
+  //   printf ("Context Length Usage\n");
+  // printf (" Len      Used\n");
+  Len = 1;
+  Used = 0;
+  Val [0] = 1.0;
+  
+  Prob = (float *) Safe_malloc (D . Num_Entries * sizeof (float));
+  Sum = 0.0;
+  for  (i = 1;  i <= Alphabet_Size;  i ++)
+    Sum += D . Val [i];
+  for  (i = 1;  i <= Alphabet_Size;  i ++)
+    Prob [i] = D . Val [i] / Sum;
+  
+  Sub = Alphabet_Size + 1;
+  Prev_Start = 1;
+  Prev_Sub = 0;
+  Ct = 0;
+  Prev_Size = 1;
+  Size = Alphabet_Size;
+  for  (i = 1;  i < Num_Entries;  i ++)  {
+    Val [i] = New_Analyze (D . Val + Sub, Prob + Prev_Start + Prev_Sub,
+			   Alphabet_Size, Prob + Sub);
+    if  (Val [i] > 0.0)
+      Used ++;
+    
+    if  (++ Ct == Size)  {
+      //           printf ("%3d %9ld (%3d%%)\n", Len ++, Used,
+      //                           int (0.5 + (100.0 * Used) / Size));
+      Used = 0;
+      Ct = 0;
+      Prev_Start += Size;
+      Prev_Size *= Alphabet_Size;
+      Size *= Alphabet_Size;
+      Prev_Sub = 0;
+    }  else  {
+      Prev_Sub = (Prev_Sub + Alphabet_Size) % Size;
+    }
+    
+    Sub += Alphabet_Size;
+  }
+  
+  free (Prob);
+  
+  return;
+!!!206210.cpp!!!	Value(in Ch : char) : int
+  switch  (tolower (Ch)) {
+  case  'a' :
+    return  0;
+  case  'c' :
+    return  1;
+  case  'g' :
+    return  2;
+  case  't' :
+  case  'u' :   
+    return  3;
+  default :
+    fprintf (stderr, "ERROR:  Unexpected character \'%c\' (ASCII %d)\n",
+	     Ch, int (Ch));
+    exit (-1);
+  }
+!!!206338.cpp!!!	AntiValue(in Ch : char) : int
+  switch  (tolower (Ch))
+    {
+    case  'u' :   
+    case  't' :
+      return  0;
+    case  'g' :
+      return  1;
+    case  'c' :
+      return  2;
+    case  'a' :
+      return  3;
+    default :
+      fprintf (stderr, "ERROR:  Unexpected character \'%c\' (ASCII %d)\n",
+	       Ch, int (Ch));
+      exit (-1);
+    }
+!!!206466.cpp!!!	BinWrite(inout fp : FILE) : void
+  int    i;
+  unsigned short  buffer;
+  
+  (void) fwrite(&Max_Str_Len,   sizeof(int), 1, fp);
+  (void) fwrite(&Alphabet_Size, sizeof(int), 1, fp);
+  (void) fwrite(&Num_Entries,   sizeof(int), 1, fp);
+  
+  for (i = 0;  i < Num_Entries;  i ++) {
+    buffer = (unsigned short) floor((double) (Val[i]/BINARY_PRECISION + 0.5));
+    (void) fwrite(&buffer,  sizeof(unsigned short), 1, fp);
+  }
+  
+  return;
+!!!206722.cpp!!!	operator ()(in S : char, in L : int) : float
+  int  i;
+  
+   i = String_To_Sub (S, L);
+   return  Val [i];
+!!!206850.cpp!!!	Anti(in S : char, in L : int) : float
+  int  i;
+  
+  i = AntiString_To_Sub (S, L);
+  return  Val [i];

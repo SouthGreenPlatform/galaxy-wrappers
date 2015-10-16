@@ -1,0 +1,243 @@
+% Documentation of the BlastX sensor
+
+\subsubsection{\texttt{Sensor.BlastX}}
+
+\paragraph{Description}
+
+The BlastX sensor allows to exploit similarities with homologous
+proteins. The similarities influence exon and intron detection.
+Similarities from several databases can be exploited. Usually 3
+databases are used: SwissProt, PIR and TrEMBL.
+
+A label $i$ (that could vary from 0 to 9) is assigned at each
+considered database. Files describing a collection of similarities with
+a sequence have an extension .blast$<$i$>$ (\texttt{.blast0,...,.blast9}).
+
+The user has to specify the list of labels to consider, the
+confidence accorded to each, the minimum length of an intron and a
+number of amino acids involved in intron incitation.  The sensor is
+activated by either:
+\begin{itemize}
+\item the \texttt{-b} argument \index{CmdFlags}{[BlastX activation] b}
+  that allows to specify the labels to consider, for example
+  \texttt{-b092} to use the levels 0, 9, 2 (files \texttt{.blast0,
+    .blast9, .blast2}),
+\item the value 1 for the parameter \texttt{Sensor.BlastX.use} in
+  the parameter file and the labels to consider in the
+  \texttt{.BlastX.levels} parameter.
+\end{itemize}
+The confidence in analyzes have to be specified in the parameter file
+giving values to the parameters \texttt{BlastX.level}$<$i$>$*.  The
+minimum length of an intron is defined in the \texttt{BlastX.minIn}
+parameter.  A number of amino acids defined in the
+\texttt{BlastX.blastxM*} parameter that allows to define if 2
+similarities are near (see the paragraph Integration of information).
+Finally the \texttt{BlastX.postProcess} parameter (when set to 1)
+allows to request to analyse how BlastX information are integrated in
+the final prediction.
+
+Here is an example of BlastX parameters definition.
+\begin{Verbatim}[fontsize=\small]
+BlastX.postProcess 1     # analyse prediction accorded to BlastX information
+BlastX.levels      012      # use levels 0, 1, and 2
+BlastX.activegaps      0    # make gap active on level 0
+BlastX.level0*     0.2      # confidence in the level 0
+BlastX.level1*     0.0      # confidence in the level 1
+BlastX.level2*     0.0      # confidence in the level 2
+BlastX.blastxM*    10       # nb of amino acids implicated in intron incitation
+BlastX.minIn       50       # minimum length of intron
+Sensor.BlastX.use  1     # Use BlastX sensor
+Sensor.BlastX      1        # Sensor priority
+\end{Verbatim}
+
+\paragraph{Native input files format}
+
+The files \texttt{.blast}$<$i$>$ describe a collection of similarities
+sorted by protein and by position on the sequence. One similarity S is
+described per line.
+
+The format of a line is:
+
+\texttt{<$b^S$> <$e^S$> <$s^S$> <$v^S$> <$p^S$> <protein name> <$bp^S$> <$ep^S$>}
+
+where:
+\begin{itemize}
+\item $b^S$ and $e^S$ are the begin and the end of the similarity S on the sequence,
+\item $s^S$ is the score of the similarity S,
+\item $v^S$ is the e-value given by BlastX and ignored by \EuGene,
+\item $p^S$ is the phase: +1, +2, +3, -1, -2, -3,
+\item $bp^S$ and $ep^S$are the begin and the end of the similarity S on the protein.
+\end{itemize}
+
+Here is an extract from \texttt{SYNO\_ARATH.fasta.blast0}:
+\begin{Verbatim}[fontsize=\small]
+2820 2861 36 3e-08 +3  sp_O07683_SYD_HALSA; 335 348
+2972 3088 41 3e-08 +2  sp_O07683_SYD_HALSA; 359 397
+3185 3298 113 3e-08 +2  sp_O07683_SYD_HALSA; 398 435
+353 418 45 2e-13 +2  sp_O24822_SYD_HALVO; 13 34
+1850 1915 67 2e-13 +2  sp_O24822_SYD_HALVO; 202 223
+2775 2858 72 2e-13 +3  sp_O24822_SYD_HALVO; 318 345
+3191 3280 104 2e-13 +2  sp_O24822_SYD_HALVO; 397 426
+353 418 51 7e-12 +2  sp_O26328_SYD_METTH; 21 42
+1271 1414 70 7e-12 +2  sp_O26328_SYD_METTH; 141 188
+1850 1954 62 7e-12 +2  sp_O26328_SYD_METTH; 210 244
+3191 3280 93 7e-12 +2  sp_O26328_SYD_METTH; 401 430
+\end{Verbatim}
+These files can be obtained directly from the output BlastX files by
+parsing them with the \texttt{blast\_parser.pl} script.
+The BlastX is launched with the command:
+\begin{Verbatim}
+  blastall -p blastx -d DATABASE_MULTIFASTA_PROTEIC_FILE -g F -F T -b
+  500000 -v 500000 -e 1e-6 -i QUERY_GENOMIC_SEQUENCE_FASTA >
+  TEMPORY_BLAST_RESULT_FILE
+\end{Verbatim}
+and the final \texttt{.blast}$<i>$ files are obtained with:
+\begin{Verbatim}
+  blast_parser.pl TEMPORY_BLAST_RESULT_FILE | sort -n -k 1,1 | sort -s
+  -k 6,6 > QUERY_GENOMIC_SEQUENCE_FASTA.blast0
+\end{Verbatim}
+
+For more explanation, see the README file in the directory
+\texttt{eugene/src/SensorPlugins/BlastX/GetData}.
+
+\paragraph{Gff3 input file format}
+
+The gff3 input mode is activated by setting the value \texttt{GFF3}
+for the parameter \texttt{BlastX.format} in the parameter file.  The
+plugin reads a collection of similarities from files named with the
+sequence name and an extension .blast$<$i$>$.gff3
+(\texttt{.blast0.gff3,...,.blast9.gff3}).
+
+Each similarity is described by a GFF3 line as follows
+
+\texttt{<sequence name> <program> <sofa feature> <$b^S$> <$e^S$> <$v^S$> <strand> <.> ID=...;Target=<protein name> <$bp^S$> <$ep^S$>;frame\_hit=<$p^S$>;score\_hit=<$s^S$>}
+
+Gff3 attributes specifications:\\
+Required attributes:\\
+	\begin{itemize}
+	\item ID
+	\item Target
+	\end{itemize}
+
+Optional attributes:\\
+	\begin{itemize}
+	\item frame\_hit represent the blast frame. This information
+          can be omitted, but if it's specified, eugene will check it
+          is consistent with the similarity positions and reject the
+          information otherwise.
+	\item score\_hit :  normalized score.
+	\end{itemize}
+
+Here an extract of : seq14ac002535g4g5.tfa.blast0.gff3
+\begin{Verbatim}[fontsize=\tiny]
+seq14	blastx0	match	2361	4506	.	+	.	ID=blastx0:seq14.1;Dbxref=blastx0:sp_O84903_GALE_LACCA 
+seq14	blastx0	match_part	2361	2483	2e-07	+	.	ID=blastx0:seq14.1.1;Dbxref=blastx0:sp_O84903_GALE_LACCA;Target=sp_O84903_GALE_LACCA 1 41 +;frame_hit=+3;score_hit=114;Parent=blastx0:seq14.1 
+seq14	blastx0	match_part	2792	2857	2e-07	+	.	ID=blastx0:seq14.1.2;Dbxref=blastx0:sp_O84903_GALE_LACCA;Target=sp_O84903_GALE_LACCA 111 132 +;frame_hit=+2;score_hit=47;Parent=blastx0:seq14.1 
+seq14	blastx0	match_part	4432	4506	2e-07	+	.	ID=blastx0:seq14.1.3;Dbxref=blastx0:sp_O84903_GALE_LACCA;Target=sp_O84903_GALE_LACCA 280 304 +;frame_hit=+1;score_hit=50;Parent=blastx0:seq14.1
+\end{Verbatim}
+
+\paragraph{Filtering input information}
+
+Similarities with a length higher than 15,000 nucleodites are
+rejected. A message ``Similarity of extreme length rejected'' is
+printed to alert the user.
+
+\paragraph{Integration of information}
+
+The procedure consists first, in computing information at the
+nucleotide level and second, in weigthing the graph used by \EuGene.
+
+A/ Computing information at the nucleotide level
+
+A-1/ Extracting information
+
+Each similarity S is considered, one after the other.  A set of 3
+variables is computed for nucleotide in position $i$. The variables
+are:
+\begin{itemize}
+\item $s_i$ the score of the nucleotide at position i
+\item $c_i$ the confidence in $s_i$,
+\item $p_i$ the phase of $s_i$ : +1, +2, +3, -1, -2, -3 for exon and 0 for intron,
+\end{itemize}
+Let $l^S$ be the length of the similarity in nucleotide.
+\[l^S = (ep^S -bp^S -1)*3\]
+
+\underline{Valuation for exon position} \\
+
+\begin{itemize}
+\item from $i = b^S$ to  $i = e^S$
+  \begin{itemize}
+  \item $s_i = s^S / l^S$
+  \item $c_i = c^S$
+  \item $p_i = p^S$
+  \end{itemize}
+\end{itemize}
+
+\underline{Valuation for intron position}\\
+
+An intron is consider as more likely when there is sufficient gap between 2 HSP 
+on the genomic sequence and the corresponding positions on the same 
+protein are close together:
+\begin{itemize}
+\item on the protein side,  two HSP of the same protein appear on the same strand
+  with a  maximum gap or overlap bteween the HSPs of \texttt{BlastX.blastxM*} amino acids.
+\item on the genomic side, the length of the gap (in nucleotide) between 
+the two HSPs is larger than \texttt{BlastX.minIn}.
+\end{itemize}
+Considering a gap S between 2 HSPs in these conditions, 
+intron predictions are favored on a small region of
+length \texttt{BlastX.minIn}/2 on both sides of the gap (inside the gap). 
+\begin{itemize}
+\item from $i = b^S -$ BlastX.minIn$/2$ to $i = b^S$ 
+\item from $i = e^S$ to $i = e^S +$ BlastX.minIn$/2$ 
+\item the following values are given at each position:
+  \begin{itemize}
+  \item $s_i = s^S / l^S$ 
+  \item $c_i = c^S$ 
+  \item $p_i = 0$
+  \end{itemize}
+\end{itemize}
+
+If furthermore, the \texttt{activegaps} parameter is set for a level, then for all the bases
+in the gap S which have not already been considered in the step above, the
+intergenic, UTR and UTR introns states are also penalized. The penality used is the minimum
+of the weights used for the left and right HSP around the gap S.
+
+A-2/ Combining extracted information\\
+
+When all the similarities have been handled, if a position has several
+set of variables, the set with the highest confidence is kept. In
+case of egal confidence, the set with the higher score is kept.
+
+B/ Weighting the graph\\
+
+For each $i$ with a set of variables:
+\begin{itemize}
+\item if $p_i$ codes for exon then $s_i .c_i$ is added to the content
+  score of nucleotide i in the corresponding exon phase (a track
+  between 0 and 5),
+\item if $p_i$ codes for intron then $s_i .c_i$ is added to the intron
+  score of nucleotide i (tracks 6 and 7),
+\end{itemize}
+
+Note: in fact, instead of rewarding the correct track (like described
+here), all the tracks except the according one(s) are penalized, with
+a penalty equal to $-|s_i .c_i|$.
+
+\paragraph{Post analyse}
+
+The correspondance between BlastX information and prediction is
+analyzed if the \texttt{-B} flasg \index{CmdFlags}{[BlastX
+  postprocessing activation] B} is provided or if the
+\texttt{BlastX.PostProcess} parameter is set to \texttt{1}.
+
+For each predicted CDS, from the start codon to the stop, the
+percentage of nucleotides supported by a proteic similarity is
+displayed.
+
+\paragraph{Graph}
+
+Grey horizontal lines are ploted on the exon tracks for only the 3
+first levels to consider (dark grey for the first, grey for the
+second, and light grey for the third).
+

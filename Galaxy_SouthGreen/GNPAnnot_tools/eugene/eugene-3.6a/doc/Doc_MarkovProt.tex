@@ -1,0 +1,63 @@
+% Documentation of the MarkovProt sensor
+
+\subsubsection{\texttt{Sensor.MarkovProt}}
+
+\paragraph{Description}
+
+This plugin injects coding/non coding likelihood as modeled by proteic
+Markov models. These models are defined in a matrices file (located in
+the directory specified by the \texttt{EuGene.PluginsDir} parameter)
+whose name is indicated by the \texttt{MarkovProt.matname} parameter.
+The order of the Markov model must be given in
+\texttt{MarkovProt.maxorder} while the actual order to use is set by
+\texttt{MarkovProt.order}.
+
+The plugin is controlled by two further parameters:
+\texttt{MarkovProt.minGC} and \texttt{MarkovProt.maxGC} which indicate
+the GC scope of the matrices. If the GC\% of the sequence is out of
+the scope, the plugin will give an equal null loglikelihood to all types
+of regions.
+
+
+The sensor is activated by either:
+\begin{itemize}
+\item the \texttt{-M} argument followed by the filename of the set of models.
+  \index{CmdFlags}{[MarkovProt Markov matrix file] M}
+\item the value 1 for the parameter \texttt{[Sensor.MarkovProt.use} in
+  the parameter file.
+\end{itemize}
+
+Here is an example of MarkovProt parameters definition.
+\begin{Verbatim}[fontsize=\small]
+MarkovProt.matname      SwP41.noFragm.mininfo1.order2.bin
+MarkovProt.minGC        0
+MarkovProt.maxGC        100
+MarkovProt.maxorder     2
+MarkovProt.order        2
+Sensor.MarkovProt.use   1    # Use MarkovProt sensor
+Sensor.MarkovProt       1       # Sensor priority
+\end{Verbatim}
+
+\paragraph{Input files format}
+
+No input files  needed beyond the markov matrix files.
+
+\paragraph{Integration of information}
+
+For coding tracks, assuming a uniform codon usage, the probability of
+the coding tracks is decomposed as the product of choosing a codon and
+then emitting the corresponding amino acid in the corresponding
+phase. The logarithm of the probability is used for weighting.
+
+For other tracks, a simple GC\% model is used to compute a background
+probability. The logarithm of the probability is used for weighting.
+
+\paragraph{Post analyse}
+
+No post analyse.
+
+\paragraph{Graph}
+
+Same as in the MarkovIMM plugin.  
+
+

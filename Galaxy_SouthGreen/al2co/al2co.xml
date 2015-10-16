@@ -1,0 +1,59 @@
+<tool id="al2co" name="AL2CO">
+	<description>, to calculate the conservation idex of proteins</description>
+	<command interpreter="bash">./al2co.sh -i $input_fasta -t $output_masked_alignment -a $methods -w $window_size -g $gap</command>
+	<inputs>
+		<param format="txt" name="input_fasta" type="data" label="Sequence alignment"/>
+		<param type="select" name="methods" label="All methods option">
+		    <option value="T">true</option>
+            <option value="F">false</option>
+        </param>
+		<param type="text" name="window_size" help="window size used for averaging conservation (for smoothing purpose)" value="3" label="Window size" />
+		<param type="text" name="gap" help="gap fraction above which conservation calculation is not performed" value="0.5" label="Gap fraction" />
+	</inputs>
+	<outputs>
+		<data format="txt" name="output_masked_alignment" />
+	</outputs>
+	<help>
+	
+==============
+ Please cite: 
+==============
+
+Pei, Jimin, and Nick V. Grishin. 2001. AL2CO: calculation of positional conservation in a protein sequence alignment. Bioinformatics 17, no. 8: 700-712. 
+doi:10.1093/bioinformatics/17.8.700.
+
+
+-----
+
+==========
+ Overview
+==========
+AL2CO is  a program to calculate the conservation idex of protein using different methods.
+
+-----
+
+- All methods option [T/F] Optional
+If set to true, the results of all 9 methods will be output:
+1. unweighted entropy measure 
+2. Henikoff entropy measure
+3. independent count entropy measure
+4. unweighted variance measure
+5. Henikoff variance measure
+6. independent count variance measure
+7. unweighted matrix-based sum-of-pairs measure
+8. Henikoff matrix-based sum-of-pairs measure
+9. independent count matrix-based sum-of-pairs measure;
+             
+- Window size used for averaging
+Recommended value for motif analysis: 3
+        
+- Gap fraction to suppress conservation calculation 
+The value should be more than 0 and no more than 1. Conservation
+indices are calculated only for positions with gap fraction less
+than the specified value. Otherwise, conservation indices will
+be set to M-S, where M is the mean conservation value and S is
+the standard deviation.
+
+	</help>
+
+</tool>

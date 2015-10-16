@@ -1,0 +1,47 @@
+<tool id="Cleaveland" name="Cleaveland">
+	<description> Analysis of degradome data to find sliced miRNA and siRNA targets</description>
+	<command>
+	source $__tool_directory__/module_cleaveland.sh;
+	$__tool_directory__/cleaveland.sh $degradome $miRNA_database $transcripts $output $log</command>
+	<inputs> 
+		<param format="fasta" name="degradome" type="data" label="Degradome in Fasta format"/>
+		<param format="fasta" name="miRNA_database" type="data" label="MiRNA database"/>
+		<param format="fasta" name="transcripts" type="data" label="Transcripts"/>
+	</inputs>
+	<outputs>
+		<data format="txt" name="output" label="Output"/>
+		<data format="txt" name="log" label="Logfile"/>
+	</outputs>
+	<help>
+
+.. class:: infomark
+
+**Program encapsulated in Galaxy by South Green**
+
+.. class:: infomark
+
+**CleaveLand 4.3**
+
+-----
+
+
+==========
+ Overview
+==========
+
+CleaveLand4 is a tool designed to parse 'degradome' data. Degradome data are a variant type of RNA-seq data, where the reads derive from the 5'-ends of uncapped RNAs. These data can be used to identify miRNA and siRNA targets that are actively 'sliced'.
+
+-----
+
+For further informations, please visite the website of Cleaveland_.
+
+
+.. _Cleaveland: http://sites.psu.edu/axtell/
+
+	</help>
+<citations>
+<citation  type="doi">10.1093/bioinformatics/btn604</citation>
+<citation  type="doi">10.1093/nar/gku157</citation>
+</citations>
+
+</tool>

@@ -1,0 +1,71 @@
+<tool id="splicemachine" name="SpliceMachine">
+	<description>Predicting splice sites from high-dimensional local context representations</description>
+	<command interpreter="bash">./splicemachine.sh $input $__tool_directory__ $model $output_mst $output_mad</command>
+	<inputs>
+		<param format="fasta" name="input" type="data" label="Nucleotide query sequence"/>
+		<param type="select" name="model" label="Model crop">
+			<option value="rice">Rice</option>
+			<option value="medicago">Medicago</option>
+		</param>
+	</inputs>
+	<outputs>
+		<data format="txt" name="output_mst" label="Start donor site" />
+		<data format="txt" name="output_mad" label="Acceptor donor site" />
+	</outputs>
+	<help>
+	
+.. class:: infomark
+
+**Program encapsulated in Galaxy by Southgreen**
+
+.. class:: infomark
+
+**SpliceMachine**
+
+-----
+
+==============
+ Please cite: 
+==============
+
+Degroeve, S., Saeys, Y., De Baets, B., Rouze, P., Van de Peer, Y. SpliceMachine: predicting splice sites from high-dimensional local context representations. Bioinformatics 21, 1332-8, 2005.
+
+
+-----
+
+===========
+ Overview:
+===========
+
+SpliceMachine recognizes GT-AG splice sites on DNA sequences. 
+
+SpliceMachine classifiers are induced using the Linear Support Vector Machine method on high-dimensional local context representations of actual and pseudo splice sites.
+
+This software only allows for the induction of the SpliceMachine splice site classification models. 
+
+Fasta file::
+
+	>TvLDH
+	AAGCTTGCATCTAGTAGTTACAAAAAGAAAAAAATTGTATGCTTAACTCTCTGGTATTTA
+	TGCCTGAGATGATAATTGCTCACTATAGCAAGGCTTATTTTTTTTAGTCTTTTCTAGAAT
+	TGTTACATGTCTGGGAGAATTCTATGAACATGCTACTTGGAGGAATGAGCTCAAAATGCA
+	ACAAAATGGTAGCTTCCCTACACATTGGTTAGGGTACCAGATATTATGAATTTGCATAGC
+	TAGGAATTTAGTAACACATTTAGAGAGACAATTATAAAGCTTTGTTGAATCTTCCATGAA
+	ACCTAAGTTTTGATGTGAGCATTATAGTTCACCCACCAATCTTAGGAAATGGCTTAGCTA
+	TTGATGATGATCTAAATACTATGACATAGATAATTATTTTTTTAGGAAAATAATGTCTAG
+	CTACAAATTACAAAAACAATTAAACAAATTCAAGAAGAATCATCAATTCAATATATATTA
+	GAAGTCCTATTAGTCAAAATCATGCATACCAACTAGATATAAGACAGATGCCTTTGAACA
+	GCATTCCAAAATGTTGATGCAATGAAAACGTATCAGTTAGGGCTGCTGTGTAGAAACAAG
+	ACTGGTAAGTAAAAGGTGAAGGAAAATATTGAAAGCTGCATGAGAGGAAAACAAAGAGAC
+	AAGGAATGGTAAACAATTGTTTAACAAGGGCAATCAAAATTATATATCATCA 
+
+------
+
+For further informations, please visite the SpliceMachine_ website.
+
+
+.. _SpliceMachine: http://bioinformatics.psb.ugent.be/software/details/SpliceMachine
+
+	</help>
+
+</tool>

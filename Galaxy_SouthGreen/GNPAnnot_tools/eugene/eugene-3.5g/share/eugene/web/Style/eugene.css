@@ -1,0 +1,71 @@
+/*
+** Feuille de style eugene
+*/
+
+<style type=text/css>
+
+/* Couleur pour les ancres */
+  a{color : #000099 ;}
+  
+  A:link { color: #ff7b00;
+           font-weight:bold;
+           text-decoration:underline }
+
+  A:visited { color:#ad5300;
+              font-weight:bold;
+              text-decoration:underline }
+
+  A:active { color:rgb(192,200,224);
+             font-weight : bold;
+             text-decoration: underline }
+
+  A:hover { color:red;
+            font-weight : bold;
+            text-decoration: none }
+
+.fonce {background-color : #06768c;}
+.clair {background-color : #6aacba;}
+.tresclair {background-color : #c0dbe2;}
+
+/* Alternance des couleurs pour les lignes des tables */
+TR.A0 {background-color : #9bc7d0}
+TR.A1 {background-color : #c0dbe2;}
+
+
+/* CoolMenus 4 - default styles - do not edit */
+.clCMEvent{position:absolute; width:100%; height:100%; clip:rect(0,100%,100%,0); left:0; top:0; visibility:visible}
+.clCMAbs{position:absolute; visibility:hidden; left:0; top:0}
+/* CoolMenus 4 - default styles - end */
+  
+/* Style for the background-bar */
+.clBar{position:absolute; width:1; height:1; background-color:#06768c; layer-background-color:#06768c; visibility:hidden}
+
+/* Styles for level 0 */
+//.clLevel0,.clLevel0over{position:absolute; padding:1px; font-family:tahoma,arial,helvetica; font-size:12px; font-weight:bold}
+.clLevel0,.clLevel0over{position:absolute; padding:1px; font-family:tahoma,arial,helvetica; font-size:12px;}
+.clLevel0{background-color:#0b6b8e; layer-background-color:#0b6b8e; color:white;}
+.clLevel0over{background-color:#c2d6e8; layer-background-color:#c2d6e8; color:#125478; cursor:pointer; cursor:hand; }
+.clLevel0border{position:absolute; visibility:hidden; background-color:#89bdc8; layer-background-color:#89bdc8;}
+
+
+/* Styles for level 1 */
+.clLevel1, .clLevel1over{position:absolute; padding:5px; font-family:tahoma, arial,helvetica; font-size:11px;}
+.clLevel1{background-color:#06768c; layer-background-color:#06768c; color:white;}
+.clLevel1over{background-color:#daeaee; layer-background-color:#daeaee; color:#06768c; cursor:pointer; cursor:hand; }
+.clLevel1border{position:absolute; visibility:hidden; background-color:#71b1bd; layer-background-color:#71b1bd;}
+
+
+/* Pour la frame scrollable : textual output */
+.conteneur {
+height: 200px;
+width: 100%;
+}
+.frame {
+margin-left: 0px;
+width: auto;
+height: 200px;
+overflow: auto;
+font-size: 14px;
+}
+
+</style>

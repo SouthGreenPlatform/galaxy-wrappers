@@ -1,0 +1,79 @@
+foreach TEST $AllGff3Sensors {
+
+# To follow execution
+    puts "Performing $TEST unit test Gff3"
+
+# Run eugene
+    if {$TEST == "Est"} {
+	eval exec $EUGENE_DIR/$EUGENE -A $EUGENE_DIR/$EUGENE_TEST_PAR \
+	    $OPTIONS(Sensor) -D ${TEST}.format=GFF3 \
+	    -D Sensor.${TEST}.use=2 -D Sensor.NG2.use=1 \
+	    $SEQ_DIR/$SEQ(Sensor).tfa 2> tmp%stderr
+    } else {
+	if {$TEST == "Homology"} {
+	    eval exec $EUGENE_DIR/$EUGENE -A $EUGENE_DIR/$EUGENE_TEST_PAR \
+		$OPTIONS(Sensor) -D ${TEST}.format=GFF3 \
+		-D Sensor.${TEST}.use=2 \
+		$SEQ_DIR/$SEQ(Sensor).tfa 2> tmp%stderr
+	} else {
+	    if {$TEST == "Tester"} {
+		eval exec $EUGENE_DIR/$EUGENE -A $EUGENE_DIR/$EUGENE_TEST_PAR \
+		    $OPTIONS(Sensor) -D ${TEST}.format=GFF3 \
+		    -D Sensor.${TEST}.use=1 $SEQ_DIR/exSeqHom.fasta  \
+		    2> tmp%stderr
+	    } else {
+		eval exec $EUGENE_DIR/$EUGENE -A $EUGENE_DIR/$EUGENE_TEST_PAR \
+		    $OPTIONS(Sensor) \
+		    -D Sensor.${TEST}.use=1 -D ${TEST}.format=GFF3 $SEQ_DIR/$SEQ(Sensor).tfa \
+		    2> tmp%stderr
+	    }
+	}
+    }
+
+    set out [open $SEQ(Sensor).egn.debug {RDONLY}]
+    set err [open tmp%stderr {RDONLY}]
+    set std [open tmp%$TEST w+]
+
+# Copy stderr and $SEQ(Sensor).egn.debug in the reference file
+    set f [read -nonewline $err]
+    puts $std $f
+    set f [read -nonewline $out]
+    puts $std $f
+
+    close $out
+    close $err
+    close $std
+
+    exec rm tmp%stderr
+
+# Remove the first lines related to version number
+    RemoveFirstLines tmp%$TEST
+
+# Compare ingnoring the case of letters (Linux inf/SUN Inf)
+    if {[file exists tmp%testdiff] == 1} {
+	exec rm tmp%testdiff
+}
+    catch {exec diff -i $OUTPUT_DIR/Output_${TEST} tmp%$TEST > tmp%testdiff }
+   
+    catch {exec diff -i $OUTPUT_DIR/Output_${TEST} tmp%$TEST> tmp%testdiff }
+    set t [open tmp%testdiff {RDONLY}]
+    set difference [read $t]
+    close $t
+    if {$difference == ""} {
+	pass "${TEST} in Gff3 mode"
+	exec rm tmp%$TEST
+} else {
+	fail "${TEST}"
+	exec mv tmp%$TEST $TRACE_DIR/Output_${TEST}.OutGff3
+}
+
+}
+
+
+# Remove temporary files
+catch {exec rm tmp%stderr}
+catch {exec rm tmp%testdiff}
+catch {exec rm exSeqHom.egn.debug}
+catch {exec rm exSeqHom.misc_info}
+catch {exec rm $SEQ(Sensor).egn.debug}
+catch {exec rm $SEQ(Sensor).misc_info}

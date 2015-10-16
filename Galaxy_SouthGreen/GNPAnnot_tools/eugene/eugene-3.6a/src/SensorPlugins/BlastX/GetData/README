@@ -1,0 +1,18 @@
+To obtain the .blast files needed by eugene for the BlastX Sensor:
+
+First, if it's not done:
+
+- Download and install the NCBI Blast package in your system. (Here, the version 2.2.5)
+- Launch the formatdb command on a proteic multifasta database with the proteic flag "true":
+	formatdb -i PROTEIC_MULTIFASTA_DATABASE -p T
+
+Then, for each .blast file purchased:
+
+- Launch the blast command:
+	blastall -p blastx -d DATABASE_MULTIFASTA_PROTEIC_FILE -g F -F T -b 500000 -v 500000 -e 1e-6 -i QUERY_GENOMIC_SEQUENCE_FASTA > TEMPORY_BLAST_RESULT_FILE
+- Parse the results in the appropriate .blast number file (blast0 for the most reliable confidence level, blast9 for the less), using the script blast_parser.pl:
+	blast_parser.pl TEMPORY_BLAST_RESULT_FILE  | sort -n -k 1,1 | sort -s -k 6,6 > QUERY_GENOMIC_SEQUENCE_FASTA.blast0
+- That's all...
+
+special: for araset and araclean, in order to test the method by simulating a more realistic situation, hits from Arabidopsis thaliana Swissprot proteins have been removed:
+	blast_parser.pl TEMPORY_BLAST_RESULT_FILE  | grep -v ARATH | sort -n -k 1,1 | sort -s -k 6,6 > QUERY_GENOMIC_SEQUENCE_FASTA.blast0

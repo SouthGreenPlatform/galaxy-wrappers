@@ -1,0 +1,51 @@
+<tool id="blastx2eugene" name="GNPAnnot Converter : Blastx" version="1.0.0">
+    <description>Convert result for EuGene</description>
+    <command interpreter="perl">./blastx2eugene.pl $input $output</command> 
+    <inputs>
+          <param format="txt" name="input" type="data" label="Blastx result"/>
+    </inputs>
+    <outputs>
+          <data format="txt" name="output" label="Blastx (eugene)" /> 
+    </outputs>
+    <help>
+    
+.. class:: infomark
+
+**Program encapsulated and developed in Galaxy by Southgreen**
+
+.. class:: infomark
+
+**Part of the GNPAnnot Converters package**
+
+-----
+
+==============
+Author: 
+==============
+
+Gaetan Droc
+
+-----
+
+==============
+What it does: 
+==============
+
+Convert result for EuGene combiner
+
+-----
+
+==============
+Output format:
+==============
+
+EuGene Specific format
+
+-----
+
+.. class:: warningmark
+
+**No support website**
+
+    </help>
+</tool>

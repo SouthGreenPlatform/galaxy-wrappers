@@ -1,0 +1,41 @@
+ Documentation of the Plotter sensor
+
+\subsubsection{\texttt{Sensor.Plotter}}
+
+\paragraph{Description}
+
+The Plotter sensor allows to add to the graphical representation the GC\%,
+the GC3\% and the two quotients A/T+A and T/T+A.
+
+The sensor is activated by the value 1 for the parameter
+\texttt{Sensor.Plotter.use} in the parameter file.
+
+Here is an example of Plotter parameters definition :
+\begin{Verbatim}[fontsize=\small]
+Plotter.GC          1         #
+Plotter.GC3         1         # 0 -> no plot  -  1 -> plot
+Plotter.A|T/A+T     1         #
+Sensor.Plotter.use  1      # Use GFF sensor
+Sensor.Plotter      1         # Sensor priority
+\end{Verbatim}
+
+\paragraph{Input files format}
+
+No input files  needed.
+
+\paragraph{Integration of information}
+
+This sensor does not affect prediction.
+
+\paragraph{Post analyse}
+
+No post analyse.
+
+\paragraph{Graph}
+
+The GC\% is plotted as a thin turquoise line on the intergenic track.
+The GC3\% is plotted as a thin turquoise line on each exon tracks.
+The T/T+A quotient is plotted as a thin orange line on the forward intron
+track.
+The A/T+A quotient is plotted as a thin orange line on the reverse intron
+track.

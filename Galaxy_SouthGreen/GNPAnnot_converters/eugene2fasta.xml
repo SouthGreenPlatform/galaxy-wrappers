@@ -1,0 +1,65 @@
+<tool id="eugene2fasta" name="GNPAnnot Converter : EuGene" version="1.0.0">
+    <description>Convert output in several format (gff3, fasta and EMBL)</description>
+    <command interpreter="perl">./eugene2fasta.pl $input_file $eugene_file $output_gff $output_embl $output_embl_utr $output_gene $output_cds $output_pep $output_region $version</command> 
+    <inputs>
+		<param format="fasta" name="input_file" type="data" label="Fasta file"/>
+		<param format="txt" name="eugene_file" type="data" label="EuGene file"/>
+		<param name="version" type="select" label="EuGene Version">
+			<option value="3.2">3.2</option>
+		</param>
+    </inputs>
+    <outputs>
+		<data format="gff3" name="output_gff" label="EuGene without functional annotation (gff3)" /> 
+		<data format="embl" name="output_embl" label="EuGene without functional annotation (embl)"/>
+		<data format="embl" name="output_embl_utr" label="EuGene UTR (embl)" />
+		<data format="fasta" name="output_gene" label="Gene sequence with intron (fasta)" />
+		<data format="fasta" name="output_cds" label="Gene Coding Sequence intron less (fasta)" />
+		<data format="fasta" name="output_pep" label="Translated Gene Coding sequence (fasta)" />
+		<data format="fasta" name="output_region" label="Region around Gene (fasta)" />
+    </outputs>
+    <help>
+    
+.. class:: infomark
+
+**Program encapsulated and developed in Galaxy by Southgreen**
+
+.. class:: infomark
+
+**Part of the GNPAnnot Converters package**
+
+-----
+
+==============
+Author: 
+==============
+
+Gaetan Droc
+
+-----
+
+==============
+What it does: 
+==============
+
+Convert output in several format (fasta, gff3 and EMBL)
+
+-----
+
+==============
+Output format:
+==============
+
+fasta
+
+GFF3
+
+EMBL
+
+-----
+
+.. class:: warningmark
+
+**No support website**
+
+    </help>
+</tool>

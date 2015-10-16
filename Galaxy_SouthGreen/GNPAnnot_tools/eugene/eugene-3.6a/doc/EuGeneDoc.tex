@@ -1,0 +1,1369 @@
+ \documentclass[a4paper,titlepage]{report}
+
+\usepackage{t1enc}
+\usepackage[pdftex]{graphicx}
+\usepackage{times}
+\usepackage{a4wide}
+\usepackage{hyperref}
+\pdfcompresslevel=9
+\usepackage{fancyvrb}
+\usepackage{multind}
+
+\makeindex{CmdFlags}
+
+\parskip 5pt plus 3pt minus 2pt 
+
+\newcommand{\EuGene}{\textsc{EuG\`ene}}
+% comment one of the above line to hide or not the developpers documentation
+%\newcommand{\shrink}[1]{}   % hide text
+\newcommand{\shrink}[1]{#1} % no effect
+
+\author{Philipe Bardou \and Marie-Jos\'ee Cros \and Sylvain Foissac \and J\'erome Gouzy \and Annick Moisan \and C\'eline Noirot \and Erika Sallet \and Thomas Schiex \\ Applied Mathematics and Computer Science Dept.\\ INRA Toulouse, France}
+
+\def\abstractname{Overview}
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{3}
+
+\title{\EuGene: an open gene finder for eukaryotes}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\begin{abstract}
+  \EuGene\ is a sophisticated open gene finder for eukaryotic
+  organisms. It has been developped thanks to funding by INRA
+  (permanent scientists and engineers), G\'enoplante and the french
+  ministry of research (with one PhD student). It generates text, HTML
+  and graphical outputs.
+  
+  \EuGene\ uses a graph based model to predict genes that covers both
+  HMM based or more complex Bayesian net based or Conditional Markov Field probabilistic
+  predictions. The model is fixed but complex (with 43 different
+  states) and covers Exon, Intron, UTR, UTR introns\ldots each with a
+  possible explicit distribution on length. The prediction itself
+  relies on an optimal linear time and space algorithm for prediction.
+  
+  Even if the gene model is fixed, the sources of information taken
+  into account be \EuGene\ for prediction are extremely varied and can
+  be easily extended by creating so-called plugins. Currently,
+  \EuGene\ can use around 30 different plugins integrating statistical
+  information (Markov models at DNA or amino acid level, WAM, Support
+  Vector machine based signal prediction\ldots), similarity information
+  (Est, cDNA, proteins) and homology (exon conservation). It can also
+  integrate predictions from other gene predictors if needed.
+  
+  In order to integrate all this information, \EuGene\ does not use
+  maximum likelihood estimation for all parameters but parameters
+  optimized by maximum of prediction quality on expertized data sets (minimizing
+  empirical risk on a given dataset).
+
+  The software called \texttt{eugene} is written in C++ and is distributed 
+  under the artistic license.
+ \end{abstract}
+
+\chapter{Quick Start}
+
+\section{Annoting a sequence}
+Here is a small example based on the \texttt{SYNO\_ARATH.fasta} sequence.
+For reference information on the software, see chapter 2.
+
+In order to first collect information on the sequence (splice sites,
+translation start predictions\ldots) we will have to use the
+\texttt{getsites4eugene.pl} script. This script directly queries the
+Netgene2, SPlicePredictor and NetStart web servers. Alternatively, if
+you have installed these programs locally, you can use the
+\texttt{lgetsites4eugene.pl} script (you must modify it and indicate
+the paths to the executables). 
+
+\begin{Verbatim}[fontsize=\scriptsize]
+> ./getsites4eugene.pl Sequences/SYNO_ARATH.fasta 
+started on sam dec 7 13:44:35 CET 2002
+
+processing Sequences/SYNO_ARATH.fasta
+
+NetStart [2*1 request(s)]: F1..R1..done
+NetGene2 [1   request(s)]: 1..FR..done
+SplicePredictor: done
+finished on sam dec 7 13:47:14 CET 2002
+\end{Verbatim}
+
+The script creates the files that contains information about the
+sequence in the same directory as the fasta file itself. The
+extensions used are \texttt{.splices} for NetGene2, \texttt{.spliceP}
+for SplicePredictor, \texttt{.starts} for NetStart (in each case, a
+\texttt{R} is added for the reverse strand). 
+
+We are now ready to use \EuGene\ on this sequence. Because the
+sequence lacks context around the CDS of the gene, we inform \EuGene\ 
+that the prediction should start and end in intergenic mode using the
+\texttt{-s} flag. This behavior can also be controlled by all the
+\texttt{Prior} parameters in the program parameter file (see
+section~\ref{param}).
+
+\EuGene\ produce two kind of output: textual and graphical. To manage this outputs
+several options could be use. Two of them (more details see chapter 2):
+\begin{itemize}
+\item \texttt{-p a|d|g|h|l|s|o}: if we want, we may ask for multiple textual output. For example an HTML output
+and an GFF output using the \texttt{-phg} flag. Two files will be created '\texttt{SYNO\_ARATH.html}'
+and '\texttt{SYNO\_ARATH.gff}'. \texttt{-po} allows to print prediction on stdout.
+\item \texttt{-g}: activates the graphical output (with \texttt{-ph} flag \texttt{-g} is on).\\
+\end{itemize}
+
+\begin{Verbatim}[fontsize=\scriptsize]
+>../src/eugene -s -po Sequences/SYNO_ARATH.fasta
+---------------------------------------------------------------------
+EuGene rel. 3.6a - Arabidopsis -
+Parameters file /SATA/home/droc/GNPAnnot/EGN_Tc100609/eugene-3.6a/doc/../cfg/eugene.par loaded.
+---------------------------------------------------------------------
+Loading sequence...SYNO_ARATH, 3699 bases read, GC Proportion = 38.8%
+Loading Sensor.MarkovIMM......done
+Reading IMM... 1 2 3 4 5 6 7 ...done
+Loading Sensor.EuStop.........done
+Loading Sensor.IfElse.........done
+Loading Sensor.NG2............done
+Reading splice site file (NetGene2)...........forward, reverse done
+Loading Sensor.SPred..........done
+Reading splice site file (Splice Predictor)...forward, reverse done
+Loading Sensor.MarkovConst....done
+Loading Sensor.NStart.........done
+Reading start file (NetStart).................forward, reverse done
+Loading Sensor.Transcript.....done
+Optimal path length = 4869.7709
+
+    Seq         Type    S       Lend    Rend   Length  Phase   Frame      Ac      Do      Pr
+
+SYNO_.1.0	Utr5    +          5      28       24     NA      NA      NA      NA     0.0  
+SYNO_.1.1	Init    +         29     421      393     0      +2      28     422     0.0  
+SYNO_.1.2	Intr    +        514     582       69     0      +1     513     583     0.0  
+SYNO_.1.3	Intr    +        699     809      111     0      +3     698     810     0.0  
+SYNO_.1.4	Intr    +        914    1018      105     0      +2     913    1019     0.0  
+SYNO_.1.5	Intr    +       1271    1408      138     0      +2    1270    1409     0.0  
+SYNO_.1.6	Intr    +       1522    1602       81     0      +1    1521    1603     0.0  
+SYNO_.1.7	Intr    +       1694    1801      108     0      +2    1693    1802     0.0  
+SYNO_.1.8	Intr    +       1853    1921       69     0      +2    1852    1922     0.0  
+SYNO_.1.9	Intr    +       2014    2088       75     0      +1    2013    2089     0.0  
+SYNO_.1.10	Intr    +       2181    2264       84     0      +3    2180    2265     0.0  
+SYNO_.1.11	Intr    +       2360    2446       87     0      +2    2359    2447     0.0  
+SYNO_.1.12	Intr    +       2712    2882      171     0      +3    2711    2883     0.0  
+SYNO_.1.13	Intr    +       2966    3092      127     0      +2    2965    3093     0.0  
+SYNO_.1.14	Term    +       3189    3304      116     2      +2    3188    3305     0.0  
+SYNO_.1.0	Utr3    +       3305    3362       58     NA      NA      NA      NA     0.0  
+
+---------------------------------------------------------------------
+ 
+\end{Verbatim}
+
+\section{Using transcribed sequences}
+
+If you want to exploit similarities with cDNA/EST sequences, you have to inform \EuGene\ of existing similarities. These similarities
+should be available in a file with the \texttt{.est} extension. The
+format of this file is described in the \texttt{Est} plugin
+section~\ref{plugest}. It can easily be created from an existing FASTA
+databank of EST and cDNA using a patched version of \texttt{sim4}. The
+patch is provided with \EuGene.
+
+\begin{Verbatim}[fontsize=\scriptsize]
+> sim4 Sequences/SYNO_ARATH.fasta cDNA A=6 > seqs/SYNO_ARATH.fasta.est
+\end{Verbatim}
+
+With an old dbEST databank completed with the cDNA databank PlantGene,
+we get the following file:
+
+\begin{Verbatim}[fontsize=\scriptsize]
+> cat Sequences/SYNO_ARATH.fasta.est
+    32    421 1844 0 0 ATAJ644    1  390
+   514    582 1844 0 0 ATAJ644  391  459
+   699    809 1844 0 0 ATAJ644  460  570
+   914   1018 1844 0 0 ATAJ644  571  675
+  1271   1408 1844 0 0 ATAJ644  676  813
+  1522   1602 1844 0 0 ATAJ644  814  894
+  1694   1771 1844 0 0 ATAJ644  895  972
+  1853   1921 1844 0 0 ATAJ644  973 1041
+  2014   2088 1844 0 0 ATAJ644 1042 1116
+  2181   2264 1844 0 0 ATAJ644 1117 1200
+  2360   2446 1844 0 0 ATAJ644 1201 1287
+  2712   2882 1844 0 0 ATAJ644 1288 1458
+  2966   3092 1844 0 0 ATAJ644 1459 1585
+  3189   3447 1844 0 0 ATAJ644 1586 1844
+    32    375 347 0 0 N97006    1  347
+  3099   3379 297 0 0 AV525988   51  347
+  3071   3092 256 0 1 AI994358    1   22
+  3189   3421 256 0 1 AI994358   23  256
+   658    672 61 0 1 AV521563    1   14
+   765    813 61 0 1 AV521563   15   61
+\end{Verbatim}
+
+We can now ask \EuGene\ for a new prediction, including this new
+evidence using the \texttt{-d} flag (equivalently, the \texttt{Est}
+plugin can be activated by modifying \EuGene\ parameter file).  When
+evidence from transcribed sequences is available, \EuGene\ will
+automatically report in the last column of its output the percentage
+of bases of the element (exon, UTR\ldots) which is consistent with the
+available evidence. Here, the gene is almost completely covered by the
+available transcribed sequences. The \texttt{Est} plugin also mentions
+if transcribed sequences are rejected and why. The information from
+two transcribed sequences is rejected. The first one because no splice
+site has been found near one of the intron border detected by the EST,
+another one because it was inconsistent with a sequence considered as
+more reliable.
+
+\begin{Verbatim}[fontsize=\scriptsize]
+>../src/eugene -s -po -d Sequences/SYNO_ARATH.fasta
+---------------------------------------------------------------------
+EuGene rel. 3.6a - Arabidopsis -
+Parameters file /SATA/home/droc/GNPAnnot/EGN_Tc100609/eugene-3.6a/doc/../cfg/eugene.par loaded.
+---------------------------------------------------------------------
+Loading sequence...SYNO_ARATH, 3699 bases read, GC Proportion = 38.8%
+Loading Sensor.MarkovIMM......done
+Reading IMM... 1 2 3 4 5 6 7 ...done
+Loading Sensor.EuStop.........done
+Loading Sensor.IfElse.........done
+Loading Sensor.NG2............done
+Reading splice site file (NetGene2)...........forward, reverse done
+Loading Sensor.SPred..........done
+Reading splice site file (Splice Predictor)...forward, reverse done
+Loading Sensor.MarkovConst....done
+Loading Sensor.NStart.........done
+Reading start file (NetStart).................forward, reverse done
+Loading Sensor.Transcript.....done
+Loading Sensor.Est............done
+Reading cDNA hits............3 sequences read
+Optimal path length = 4885.5924
+
+    Seq         Type    S       Lend    Rend   Length  Phase   Frame      Ac      Do      Pr
+
+SYNO_.1.0	Utr5    +          5      28       24     NA      NA      NA      NA     0.0  
+SYNO_.1.1	Init    +         29     421      393     0      +2      28     422    99.0  
+SYNO_.1.2	Intr    +        514     582       69     0      +1     513     583   100.0  
+SYNO_.1.3	Intr    +        699     809      111     0      +3     698     810   100.0  
+SYNO_.1.4	Intr    +        914    1018      105     0      +2     913    1019   100.0  
+SYNO_.1.5	Intr    +       1271    1408      138     0      +2    1270    1409   100.0  
+SYNO_.1.6	Intr    +       1522    1602       81     0      +1    1521    1603   100.0  
+SYNO_.1.7	Intr    +       1694    1771       78     0      +2    1693    1772   100.0  
+SYNO_.1.8	Intr    +       1853    1921       69     0      +2    1852    1922   100.0  
+SYNO_.1.9	Intr    +       2014    2088       75     0      +1    2013    2089   100.0  
+SYNO_.1.10	Intr    +       2181    2264       84     0      +3    2180    2265   100.0  
+SYNO_.1.11	Intr    +       2360    2446       87     0      +2    2359    2447   100.0  
+SYNO_.1.12	Intr    +       2712    2882      171     0      +3    2711    2883   100.0  
+SYNO_.1.13	Intr    +       2966    3092      127     0      +2    2965    3093   100.0  
+SYNO_.1.14	Term    +       3189    3304      116     2      +2    3188    3305   100.0  
+SYNO_.1.0	Utr3    +       3305    3441      137     NA      NA      NA      NA   100.0  
+
+---------------------------------------------------------------------
+ 
+\end{Verbatim}
+
+An additional postprocessing can be requested to the plugin using the
+\texttt{-E} flag. For each gene predicted, the plugin will analyze
+each transcribed sequence matching the gene and report its consistency
+with the prediction in '\texttt{SYNO\_ARATH.misc\_info}' file.
+
+\begin{Verbatim}[fontsize=\scriptsize]
+>../src/eugene -s -po -d -E Sequences/SYNO_ARATH.fasta
+---------------------------------------------------------------------
+EuGene rel. 3.6a - Arabidopsis -
+Parameters file /SATA/home/droc/GNPAnnot/EGN_Tc100609/eugene-3.6a/doc/../cfg/eugene.par loaded.
+---------------------------------------------------------------------
+Loading sequence...SYNO_ARATH, 3699 bases read, GC Proportion = 38.8%
+Loading Sensor.MarkovIMM......done
+Reading IMM... 1 2 3 4 5 6 7 ...done
+Loading Sensor.EuStop.........done
+Loading Sensor.IfElse.........done
+Loading Sensor.NG2............done
+Reading splice site file (NetGene2)...........forward, reverse done
+Loading Sensor.SPred..........done
+Reading splice site file (Splice Predictor)...forward, reverse done
+Loading Sensor.MarkovConst....done
+Loading Sensor.NStart.........done
+Reading start file (NetStart).................forward, reverse done
+Loading Sensor.Transcript.....done
+Loading Sensor.Est............done
+Reading cDNA hits............3 sequences read
+Optimal path length = 4885.5924
+
+    Seq         Type    S       Lend    Rend   Length  Phase   Frame      Ac      Do      Pr
+
+SYNO_.1.0	Utr5    +          5      28       24     NA      NA      NA      NA     0.0  
+SYNO_.1.1	Init    +         29     421      393     0      +2      28     422    99.0  
+SYNO_.1.2	Intr    +        514     582       69     0      +1     513     583   100.0  
+SYNO_.1.3	Intr    +        699     809      111     0      +3     698     810   100.0  
+SYNO_.1.4	Intr    +        914    1018      105     0      +2     913    1019   100.0  
+SYNO_.1.5	Intr    +       1271    1408      138     0      +2    1270    1409   100.0  
+SYNO_.1.6	Intr    +       1522    1602       81     0      +1    1521    1603   100.0  
+SYNO_.1.7	Intr    +       1694    1771       78     0      +2    1693    1772   100.0  
+SYNO_.1.8	Intr    +       1853    1921       69     0      +2    1852    1922   100.0  
+SYNO_.1.9	Intr    +       2014    2088       75     0      +1    2013    2089   100.0  
+SYNO_.1.10	Intr    +       2181    2264       84     0      +3    2180    2265   100.0  
+SYNO_.1.11	Intr    +       2360    2446       87     0      +2    2359    2447   100.0  
+SYNO_.1.12	Intr    +       2712    2882      171     0      +3    2711    2883   100.0  
+SYNO_.1.13	Intr    +       2966    3092      127     0      +2    2965    3093   100.0  
+SYNO_.1.14	Term    +       3189    3304      116     2      +2    3188    3305   100.0  
+SYNO_.1.0	Utr3    +       3305    3441      137     NA      NA      NA      NA   100.0  
+
+---------------------------------------------------------------------
+> cat SYNO_ARATH.misc_info
+#=========================================#
+#=           Gene informations           =#
+#=========================================#
+SYNO_.1  	EuGene_misc	CDS	29	3304	1704	+	.	Full	29..421,514..582,699..809,914..1018,1271..1408,1522..1602,1694..1771,1853..1921,2014..2088,2181..2264,2360..2446,2712..2882,2966..3092,3189..3304
+SYNO_.1  	EuGene_misc	Gene	5	3441	3437	+	.	Full	5..28:29..421,514..582,699..809,914..1018,1271..1408,1522..1602,1694..1771,1853..1921,2014..2088,2181..2264,2360..2446,2712..2882,2966..3092,3189..3304:3305..3441
+#=========================================#
+#=             Est evidences             =#
+#=========================================#
+SYNO_.1.1	EuGene_cDNA	Exon	29	421	390	+	.	99	ATAJ644(99,1) AT00622(87,1) 
+SYNO_.1.2	EuGene_cDNA	Exon	514	582	69	+	.	100	ATAJ644(100,1) 
+SYNO_.1.3	EuGene_cDNA	Exon	699	809	111	+	.	100	ATAJ644(100,1) 
+SYNO_.1.4	EuGene_cDNA	Exon	914	1018	105	+	.	100	ATAJ644(100,1) 
+SYNO_.1.5	EuGene_cDNA	Exon	1271	1408	138	+	.	100	ATAJ644(100,1) 
+SYNO_.1.6	EuGene_cDNA	Exon	1522	1602	81	+	.	100	ATAJ644(100,1) 
+SYNO_.1.7	EuGene_cDNA	Exon	1694	1771	78	+	.	100	ATAJ644(100,1) 
+SYNO_.1.8	EuGene_cDNA	Exon	1853	1921	69	+	.	100	ATAJ644(100,1) 
+SYNO_.1.9	EuGene_cDNA	Exon	2014	2088	75	+	.	100	ATAJ644(100,1) 
+SYNO_.1.10	EuGene_cDNA	Exon	2181	2264	84	+	.	100	ATAJ644(100,1) 
+SYNO_.1.11	EuGene_cDNA	Exon	2360	2446	87	+	.	100	ATAJ644(100,1) 
+SYNO_.1.12	EuGene_cDNA	Exon	2712	2882	171	+	.	100	ATAJ644(100,1) 
+SYNO_.1.13	EuGene_cDNA	Exon	2966	3092	127	+	.	100	ATAJ644(100,1) AI994358(17,1) 
+SYNO_.1.14	EuGene_cDNA	Exon	3189	3304	116	+	.	100	ATAJ644(100,1) AI994358(100,1) 
+SYNO_.1.0	EuGene_cDNA	UTR3	3305	3441	137	+	.	100	ATAJ644(100,1) AI994358(85,1) 
+SYNO_.1  	EuGene_cDNA	CDS	29	3304	3273	+	.	99	ATAJ644(99,1) AT00622(10,1) AI994358(7,1) 
+SYNO_.1  	EuGene_cDNA	Gene	5	3441	3410	+	.	99	ATAJ644(99,1) AT00622(10,1) AI994358(10,1) 
+ 
+\end{Verbatim}
+
+% TO UPDATE: THOMAS
+%One can see that 2 of the 5 transcribed sequences have been filtered.
+%\texttt{ATAJ644} is an almost full-length cDNA. It covers almost all
+%the gene, from the position after the ATG to the 3'UTR. At the end,
+%for each gene predicted, a summary reports that the CDS predicted is
+%supported by 3273 over 3276 bases (the ATG is missing in all
+%trannscripts). The transcribed sequence predicted (including the UTR)
+%is supported for 3416 of its 3444 bases.
+
+\section{Using protein similarities}
+
+If one wants also to exploit similarities with homologous proteins, a
+similar file format can be used (see the corresponding plugin). The
+plugin can analyze similarities from several databases, each being
+associated with a specific ``level''. For each level, a confidence is
+defined in \EuGene's parameter file. Usually, 3 databases are used:
+SwissProt, PIR and TrEMBL (from the highest confidence to the
+lowest). Each collection of similarity is stored in a file with an
+extension \texttt{.blast} followed by the level of the database 
+(\texttt{.blast0}, \texttt{.blast1}, ..., \texttt{.blast9}).  The
+script used create these files from the output of NCBI-BLASTX is
+copyrighted and is therefore not distributed with \EuGene. It is not
+difficult to design another one. Here is an extract from
+\texttt{SYNO\_ARATH.fasta.blast0}:
+
+\begin{Verbatim}[fontsize=\scriptsize]
+2820 2861 36 3e-08 +3  sp_O07683_SYD_HALSA; 335 348
+2972 3088 41 3e-08 +2  sp_O07683_SYD_HALSA; 359 397
+3185 3298 113 3e-08 +2  sp_O07683_SYD_HALSA; 398 435
+353 418 45 2e-13 +2  sp_O24822_SYD_HALVO; 13 34
+1850 1915 67 2e-13 +2  sp_O24822_SYD_HALVO; 202 223
+2775 2858 72 2e-13 +3  sp_O24822_SYD_HALVO; 318 345
+3191 3280 104 2e-13 +2  sp_O24822_SYD_HALVO; 397 426
+353 418 51 7e-12 +2  sp_O26328_SYD_METTH; 21 42
+1271 1414 70 7e-12 +2  sp_O26328_SYD_METTH; 141 188
+1850 1954 62 7e-12 +2  sp_O26328_SYD_METTH; 210 244
+3191 3280 93 7e-12 +2  sp_O26328_SYD_METTH; 401 430
+\end{Verbatim}
+
+To exploit this information, the \texttt{-b} flag must be used,
+optionally followed by the set of levels to be exploited
+(``\texttt{012}'' means level 0, 1 and 2).  We start \EuGene\ and ask
+for both EST and proteic similarities analysis. We again enforce the
+use of an intergenic mode on the beginning and end of the sequence.
+And similar to the EST, an additional postprocessing can be requested
+to the plugin using the \texttt{-B} flag.
+
+\begin{Verbatim}[fontsize=\scriptsize]
+>../src/eugene -s -po -d -b012 -B Sequences/SYNO_ARATH.fasta
+---------------------------------------------------------------------
+EuGene rel. 3.6a - Arabidopsis -
+Parameters file /SATA/home/droc/GNPAnnot/EGN_Tc100609/eugene-3.6a/doc/../cfg/eugene.par loaded.
+---------------------------------------------------------------------
+Loading sequence...SYNO_ARATH, 3699 bases read, GC Proportion = 38.8%
+Loading Sensor.MarkovIMM......done
+Reading IMM... 1 2 3 4 5 6 7 ...done
+Loading Sensor.BlastX.........done
+Reading BlastX data, level...0 1 2 done
+Loading Sensor.EuStop.........done
+Loading Sensor.IfElse.........done
+Loading Sensor.NG2............done
+Reading splice site file (NetGene2)...........forward, reverse done
+Loading Sensor.SPred..........done
+Reading splice site file (Splice Predictor)...forward, reverse done
+Loading Sensor.MarkovConst....done
+Loading Sensor.NStart.........done
+Reading start file (NetStart).................forward, reverse done
+Loading Sensor.Transcript.....done
+Loading Sensor.Est............done
+Reading cDNA hits............3 sequences read
+Optimal path length = 4907.0231
+
+    Seq         Type    S       Lend    Rend   Length  Phase   Frame      Ac      Do      Pr
+
+SYNO_.1.0	Utr5    +          5      28       24     NA      NA      NA      NA     0.0  
+SYNO_.1.1	Init    +         29     421      393     0      +2      28     422    99.0  
+SYNO_.1.2	Intr    +        514     582       69     0      +1     513     583   100.0  
+SYNO_.1.3	Intr    +        699     809      111     0      +3     698     810   100.0  
+SYNO_.1.4	Intr    +        914    1018      105     0      +2     913    1019   100.0  
+SYNO_.1.5	Intr    +       1271    1408      138     0      +2    1270    1409   100.0  
+SYNO_.1.6	Intr    +       1522    1602       81     0      +1    1521    1603   100.0  
+SYNO_.1.7	Intr    +       1694    1771       78     0      +2    1693    1772   100.0  
+SYNO_.1.8	Intr    +       1853    1921       69     0      +2    1852    1922   100.0  
+SYNO_.1.9	Intr    +       2014    2088       75     0      +1    2013    2089   100.0  
+SYNO_.1.10	Intr    +       2181    2264       84     0      +3    2180    2265   100.0  
+SYNO_.1.11	Intr    +       2360    2446       87     0      +2    2359    2447   100.0  
+SYNO_.1.12	Intr    +       2712    2882      171     0      +3    2711    2883   100.0  
+SYNO_.1.13	Intr    +       2966    3092      127     0      +2    2965    3093   100.0  
+SYNO_.1.14	Term    +       3189    3304      116     2      +2    3188    3305   100.0  
+SYNO_.1.0	Utr3    +       3305    3441      137     NA      NA      NA      NA   100.0  
+
+---------------------------------------------------------------------
+> cat SYNO_ARATH.misc_info
+#=========================================#
+#=           Gene informations           =#
+#=========================================#
+SYNO_.1  	EuGene_misc	CDS	29	3304	1704	+	.	Full	29..421,514..582,699..809,914..1018,1271..1408,1522..1602,1694..1771,1853..1921,2014..2088,2181..2264,2360..2446,2712..2882,2966..3092,3189..3304
+SYNO_.1  	EuGene_misc	Gene	5	3441	3437	+	.	Full	5..28:29..421,514..582,699..809,914..1018,1271..1408,1522..1602,1694..1771,1853..1921,2014..2088,2181..2264,2360..2446,2712..2882,2966..3092,3189..3304:3305..3441
+#=========================================#
+#=           Protein evidences           =#
+#=========================================#
+SYNO_.1.1	EuGene_prot	Exon	29	421	393	+	.	100	sp_O23573_O23573_ARATH;(100,2) AC;(100,1) sp_P38707_SYNC_YEAST;(28,0) AC;(28,1) sp_P54263_SYN_THETH;(22,0) 
+SYNO_.1.2	EuGene_prot	Exon	514	582	69	+	.	100	sp_O23573_O23573_ARATH;(100,2) sp_P17242_SYN_ECOLI;(100,0) sp_P43829_SYN_HAEIN;(100,0) sp_O96198_O96198_PLAFA;(100,2) sp_O51128_SYN_BORBU;(100,0) 
+SYNO_.1.3	EuGene_prot	Exon	699	809	72	+	.	64	sp_O23573_O23573_ARATH;(64,2) AC;(64,1) sp_P17242_SYN_ECOLI;(48,0) AC;(48,1) 
+SYNO_.1.4	EuGene_prot	Exon	914	1018	102	+	.	97	sp_O23573_O23573_ARATH;(97,2) sp_P52276_SYN_SYNY3;(97,0) AC;(97,1) AC;(97,1) sp_P17242_SYN_ECOLI;(94,0) 
+SYNO_.1.5	EuGene_prot	Exon	1271	1408	138	+	.	100	sp_O23573_O23573_ARATH;(100,2) sp_P17242_SYN_ECOLI;(100,0) sp_P43829_SYN_HAEIN;(100,0) sp_O96198_O96198_PLAFA;(100,2) sp_O51128_SYN_BORBU;(100,0) 
+SYNO_.1.6	EuGene_prot	Exon	1522	1602	81	+	.	100	sp_O23573_O23573_ARATH;(100,2) AC;(100,1) 
+SYNO_.1.7	EuGene_prot	Exon	1694	1771	78	+	.	100	sp_P43829_SYN_HAEIN;(100,0) sp_O96198_O96198_PLAFA;(100,2) sp_O51128_SYN_BORBU;(100,0) sp_O83618_SYN_TREPA;(100,0) sp_O43776_SYN_HUMAN;(100,0) 
+SYNO_.1.8	EuGene_prot	Exon	1853	1921	69	+	.	100	sp_P54263_SYN_THETH;(100,0) sp_P17242_SYN_ECOLI;(100,0) sp_P43829_SYN_HAEIN;(100,0) sp_O96198_O96198_PLAFA;(100,2) sp_O51128_SYN_BORBU;(100,0) 
+SYNO_.1.9	EuGene_prot	Exon	2014	2088	75	+	.	100	sp_P17242_SYN_ECOLI;(100,0) sp_P43829_SYN_HAEIN;(100,0) sp_O96198_O96198_PLAFA;(100,2) sp_O51128_SYN_BORBU;(100,0) sp_P39772_SYN_BACSU;(100,0) 
+SYNO_.1.10	EuGene_prot	Exon	2181	2264	81	+	.	96	sp_O96198_O96198_PLAFA;(96,2) AC;(96,1) sp_P17242_SYN_ECOLI;(92,0) AC;(92,1) sp_P43829_SYN_HAEIN;(85,0) 
+SYNO_.1.11	EuGene_prot	Exon	2360	2446	87	+	.	100	sp_P43829_SYN_HAEIN;(100,0) sp_O96198_O96198_PLAFA;(100,2) sp_O83618_SYN_TREPA;(100,0) sp_P52276_SYN_SYNY3;(100,0) AC;(100,1) 
+SYNO_.1.12	EuGene_prot	Exon	2712	2882	171	+	.	100	sp_P17242_SYN_ECOLI;(105,0) sp_O83618_SYN_TREPA;(103,0) sp_O23573_O23573_ARATH;(100,2) AC;(100,1) sp_O96198_O96198_PLAFA;(96,2) 
+SYNO_.1.13	EuGene_prot	Exon	2966	3092	127	+	.	100	sp_O23573_O23573_ARATH;(100,2) AC;(100,1) sp_P38707_SYNC_YEAST;(99,0) sp_P54263_SYN_THETH;(99,0) sp_P17242_SYN_ECOLI;(99,0) 
+SYNO_.1.14	EuGene_prot	Exon	3189	3304	110	+	.	94	sp_P52276_SYN_SYNY3;(94,0) sp_O07683_SYD_HALSA;(94,0) AC;(94,1) sp_O84546_O84546_CHLTR;(93,2) sp_O96198_O96198_PLAFA;(93,2) 
+SYNO_.1  	EuGene_prot	CDS	29	3304	1653	+	.	97	sp_O23573_O23573_ARATH;(67,2) sp_P17242_SYN_ECOLI;(14,0) sp_P38707_SYNC_YEAST;(9,0) sp_P54263_SYN_THETH;(4,0) 
+ 
+\end{Verbatim}
+
+Other plugins are described in the reference section of this document.
+
+\newpage
+\chapter{Reference documentation}
+
+To be executed, \EuGene\ needs at least one file: this is the
+so-called parameter file.  \EuGene\ behavior is entirely controlled
+by a set of parameters whose default values are available in this
+file. These default values can be altered by editing this file or for
+some values through flags in the command line (such as \texttt{-d},
+see the quick start chapter). Command line flags override any value in the parameter
+file. The name of the parameter file that \EuGene\ seeks is obtained
+by adding the suffix ``\texttt{.par}'' to the name of the \EuGene\ 
+command itself.  As it is distributed, \EuGene\ command's name is
+\texttt{eugene} and accordingly the parameter file is
+\texttt{eugene.par}. If at some point you want to use several
+different parameter files, you can simply use symbolic links to the
+\texttt{eugene} binary executable. Using a symbolic link, with a
+specific name to call \EuGene\ will enable you to load a different
+parameter file whose name is derived from the symbolic link name by
+ading `\texttt{`.par}'' The parameter file is first sought in the
+local directory.  If this fails, the value of the environment variable
+\texttt{EUGENEDIR} is used as a second possible path.
+
+\EuGene\ gathers all informations on the FASTA sequences through
+so-called ``plugins'' also called ``sensors''. A plugin is a small
+software component that can be dynamically loaded and that can inform
+\EuGene\ about likely exonic, intronic, utr, intergenic regions and
+about signals in the sequence (either splice sites, translation starts
+and stops, transcription starts and stops and possible frameshifts).
+Plugins can typically embody Markov models (that characterize exonic,
+intronic\ldots regions) or splice site detectors or others.  Available
+sensors are stored in the \texttt{PLUGINS} directory and are
+dynamically loaded by \EuGene\ according to the parameters.
+
+The typical call to \EuGene\ is:
+
+\begin{Verbatim}[fontsize=\small]
+eugene <fasta files>
+\end{Verbatim}
+
+where each FASTA file contains one single DNA sequence. In this case,
+the first action of \EuGene\ is to seek and load the parameter file.
+All the parameters in this file are either used by \EuGene\ or by the
+plugins. Each plugin may have its own parameters. The following
+section describes all the parameters used by \EuGene. Information
+about the parameters used by plugins is provided in each plugin
+section (see section~\ref{plug}).
+
+\section{\EuGene's general parameters}
+\label{param}
+
+Here is a list of all the parameters not related to a plugin which control \EuGene's
+behavior. When a command line flag exists that can modify the
+corresponding parameter, it is indicated.  All the parameters that
+control \EuGene\'s behavior are available in the parameter file. This
+file has a relatively strict formatting. Each line can either be a
+comment line (the first character in the line must be a \verb # ) or a
+parameter definition. Empty lines are not allowed. A parameter
+definition is composed of two strings of character. The first one is
+the name of the parameter, the second is its value. Everything is case
+sensitive. The definition order is not important.
+
+\begin{itemize}
+\item \texttt{EuGene.version}: specifies the \EuGene \ version. 
+  After having load the parameter file, \EuGene \ checks
+  that the parameter file version is consistent with the executable
+  version.
+
+\item \texttt{EuGene.organism}: name of the considered organism.
+   
+\item \texttt{EuGene.PluginsDir}: specify the location of the directory
+  where plugins could be found (``\texttt{.so}'' files, sensor specific 
+  models files); that is the path to the \texttt{PLUGINS} directory.
+  
+  \item \texttt{EuGene.sloppy}: in the default (non-sloppy) mode, 
+  \EuGene\ will stop and abort if some needed parameters in the parameter
+  file is missing. If the parameter is set to \texttt{1} then a simple warning
+  is emitted. Not advised unless you know what you do.
+  
+\item \texttt{EuGene.ExonPrior}, \texttt{EuGene.IntronPrior},
+  \texttt{EuGene.InterPrior}, \texttt{EuGene.FivePri\-mePrior},
+  \texttt{EuGene.ThreePrimePrior}: prior on the initial/final state of
+  prediction. The ``\texttt{-s}'' command line flag can override these
+  priors by setting all the non intergenic priors to $0.0$. This
+  forces \EuGene\ to start and and its prediction in intergenic mode.
+  
+\item \texttt{EuGene.InitExDist}, \texttt{EuGene.IntrExDist},
+  \texttt{EuGene.TermExDist}, \texttt{EuGene.SnglExDist},
+  \texttt{EuGene.IntronDist}, \texttt{EuGene.InterDist},
+  \texttt{EuGene.5PrimeDist}, \texttt{EuGene.3PrimeDist}: \EuGene\ 
+  can use explicit penalty distributions on the length of the elements
+  predicted. This can be an initial exon, and intermediary exon, a
+  terminal exon, a single exon gene, an intron an intergenic region, a
+  5' UTR region or a 3' UTR region. Each parameter specifies the
+  filename of an explicit penalty distribution file (see the following section). %TBD
+  
+\item \texttt{EuGene.SplicedStopPen}: indicates the penalty for
+  predicting genes containing in-frame spliced STOPs. This is
+  basically set to an infinite value in order to avoid prediction
+  containing spliced STOPs but setting this to 0.0 can be useful for
+  pseudo-gene prediction\ldots
+
+\item \texttt{Output.RemoveFrags}: in the text output, remove any 
+fragmentary gene prediction (missing ATG or STOP or both). The prediction
+process is unchanged,  the prediction is just filtered. \index{CmdFlags}{[Remove fragmentary proteins] F}
+
+\item \texttt{Output.truncate}: in the text output, each gene element
+  predicted if prefixed by the FASTA sequence id (or the filename if
+  no FASTA id is available). This is truncated to the number of
+  caracters indicated. If set to 0 (or FALSE), the full id is used.
+
+\item \texttt{Output.MinCDSLen}: any predicted gene whose CDS length
+  in number of nucleotides is lower than this is filtered out from the
+  output.
+
+\item \texttt{Output.UTRtrim}: EuGene is natively capable of
+  predicting UTR. If desired however, the UTR prediction of EuGene can
+  be trimmed to be exactly consistent with the transcript evidence
+  available as provided by the Est plugin. If no EST evidence is
+  available, this means that all UTR predictions will be removed from
+  the output.
+
+\item \texttt{Output.stepid}: in the text output, step for numbering genes.
+
+\item \texttt{Output.graph}: if set, requests graphical PNG output.
+  This can also be set using the \texttt{-g} command line flag. \index{CmdFlags}{[eugene PNG graph required] g}
+  The PNG filename is composed by the seq name (w/o the .fasta suffix) completed by
+  the number of the figure + .png extension (possibly,
+  start/end positions will be inserted too if -u/-v is used).
+  
+\item \texttt{Output.resx}, \texttt{Output.resy}: controls the
+  horizontal and vertical resolution of the PNG images generated by
+  \EuGene. 
+  
+\item \texttt{Output.gfrom}, \texttt{Output.gto}: respectively
+  controls which part of the sequence is to be plotted (eg. for
+  zooming). The default value for both is $-1$ which corresponds to
+  the whole sequence. These parameters can also be set using the
+  \texttt{-u} and \texttt{-v}. flags \index{CmdFlags}{[eugene PNG graph lower bound] u}
+  \index{CmdFlags}{[eugene PNG graph higher bound] v}
+
+\item \texttt{Output.glen}: controls the number of nucleotides that
+  will appear on a single image. The value $-1$ corresponds to a
+  default adaptative mechanism which plots min (6000,length to
+  visualize). The ``length to visualize'' is computed from the value
+  given to \texttt{Output.gfrom} and \texttt{Output.gto}.
+  
+\item \texttt{Output.golap}: controls how successives PNG images
+  overlap. It must be set to the number of overlapping nucleotides
+  between 2 successives PNG images. Default is $-1$ which
+  heuristically determines this based on resolution and number of nuc.
+  per image. This parameter can also be set using the \texttt{-c}
+  command line flag. \index{CmdFlags}{[eugene PNG graph overlapping] c}
+    
+\item \texttt{Output.normopt}: indicates the way the score are
+  normalized accross the possibles states (phase 1, 2, 3, -1, -2, -3,
+  introns and intergenic states).
+  \begin{itemize}
+  \item 0: no normalization
+  \item 1: normalize accross all states
+  \item 2: normalize each coding phase w.r.t. to the non coding
+    score only.
+  \end{itemize}
+  Default is 1. Does not affect prediction, only graphical output.
+
+\item \texttt{Output.window}: sets the half-size of the smoothing
+  window used to plot the scores.  Default is 48. This does not affect
+  prediction, only graphical output. It can be set using the
+  \texttt{-w} command line flag. \index{CmdFlags}{[eugene PNG graph smoothing window] w}
+
+\item \texttt{Output.intron}: allows to print introns in the textual output.
+  Default is 0 (no introns).
+ 
+\item \texttt{Output.format}: controls the format of the textual
+  outpout. May be \texttt{o} (stdout), \texttt{d} (detailed),
+  \texttt{l} (long), \texttt{s} (short), \texttt{h} (html), \texttt{g}
+  (gff) or \texttt{a} (araset format). Default is \texttt{l}. This can
+  be overrided using the \texttt{-p} command line
+  flag.\index{CmdFlags}{[eugene textual output format] p} \texttt{o}:
+  print the prediction on stdout using the same format than
+  \texttt{l}.  All the others print the prediction in files which name
+  are composed by the name of the sequence file (w/o the extension
+  .fasta, .tfa, .fsa or .txt) completed by \texttt{.egn.debug (d)},
+  \texttt{.egn (l)}, \texttt{.egn.short (s)}, \texttt{.html (h)},
+  \texttt{.gff (g)}, \texttt{.gff3 (g)} or \texttt{.egn.ara (a)}.
+  Multiple format can be selected (\texttt{ohg} for example). When GFF
+  is requested, both GFF1 and GFF3 are produced.
+  
+\item \texttt{Output.offset}: allows to offset the nucleotide position
+  of the prediction.  That is, the prediction for nucleotide at
+  position $i$ of the given sequence is printed as nucleotide $i+$ the
+  offset. Useful to perform prediction on an extracted sequence
+  without loosing the original position. Can also be set using the
+  \texttt{-o} command line flag. \index{CmdFlags}{[eugene nucleotide position offset] o}
+  
+\item \texttt{Output.Prefix}: indicates the directory where all non
+  stderr/stdout output (eg. PNG images, HTML and GFF files...) should go.
+  Default is the current directory.
+  \index{CmdFlags}{[eugene output directory] O}
+
+\item \texttt{Gff3.SoTerm}: indicates the path where sofa (Sequence Ontology Feature Terms) terms are store.
+  The path is relative to EUGENEDIR.
+
+\item \texttt{Eval.offset}: using during the evaluation of a prediction. 
+The prediction is compared with a reference (the real gene structure). 
+The region in which compare the prediction and the reference is defined 
+	as the reference positions +/- the offset.
+
+\item \texttt{Fitness.wsng}, \texttt{Fitness.wsne}, 
+\texttt{Fitness.wsnn}, \texttt{Fitness.wspg}, 
+\texttt{Fitness.wspe}, \texttt{Fitness.wsspn}: 
+indicate respectively the weight of the gene sensitivity, of the exon sensitivity, 
+of the nucleotide sensitivity, of the gene specificity, of the exon specificity 
+and of the nucleotide specificity in the fitness computing.
+\end{itemize}
+
+{\bf Specification of explicit penalty distributions on length}
+
+As in semi-Markov models, \EuGene\ uses explicit distribution of
+penalties on the length of all predicted elements. The dynamic
+programming inside \EuGene\ garantees that \EuGene\ will run in linear
+time and space in the length of the sequence in all cases.
+
+The distributions handled by \EuGene\ are made of 3 components. First,
+there is a region of forbidden length (minimum length), then a region
+with an arbitrary penalty distribution, then a region with a linear
+variation of the penalty. From a probabilitic point of view, this means
+an exponential tail.
+
+Although \EuGene\ is linear in time in the sequence length, it is also
+typically linear in time in the sum of the size of the two first
+regions. For the moment, all existing \EuGene\ instances use explicit
+distributions with an empty arbitrary region (the distribution is just
+a minimum length followed by an exponential tail).
+
+Explicit distributions must be specified in distribution files. Each
+line in a distribution file contains a length and a penalty. The first
+length used specifies the minimum allowed length. Then each line
+specifies a point of the explicit distribution. Linear interpolation
+is used between points. Then the last length used specifies the start
+of the linear tail. The last slope used becomes the slop of the linear
+tail.
+
+A
+typical distribution file is given below:
+\begin{Verbatim}
+3 0.0
+4 2.0
+6 4.0
+\end{Verbatim}
+
+It specifies a minimum length of 3. We then have an explicit
+distribution region with penalty 0.0 for 3, 2.0 for 4, 3.0 for 5
+(linear interpolation), then 4.0 at 6. As this is the last point
+and the slope is 1, the rest of the distribution will be linear
+with slope 1.
+
+\section{Splice variant prediction}
+
+Since version 3.4, \EuGene\ allows to predict splice variants based purely on
+experimental data (alternative transcripts observed through EST). The feature
+is still experimental and is activated using the \texttt{-a} flag or 
+equivalently by setting the parameter \texttt{AltEst.use} to 1 or TRUE.\index{CmdFlags}{[splice isoform prediction] a}
+
+In this case, \EuGene\ will look for a file with the same name as the sequence
+file and with a suffix '\texttt{.alt.est}'. This file has the same format as
+the '\texttt{.est}' used by the Est pugin (see later) and contains information
+about genomic region with high quality similarity with EST. The spliced 
+alignment algorithm used to create this file should be of high quality, 
+with clear exon-intron frontiers associated with splice sites (use for example
+GeneSeqer or faster GenomeThreader).
+
+\EuGene\ will analyze these EST and look for pairs of EST which are inconsistent
+one with the other (there is one nucleotide mapped to an exon by one which is 
+mapped to an intron/gap by the other). Each element of such a pair will be used 
+to try to produce a prediction that follows the EST structure. If the prediction
+is different from the optimal prediction, the gene variant structure will be
+also output.
+
+This feature is controlled by a number of parameters with the '\texttt{AltEst}'
+prefix in the parameter file. The only parameters that you could change are the
+parametrs regarding length thresholds, used for filtering (\texttt{AltEst.maxEstLength}, \texttt{AltEst.minEstLength}, \texttt{AltEst.maxIn}, \texttt{AltEst.minIn}, \texttt{AltEst.maxEx} and \texttt{AltEst.minEx} which speak for themselves.
+
+Every alignement is also "trimmed" by an amount of \texttt{AltEst.exonucleasicLength} on the first and last hit to account for possible spurious short matches. If these hits are shorter than this amount, they are removed from the available data.
+
+Using the sequence \texttt{At5g18830.fasta.genomicAJ011613.fasta} and the associated information found in
+the \texttt{doc/Sequences/} directory, we can test this as follows:
+
+\begin{Verbatim}[fontsize=\scriptsize]
+>../src/eugene -s -a -po Sequences/At5g18830.fasta.genomicAJ011613.fasta
+---------------------------------------------------------------------
+EuGene rel. 3.6a - Arabidopsis -
+Parameters file /SATA/home/droc/GNPAnnot/EGN_Tc100609/eugene-3.6a/doc/../cfg/eugene.par loaded.
+---------------------------------------------------------------------
+Loading sequence...gi|5931636|emb|AJ011613.1|ATH011613, 4920 bases read, GC Proportion = 40.0%
+Loading Sensor.MarkovIMM......done
+Reading IMM... 1 2 3 4 5 6 7 ...done
+Loading Sensor.EuStop.........done
+Loading Sensor.IfElse.........done
+Loading Sensor.NG2............done
+Reading splice site file (NetGene2)...........forward, reverse done
+Loading Sensor.SPred..........done
+Reading splice site file (Splice Predictor)...forward, reverse done
+Loading Sensor.MarkovConst....done
+Loading Sensor.NStart.........done
+Reading start file (NetStart).................forward, reverse done
+Loading Sensor.Transcript.....done
+Optimal path length = 6501.0711
+Reading alt. spl. evidence... 11 read, 9 removed (0 incl., 9 unsp., 0 no alt.spl., 0 len.), 1 inc. pairs, 2 kept ... done
+Optimal path length = 6505.9537
+
+    Seq         Type    S       Lend    Rend   Length  Phase   Frame      Ac      Do      Pr
+
+
+    Seq         Type    S       Lend    Rend   Length  Phase   Frame      Ac      Do      Pr
+
+gi|59.1a.0	Utr5    +         83     118       36     NA      NA      NA      NA     0.0  
+gi|59.1a.1	Init    +        119     669      551     0      +2     118     670     0.0  
+gi|59.1a.2	Intr    +       1066    1238      173     1      +2    1065    1239     0.0  
+gi|59.1a.3	Intr    +       1390    1616      227     2      +3    1389    1617     0.0  
+gi|59.1a.4	Intr    +       1690    1764       75     0      +1    1689    1765     0.0  
+gi|59.1a.5	Intr    +       1867    1974      108     0      +1    1866    1975     0.0  
+gi|59.1a.6	Intr    +       2291    2408      118     0      +2    2290    2409     0.0  
+gi|59.1a.7	Intr    +       2525    2660      136     2      +1    2524    2661     0.0  
+gi|59.1a.8	Intr    +       2886    3039      154     1      +1    2885    3040     0.0  
+gi|59.1a.9	Intr    +       3114    3674      561     0      +3    3113    3675     0.0  
+gi|59.1a.10	Term    +       3928    4230      303     0      +1    3927    4231     0.0  
+gi|59.1a.0	Utr3    +       4231    4268       38     NA      NA      NA      NA     0.0  
+
+gi|59.1b.0	Utr5    +         83     118       36     NA      NA      NA      NA     0.0  
+gi|59.1b.1	Init    +        119     669      551     0      +2     118     670     0.0  
+gi|59.1b.2	Intr    +       1066    1238      173     1      +2    1065    1239     0.0  
+gi|59.1b.3	Intr    +       1390    1616      227     2      +3    1389    1617     0.0  
+gi|59.1b.4	Intr    +       1690    1764       75     0      +1    1689    1765     0.0  
+gi|59.1b.5	Intr    +       1867    1974      108     0      +1    1866    1975     0.0  
+gi|59.1b.6	Intr    +       2291    2408      118     0      +2    2290    2409     0.0  
+gi|59.1b.7	Intr    +       2525    2660      136     2      +1    2524    2661     0.0  
+gi|59.1b.8	Intr    +       2886    3039      154     1      +1    2885    3040     0.0  
+gi|59.1b.9	Intr    +       3114    3596      483     0      +3    3113    3597     0.0  
+gi|59.1b.10	Term    +       3928    4230      303     0      +1    3927    4231     0.0  
+gi|59.1b.0	Utr3    +       4231    4353      123     NA      NA      NA      NA     0.0  
+
+---------------------------------------------------------------------
+ 
+\end{Verbatim}
+
+We can see that two predictions are produced for the same region. In this case, it is just one alternative splice site
+that has been used for the exon number 8 in the gene.
+
+\section{Plugins}
+\label{plug}
+
+Plugins are small software components that can be dynamically loaded
+by \EuGene. Although it is completely transparent to the end-user,
+every plugin loaded by \EuGene\ must be written in C++ and be a
+subclass of the Sensor class. This class provides essentially four
+methods:
+\begin{itemize}
+\item constructor: when instanciated, a plugin receives an instance number
+  (specified in the parameter file) and a DNA sequence (instance of
+  the \texttt{DNASeq} class). The instance number allows to load
+  several identical plugins using different parameters. A plugin with
+  a parameter \texttt{X} and instance number \texttt{n} will fetch
+  parameter \texttt{X[n]} in the parameter file. On instanciation, the
+  plugin should load all data needed to handle the sequence. If the
+  plugin depends on optimizable parameters (parameters whose name is
+  followed by a \texttt{*}), then the final configuration that may
+  depend on these parameters must be postponed in the \texttt{Init}
+  method. 
+  
+\item \texttt{Init}: receives as argument the sequence to process (an
+  instance of the \texttt{DNASeq} class) and performs the extra
+  initializations that depends on optimizable parameters values
+  (parameters whose name is followed by a \texttt{*}).
+  
+\item \texttt{GiveInfo}: receives as argument the sequence to process
+  (an instance of the \texttt{DNASeq} class), a position on the
+  sequence and a \texttt{Data} instance. The \texttt{Data}
+  data-structure can receive predictions on all signals and contents
+  scores known to \EuGene.
+
+\item \texttt{Plot}: receives as argument the sequence to process (an
+  instance of the \texttt{DNASeq} class) and plots all the predictions
+  made by the sensor.
+
+\item \texttt{PostAnalyse}: receives as argument the prediction of
+  \EuGene\ and may check it against its own prediction and report
+  support or inconsistencies.
+\end{itemize}
+
+The \texttt{Plot} and \texttt{PostAnalyse} methods are often empty.
+The \texttt{Init} is usually limited to the reloading of optimizable
+parameters (see the source of the \texttt{Est} or \texttt{BlastX}
+plugins for exceptions).
+
+\subsection{Loading plugins}
+
+When \EuGene\ starts, plugins are loaded and instanciated following
+parameters in the parameter file. The \texttt{Sensor.*.use} may
+activate or desactivate the corresponding sensor (which must be
+available in the PLUGINS directory). If the parameter value is set to
+\texttt{0} or \texttt{FALSE}, the plugin is not used. If the parameter
+value is set to \texttt{1}, then a single instance of the plugin is
+loaded. If the parameter is set to an integer value, then this number
+of instances of the plugin are created.
+
+Below is the list of minimum plugins which are activated by default by
+the \emph{Arabidopsis thaliana} version of \EuGene.
+
+\begin{Verbatim}
+Sensor.Transcript.use   1
+Sensor.EuStop.use       1
+Sensor.NStart.use       1
+Sensor.IfElse.use       1 (with 2 splice site prediction plugins)
+Sensor.MarkovIMM.use    1
+Sensor.MarkovConst.use  1
+\end{Verbatim}  
+
+Sensors are loaded and instanciated following an increasing order of
+priorities. The priority of a given type of plugin is defined by the
+value of the corresponding \texttt{Sensor.*} parameter. Here is an
+example of actual priorities:
+
+\begin{Verbatim}
+Sensor.Transcript       1
+Sensor.FrameShift       1
+Sensor.IfElse           1
+Sensor.EuStop           1       
+Sensor.NStart           1       
+Sensor.MarkovIMM        1 
+Sensor.Est              30         
+\end{Verbatim}
+
+The \texttt{Sensor.Est} is loaded last because it has the highest
+priority.  This is important since the sensor actually uses the
+information provided by other sensors (splice site prediction sensors)
+that then have to be loaded before.
+
+Several instances of the same sensor can be loaded. Eg., if you are
+dealing with an organism that has a large GC\% range, one may use
+several \texttt{Sensor.MarkovIMM}. Imagine you want to use one model
+for sequences who have a GC\% below 50 and another for higher GC\%.
+This can be achieved by instaciating 2 such sensors. 
+
+\begin{Verbatim}
+Sensor.MarkovIMM        2
+\end{Verbatim}
+
+When these sensors will be instanciated, they will look for specific
+parameters. The first instance will use the usual parameters or parameters 
+followed by \texttt{[0]} for this plugin class, the second instance will use parameters 
+followed by \texttt{[1]}.
+
+\begin{Verbatim}
+MarkovIMM.matname[0]    lowGC.mat 
+MarkovIMM.minGC[0]      0
+MarkovIMM.maxGC[0]      50
+MarkovIMM.matname[1]    highGC.mat
+MarkovIMM.minGC[1]      50
+MarkovIMM.maxGC[1]      100
+\end{Verbatim}
+
+As the example show, it is equivalent to define the parameter
+\texttt{MarkovIMM.matname[0]} (or any parameter followed by
+\texttt{[0]} and the parameter \texttt{MarkovIMM.matname}.
+
+\subsection{\texttt{GFF3 input documentation}} 
+
+Since version 3.4b, Eugene allows for Gff3-compliant input and output.
+
+\paragraph{GFF3 format}
+
+See \texttt{http://www.sequenceontology.org/gff3.shtml} for details.
+In a GF33 file, everything is line-based. The format of a line is:
+
+\verb!<seqid> <source> <type> <start> <end> <score> <strand> <phase><attributes>!
+
+The attributes column is composed of tags, some tags have predefined
+meanings according to Gff3 specifications. These are the tags
+\texttt{ID, Target, Ontology\_term}.  For Eugene, we define additional
+specific attributes: \texttt{is\_full\_length, target\_length,
+  target\_sequence, database, frame\_hit, frame\_hit, score\_hit}.
+
+A new parameter is needed in \texttt{eugene.par}: 
+\texttt{Gff3.SoTerms		cfg/sofa.obo}
+
+It specifies the path relatively to EUGENEDIR of the file which contains
+all SOFA codes. Currently we use the version 1.2 of 25:07:2007. In order
+to create valid gff3 file, you have to use SOFA terms or codes.
+
+The third column (type) of gff3 format must contain a term of SOFA,
+program accept the id, name and synonyms.
+
+Example of SOFA definition term :
+\begin{Verbatim}
+[Term]
+id: SO:0000164
+name: three_prime_splice_site
+def: "The junction between the 3 prime end of an intron and 
+the following exon." [http://www.ucl.ac.uk/~ucbhjow/b241/glossary.html]
+subset: SOFA
+synonym: "3' splice site" RELATED []
+synonym: "acceptor" RELATED []
+synonym: "acceptor splice site" EXACT []
+synonym: "splice acceptor site" EXACT []
+is_a: SO:0000162 ! splice_site
+\end{Verbatim}
+
+The accepted types in the third columns are:
+
+\begin{itemize}
+\item\texttt{ SO:0000164}
+\item\texttt{ three\_prime\_splice\_site}
+\item\texttt{ acceptor }
+\item\texttt{ acceptor splice site or  acceptor\_splice\_site}
+\item\texttt{ splice acceptor site or  splice\_acceptor\_site}
+\end{itemize}
+
+Each plugin has its own extension, in gff3 mode you just have to add '.gff3' after the native file name.
+Example if plugin \texttt{SPred} is active with gff3 input format , it will expect 
+a file named \texttt{file.SPred.gff3} ( instead of \texttt{file.SPred} in native mode)
+
+We now descrive each plugin, its behavior and parameters.
+
+\subsection{\texttt{Signal plugins}}
+\input{Doc_EuStop.tex}
+\input{Doc_FrameShift.tex}
+\input{Doc_GSplicer.tex}
+\input{Doc_NG2.tex}
+\input{Doc_NStart.tex}
+\input{Doc_PatConst.tex}
+\input{Doc_PepSignal.tex}
+\input{Doc_SMachine.tex}
+\input{Doc_SpliceWAM.tex}
+\input{Doc_SPred.tex}
+\input{Doc_StartWAM.tex}
+\input{Doc_Transcript.tex}
+
+\subsection{\texttt{Content plugins}}
+\input{Doc_BlastX.tex}
+\input{Doc_Est.tex}
+\input{Doc_Homology.tex}
+\input{Doc_MarkovConst.tex}
+\input{Doc_MarkovIMM.tex}
+\input{Doc_MarkovProt.tex}
+\input{Doc_Repeat.tex}
+\input{Doc_NStretch.tex}
+
+\subsection{\texttt{Mixed signal/content plugins}}
+\input{Doc_AnnotaStruct.tex}
+\input{Doc_IfElse.tex}
+\input{Doc_Riken.tex}
+\input{Doc_NcRNA.tex}
+
+\subsection{\texttt{Others plugins}}
+\input{Doc_GCPlot.tex}
+\input{Doc_GFF.tex}
+\input{Doc_Plotter.tex}
+\input{Doc_Tester.tex}
+
+\section{\EuGene\ as a combiner}
+
+\EuGene\ is able to integrate predictions from many sources and to combine them in one prediction.
+For that, you only need to use the AnnotaStruct plugin (see section~\ref{annotastruct}): create as many AnnotaStruct instances as files to combine.
+
+
+The parameter file \texttt{cfg/eugene.combine.par} is parametrized to combine two files. 
+In the first file, information about start and stop codons is taken into account, whereas in the second one, it is information about splice sites and CDS.
+\begin{Verbatim}[fontsize=\small]
+ ##### Sensors AnnotaStruct #####
+AnnotaStruct.FileExtension[0]      genefinder1
+AnnotaStruct.TranscriptFeature[0]  transcript
+AnnotaStruct.Start*[0]            2     # i: inline score (GFF3 format only) 
+AnnotaStruct.StartType[0]         s      # p: probability  s: score
+AnnotaStruct.Stop*[0] 1.5
+AnnotaStruct.StopType[0] s
+AnnotaStruct.Acc*[0] 0
+AnnotaStruct.AccType[0] s
+AnnotaStruct.Don*[0] 0
+AnnotaStruct.DonType[0] s
+AnnotaStruct.TrStart*[0] 0
+AnnotaStruct.TrStartType[0] s
+AnnotaStruct.TrStop*[0] 0
+AnnotaStruct.TrStopType[0] s
+AnnotaStruct.TrStartNpc*[0] 0
+AnnotaStruct.TrStartNpcType[0] s
+AnnotaStruct.TrStopNpc*[0] 0
+AnnotaStruct.TrStopNpcType[0] s
+AnnotaStruct.Exon*[0] 0
+AnnotaStruct.Intron*[0] 0
+AnnotaStruct.CDS*[0] 0
+AnnotaStruct.npcRNA*[0]  0
+AnnotaStruct.format[0]             GFF3
+\end{Verbatim}
+
+\begin{Verbatim}[fontsize=\small]
+AnnotaStruct.FileExtension[1]      genefinder2
+AnnotaStruct.TranscriptFeature[1]  transcript
+AnnotaStruct.Start*[1]            0     # i: inline score (GFF3 format only)
+AnnotaStruct.StartType[1]          s      # p: probability  s: score
+AnnotaStruct.Stop*[1] 0
+AnnotaStruct.StopType[1] s
+AnnotaStruct.Acc*[1] 3
+AnnotaStruct.AccType[1] s
+AnnotaStruct.Don*[1] 2.5
+AnnotaStruct.DonType[1] s
+AnnotaStruct.TrStart*[1] 0
+AnnotaStruct.TrStartType[1] s
+AnnotaStruct.TrStop*[1] 0
+AnnotaStruct.TrStopType[1] s
+AnnotaStruct.TrStartNpc*[1] 0
+AnnotaStruct.TrStartNpcType[1] s
+AnnotaStruct.TrStopNpc*[1] 0
+AnnotaStruct.TrStopNpcType[1] s
+AnnotaStruct.Exon*[1] 0
+AnnotaStruct.Intron*[1] 0
+AnnotaStruct.CDS*[1] 4
+AnnotaStruct.npcRNA*[1]  0
+AnnotaStruct.format[1]             GFF3
+#
+# SIGNAL/CONTENT SENSORS
+Sensor.AnnotaStruct.use 2
+#
+\end{Verbatim}
+More details about AnnotaStruct parameters in the section~\ref{annotastruct}.
+
+
+
+\section{Optimization of Plugins parameters}
+
+The value of some numerical plugins parameters (specified in the
+parameter file with a name finishing with an '*') can be optimized on
+a reference set of sequences (with their related information) for
+which genes positions are known. The idea is to adapt the values of
+parameters to increase as much as possible the quality of prediction
+of genes and exons. The figure \ref{fig:ParaOptimization} details the
+general function of the software with input and ouput files.
+
+\begin{figure}[htbp]
+  \begin{center}
+    \includegraphics[width=7cm]{ParaOptimization}
+  \end{center}
+  \caption{Input and output files for parameters optimization} 
+  \label{fig:ParaOptimization}
+\end{figure}
+
+The optimization can be lauched with the \texttt{-Z} argument
+\index{CmdFlags}{[parameters optimization] Z} on the command line or
+with the \texttt{ParaOptimi\-zation.Use} parameter set to \texttt{1}.
+
+After updating the parameter file \texttt{eugene.par} (which sensors
+to use,...), the software is lauched with the usual command line
+specifying as argument the reference sequences to consider. At the
+end, the software creates a new parameter file called
+\texttt{eugene.<date>.OPTI.par} (for example,
+\texttt{eugene.30Sep\-2003.OPTI.par}) with the new value for the
+optimized parameters.
+
+For parameters optimization, the inputs to be specified in the
+parameter file are:
+\begin{itemize}
+\item the parameters to optimize with their value domain,
+\item the optimization algorithm to use: genetic algorithm, Line
+  Search, genetic algorithm and Line Search,
+\item the parameters of the optimization algorithm, and for the Line
+  Search algorithm complementary information on the parameters to
+  optimize (initial value, step of discretization, ...),
+\item a file with the coordinates of genes for the sequences set. See below its description.
+\item it is possible to include a regulizing term in the criteria
+optimized using the \texttt{ParaOptimization.Regularizer} parameter.
+The sum of all the absolute values of the parameters multiplied by this parameter is subtracted from the original fitness to define the final fiteness optimized.\end{itemize}
+
+\paragraph{Description of the file with the coordinates of genes}
+One line of the file describes one gene. The first field of the line is the sequence name. The followed fields are the list of respectively start and stop positions of the exons of the gene. 
+The fields are separated by spaces.
+An empty line is required to separate two different sequences.
+Note that the order of the sequences is important: the order has to be similar to the result of the 'ls 'command.
+
+Example:
+{\scriptsize \begin{verbatim}
+SEQ1 429 545 665 750
+SEQ1 -2001 -2342 -2424 -2522
+
+SEQ2 1000 1230 1521 1690 2510 2600
+
+\end{verbatim}}
+This example describes 2 sequences named SEQ1 et SEQ2. SEQ1 is composed of two genes: the first gene is composed of two exons on the forward strand [429-545] [665-750], 
+the second of two exons on the reverse strand [2001-2342] [2424-2522].
+SEQ2 has a unique gene composed of three exons [1000-1230] [1521-1690] [2510-2600]
+
+\paragraph{Optimization parameter definition example}
+Here is a simplified example of optimization parameters definition in the parameter file. 
+{\scriptsize \begin{verbatim}
+#################################################################
+################### PARAMETERS OPTIMIZATION #####################
+#################################################################
+ParaOptimization.Use           1
+ParaOptimization.Regularizer   0.0
+ParaOptimization.TrueCoordFile Araset.coord
+ParaOptimization.Algorithm     GENETIC+LINESEARCH
+ParaOptimization.Test          FALSE
+ParaOptimization.Trace         1
+#
+ParaOptimization.NbParameter   3
+#
+ParaOptimization.Para.Name[0]   NStart.startP*
+ParaOptimization.Para.Min[0]    0.001
+ParaOptimization.Para.Max[0]    15      
+#
+ParaOptimization.Para.Name[1]   NStart.startB*
+ParaOptimization.Para.Min[1]    0.001
+ParaOptimization.Para.Max[1]    15      
+#
+ParaOptimization.Para.Name[2]   EuStop.stopP*
+ParaOptimization.Para.Min[2]    0
+ParaOptimization.Para.Max[2]    6       
+#
+################## Genetic ######################################
+Genetic.NbRun 2
+Genetic.NbGeneration 20
+Genetic.NbElement 50
+Genetic.Seed 4
+Genetic.CrossOverProbability 0.6
+Genetic.MutationProbability 0.2
+Genetic.SelectionType 1         # 0: roulette wheel 
+#                                 1:stochastic remainder without replacement
+Genetic.ScalingType 1           # 0: no scaling 
+#                                 1: Sigma Truncation scaling 
+#                                 2: Power Law scaling
+Genetic.Sharing 0.9             # 0: no sharing 
+#                                 1: sharing, looking for clusters which best 
+#                                    elt fitness is at least n% of the overall 
+#                                    best element of the population
+Genetic.Clustering 1
+Genetic.Elitism 0.9             # 0: none
+#                                 n: elitism; keeps the best elt if no sharing,
+#                                    and keeps the best elt of each cluster 
+#                                    which best_elt fitness is at
+#                                    least n% of the overallbest elt if sharing 
+Genetic.SA.Mutation FALSE          # Simulated Annealing mutation
+Genetic.SA.CrossOver FALSE         # Simulated Annealing crossover
+#
+#
+######### LINESEARCH ###########################################
+LineSearch.NbMaxCycle 1
+LineSearch.NbMinCycle 1
+LineSearch.NbMaxStab 2
+LineSearch.DivInter 10
+LineSearch.Alpha 0.6
+LineSearch.EvolutionMini 0.001
+LineSearch.Seed ALEA
+#
+LineSearch.NbCluster 2
+LineSearch.Cluster[0] LINKED
+LineSearch.Cluster[1] IDENTICAL
+#
+LineSearch.Para.Step[0]         0.001
+LineSearch.Para.Init[0]         7.5
+LineSearch.Para.MinInit[0]      0.001
+LineSearch.Para.MaxInit[0]      15
+LineSearch.Para.Cluster[0]      0
+#
+LineSearch.Para.Step[1]         0.001
+LineSearch.Para.Init[1]         7.5
+LineSearch.Para.MinInit[1]      0.001
+LineSearch.Para.MaxInit[1]      15
+LineSearch.Para.Cluster[1]      0
+#
+LineSearch.Para.Step[2]         0.001
+LineSearch.Para.Init[2]         3
+LineSearch.Para.MinInit[2]      0
+LineSearch.Para.MaxInit[2]      6
+LineSearch.Para.Cluster[2]      1
+#
+\end{verbatim} }
+
+\section{Command line flags}
+ 
+\begin{itemize}
+
+\item \texttt{a}: activates the alternative splicing prediction.
+
+\item \texttt{b}: activates the plugin \texttt{Sensor.BlastX}.
+
+\item \texttt{B}: postprocessing activation of the plugin \texttt{Sensor.BlastX}.
+  
+\item \texttt{c}: controls how successives PNG images overlap (parameter
+  \texttt{Output.golap}). It must be followed by the number of
+  overlapping nucleotides between 2 successives PNG images. Default is
+  heuristically determined based on resolution and number of nuc. per
+  image.
+ 
+\item \texttt{d}: activates the plugin \texttt{Sensor.Est}.
+
+\item \texttt{D}: allows to specify a value to a parameter (syntax: -D<para>=<value>).
+  \index{CmdFlags}{[eugene parameter definition] D}
+  
+\item \texttt{E}: enables EST and cDNA post-predition analysis (parameter
+  \texttt{Est.PostProcess}) of the Est sensor: after each transcript
+  prediction, all matching EST are analyzed and the consistency of the
+  EST with the prediction is analyzed. At the end, the number of bases
+  of the exon/intron structure predicted which are consistent with at
+  least one EST/cDNA are reported.
+
+\item \texttt{f}: the frameshift penalty. A large value prevents
+  \EuGene\ from predicting frameshifts (the default).
+
+\item \texttt{g}: graph required.
+
+\item \texttt{G}: activates the plugin \texttt{Sensor.GFF}.
+
+\item \texttt{h}: help \index{CmdFlags}{[eugene help] h}
+   
+\item \texttt{l}: controls the number of nucleotides that will appear on a
+  single image (parameter \texttt{Output.glen}). Default is min
+  (6,000 length to visualize). The length to visualize is computed from
+  the value given to -u and -v (default is all sequence)
+  \index{CmdFlags}{[eugene image size] l}
+ 
+\item \texttt{m}: activates the plugin \texttt{Sensor.MarkovIMM} and specifies 
+  the filename of the set of Markov models that will
+  be used by the MarkovIMM sensor (parameter \texttt{MarkovIMM.matname}).
+
+\item \texttt{M}:  activates the plugin \texttt{Sensor.MarkovProt} and specifies 
+  the filename of the set of Markov models that will
+  be used by the MarkovProt sensor (parameter \texttt{MarkovProt.matname}).
+
+
+\item \texttt{n}: followed by 0 1 or 2. Indicates the way the score are
+  normalized accross the possibles states (phase 1,2,3,-1,-2,-3,
+  introns and intergenic states). 
+  \begin{itemize}
+  \item \texttt{0}: no normalization
+  \item \texttt{1}: normalize accross all states
+  \item \texttt{2}: normalize each coding phase w.r.t. to the non coding
+    score only.
+  \end{itemize}
+  Default is 1 (parameter \texttt{Output.normopt}). Does not affect
+  prediction, only text/graphical output.
+  \index{CmdFlags}{[eugene graphical score normalization] n}
+  
+\item \texttt{o}: allows to offset the nucleotide position of the prediction
+  (parameter \texttt{Output.offset}).  That is, the prediction for
+  nucleotide at position $i$ of the given sequence is printed as
+  nucleotide $i+$ the offset. Useful to perform prediction on an
+  extracted sequence without loosing the original position.
+
+\item \texttt{O}: allows to specify an output directory (the texttt{Output.Prefix} 
+  parameter value).
+
+\item \texttt{p}: controls the format of the textual outpout (parameter
+  \texttt{Output.format}). May be d (detailed), l (long), s (short), h
+  (html), g (gff) or a (araset format). Default is l.
+    
+\item \texttt{r}: activates the plugin \texttt{Sensor.Repeat}.
+
+\item \texttt{R}: activates the plugin \texttt{Sensor.Riken}.
+  
+\item \texttt{s}: forces non partial gene mode prediction. This forbids
+  predictions that start and end in intergenic mode and therefore
+  prevents the occurrence of partial gene structures on the border of
+  the sequence.  Useful if \EuGene\ lacks context around the gene and
+  you know a single (or only complete) gene appears on the sequence.
+  In practice this simply sets the parameters
+  \texttt{EuGene.ExonPrior}, \texttt{EuGene.IntronPrior},
+  \texttt{EuGene.FivePrimePrior} and \texttt{EuGene.ThreePrimePrior}
+  to $0.0$. \index{CmdFlags}{[eugene non partial gene mode] s}
+ 
+\item \texttt{t}: activates the plugin \texttt{Sensor.Homology}
+
+\item \texttt{u}: controls the part of the sequence whose prediction will be
+  displayed in the graphical output (parameter \texttt{Output.gfrom}). It must
+  be followed by the position of the 1st nuc. which will be plotted on
+  graphical output (allows for zoom'in).  Default is 1.
+  
+\item \texttt{U}: activates the User information sensor (parameter
+  \texttt{Sensor.User.use}). This sensor reads user informations
+  stored in .user file. These informations use a small language. The
+  language can contain two types of statements. Statements on signals
+  (translation start, splice sites) and on the sequence itself
+  (coding, non coding...).
+  
+\item \texttt{v}: controls the part of the sequence whose prediction will be
+  displayed in the graphical output (parameter \texttt{Output.gfrom}).
+  It must be followed by the position of the last nuc. which will be
+  plotted on graphical output (allows for zoom'in). Default is the
+  sequence length.
+  
+\item \texttt{w}: followed by half the size of the smoothing window for the
+  scores (parameter \texttt{Output.window}). Default is 48. Does not
+  affect prediction, only graphical output.
+
+\item \texttt{x}: controls the horizontal resolution of the PNG images
+  generated by EuGene (parameter \texttt{Output.resx}). Default is 900.
+  \index{CmdFlags}{[eugene image horizontal resolution] x}
+  
+\item \texttt{y}: controls vertical resolution of the PNG images generated by
+  EuGene (parameter \texttt{Output.resy}).  Default is 400.
+  \index{CmdFlags}{[eugene image vertical resolution] y}
+
+\item \texttt{Z}: allows to ask for a parameters optimization (equivallent to
+  set the \texttt{ParaOptimization.Use} parameter to 1).
+\end{itemize}
+
+\printindex{CmdFlags}{Index of command line flags for sensors}
+
+
+For more information, have a look to
+\textsf{www-bia.inra.fr/T/EuGene}. This gives a rough idea of \EuGene\ 
+reliability and the meaning of the graphical output (PDF file, poster
+on \EuGene).
+
+
+\end{document}
+
+

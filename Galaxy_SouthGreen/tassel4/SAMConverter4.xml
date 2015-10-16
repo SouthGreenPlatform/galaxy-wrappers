@@ -1,0 +1,61 @@
+<tool id="samconverter4" name="SAMConverter4" version="4.0">
+  <description>Converts a SAM format alignment into a binary tagsOnPhysicalMap (.topm) </description>
+
+  <command>
+		source $__tool_directory__/module_tassel4.sh;
+		$__tool_directory__/SAMConverter4.sh $input $output $logfile
+  </command>
+
+  <inputs>
+    <param name="input" type="data" format="sam" label="SAM format alignment" />
+  </inputs>
+
+  <outputs>
+    <data format="txt" name="output" label="Tassel4 Output TagsOnPhysicalMap (.topm) (Input for FastqToTBT and Discovery SNP Plugin)"/> 
+    <data format="txt" name="logfile" label="Tassel4 SAMConverter logfile"/> 
+  </outputs>
+  <help>
+  
+  .. class:: infomark
+
+**Program encapsulated in Galaxy by South Green**
+
+.. class:: infomark
+
+**Tassel**
+
+-----
+
+==========
+ Overview
+==========
+
+**TASSEL-GBS: A High Capacity Genotyping by Sequencing Analysis Pipeline**
+
+**SAMConverter Plugin (Tassel 4.0)**
+
+Converts a SAM format alignment (.sam) file produced by one of the aligners, BWA or bowtie2, into a binary tagsOnPhysicalMap (.topm) file that can be used by the TagsToSNPByAlignmentPlugin for calling SNPs. 
+
+**The commonly used parameters with default value setting**::
+
+    -i    Alignment file in SAM format (.sam) produced by BWA or bowtie2.
+    -o    Output TagsOnPhysicalMap (TOPM) file that can be used by the TagsToSNPByAlignmentPlugin for calling SNPs (or by the SeqToTBTHDF5Plugin or FastqToTBTPlugin as a master tag list). 
+
+In order for this step to work correctly, the chromosome names (sequence headers) in the FASTA reference
+genome file used as input to BWA or bowtie2 must be integers, e.g., >1, >2, or >3. We currently do not have
+any provision for text names such as >chrom1, >chrom2, >chrom3, etc. The only exception is that we do allow
+usage of the prefix “chr” so that >chr1, >chr2, >chr3, etc. are acceptable headers. In the case of non-numerical
+chromosome names (X, Y, mt, cp) or polyploid genomes, you will need to rename them as integers (and keep
+track of how your new names back-translate).
+
+-----
+
+For further informations, please visite the website of TASSEL_.
+
+.. _TASSEL: http://www.maizegenetics.net/#!tassel/c17q9
+
+  	</help>
+	<citations>
+    	<citation type="doi">10.1371/journal.pone.0090346</citation> 
+  	</citations>
+</tool>

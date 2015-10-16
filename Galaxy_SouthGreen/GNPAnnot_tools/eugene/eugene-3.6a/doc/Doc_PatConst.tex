@@ -1,0 +1,51 @@
+% Documentation of the PatConst sensor
+
+\subsubsection{\texttt{Sensor.PatConst}}
+
+\paragraph{Description}
+
+This plugin predicts signals at each occurence of a pattern on the
+sequence. The corresponding uniform costs for using
+or rejecting a signal can be set using the
+\texttt{PatConst.patP*[i]}/ and \texttt{PatConst.patPNo*[i]} parameters.
+
+The sensor is activated by setting the value 1 (one instance of the
+plugin) or an integer (i instance) for the parameter
+\texttt{Sensor.PatConst.use} in the parameter file.
+
+Here is an example of PatConst parameters definition (2 instances) :
+\begin{Verbatim}[fontsize=\small]
+PatConst.type[0]        donor    # Possible types : start insertion deletion
+PatConst.pat[0]         GC       #  transstart transstop stop acceptor donor
+PatConst.newStatePos[0] 1        # Position of the new state in the pattern
+PatConst.patP*[0]       -25
+PatConst.patPNo*[0]     0
+#
+PatConst.type[1]        acceptor
+PatConst.pat[1]         AG   
+PatConst.newStatePos[1] 3
+PatConst.patP*[1]       -40
+PatConst.patPNo*[1]     0
+#
+Sensor.PatConst.use     2
+Sensor.PatConst         1        # Sensor priority
+\end{Verbatim}
+
+\paragraph{Input files format}
+
+No file input.
+
+\paragraph{Integration of information}
+
+All predictions that use a predicted signal receive the
+corresponding \texttt{PatConst\-.patP*[i]} penalty while those that go through
+a predicted splice site while they could have used it receive a
+\texttt{PatConst.patPNo*[i]} penalty.
+
+\paragraph{Post analyse}
+
+No post analyse.
+
+\paragraph{Graph}
+
+No plot.

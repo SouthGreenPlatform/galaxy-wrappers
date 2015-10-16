@@ -1,0 +1,116 @@
+% Documentation of the StartWAM sensor
+
+\subsubsection{\texttt{Sensor.StartWAM}}
+
+\paragraph{Description}
+
+The goal of the StartWAM sensor is to detect the translation start
+codons and to give them a score reflecting the context accordance with
+given models. A score is attributed at each potential start codons
+(ATG), according to Weight Array Method (see Zhang and Marr, {\em
+  Comput Appl Biosci.} 1993 Oct;9(5):499-509), or Weighted Array
+Matrix models (Salzberg, {\em Comput Appl Biosci} 1997
+Aug;13(4):365-76). A WAM describes a consensus motif of a functional
+signal, and is composed by one markovian model per each position of
+the motif. Here the motif is defined by the ATG (present in all start
+codons) plus the two flanking contexts (used by the WAM).  Globally,
+the score of a motif is a function of the emission probabilities of
+this motif given a true positive model and a false positive model.
+
+The sensor is activated by setting the parameter
+\texttt{Sensor.StartWAM.use} to 1.  The user have to specify in
+the parameter file the base name (prefix) of the model files
+(\texttt{StartWAM.modelfilename}), the size of the context
+(\texttt{StartWAM.NbNtBeforeATG, StartWAM.NbNtAfterATG}), the order of
+the markovian models \texttt{StartWAM.MarkovianOrder} (the same for
+each position of the motif), and the scaling parameters
+\texttt{StartWAM.ScaleCoef*, StartWAM.ScalePenalty*}.
+
+Here is an example of StartWAM parameters definition.
+\begin{Verbatim}[fontsize=\small]
+StartWAM.modelfilename     WAM/WAM.ARA.START  # base name of the model files
+StartWAM.NbNtBeforeATG     3                  # amount context
+StartWAM.NbNtAfterATG      3                  # aval context
+StartWAM.MarkovianOrder    1                  # order of the markovian models
+StartWAM.ScaleCoef*        0.1594             # scaling parameter
+StartWAM.ScalePenalty*     -3.1439            # scaling parameter
+Sensor.StartWAM.use        1               # Use StartWAM sensor
+Sensor.StartWAM            1                  # Sensor priority
+\end{Verbatim}
+
+\paragraph{Input files format}
+
+This StartWAM sensor requires a true positive and a false positive
+model file per motif position. These files have to be present in the
+path given by \texttt{StartWAM.modelfilename} from the plugins
+directory (see \texttt{EuGene.PluginsDir} parameter). These models can
+be generated using \texttt{WAMbuilder.cc} (see
+\texttt{eugene/src/SensorPlugins/0\_SensorTk/GetData/README}).  The
+file name of a model is a concatenation of the base name (prefix)
+specified in the parameter file, an extension (suffix) specified in
+the \texttt{WAM.h} file (\texttt{.TP.} for true positive and
+\texttt{.FP.}  for false positive), and a number between 00 and 99
+indexing the position in the motif (restricting thus the motif length
+to a maximum of 100 nt).
+
+As an example, with the base name \texttt{WAM.ARA.START9} (refering to
+{\em A.thaliana} models of 9nt-length start motif), one can found these files:
+\begin{Verbatim}[fontsize=\small]
+WAM.ARA.START9.FP.00
+WAM.ARA.START9.FP.01
+...
+WAM.ARA.START9.FP.07
+WAM.ARA.START9.FP.08
+WAM.ARA.START9.TP.00
+WAM.ARA.START9.TP.01
+...
+WAM.ARA.START9.TP.08
+\end{Verbatim}
+
+These files are in binary form, each containing the properties of a
+markovian model (see documentations of \texttt{WAMbuilder.cc} and
+\texttt{markov.cc}).
+
+\paragraph{Filtering input information}
+
+Each binary model file is verified when loaded, checking if 3 expected
+properties of its markovian model are verified: the order, the
+alphabet size, and the total number of possible words (these 3 values
+are automatically included during the models generation by
+\texttt{WAMbuilder.cc}). This test is done in the loading file method
+``\texttt{chargefichier}'' in markov.cc.
+
+\paragraph{Integration of information}
+
+At each ATG of the genomic sequence a score is assigned depending on
+the ATG flanking context. If there isn't enough context, e.g. in the
+sequence extremities, nothing is done.  This score is provided by a
+scaled sum of likelihood ratio, computed as following.
+
+Let be $P^t_i$ the emission probability of the nucleotid at position
+$i$ in the motif according to the True Positive model, and $P^f_i$ the
+emission probability of the nucleotid given by the False Positive
+model. The score given by the WAM for the entire motif $M$ of length
+$L$ is:
+\[ S_M = \sum_{i=0}^{L} log\left(\frac{P^t_i}{P^f_i}\right) \]
+
+This score is then scaled with the \texttt{StartWAM.ScaleCoef*} and the
+\texttt{StartWAM.ScalePenalty*} parameters, following this formula :
+$$S_M . \texttt{StartWAMScaleCoef*} + \texttt{StartWAMScalePenalty*}$$
+
+This rescaled score is finally integrated into the \EuGene\ graph on
+the UTR5 $\to$ EXON transition edge just before the considered ATG. The
+score applies only to the edge corresponding to the situation where
+the signal is used. The edge corresponding to the situation where the
+signal is not used is unchanged.
+
+\paragraph{Post analyse}
+
+No Post-Analyse.
+
+\paragraph{Graph}
+
+Vertical blue lines (whose length is function of the score) are
+plotted on the corresponding frame for each start codon which score is
+higher than a defined treshold. This threshold is defined in the
+\texttt{StartWAM.cc} file as -\texttt{PlotScoreIncrease}.

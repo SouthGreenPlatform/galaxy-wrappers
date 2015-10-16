@@ -1,0 +1,32 @@
+% Documentation of the NStretch sensor
+
+\subsubsection{\texttt{Sensor.NStretch}}
+
+\paragraph{Description}
+
+A content sensor that penalizes the stretchs of 'N' longer than \texttt{NStretch\-.maxLengthWithoutPenalty}.
+
+Here is an example of NStretch parameters definition.
+\begin{Verbatim}[fontsize=\small]
+NStretch.stretchPenalty 1.0
+NStretch.maxLengthWithoutPenalty      5000
+Sensor.NStretch.use  1   # Use Stretch sensor
+Sensor.NStretch      1   # Sensor priority
+\end{Verbatim}
+
+\paragraph{Input files format}
+
+No input files  needed.
+
+\paragraph{Integration of information}
+
+All positions that occur in a stretch of N are penalized using the \texttt{NStretch\.stretchPenalty} penalty.
+
+\paragraph{Post analyse}
+
+No post analyse.
+
+\paragraph{Graph}
+
+No plotting.
+

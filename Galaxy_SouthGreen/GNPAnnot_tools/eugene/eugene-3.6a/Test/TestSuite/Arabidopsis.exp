@@ -1,0 +1,71 @@
+# ------------------------------------------------------------------
+# Copyright (C) 2004 INRA <eugene@ossau.toulouse.inra.fr>
+#
+# This program is open source; you can redistribute it and/or modify
+# it under the terms of the Artistic License (see LICENSE file).
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+#
+# You should have received a copy of Artistic License along with
+# this program; if not, please see http://www.opensource.org
+#
+# $Id: Arabidopsis.exp,v 1.8 2008-10-22 12:52:43 sallet Exp $
+# ------------------------------------------------------------------
+# File:     Arabidopsis.exp
+# Contents: Tests on Arabidopsis sesequences
+# ------------------------------------------------------------------
+
+
+foreach TEST $ArabidopsisTestList {
+
+    # To follow execution
+    puts "Performing $TEST Arabidopsis test"
+
+    set test 0
+
+    # Preparation of the parameter file with the correct sensors
+    foreach sensor $SensorsList($TEST) \
+	{set NewValueBase(Sensor.${sensor}.use) 1}
+    ModifyParaValue $EUGENE_TEST_PAR  NewValueBase
+    
+    # Run EuGene
+    catch {eval exec $EUGENE_DIR/$EUGENE -A $EUGENE_DIR/$EUGENE_TEST_PAR $OPTIONS($TEST) $SEQ($TEST) 2> tmp%stderr > tmp%stdout }
+    catch {exec rm tmp%stderr}
+    if {$TEST == "Araset"} {
+		
+		set TEST2 "ArasetSpSn"
+		puts "Performing $TEST2 Arabidopsis test"
+		eval exec $PRG_EVAL_PRED $FILE_COORD($TEST2) tmp%stdout > $TRACE_DIR/$FILE_REF($TEST2)
+		RemoveFirstLines $TRACE_DIR/$FILE_REF($TEST2)
+		set test_spsn [diff $OUTPUT_DIR/$FILE_REF($TEST2) $TRACE_DIR/$FILE_REF($TEST2)]
+		if {$test_spsn != 1} {
+			fail "${TEST} (spsn)"
+	   	} else {
+			catch { exec rm $TRACE_DIR/$FILE_REF($TEST2)}
+		}
+		
+    }
+    # Checking the output
+    set test [diff $OUTPUT_DIR/$FILE_REF($TEST) tmp%stdout]
+    if {$test == 1 } {
+	pass $TEST
+    } else {
+	fail $TEST
+	catch {exec mv tmp%stdout $TRACE_DIR/$FILE_REF($TEST)}
+    }
+    
+    # Remove temporary file
+    catch {exec rm tmp%stdout}
+    set seq [eval exec ls .]
+    foreach f $seq {
+	if { [string match *.misc_info $f] || [string match *.egn.debug $f]} {
+	    exec rm $f
+	}
+    }
+
+    # Restore initial parameters values
+    InitParameterFile $EUGENE_TEST_PAR $AllSensorsList $EUGENE_DIR
+
+}

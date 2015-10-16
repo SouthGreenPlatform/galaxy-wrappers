@@ -1,0 +1,99 @@
+<tool id="eugene" name="EuGene" version="1.0.0"> 
+	<description>A gene finding software</description> 
+	<command>export EUGENEDIR=/home/galaxydev/galaxy/tools/GNPAnnot_tools/eugene/eugene-3.2;$__tool_directory__/eugene.pl 
+        -fasta $input_fasta
+        -mst $input_mst
+        -mad $input_mad
+        -fgenesh $input_fgenesh
+        -output $output
+        -tool_directory $__tool_directory__ 
+        
+#if $egn_opts.egn_opts_selector == "imm":
+  -use_imm "imm"
+#else:
+  -use_imm "complete"
+  -blast0 $input_blast0
+  -blast1 $input_blast1
+  -file_gth0 $input_gth0
+  -file_gth1 $input_gth1
+  -file_gth2 $input_gth2
+  -file_gth3 $input_gth3
+  -file_gth4 $input_gth4
+  -file_gth5 $input_gth5
+#end if
+	</command>
+	<inputs>
+		<param format="fasta" name="input_fasta" type="data" label="Fasta file"/>  
+			<conditional name="egn_opts">
+				<param  name="egn_opts_selector" type="select" label="Database">
+					<option value="complete" selected="True">Full EuGene</option>
+					<option value="imm">Only EuGeneIMM</option>
+				</param>
+				<when value="complete">       
+					<param format="txt" name="input_blast0" type="data" label="BlastX SwissProt"/>
+					<param format="txt" name="input_blast1" type="data" label="BlastX TrEMBL"/>
+					<param format="txt" name="input_gth0" type="data" label="GenomeThreader Musa"/>
+					<param format="txt" name="input_gth1" type="data" label="GenomeThreader Rice"/>
+		       		<param format="txt" name="input_gth2" type="data" label="GenomeThreader Wheat"/>
+		      	 	<param format="txt" name="input_gth3" type="data" label="GenomeThreader Maize"/>
+		       		<param format="txt" name="input_gth4" type="data" label="GenomeThreader Sorghum"/>
+		       		<param format="txt" name="input_gth5" type="data" label="GenomeThreader Sugarcane"/>
+					<param format="txt" name="input_mst" type="data" label="SpliceMachine Mst"/>
+					<param format="txt" name="input_mad" type="data" label="SpliceMachine Mad"/>
+					<param format="txt" name="input_fgenesh" type="data" label="Fgenesh"/>   
+				</when>
+				<when value="imm">
+					<param format="txt" name="input_mst" type="data" label="SpliceMachine Mst"/>
+					<param format="txt" name="input_mad" type="data" label="SpliceMachine Mad"/> 
+					<param format="txt" name="input_fgenesh" type="data" label="Fgenesh"/>
+				</when>
+			</conditional>
+		</inputs> 
+        <outputs>
+			<data format="txt" name="output" label="EuGene result"/>  
+        </outputs>
+        <help>
+        
+.. class:: infomark
+
+**Program encapsulated and developed in Galaxy by Southgreen**
+
+**EuGene : A Gene Finding Software**
+
+-----
+
+**What it does**
+
+EuGene is an open gene finder for eukaryotic organisms. 
+
+Compared to most existing gene finders, EuGene is characterized by its ability to simply integrate arbitrary sources of information in its prediction process.
+
+As most existing gene finders, EuGene can exploit probabilistic models like Markov models for discriminating coding from non coding sequences or to discriminate effective splice sites from false splice sites (using various mathematical models). 
+
+Beyond this EuGene is able to integrate information from several signal (splice site, translation start...) prediction software, similarity with existing sequences (EST, mRNA, 5'/3' EST from full length mRNA, proteins, genomic homologuous sequences) 
+and output of existing gene finders... 
+
+Based on all the available information, EuGene will output a prediction of maximal score i.e., maximally consistent with the information provided. 
+
+-----
+
+**Output format**
+
+GFF2 
+
+-------
+
+**References**
+
+EuGene: An Eucaryotic Gene Finder that combines several sources of evidence. T. Schiex, A. Moisan and P. Rouzé. Computational Biology, Eds. O. Gascuel and M-F. Sagot, LNCS 2066, pp. 111-125, 2001. 
+
+http://eugene.toulouse.inra.fr/index.html
+
+
+	</help>
+	<citations>
+        <citation type="doi">10.1007/3-540-45727-5_10</citation> 
+        <citation type="doi">10.2174/157489308784340702#sthash.ijJYmKhb.dpuf</citation> 
+	</citations>
+	
+</tool>

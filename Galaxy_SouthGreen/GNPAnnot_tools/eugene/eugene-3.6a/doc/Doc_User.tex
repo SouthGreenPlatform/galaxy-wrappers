@@ -1,0 +1,129 @@
+% Documentation of the User sensor
+
+\subsubsection{\texttt{Sensor.User}}
+\label{pluguser}
+
+The user plugin is superseded by the AnnotaStruct\footnote{Also know
+  as the BarbaTruc plugin.} plugin. It is conserved for compatibility
+reasons.
+
+\paragraph{Description}
+
+The sensor allows to seamlessly modify \EuGene\ underlying graph
+weighting using a small langage that can modify the weights of signals
+and contents edges in the graph. The plugin priority is significant
+here because it may directly set signal weights to a specific value
+(to eg. remove a signal prediction). Contents edges are just penalized
+(a weight is added to the existing weight).
+
+The sensor is activated by either :
+\begin{itemize}
+\item the \texttt{-U} argument \index{CmdFlags}{[User activation] U}
+\item the value 1 for the parameter \texttt{Sensor.User.use} in the
+  parameter file.
+\end{itemize}
+Here is an example of User parameters definition :
+\begin{Verbatim}[fontsize=\small]
+Sensor.User.use  1      # Use User sensor
+Sensor.User      10        # Sensor priority
+\end{Verbatim}
+
+\paragraph{Input files format}
+
+A small language is used to indicate which edges should have their
+weight modified. Signal weight modification is indicated by the
+keywords \texttt{start}, \texttt{stop}, \texttt{acceptor} and
+\texttt{donor}. Each line should indicate the type of signal edge
+which should be modified, the strand (either \texttt{f} or
+\texttt{r}), the position and the weight $p$ to use for the signal.
+$p$ can take any value between $0.0$ and $1.0$. The two signal edges
+(corresponding respectivelyto the fact the the signal is used or not)
+are respectively set to $\log(p)$ and $\log(1-p)$.
+
+For contents edges, the keywords \texttt{exon}, \texttt{intron},
+\texttt{utr3}, \texttt{utr5} and \texttt{intergenic} are used. Then
+the strand is indicated (either \texttt{f} or \texttt{r}), then the
+region where contents edge weights should be modified (as an interval
+\texttt{[begin..end]}). Finally, the weight modification $p$ is given
+as a floating point value. Any floating point value can be used
+including two special values denoted \texttt{infinity} and
+\texttt{-infinity} (with an obvious meaning).
+
+  Information on signals (stop/start/splice sites) use the
+  following syntax:
+  \begin{Verbatim}[fontsize=\small]
+  <type> <strand> <position> <value>
+\end{Verbatim}
+  where:
+  \begin{itemize}
+  \item \verb|<type>| can be start, stop, acceptor, donor 
+  \item \verb|<strand>| can be f for forward and r for reverse
+  \item \verb|<position>| is a position on the sequence 
+  \item \verb|<value>| is the cost associated with the signal. It can range
+    from 0.0 to 1.0. A value of 0.0 means that no site of this type
+    exists at this position.  The cost will override any existing
+    cost.
+  \end{itemize} 
+  
+Informations on regions have the following syntax:
+  \begin{Verbatim}[fontsize=\small]
+         <type> <strand>{<phase>} [<start>..<end>] <value>
+\end{Verbatim}
+where
+\begin{itemize}
+\item \verb|<type>| can be exon, intron, utr3, utr5, intergenic
+\item \verb|<strand>| if either f for forward or r for reverse
+
+\item \verb|<phase>| is only used for exons and introns. The phase of an
+  exon indicates the position of the codons wrt. to the
+  start/end of the sequence (modulo 3, same as reported by
+  BlastX). The phase of an intron specifies how the codon is
+  split by the splice site: between 2 codons, after 1
+  nucleotode or after 2. Basically, if you don't care of the
+  intron "phase" just put the same information for all 3
+  phases.
+  
+\item \verb|<start>| and \verb|<end>| are positions on the sequence that
+  indicate the scope of the information.
+  
+\item \verb|<value>| is a score that can take any floating point value
+  plus the extra value "infinity" that represent "minus
+  infinity". This cost will be added to the existing cost.  A
+  positive cost helps predicting something consistent with the
+  information, a negative one prevents from predicting
+  something consistent with the information. Thus a cost
+  "infinity" effectively forbids the prediction.
+\end{itemize}
+
+Here is an example:
+\begin{Verbatim}[fontsize=\small]
+utr5 f [2..28] 10.0
+acceptor f 2966 0.0
+\end{Verbatim}
+
+which delete any existing acceptor prediction at position 2966 on the
+forward strand and favors UTR5 prediction on the 2-28 region.
+
+\paragraph{Filtering input information}
+
+No filtering.
+
+\paragraph{Integration of information}
+
+The underlying graph edges are directly modified as indicated. Pay
+attention that signal edge weights are \emph{set} to the value
+indicated while contents edge weights are just incremented by the
+value indicated. The signal behavior is useful to be able to delete an
+existing signal.
+
+\paragraph{Post analyse}
+
+No post analyse.
+
+\paragraph{Graph}
+
+No plotting.
+
+
+
+

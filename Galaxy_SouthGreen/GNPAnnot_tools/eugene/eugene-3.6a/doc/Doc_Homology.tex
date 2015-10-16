@@ -1,0 +1,179 @@
+% Documentation of the Homology sensor
+
+\subsubsection{\texttt{Sensor.Homology}}
+
+\paragraph{Description}
+
+This sensor is intended to take into account information from one or
+more homologous DNA sequences, usually genomic sequences from other
+species (inter-genomic homology), other sequences from the same genome
+(intra-genomic homology), or transcript sequences from normalized cDNA
+sets. The underlying general idea is that during evolution, functional
+genomic regions (\emph{e.g.} exons) tend to be more conserved than
+non-functional ones (\emph{e.g.} introns). The sensor increases the
+coding score of a genomic position that is included in a conserved
+region.
+
+Homology detection has to be performed beforehand by the
+\texttt{TBlastX} software. Resulting alignment files require a
+specific format (see below).
+
+The sensor is activated by either:
+\begin{itemize}
+\item the \texttt{-t} argument \index{CmdFlags}{[Homology activation] t}
+\item a value higher than 0 for the parameter \texttt{Sensor.Homology.use} in the
+  parameter file.
+\end{itemize}
+Here is an example of Homology parameters definition:
+\begin{Verbatim}[fontsize=\small]
+Homology.TblastxP*[0]     0
+Homology.TblastxB*[0]     0.0595
+Homology.protmatname[0]   BLOSUM80
+Homology.MaxHitLen[0]     15000
+Homology.FileExtension[0] .tblastx
+Sensor.Homology.use       1         # Use Homology sensor
+Sensor.Homology           1         # Sensor priority
+
+\end{Verbatim}
+
+\texttt{Homology.protmatname} is the name of the file containing the
+amino acid substitution score matrix used to measure the base homology
+score at the proteic level, before scaling (standard text format).
+\texttt{Homology.TblastxP} and \texttt{Homology.TblastxB} parameters
+are used to scale the information given by homology regions. For more
+details, please refer to the publication ``\textsc{EuG\`ene'Hom}: a
+generic similarity-based gene finder using multiple homologous
+sequences'' (Foissac \emph{et. al}, \emph{Nucleic Acids Res.}, 2003,
+31(13):3742-5).
+
+\paragraph{Native input files format}
+
+The plugin reads information from the file whose name is the concatenation 
+of the sequence file name and the \texttt{Homology.FileExtension} parameter. 
+The file describes a collection of similarities sorted by subject sequence 
+and by position on the query sequence.
+
+These files are obtained by blasting with \texttt{TBlastx} the genomic
+sequence (the query) against a set of other DNA sequences, and by
+parsing the results with the \texttt{ParseBlastXML.pl} script.
+
+The TBlastX is launched with the command:
+
+\begin{Verbatim}[fontsize=\small]
+blastall -p tblastx -i QUERY_GENOMIC_SEQUENCE_FASTA -d
+DATABASE_MULTIFASTA_FILE -F T -M SUBSTITUTION_MATRIX_FILE -e 1e-6 -b
+50000 -m 7 > TEMPORY_BLAST_RESULT_FILE
+\end{Verbatim}
+
+Note: in order to reduce the number of ``phantom frame'' hits, the
+amino acid substitution matrix (e.g. BLOSUM62) should be modified by
+setting every score involving a STOP codon (lines and column noted
+with a star *) to a huge penalty (e.g. -500).
+
+and the final \texttt{.tblastx}$<i>$ files are obtained with:
+\begin{Verbatim}[fontsize=\small]
+ParseBlastXML.pl TEMPORY_BLAST_RESULT_FILE > QUERY_GENOMIC_SEQUENCE_FASTA.tblastx
+\end{Verbatim}
+
+For more explanation, see the README file in the directory\\
+\texttt{eugene/src/SensorPlugins/Homology/GetData}.\\
+
+One similarity S is described per line.
+
+The format of a line is similar to the ``.blast'' file format (BlastX
+sensor) with an additional column displaying the translated sequence
+(amino acid alphabet) of the subject matching region:
+
+\texttt{<$b^S$> <$e^S$> <$s^S$> <$v^S$> <$p^S$> <subject seq. name> <$bp^S$> <$ep^S$> <AA\_SEQ>}
+
+where:
+\begin{itemize}
+\item $b^S$ and $e^S$ are the begin and the end of the similarity S on the query sequence,
+\item $s^S$ is the score of the similarity S,
+\item $v^S$ is the e-value given by TBlastX and ignored by \EuGene,
+\item $p^S$ is the phase: +1, +2, +3, -1, -2, -3,
+\item $bp^S$ and $ep^S$are the begin and the end of the similarity S on the subject sequence,
+\item AA\_SEQ is the amino acid sequence translated from the subject nucleic region.
+\end{itemize}
+
+Here is an example of the format:
+\begin{Verbatim}[fontsize=\small]
+831 878 51 7e-26 -3 ATHA10A_809_856 809 856 TLQLHGRRYVETTVFV
+828 878 48 1e-20 +3 ATHA10A_806_856 806 856 RDKHRCFHVSSAMKLEG
+1572 1652 109 7e-114 -3 ATHA10A_1349_1429 1349 1429 IPWSNLLELKSTPMILEAPAILAPSAA
+1738 1821 108 1e-153 +1 ATHA10A_1493_1576 1493 1576 FDMLLAAKEFGVTECVNPKDHDKPIQQV
+830 877 86 1e-153 +2 ATHA10A_808_855 808 855 GQTPLFPRIFGHEAGG
+590 625 44 1e-20 +2 ATHA10A_562_597 562 597 LQLLWHGKPESH
+\end{Verbatim}
+
+\paragraph{Gff3 input file format}
+
+The gff3 input mode is activated by setting the value \texttt{GFF3}
+for the parameter \texttt{Homology.format} in the parameter file. The
+plugin reads its information from the file whose name is the concatenation
+of the sequence file name, the \texttt{Homology.FileExtension} parameter 
+and the \texttt{.gff3} extension. Each line reads as follows:
+
+\texttt{<sequence name> <program> <sofa feature> <$b^S$> <$e^S$> <$v^S$> <strand> <.> 
+ID=...;Target=<est name> <$bp^S$> <$ep^S$> <target strand>;frame\_hit=<$p^S$>;score\_hit=<$s^S$>}
+
+Gff3 attributes specifications:\\
+Required attributes:
+	\begin{itemize}
+	\item ID
+	\item Target
+	\item target\_sequence : amino acid sequence.
+	\end{itemize}
+
+Optional attributes:
+	\begin{itemize}
+	\item frame\_hit represents the blast frame. This information
+          can be omitted, but if it's specified, eugene will check it
+          is consistent with the similarity positions and reject the
+          information otherwise.
+	\item score\_hit : normalized score.
+	\end{itemize}
+
+
+Here an extract of \texttt{seq14ac002535g4g5.tfa.tblastx.gff3}:
+\begin{Verbatim}[fontsize=\tiny]
+seq14	tblastx	match	129	236	2e-25	+	.	ID=tblastx:seq14.1;Dbxref=tblastx:ATKIN2_100_207;Target=ATKIN2_100_207 100 207 +;frame_hit=+3;score_hit=118;target_sequence=KNVRDQQECLPSRSGRWQS*GTLSLLEQSTDRLFKL;
+seq14	tblastx	match	86	130	3e-63	-	.	ID=tblastx:seq14.2;Dbxref=tblastx:ATKIN2_102_58;Target=ATKIN2_102_58 102 58 +;frame_hit=-2;score_hit=74;target_sequence=FQIFFSCKIVFDVCF;
+\end{Verbatim}
+
+\paragraph{Filtering input information}
+
+Note that similarities which have a length higher than 
+\texttt{Homology.MaxHitLen} parameter value are rejected. A message 
+``Similarity of extreme length rejected. Check tblastx file <NAME>'' 
+is printed to alert the user.
+
+\paragraph{Integration of information}
+
+The TBlastX search returns a set of High Scoring Pairs (HSP), each in
+a given frame. All pairs of HSP which overlap and are in the same
+frame are clustered together in so-called ``HSP contigs''. To
+associate an homology score to a given nucleotide $n_i$ in the context
+of a coding region, we consider (if it exists), the single HSP contig
+$HC$ that overlaps the nucleotide in the sequence and which is in the
+same frame. Let $n$ be the maximum number of HSPs in the cluster that
+overlap a single position. Let $c(n_i)$ be the codon that contains
+$n_i$ in the sequence, for each HSP $h$ in the cluster that overlaps
+the codon $c(n_i)$, we define $S(c(n_i),h)$ to be the matrix
+substitution score for the amino acid coded by $c(n_i)$ in the HSP
+alignment. This score is considered as equal to zero for non
+overlapping HSP. The homology score for the nucleotide in the context
+of the coding region considered is defined as:
+\[HS(n_i) = \frac{1}{n}\sum_{h\in HC} S(c(n_i),h)\]
+The resulting score provided by the sensor after scaling is equal to
+\[\mbox{\texttt{Homology.TblastxB}}\ . HS(n_i) + \mbox{\texttt{Homology.TblastxP}}\]
+
+\paragraph{Post analyse}
+
+None.
+
+\paragraph{Graph}
+
+HSP clusters are represented as grey blocks whose thickness is
+proportional to the number of hits at a given position and whose
+darkness is proportional to the homology score at this position.

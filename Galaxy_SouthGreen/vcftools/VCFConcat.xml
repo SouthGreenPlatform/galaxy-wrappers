@@ -1,0 +1,44 @@
+<tool id="vcf-concat" name="vcf-concat" version="4.0">
+	<description>Convenience tool for concatenating VCF files</description>
+	<command>
+		source $__tool_directory__/module_vcf.sh;
+		$__tool_directory__/VCFConcat.sh $input $output</command>
+	<inputs>
+    	<param name="input" type="data" format="txt" label="VCF files (tar.gz)" /> 
+  	</inputs>
+	<outputs>
+    	<data format="vcf" name="output" label="Concatenates VCF files"/> 
+  	</outputs>
+  	<help>
+  
+  .. class:: infomark
+
+**Program encapsulated in Galaxy by South Green**
+
+.. class:: infomark
+ 
+-----
+
+==========
+ Overview
+========== 
+
+**vcf-concat**
+
+Concatenates VCF files (for example split by chromosome). 
+Note that the input and output VCFs will have the same number of columns, the script does not merge VCFs by position.
+
+In the basic mode it does not do anything fancy except for a sanity check that all files have the same columns. 
+When run with the -s option, it will perform a partial merge sort, looking at limited number of open files simultaneously.
+ 
+-----
+
+For further informations, please visite the website of VCFtools_
+
+.. _VCFtools: http://vcftools.sourceforge.net/
+
+	</help>
+	<citations>
+    	<citation type="doi">10.1093/bioinformatics/btr330</citation> 
+  	</citations>
+</tool>

@@ -1,0 +1,305 @@
+% Documentation of the Est sensor
+
+\subsubsection{\texttt{Sensor.Est}}
+\label{plugest}
+
+\paragraph{Description}
+
+This sensor is intended to take into account information from aligned
+transcribed sequences, both complete cDNA and EST. The existence of a
+hit (resp. gap) in the spliced alignment will influence intergenic,
+exonic and intronic state costs by penalizing states that are
+incompatible with the alignment. The spliced alignments must be
+performed beforehand using a spliced aligner such as \texttt{sim4} or
+\texttt{spidey}. The output of these aligners must be converted in the
+adequate format (see below). 
+To take into account information from ncRNA hits too, set 
+\texttt{Est.mRNAOnly} to 0.
+
+The sensor is activated by either:
+\begin{itemize}
+\item the \texttt{-d} argument \index{CmdFlags}{[EST activation]
+    d}.
+\item a value higher than 0 for the parameter \texttt{Sensor.Est.use} in
+  the parameter file.
+\end{itemize}
+
+The behavior of the plugin is controlled by the following parameters:
+\begin{itemize}
+\item \texttt{Est.estP*} indicates the penalty for violating a transcribed
+  evidence.
+\item \texttt{Est.SpliceBoost*} is a bonus used to enhance the score 
+  of predicted splice sites which appear at a hit/gap border of aligned 
+  spliced ESTs.
+\item \texttt{Est.estM} gives the amount of ``fuzzyness'' allowed in
+  interpreting a hit/gap border. The nucleotides which are less than
+  \texttt{Est.estM} nucleotides away from this border are considered
+  as neither in a hit or a gap.
+\item \texttt{Est.utrP*} is a penalty introduced to try to limit the
+  extension of UTR beyond the frontier of transcribed evidence when
+  there is some. For a defined length, the adequate UTR states that
+  precede or follow an uninterrupted stretch of transcribed evidence
+  will be penalized by the logarithm of this parameter.
+\item \texttt{Est.utrM} gives the number of UTR nucleotides that will
+  be penalized using the previous penalty on the border of transcribed
+  evidence.
+\item \texttt{Est.StrongDonor} gives a threshold $T$ on donor strength
+  inside intronless EST. If a given Donor with scores $a|b$ such that
+  $\log(\frac{a}{b}) >T$ then the intronless EST is rejected because
+  it goes through a very strong donor site.
+\item \texttt{Est.MinDangling} gives the minimum length of the first
+  and last match region in a genomic spliced alignment. If the length
+  is below this, then it is assumed to be a false match and it is
+  ignored.
+\item \texttt{Est.MaxIntron} gives the maximum length for the first
+  and last gap (representing introns) in a spliced alignment. If the
+  length exceeds this maximum, then the corresponding regions are
+  ignored in the alignment (the long gap and the dangling hit).
+\item \texttt{Est.MaxInternalIntron} gives the maximum length for any
+  gap (representing an intron) in a spliced alignment. If the length
+  exceeds this maximum, then the corresponding gap is ignored as
+  a probable bad spliced alignment or chimeric data.
+\item \texttt{Est.mRNAOnly} In the default mode (1), the plugin reads 
+transcribed sequences which are mRNA fragments or complete cDNA, 
+so the plugin always penalizes ncRNA states. Set this parameter to 0 
+to read non coding RNA fragments too: in this case, only ncRNA tracks 
+which are incompatible with the alignment will be penalized.
+
+\end{itemize}
+
+The sensor is also capable of a postprocessing analyse described below
+and activated either by the \texttt{-E} argument or by setting the value
+1 or 2 for the parameter \texttt{Est.PostProcess} in the parameter
+file.
+
+The \texttt{Sensor.Est} is loaded last because it has the highest priority.
+This is important since the sensor actually uses the information
+provided by other sensors (splice site prediction sensors) that then have to be loaded before.
+
+Here is an example of Est parameters definition.
+\begin{Verbatim}[fontsize=\small]
+Est.PostProcess[0]       0      # 0 1 OR 2
+Est.PPNumber[0]          5      # For PostProcess = "2"
+Est.estP*[0]             -0.4
+Est.estM[0]              6
+Est.utrP*[0]             0.35
+Est.utrM[0]              5
+Est.SpliceBoost*[0]      0.0
+Est.StrongDonor[0]       0.95
+Est.MinDangling[0]       10
+Est.MaxIntron[0]         15000
+Est.MaxInternalIntron[0] 15000
+Est.mRNAOnly[0]          1
+Est.FileExtension[0]     .est
+Sensor.Est.use           1      # Use EST sensor
+Sensor.Est               20     # Sensor priority: the highest one
+
+\end{Verbatim}
+
+
+\paragraph{Native input files format}
+
+The plugin reads information from the file whose name is the concatenation 
+of the sequence file name and the \texttt{Est.FileExtension} parameter. 
+Each line of the input file is composed of 8 fields:
+
+
+\texttt{<$b^S$> <$e^S$> <$s^S$> <$x$> <$b^S$> <est name> <$bq^S$> <$eq^S$>}
+
+where:
+\begin{itemize}
+\item $b^S$ and $e^S$ are the begin and the end of the similarity S on the genomic sequence,
+
+\item $s^S$ is the score of the similarity S (number of identical bases)
+\item $x$ is unused for now
+\item $b^S$ is the strand where the similarity occurs (forward = 0,
+  reverse = 1). This information is not used anymore by the plugin
+  which decides the strand of similarity by itself if there is anough
+  information.
+\item \texttt{<est name>} is the name of the EST/cDNA sequence. Each
+  sequence MUST have a unique name.
+\item <$bq^S$> <$eq^S$> are the begin and the end of the similarity S
+  on the query (EST/cDNA) sequence.
+\end{itemize}
+The lines in the file must be ordered by sequence name first (all the
+hits of a given EST are put together) and by increasing
+\texttt{<$bq^S$> <$eq^S$>}. 
+
+Here is an example for the \texttt{SYNO\_ARATH.tfa.est} file:
+\begin{Verbatim}[fontsize=\small]
+    32    421 1844 0 0 ATAJ644    1  390
+   514    582 1844 0 0 ATAJ644  391  459
+   699    809 1844 0 0 ATAJ644  460  570
+   914   1018 1844 0 0 ATAJ644  571  675
+  1271   1408 1844 0 0 ATAJ644  676  813
+  1522   1602 1844 0 0 ATAJ644  814  894
+  1694   1771 1844 0 0 ATAJ644  895  972
+  1853   1921 1844 0 0 ATAJ644  973 1041
+  2014   2088 1844 0 0 ATAJ644 1042 1116
+  2181   2264 1844 0 0 ATAJ644 1117 1200
+  2360   2446 1844 0 0 ATAJ644 1201 1287
+  2712   2882 1844 0 0 ATAJ644 1288 1458
+  2966   3092 1844 0 0 ATAJ644 1459 1585
+  3189   3447 1844 0 0 ATAJ644 1586 1844
+    32    375 347 0 0 AT00622    1  347
+  3071   3092 256 0 1 AI994358    1   22
+  3189   3421 256 0 1 AI994358   23  256
+\end{Verbatim}
+
+All the hits of the ATAJ644 are clustered together and sorted with
+increasing \texttt{<$bq^S$> <$eq^S$> }. In practice, this file can be
+directly constructed from an EST/cDNA bank and the sequence using a
+modified version of \texttt{sim4}. This version outputs splices
+alignements in the correct format (using the flag \texttt{A=6}) and
+only outputs hits with a coverage of more than 80\%\ and with a
+similarity either than 90\%.
+
+A patch file \texttt{sim4.patch} is available in the plugin source
+directory as well as an awk script that put a FASTA sequence bank in a
+pure sim4 format (no upper case, no degenerated code). This seems
+useless on recent sim4 versions.
+
+\paragraph{Gff3 input file format}
+
+The gff3 input mode is activated by setting the value \texttt{GFF3}
+for the parameter \texttt{Est.format} in the parameter file. The
+plugin reads its information from the file whose name is the concatenation
+of the sequence file name, the \texttt{Est.FileExtension} parameter 
+and the \texttt{.gff3} extension. Each line is as follows:
+
+
+\texttt{<sequence name> <program> <sofa feature> <$b^S$> <$e^S$> <$v^S$> 
+<strand> <.> \\
+ID=...;Target=<est name> <$bp^S$> <$ep^S$> <est strand>;score\_hit=<$s^S$>}
+
+Accepted features (third column):
+\begin{itemize}
+\item  SO:0000668 or EST\_match
+\end{itemize}
+
+
+Gff3 attributes specifications:\\
+Required attributes:
+	\begin{itemize}
+	\item ID
+	\item Target
+	\end{itemize}
+
+Optional attributes:
+	\begin{itemize}
+%	\item frame\_hit represent the blast frame. It can be omitted but if specified, its consistency with the hit coordinates will be cheked and the hit will be rejected if the frame is not consistent.
+	\item score\_hit :  normalized score.
+	\end{itemize}
+
+
+Here an extract of : seq14ac002535g4g5.tfa.est.gff3
+\begin{Verbatim}[fontsize=\tiny]
+seq14	gth	EST_match	3261	4698	.	-	.	ID=EST_match:seq14.1;
+seq14	gth	EST_match	3261	3332	0	-	.	ID=EST_match:seq14.1.1;Target=AV537418 1 72 +;score_hit=636;Parent=EST_match:seq14.1;
+seq14	gth	EST_match	3411	3494	0	-	.	ID=EST_match:seq14.1.2;Target=AV537418 73 156 +;score_hit=636;Parent=EST_match:seq14.1;
+seq14	gth	EST_match	3583	3657	0	-	.	ID=EST_match:seq14.1.3;Target=AV537418 157 231 +;score_hit=636;Parent=EST_match:seq14.1;
+seq14	gth	EST_match	4209	4301	0	-	.	ID=EST_match:seq14.1.4;Target=AV537418 232 324 +;score_hit=636;Parent=EST_match:seq14.1;
+seq14	gth	EST_match	4387	4698	0	-	.	ID=EST_match:seq14.1.5;Target=AV537418 325 636 +;score_hit=636;Parent=EST_match:seq14.1;
+\end{Verbatim}
+
+
+\paragraph{Filtering input information}
+
+The EST information goes through a complex filtering process. First
+all hits are loaded. Successive hits of a same sequence are considered
+as a single alignment.  For every spliced alignement, the plugin
+checks if a splice site of the correct type as been predicted near the
+border of each gap (less than \texttt{Est.estM} bases aways of the
+border). This is checked on each strand. If a strand does not contain
+the necessary splice sites, then it is considered as impossible. If
+neither strand contains adequate splice sites, the sequence is
+discarded (filtered).
+
+All remaining alignments are sortered by 1) decreasing number of
+detected gaps then by 2) length (this tends to put cDNA or spliced EST
+alignments first) and 3) by the alphabetical order of the sequence
+names (to avoid sorting ambiguities). Any sequence that is
+inconsistent with previous sequence in this order (in the sense that
+they indicate that a given nucleotide is part of an intron, resp.
+exon, while a previous sequence indicates that the nucleotide is part
+of an exon (resp. intron) is discarded (filtered).
+
+Any unspliced sequence that crosses a donor site that is predicted
+with a sufficiently strong confidence (See \texttt{Est.StrongDonor*})
+is filtered out.
+
+\paragraph{Integration of information}
+
+Using filtered EST/cDNA sequence that are all consistent, every
+nucleotide can either be located:
+\begin{description}
+\item[Hit] inside a matching segment that can occur on the forward strand
+  on the reverse strand or both (as identified during filtering).
+\item[Gap] or inside a gap segment that can occur on the forward strand
+  on the reverse strand or both (as identified during filtering).
+\item[None] or otherwise outside of any existing hit or gap (or less
+  than \texttt{Est.estM} bases aways of the border of such a segment)
+\end{description}
+
+For a Hit: all intronic and intergenic tracks as well as UTR and
+exonic tracks on a strand incompatible with the hit are penalized with
+\texttt{Est.estP*}.
+
+For a Gap: all exonic and intergenic tracks as well as UTR and
+intronic tracks on a strand incompatible with the hit are penalized with
+\texttt{Est.estP*}.
+
+When no information exists (None), the UTR tracks are penalized by
+\texttt{Est.utrP*} if and only if there is a Hit evidence at less than
+\texttt{Est.utrM} bases away.
+
+\paragraph{Post analysis}
+
+The correspondence between transcribed sequence information and
+prediction is analyzed if the \texttt{-E} argument
+\index{CmdFlags}{[EST postprocessing activation] E} is activated or if
+the \texttt{Est.PostProcess} parameter value is \texttt{1} or \texttt{2}.
+
+\begin{itemize}
+ \item \texttt{Est.PostProcess = 1}: EST/cDNA are compared to the prediction
+
+For each predicted transcript (from 5'UTR to 3'UTR), each available
+EST/cDNA sequence that overlaps the transcript is compared to the
+prediction. The transcribed sequence is then classified as:
+\begin{itemize}
+\item Filtered (if it was filtered in the initial filtering process)
+\item Inconsistent (if it is incompatible with the prediction)
+\item Full transcript Support (if it is completely consistent with the
+  predicted transcript on all the predicted transcript length)
+\item Full Coding Support (if it is completely consistent with the
+  predicted CDS on all the predicted CDS length, from start to stop
+  codon)
+\item Support (if it is otherwise consistent with the prediction)
+\end{itemize}
+Finally, for each predicted transcript (from 5'UTR to 3'UTR) and
+predicted CDS (from start to stop), the number of predicted
+nucleotides that are supported by existing transcripts (filtered or
+not) is reported.
+
+ \item \texttt{Est.PostProcess = 2}: the prediction is compared to the EST/cDNA
+
+For each predicted coding exon, the percentage of nucleotides
+supported by a transcribed sequence is displayed. This count includes
+all EST/cDNA, including those filtered. 
+Overlapped transcribed sequences are displayed in the last column.
+The \texttt{Est.PPNumber} parameter is the maximum number of displayed 
+transcribed sequences per exon.
+\end{itemize}
+
+
+\paragraph{Graph}
+
+Non filtered transcribed evidence are plotted as blue horizontal
+blocks (hits) separated by thin blue lines (gap) on the intronic
+tracks. If the strand of the transcription has been identified during
+filtering, the blocks and lines occurr only on the corresponding IR or
+IF track.
+
+Filtered sequences are plotted as gray blocks and lines just above
+(below) the forward (reverse) intronic tracks.
+

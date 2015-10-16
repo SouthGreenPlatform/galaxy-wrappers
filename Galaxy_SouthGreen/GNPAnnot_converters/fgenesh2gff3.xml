@@ -1,0 +1,60 @@
+<tool id="fgenesh2gff3" name="GNPAnnot Converters : FGenesH">
+    <description>Convert output in GFF3, EMBL and specific input for EuGene combiner</description>
+    <command interpreter="perl">fgenesh2gff3.pl $input $output_gff3 $output_embl $output_eugene</command>
+    <inputs>
+		<param format="txt" name="input" type="data" label="FGenesH output" />
+    </inputs>
+    <outputs>
+		<data format="gff3" name="output_gff3" label="FGenesH (gff3)"/> 
+		<data format="txt" name="output_embl" label="FGenesH (embl)"/> 
+		<data format="txt" name="output_eugene" label="FGenesH (eugene)" />
+    </outputs>
+    <help>
+    
+.. class:: infomark
+
+**Program encapsulated and developed in Galaxy by Southgreen**
+
+.. class:: infomark
+
+**Part of the GNPAnnot Converters package**
+
+-----
+
+==============
+Author: 
+==============
+
+Gaetan Droc
+
+-----
+
+==============
+What it does: 
+==============
+
+Convert FgenesH output in GFF3 and a specific format for EuGene combiner
+
+-----
+
+==============
+Output format:
+==============
+
+GFF3
+
+EMBL
+
+Specific format for EuGene
+
+-----
+
+==============
+Reference:
+==============
+
+http://linux1.softberry.com/berry.phtml
+
+
+    </help>
+</tool>

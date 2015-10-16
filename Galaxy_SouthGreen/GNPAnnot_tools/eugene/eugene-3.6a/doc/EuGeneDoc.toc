@@ -1,0 +1,222 @@
+\contentsline {chapter}{\numberline {1}Quick Start}{1}{chapter.1}
+\contentsline {section}{\numberline {1.1}Annoting a sequence}{1}{section.1.1}
+\contentsline {section}{\numberline {1.2}Using transcribed sequences}{2}{section.1.2}
+\contentsline {section}{\numberline {1.3}Using protein similarities}{4}{section.1.3}
+\contentsline {chapter}{\numberline {2}Reference documentation}{7}{chapter.2}
+\contentsline {section}{\numberline {2.1}\textsc {EuG\`ene}'s general parameters}{7}{section.2.1}
+\contentsline {section}{\numberline {2.2}Splice variant prediction}{10}{section.2.2}
+\contentsline {section}{\numberline {2.3}Plugins}{11}{section.2.3}
+\contentsline {subsection}{\numberline {2.3.1}Loading plugins}{12}{subsection.2.3.1}
+\contentsline {subsection}{\numberline {2.3.2}\texttt {GFF3 input documentation}}{13}{subsection.2.3.2}
+\contentsline {paragraph}{GFF3 format}{13}{section*.2}
+\contentsline {subsection}{\numberline {2.3.3}\texttt {Signal plugins}}{14}{subsection.2.3.3}
+\contentsline {subsubsection}{\numberline {2.3.3.1}\texttt {Sensor.EuStop}}{14}{subsubsection.2.3.3.1}
+\contentsline {paragraph}{Description}{14}{section*.3}
+\contentsline {paragraph}{Input files format}{14}{section*.4}
+\contentsline {paragraph}{Integration of information}{14}{section*.5}
+\contentsline {paragraph}{Post analyse}{14}{section*.6}
+\contentsline {paragraph}{Graph}{14}{section*.7}
+\contentsline {subsubsection}{\numberline {2.3.3.2}\texttt {Sensor.FrameShift}}{14}{subsubsection.2.3.3.2}
+\contentsline {paragraph}{Description}{14}{section*.8}
+\contentsline {paragraph}{Input files format}{15}{section*.9}
+\contentsline {paragraph}{Integration of information}{15}{section*.10}
+\contentsline {paragraph}{Post analyse}{15}{section*.11}
+\contentsline {paragraph}{Graph}{15}{section*.12}
+\contentsline {subsubsection}{\numberline {2.3.3.3}\texttt {Sensor.GSplicer}}{15}{subsubsection.2.3.3.3}
+\contentsline {paragraph}{Description}{15}{section*.13}
+\contentsline {paragraph}{Native input files format}{15}{section*.14}
+\contentsline {paragraph}{Gff3 input file format}{16}{section*.15}
+\contentsline {paragraph}{Filtering input information}{16}{section*.16}
+\contentsline {paragraph}{Integration of information}{16}{section*.17}
+\contentsline {paragraph}{Post analyse}{17}{section*.18}
+\contentsline {paragraph}{Graph}{17}{section*.19}
+\contentsline {subsubsection}{\numberline {2.3.3.4}\texttt {Sensor.NG2}}{17}{subsubsection.2.3.3.4}
+\contentsline {paragraph}{Description}{17}{section*.20}
+\contentsline {paragraph}{Native input files format}{17}{section*.21}
+\contentsline {paragraph}{Gff3 input file format}{18}{section*.22}
+\contentsline {paragraph}{Filtering input information}{18}{section*.23}
+\contentsline {paragraph}{Integration of information}{18}{section*.24}
+\contentsline {paragraph}{Post analyse}{18}{section*.25}
+\contentsline {paragraph}{Graph}{18}{section*.26}
+\contentsline {subsubsection}{\numberline {2.3.3.5}\texttt {Sensor.NStart}}{18}{subsubsection.2.3.3.5}
+\contentsline {paragraph}{Description}{18}{section*.27}
+\contentsline {paragraph}{Native input files format}{19}{section*.28}
+\contentsline {paragraph}{Gff3 input file format}{19}{section*.29}
+\contentsline {paragraph}{Filtering input information}{19}{section*.30}
+\contentsline {paragraph}{Integration of information}{19}{section*.31}
+\contentsline {paragraph}{Post analyse}{19}{section*.32}
+\contentsline {paragraph}{Graph}{20}{section*.33}
+\contentsline {subsubsection}{\numberline {2.3.3.6}\texttt {Sensor.PatConst}}{20}{subsubsection.2.3.3.6}
+\contentsline {paragraph}{Description}{20}{section*.34}
+\contentsline {paragraph}{Input files format}{20}{section*.35}
+\contentsline {paragraph}{Integration of information}{20}{section*.36}
+\contentsline {paragraph}{Post analyse}{20}{section*.37}
+\contentsline {paragraph}{Graph}{20}{section*.38}
+\contentsline {subsubsection}{\numberline {2.3.3.7}\texttt {Sensor.PepSignal}}{20}{subsubsection.2.3.3.7}
+\contentsline {paragraph}{Description}{20}{section*.39}
+\contentsline {paragraph}{Native input files format}{21}{section*.40}
+\contentsline {paragraph}{Gff3 input file format}{21}{section*.41}
+\contentsline {paragraph}{Filtering input information}{21}{section*.42}
+\contentsline {paragraph}{Integration of information}{21}{section*.43}
+\contentsline {paragraph}{Post analyse}{21}{section*.44}
+\contentsline {paragraph}{Graph}{21}{section*.45}
+\contentsline {subsubsection}{\numberline {2.3.3.8}\texttt {Sensor.SMachine}}{22}{subsubsection.2.3.3.8}
+\contentsline {paragraph}{Description}{22}{section*.46}
+\contentsline {paragraph}{Native input files format}{22}{section*.47}
+\contentsline {paragraph}{Gff3 input file format}{23}{section*.48}
+\contentsline {paragraph}{Filtering input information}{23}{section*.49}
+\contentsline {paragraph}{Integration of information}{23}{section*.50}
+\contentsline {paragraph}{Post analyse}{23}{section*.51}
+\contentsline {paragraph}{Graph}{23}{section*.52}
+\contentsline {subsubsection}{\numberline {2.3.3.9}\texttt {Sensor.SpliceWAM}}{24}{subsubsection.2.3.3.9}
+\contentsline {paragraph}{Description}{24}{section*.53}
+\contentsline {paragraph}{Input files format}{24}{section*.54}
+\contentsline {paragraph}{Filtering input information}{25}{section*.55}
+\contentsline {paragraph}{Integration of information}{25}{section*.56}
+\contentsline {paragraph}{Post analyse}{25}{section*.57}
+\contentsline {paragraph}{Graph}{25}{section*.58}
+\contentsline {subsubsection}{\numberline {2.3.3.10}\texttt {Sensor.SPred}}{25}{subsubsection.2.3.3.10}
+\contentsline {paragraph}{Description}{25}{section*.59}
+\contentsline {paragraph}{Native input files format}{26}{section*.60}
+\contentsline {paragraph}{Gff3 input file format}{26}{section*.61}
+\contentsline {paragraph}{Filtering input information}{26}{section*.62}
+\contentsline {paragraph}{Integration of information}{26}{section*.63}
+\contentsline {paragraph}{Post analyse}{26}{section*.64}
+\contentsline {paragraph}{Graph}{27}{section*.65}
+\contentsline {subsubsection}{\numberline {2.3.3.11}\texttt {Sensor.StartWAM}}{27}{subsubsection.2.3.3.11}
+\contentsline {paragraph}{Description}{27}{section*.66}
+\contentsline {paragraph}{Input files format}{27}{section*.67}
+\contentsline {paragraph}{Filtering input information}{28}{section*.68}
+\contentsline {paragraph}{Integration of information}{28}{section*.69}
+\contentsline {paragraph}{Post analyse}{28}{section*.70}
+\contentsline {paragraph}{Graph}{28}{section*.71}
+\contentsline {subsubsection}{\numberline {2.3.3.12}\texttt {Sensor.Transcript}}{28}{subsubsection.2.3.3.12}
+\contentsline {paragraph}{Description}{28}{section*.72}
+\contentsline {paragraph}{Input files format}{28}{section*.73}
+\contentsline {paragraph}{Integration of information}{28}{section*.74}
+\contentsline {paragraph}{Post analyse}{29}{section*.75}
+\contentsline {paragraph}{Graph}{29}{section*.76}
+\contentsline {subsection}{\numberline {2.3.4}\texttt {Content plugins}}{29}{subsection.2.3.4}
+\contentsline {subsubsection}{\numberline {2.3.4.1}\texttt {Sensor.BlastX}}{29}{subsubsection.2.3.4.1}
+\contentsline {paragraph}{Description}{29}{section*.77}
+\contentsline {paragraph}{Native input files format}{29}{section*.78}
+\contentsline {paragraph}{Gff3 input file format}{30}{section*.79}
+\contentsline {paragraph}{Filtering input information}{31}{section*.80}
+\contentsline {paragraph}{Integration of information}{31}{section*.81}
+\contentsline {paragraph}{Post analyse}{32}{section*.82}
+\contentsline {paragraph}{Graph}{32}{section*.83}
+\contentsline {subsubsection}{\numberline {2.3.4.2}\texttt {Sensor.Est}}{32}{subsubsection.2.3.4.2}
+\contentsline {paragraph}{Description}{32}{section*.84}
+\contentsline {paragraph}{Native input files format}{33}{section*.85}
+\contentsline {paragraph}{Gff3 input file format}{34}{section*.86}
+\contentsline {paragraph}{Filtering input information}{35}{section*.87}
+\contentsline {paragraph}{Integration of information}{35}{section*.88}
+\contentsline {paragraph}{Post analysis}{36}{section*.89}
+\contentsline {paragraph}{Graph}{36}{section*.90}
+\contentsline {subsubsection}{\numberline {2.3.4.3}\texttt {Sensor.Homology}}{36}{subsubsection.2.3.4.3}
+\contentsline {paragraph}{Description}{36}{section*.91}
+\contentsline {paragraph}{Native input files format}{37}{section*.92}
+\contentsline {paragraph}{Gff3 input file format}{38}{section*.93}
+\contentsline {paragraph}{Filtering input information}{38}{section*.94}
+\contentsline {paragraph}{Integration of information}{38}{section*.95}
+\contentsline {paragraph}{Post analyse}{39}{section*.96}
+\contentsline {paragraph}{Graph}{39}{section*.97}
+\contentsline {subsubsection}{\numberline {2.3.4.4}\texttt {Sensor.MarkovConst}}{39}{subsubsection.2.3.4.4}
+\contentsline {paragraph}{Description}{39}{section*.98}
+\contentsline {paragraph}{Input files format}{39}{section*.99}
+\contentsline {paragraph}{Integration of information}{39}{section*.100}
+\contentsline {paragraph}{Post analyse}{39}{section*.101}
+\contentsline {paragraph}{Graph}{39}{section*.102}
+\contentsline {subsubsection}{\numberline {2.3.4.5}\texttt {Sensor.MarkovIMM}}{39}{subsubsection.2.3.4.5}
+\contentsline {paragraph}{Description}{39}{section*.103}
+\contentsline {paragraph}{Input files format}{40}{section*.104}
+\contentsline {paragraph}{Integration of information}{40}{section*.105}
+\contentsline {paragraph}{Post analyse}{40}{section*.106}
+\contentsline {paragraph}{Graph}{40}{section*.107}
+\contentsline {subsubsection}{\numberline {2.3.4.6}\texttt {Sensor.MarkovProt}}{41}{subsubsection.2.3.4.6}
+\contentsline {paragraph}{Description}{41}{section*.108}
+\contentsline {paragraph}{Input files format}{41}{section*.109}
+\contentsline {paragraph}{Integration of information}{41}{section*.110}
+\contentsline {paragraph}{Post analyse}{41}{section*.111}
+\contentsline {paragraph}{Graph}{41}{section*.112}
+\contentsline {subsubsection}{\numberline {2.3.4.7}\texttt {Sensor.Repeat}}{41}{subsubsection.2.3.4.7}
+\contentsline {paragraph}{Description}{41}{section*.113}
+\contentsline {paragraph}{Native input files format}{42}{section*.114}
+\contentsline {paragraph}{Gff3 input file format}{42}{section*.115}
+\contentsline {paragraph}{Filtering input information}{42}{section*.116}
+\contentsline {paragraph}{Integration of information}{42}{section*.117}
+\contentsline {paragraph}{Post analyse}{42}{section*.118}
+\contentsline {paragraph}{Graph}{42}{section*.119}
+\contentsline {subsubsection}{\numberline {2.3.4.8}\texttt {Sensor.NStretch}}{42}{subsubsection.2.3.4.8}
+\contentsline {paragraph}{Description}{42}{section*.120}
+\contentsline {paragraph}{Input files format}{43}{section*.121}
+\contentsline {paragraph}{Integration of information}{43}{section*.122}
+\contentsline {paragraph}{Post analyse}{43}{section*.123}
+\contentsline {paragraph}{Graph}{43}{section*.124}
+\contentsline {subsection}{\numberline {2.3.5}\texttt {Mixed signal/content plugins}}{43}{subsection.2.3.5}
+\contentsline {subsubsection}{\numberline {2.3.5.1}\texttt {Sensor.AnnotaStruct}}{43}{subsubsection.2.3.5.1}
+\contentsline {paragraph}{Description}{43}{section*.125}
+\contentsline {paragraph}{Native GGF-like input files format}{44}{section*.126}
+\contentsline {paragraph}{Gff3 input files format}{46}{section*.127}
+\contentsline {paragraph}{Filtering input information}{48}{section*.128}
+\contentsline {paragraph}{Integration of information}{48}{section*.129}
+\contentsline {paragraph}{Post analyse}{48}{section*.130}
+\contentsline {paragraph}{Graph}{48}{section*.131}
+\contentsline {subsubsection}{\numberline {2.3.5.2}\texttt {Sensor.IfElse}}{48}{subsubsection.2.3.5.2}
+\contentsline {paragraph}{Description}{48}{section*.132}
+\contentsline {paragraph}{Input files format}{49}{section*.133}
+\contentsline {paragraph}{Filtering input information}{49}{section*.134}
+\contentsline {paragraph}{Integration of information}{49}{section*.135}
+\contentsline {paragraph}{Post analyse}{49}{section*.136}
+\contentsline {paragraph}{Graph}{49}{section*.137}
+\contentsline {subsubsection}{\numberline {2.3.5.3}\texttt {Sensor.Riken}}{49}{subsubsection.2.3.5.3}
+\contentsline {paragraph}{Description}{49}{section*.138}
+\contentsline {paragraph}{Native input files format}{50}{section*.139}
+\contentsline {paragraph}{Gff3 input file format}{50}{section*.140}
+\contentsline {paragraph}{Filtering input information}{50}{section*.141}
+\contentsline {paragraph}{Integration of information}{51}{section*.142}
+\contentsline {paragraph}{Post analyse}{51}{section*.143}
+\contentsline {paragraph}{Graph}{51}{section*.144}
+\contentsline {subsubsection}{\numberline {2.3.5.4}\texttt {Sensor.NcRNA}}{51}{subsubsection.2.3.5.4}
+\contentsline {paragraph}{Description}{51}{section*.145}
+\contentsline {paragraph}{Gff3 input files format}{52}{section*.146}
+\contentsline {paragraph}{Filtering input information}{52}{section*.147}
+\contentsline {paragraph}{Integration of information}{52}{section*.148}
+\contentsline {paragraph}{Post analyse}{52}{section*.149}
+\contentsline {paragraph}{Graph}{52}{section*.150}
+\contentsline {subsection}{\numberline {2.3.6}\texttt {Others plugins}}{52}{subsection.2.3.6}
+\contentsline {subsubsection}{\numberline {2.3.6.1}\texttt {Sensor.GCPlot}}{52}{subsubsection.2.3.6.1}
+\contentsline {paragraph}{Description}{52}{section*.151}
+\contentsline {paragraph}{Input files format}{53}{section*.152}
+\contentsline {paragraph}{Integration of information}{53}{section*.153}
+\contentsline {paragraph}{Post analyse}{53}{section*.154}
+\contentsline {paragraph}{Graph}{53}{section*.155}
+\contentsline {subsubsection}{\numberline {2.3.6.2}\texttt {Sensor.GFF}}{53}{subsubsection.2.3.6.2}
+\contentsline {paragraph}{Description}{53}{section*.156}
+\contentsline {paragraph}{Native input files format}{53}{section*.157}
+\contentsline {paragraph}{Gff3 input files format}{54}{section*.158}
+\contentsline {paragraph}{Filtering input information}{54}{section*.159}
+\contentsline {paragraph}{Integration of information}{54}{section*.160}
+\contentsline {paragraph}{Post analyse}{54}{section*.161}
+\contentsline {paragraph}{Graph}{54}{section*.162}
+\contentsline {subsubsection}{\numberline {2.3.6.3}\texttt {Sensor.Plotter}}{54}{subsubsection.2.3.6.3}
+\contentsline {paragraph}{Description}{54}{section*.163}
+\contentsline {paragraph}{Input files format}{54}{section*.164}
+\contentsline {paragraph}{Integration of information}{54}{section*.165}
+\contentsline {paragraph}{Post analyse}{55}{section*.166}
+\contentsline {paragraph}{Graph}{55}{section*.167}
+\contentsline {subsubsection}{\numberline {2.3.6.4}\texttt {Sensor.Tester}}{55}{subsubsection.2.3.6.4}
+\contentsline {paragraph}{Description}{55}{section*.168}
+\contentsline {paragraph}{Native input files format}{56}{section*.169}
+\contentsline {paragraph}{Gff3 input files format}{56}{section*.170}
+\contentsline {paragraph}{Output files format}{57}{section*.171}
+\contentsline {paragraph}{Filtering input information}{58}{section*.172}
+\contentsline {paragraph}{Integration of information}{58}{section*.173}
+\contentsline {paragraph}{Post analyse}{58}{section*.174}
+\contentsline {paragraph}{Graph}{58}{section*.175}
+\contentsline {section}{\numberline {2.4}\textsc {EuG\`ene}\ as a combiner}{58}{section.2.4}
+\contentsline {section}{\numberline {2.5}Optimization of Plugins parameters}{59}{section.2.5}
+\contentsline {paragraph}{Description of the file with the coordinates of genes}{60}{section*.176}
+\contentsline {paragraph}{Optimization parameter definition example}{60}{section*.177}
+\contentsline {section}{\numberline {2.6}Command line flags}{61}{section.2.6}
+\contentsline {section}{Index of command line flags for sensors}{64}{section.2.6}

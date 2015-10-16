@@ -1,0 +1,41 @@
+To build WAM matrices:
+
+A multifasta file containing a consensus for the considered signal is required.
+
+consensus = context before the signal + signal + context after the signal
+
+Example for a virtual start file, with ATG and a short context (3+2):
+>Start01
+ATTATGCT
+>Start02
+TTTATGCA
+>Start3
+CACATGTT
+...
+
+Some parameters are also required (explained by a WAMbuild -h)
+1 The order of the markovian models
+2 The total length of the consensus
+3 The position of the first nt of the consensus
+4 name of the multifasta file
+5 base name for the output
+
+warning: 
+Depending on the purchased order, some additionnal context could be
+required in the multifasta file before the first nt of the consensus
+(min length of this additional context = order of the markovian model)
+Some possible commands for the example:
+
+WAMbuild 0 8 1 start.true.fasta start.wam.true
+WAMbuild 1 7 2 start.true.fasta start.wam.true 
+(with an order 1, the consensus can't begin before the second nt to allow 
+WAMbuilder to build the first model)
+
+One model (binary file) is build per position of the consensus.
+For the WAM sensors, two sets of model are required, one for the true
+positive, and one for the false positive (at each signal occurence ATG,
+GT or AG the log likelihood is computed).
+A text output is produced with words occurence counts per position.
+(false positive files can be produced by a simple extraction of ATG, Gt
+and AG with some context).
+

@@ -1,0 +1,46 @@
+\BOOKMARK [0][-]{chapter.1}{Quick Start}{}
+\BOOKMARK [1][-]{section.1.1}{Annoting a sequence}{chapter.1}
+\BOOKMARK [1][-]{section.1.2}{Using transcribed sequences}{chapter.1}
+\BOOKMARK [1][-]{section.1.3}{Using protein similarities}{chapter.1}
+\BOOKMARK [0][-]{chapter.2}{Reference documentation}{}
+\BOOKMARK [1][-]{section.2.1}{EuG\350ne's general parameters}{chapter.2}
+\BOOKMARK [1][-]{section.2.2}{Splice variant prediction}{chapter.2}
+\BOOKMARK [1][-]{section.2.3}{Plugins}{chapter.2}
+\BOOKMARK [2][-]{subsection.2.3.1}{Loading plugins}{section.2.3}
+\BOOKMARK [2][-]{subsection.2.3.2}{GFF3 input documentation}{section.2.3}
+\BOOKMARK [2][-]{subsection.2.3.3}{Signal plugins}{section.2.3}
+\BOOKMARK [3][-]{subsubsection.2.3.3.1}{Sensor.EuStop}{subsection.2.3.3}
+\BOOKMARK [3][-]{subsubsection.2.3.3.2}{Sensor.FrameShift}{subsection.2.3.3}
+\BOOKMARK [3][-]{subsubsection.2.3.3.3}{Sensor.GSplicer}{subsection.2.3.3}
+\BOOKMARK [3][-]{subsubsection.2.3.3.4}{Sensor.NG2}{subsection.2.3.3}
+\BOOKMARK [3][-]{subsubsection.2.3.3.5}{Sensor.NStart}{subsection.2.3.3}
+\BOOKMARK [3][-]{subsubsection.2.3.3.6}{Sensor.PatConst}{subsection.2.3.3}
+\BOOKMARK [3][-]{subsubsection.2.3.3.7}{Sensor.PepSignal}{subsection.2.3.3}
+\BOOKMARK [3][-]{subsubsection.2.3.3.8}{Sensor.SMachine}{subsection.2.3.3}
+\BOOKMARK [3][-]{subsubsection.2.3.3.9}{Sensor.SpliceWAM}{subsection.2.3.3}
+\BOOKMARK [3][-]{subsubsection.2.3.3.10}{Sensor.SPred}{subsection.2.3.3}
+\BOOKMARK [3][-]{subsubsection.2.3.3.11}{Sensor.StartWAM}{subsection.2.3.3}
+\BOOKMARK [3][-]{subsubsection.2.3.3.12}{Sensor.Transcript}{subsection.2.3.3}
+\BOOKMARK [2][-]{subsection.2.3.4}{Content plugins}{section.2.3}
+\BOOKMARK [3][-]{subsubsection.2.3.4.1}{Sensor.BlastX}{subsection.2.3.4}
+\BOOKMARK [3][-]{subsubsection.2.3.4.2}{Sensor.Est}{subsection.2.3.4}
+\BOOKMARK [3][-]{subsubsection.2.3.4.3}{Sensor.Homology}{subsection.2.3.4}
+\BOOKMARK [3][-]{subsubsection.2.3.4.4}{Sensor.MarkovConst}{subsection.2.3.4}
+\BOOKMARK [3][-]{subsubsection.2.3.4.5}{Sensor.MarkovIMM}{subsection.2.3.4}
+\BOOKMARK [3][-]{subsubsection.2.3.4.6}{Sensor.MarkovProt}{subsection.2.3.4}
+\BOOKMARK [3][-]{subsubsection.2.3.4.7}{Sensor.Repeat}{subsection.2.3.4}
+\BOOKMARK [3][-]{subsubsection.2.3.4.8}{Sensor.NStretch}{subsection.2.3.4}
+\BOOKMARK [2][-]{subsection.2.3.5}{Mixed signal/content plugins}{section.2.3}
+\BOOKMARK [3][-]{subsubsection.2.3.5.1}{Sensor.AnnotaStruct}{subsection.2.3.5}
+\BOOKMARK [3][-]{subsubsection.2.3.5.2}{Sensor.IfElse}{subsection.2.3.5}
+\BOOKMARK [3][-]{subsubsection.2.3.5.3}{Sensor.Riken}{subsection.2.3.5}
+\BOOKMARK [3][-]{subsubsection.2.3.5.4}{Sensor.NcRNA}{subsection.2.3.5}
+\BOOKMARK [2][-]{subsection.2.3.6}{Others plugins}{section.2.3}
+\BOOKMARK [3][-]{subsubsection.2.3.6.1}{Sensor.GCPlot}{subsection.2.3.6}
+\BOOKMARK [3][-]{subsubsection.2.3.6.2}{Sensor.GFF}{subsection.2.3.6}
+\BOOKMARK [3][-]{subsubsection.2.3.6.3}{Sensor.Plotter}{subsection.2.3.6}
+\BOOKMARK [3][-]{subsubsection.2.3.6.4}{Sensor.Tester}{subsection.2.3.6}
+\BOOKMARK [1][-]{section.2.4}{EuG\350ne as a combiner}{chapter.2}
+\BOOKMARK [1][-]{section.2.5}{Optimization of Plugins parameters}{chapter.2}
+\BOOKMARK [1][-]{section.2.6}{Command line flags}{chapter.2}
+\BOOKMARK [1][-]{section.2.6}{Index of command line flags for sensors}{chapter.2}

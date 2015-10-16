@@ -1,0 +1,55 @@
+% Documentation of the IfElse sensor
+
+\subsubsection{\texttt{Sensor.IfElse}}
+
+\paragraph{Description}
+
+This plugin is used to combine the predictions of two existing
+plugins. It listens to a first plugin. For each possible predictable
+item, if this plugin predicts something then this prediction is used.
+If the plugin does not predict anything, then the output of the second
+plugin is used.
+ 
+The plugin needs only two parameters to be informed:
+\texttt{IfElse.SensorIf} and \texttt{IfElse.SensorElse} which indicate
+the names of the two slave plugins. The two slave plugins will be
+loaded with an instance number equal to one plus the instance number
+of the IfElse sensor itself (allowing for nested IfElse).
+
+Here is an example of IfElse parameters definition which uses the NG2
+Sensor if it predicts something or else the SPred sensor.
+\begin{Verbatim}[fontsize=\small]
+IfElse.SensorIf         NG2
+IfElse.SensorElse       SPred
+Sensor.IfElse.use       1    # Use IfElse sensor
+Sensor.IfElse           1       # Sensor priority
+\end{Verbatim}
+
+In this case, since the IfElse is loaded as a first plugin (instance
+0), the two slave plugins will be instanciated as instance number
+one. The parameters for the 2 plugins must therefore be suffixed by
+\texttt{[1]}.
+
+\paragraph{Input files format}
+
+No input files  needed beyond those used by the slave sensors.
+
+\paragraph{Filtering input information}
+
+No filtering.
+
+\paragraph{Integration of information}
+
+The ``If'' plugin is called. For each of the possible information type
+(signal and contents), if nothing is predicted by it, the prediction
+of the second plugin is used instead.
+
+\paragraph{Post analyse}
+
+No post analyse beyond the post analyze in the slave plugins.
+
+\paragraph{Graph}
+
+Nothing beyond the plotting in the slave plugins.
+
+

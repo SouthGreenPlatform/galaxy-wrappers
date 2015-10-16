@@ -1,0 +1,108 @@
+<tool id="mergeduplicatesnps4" name="MergeDuplicateSNPs4" version="4.0">
+	<description>Finds duplicate SNPs in the input HapMap or VCF file, and merges them if they have the same pair of alleles</description>
+	<command>
+		source $__tool_directory__/module_tassel4.sh;
+		$__tool_directory__/MergeDuplicateSNPs4.sh   
+	#if $type.source == "hapmap":
+  	 	$type.file 
+  	#else:
+  	 	$type.file  
+  	#end if 
+  	$type.source $misMat $callHets $kpUnmergDups $sC $eC $maxAlleleVCF $output $snpLog $customSNPlog</command>
+	<inputs>  	
+		<conditional name="type">
+			<param name="source" type="select" label="Input file format:">
+				<option value="hapmap" selected="True">HapMap file</option>
+				<option value="vcf">VCF file</option>
+			</param>
+			<when value="hapmap">
+				<param name="file" type="data" format="txt" label="HapMap file" /> 
+			</when>
+			<when value="vcf">
+				<param name="file" type="data" format="txt" label="VCF file" /> 
+			</when>
+		</conditional>
+    	<param name="misMat" type="float" value="0.05" label="Threshold genotypic mismatch rate above which the duplicate SNPs won't be merged (default: 0.05) " />
+		<param name="callHets" type="boolean" checked="false" label="When two genotypes disagree at a SNP, call it a heterozygote (default: false) "/>
+		<param name="kpUnmergDups" type="boolean" checked="false" label="When two genotypes disagree at a SNP, call it a heterozygote (default: false) "/>
+  		<param name="sC" type="integer" value="1" label="Start chromosome" />
+    	<param name="eC" type="integer" value="10" label="End chromosome" /> 
+		<param name="maxAlleleVCF" type="boolean" checked="false" label="Maximum number of alleles allowed in vcf file." /> 
+  	</inputs>
+	<outputs>
+		<data format="txt" name="output" label="Tassel4 Merge ${type.source} file (.tar.gz)"/> 
+ 		<data format="txt" name="snpLog" label="Tassel4 SNPs Removed Log file name for ${type.source} "/> 
+ 		<data format="txt" name="customSNPlog" label="Tassel4 customSNPlog "/>  	
+ 	</outputs>   
+  	<help>
+  
+  .. class:: infomark
+
+**Program encapsulated in Galaxy by South Green**
+
+.. class:: infomark
+
+**Tassel**
+
+-----
+
+==========
+ Overview
+==========
+
+**TASSEL-GBS: A High Capacity Genotyping by Sequencing Analysis Pipeline**
+
+**MergeDuplicateSNPs Plugin (Tassel 4.0)**
+
+Finds duplicate SNPs in the input HapMap file, and merges them if they have the same pair of alleles
+
+
+**The commonly used parameters with default value setting (FastqToTBT Plugin option)**::
+	
+Options -hmp and -vcf are mutual exclusive
+	
+    -hmp				Input GBS genotype file (in HapMap format)
+	-vcf				Input GBS genotype file (in VCF format).
+	-o					Output HapMap file
+	-misMat				Threshold genotypic mismatch rate above which the duplicate SNPs won't be merged (default: 0.05)
+	-callHets			When two genotypes disagree at a SNP, call it a heterozygote (default: false = set to missing)
+	-kpUnmergDups		When two duplicate SNPs were not merged (different alleles or too many mismatches), keep them (default: false = delete them)
+ 	-sC					Start chromosome
+	-eC					End chromosome
+	-maxAlleleVCF		Maximum number of alleles allowed in vcf file	 
+
+
+This step merges the separate tagsByTaxa files produced by the FastqToTBTPlugin (and/or QseqToTBTPlugin)
+into a single, experiment-wide tagsByTaxa (TBT) file for all of the flow cell lanes in your experiment.
+
+The -s option controls the maximum number of tags that can be stored in the TBT tag list during the merger
+process. It defaults to 200,000,000. This is much larger than is needed for most purposes. If you try to run
+MergeTagsByTaxaFilesPlugin but run out of memory, invoke this option with a number smaller than 200,000,000.
+Use the largest possible number that your memory capacity can handle. This should be at least twice the number
+of tags in the master tagCounts (or master tagsOnPhysicalMap) file that you used to generate the individual
+tagsByTaxa files (in the FastqToTBTPlugin).
+
+The -x option (off by default) can be invoked to merge the tag counts of taxa with identical short names (i.e., with
+the same “SampleName” part of their full name, where the full name is either
+“SampleName:Flowcell:Lane:LibraryPrepID” or “SampleName:Flowcell:Lane:Well”). These taxa have the same
+SampleName (or DNASampleName) in the key file but were run on different flow cells, lanes or in the same lane
+but with different barcodes. However, we recommend that you do not invoke the -x option and thus leave in any
+duplicated taxa for now, as they can be used in a later step (GBSHapMapFiltersPlugin,
+BiparentalErrorCorrectionPlugin, or MergeIdenticalTaxaPlugin) to check error rates and to verify that there have
+been no sample mix-ups among the replicates.
+
+-----
+
+For further informations, please visite the website of TASSEL_.
+
+.. _TASSEL: http://www.maizegenetics.net/#!tassel/c17q9
+
+	</help>
+	<citations>
+    	<citation type="doi">10.1371/journal.pone.0090346</citation> 
+  	</citations>
+</tool>
+
+
+
+

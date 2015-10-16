@@ -1,0 +1,78 @@
+# ------------------------------------------------------------------
+# Copyright (C) 2004 INRA <eugene@ossau.toulouse.inra.fr>
+#
+# This program is open source; you can redistribute it and/or modify
+# it under the terms of the Artistic License (see LICENSE file).
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+#
+# You should have received a copy of Artistic License along with
+# this program; if not, please see http://www.opensource.org
+#
+# $Id: Functionals.exp,v 1.11 2008-11-06 09:50:28 sallet Exp $
+# ------------------------------------------------------------------
+# File:     Functional.exp
+# Contents: Functional tests scripts
+# ------------------------------------------------------------------
+
+
+foreach TEST $FunctionalTestList {
+
+    # To follow execution
+    puts "Performing $TEST functional test"
+
+    foreach seq $SEQ($TEST) {
+	# Local variables 
+	set test_std 0
+	set test_png 0
+
+	# Preparation of the parameter file with the correct sensors
+	foreach sensor $SensorsList($TEST) \
+	    {set NewValue${TEST}(Sensor.${sensor}.use) 1}
+	ModifyParaValue $EUGENE_TEST_PAR  NewValue${TEST}
+
+	# Get the sequence length
+	set l [GetSeqLength $SEQ_DIR/$seq]
+
+   	# Run EuGene
+    	catch {eval exec $EUGENE_DIR/$EUGENE -A $EUGENE_DIR/$EUGENE_TEST_PAR $OPTIONS($TEST) -l $l $SEQ_DIR/$SEQ($TEST) > $TRACE_DIR/$FILE_REF($TEST) }
+
+	# Remove the first lines related to version number
+	#RemoveFirstLines $TRACE_DIR/$FILE_REF($TEST)
+
+	# Checking eugene output
+	set test_std [diff $OUTPUT_DIR/$FILE_REF($TEST) $TRACE_DIR/$FILE_REF($TEST)]
+
+	# Checking the graphical output
+	set test_png [diff $OUTPUT_DIR/$FILE_REF($TEST).png $IMG($TEST)]
+
+	# No regression if the 2 tests are passed #
+	if {$test_std==1 && $test_png==1} {
+ 	    pass "${TEST}"
+	    exec rm $IMG($TEST)
+	    catch {exec rm $TRACE_DIR/$FILE_REF($TEST)}
+	} else {
+	    if {$test_std != 1} {
+		fail "${TEST} (text)"
+	    }
+	    if {$test_png != 1} {
+		fail "${TEST} (graph)"
+		catch {exec mv $IMG($TEST) $TRACE_DIR/$FILE_REF($TEST).png}
+	    }
+	    catch {exec rm $IMG($TEST)}
+	}
+
+	# Restore initial parameters values
+	InitParameterFile $EUGENE_TEST_PAR $AllSensorsList $EUGENE_DIR
+    }
+}
+
+# Remove temporary files (misc_info)
+set seq [eval exec ls .]
+foreach f $seq {
+    if { [string match *.misc_info $f]} {
+	exec rm $f
+    }
+}

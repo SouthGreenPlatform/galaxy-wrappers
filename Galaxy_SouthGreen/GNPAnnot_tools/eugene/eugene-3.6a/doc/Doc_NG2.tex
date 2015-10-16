@@ -1,0 +1,116 @@
+% Documentation of the NG2 sensor
+
+\subsubsection{\texttt{Sensor.NG2}}
+
+\paragraph{Description}
+
+This plugin injects possible splice sites as predicted by the
+NetGene2 program. 
+
+The sensor is activated by setting the value 1 for the parameter
+\texttt{Sensor.NG2.use} in the parameter file. The score for acceptor
+and donor prediction is rescaled by the parameters {\tt NG2.accP*} and
+{\tt NG2.accB*} for acceptors and {\tt NG2.donP*} and {\tt NG2.donB*} for
+donors (see below).
+
+Here is an example of NG2 parameters definition.
+\begin{Verbatim}[fontsize=\small]
+NG2.accP*        0.903
+NG2.accB*        5.585
+NG2.donP*        0.980
+NG2.donB*        27.670
+Sensor.NG2.use   1
+Sensor.NG2       1      # Sensor priority
+\end{Verbatim}
+
+\paragraph{Native input files format}
+The plugin reads the prediction of the
+program from two files whose names are derived from the sequence name
+by adding the \texttt{.splices} and \texttt{.splicesR} suffixes
+(respectively prediction for the forward and reverse strand).
+
+The files with \texttt{.splices} and \texttt{.splicesR} suffixes are
+obtained by running NetGene2 which can be obtained at
+\texttt{http://www.cbs.dtu.dk/services/NetGene2/} and using the
+detailed output of the software.
+
+Here is an extract from \texttt{SYNO\_ARATH.fasta.splices}:
+\begin{Verbatim}[fontsize=\small]
+    396 C  0      0      0.903 2  0.835  0.862  0      0      -     - 
+    397 T  0      0      0.858 3  0.828  0.869  0      0      -     - 
+    398 C  0      0      0.873 1  0.822  0.876  0      0      -     - 
+    399 A  0      0      0.826 2  0.816  0.882  0      0      -     - 
+    400 G  0      0      0.869 3  0.809  0.889  0      0     -2.337 359 
+    401 A  0      0      0.862 1  0.803  0.896  0      0      -     - 
+    402 G  0      0      0.794 2  0.798  0.901  0      0     -2.337 359 
+    403 C  0      0      0.809 3  0.792  0.907  0      0      -     - 
+    404 A  0      0      0.833 1  0.786  0.914  0      0      -     - 
+    405 G  0      0      0.823 2  0.780  0.920  0      0     -2.337 359 
+    406 T  0      0      0.845 3  0.774  0.926  0      0      -     - 
+    407 G  0      0      0.792 1  0.769  0.932  0      0      -     - 
+    408 T  0      0      0.745 2  0.764  0.936  0      0      -     - 
+    409 C  0      0      0.792 3  0.759  0.942  0      0      -     - 
+    410 A  0      0      0.802 1  0.753  0.948  0      0      -     - 
+    411 C  0      0      0.764 2  0.749  0.953  0      0      -     - 
+[...]
+\end{Verbatim}
+
+To run Netgene2, the following parameters are used (for \emph{Arabidopsis
+thaliana}): \texttt{netgene2 -a -e -p -r -s at <Fasta sequence>}.
+
+\paragraph{Gff3 input file format}
+
+The gff3 input mode is activated by setting the value \texttt{GFF3}
+for the parameter \texttt{NG2.format} in the parameter file.  The
+plugin reads the predictions of the program from one file which name
+is derived from the sequence name by adding the
+\texttt{.splices.gff3} extension.
+
+Accepted features (third column):\\
+\begin{itemize}
+\item  SO:0000164 or splice\_acceptor\_site 
+\item  SO:0000163 or splice\_donor\_site 
+\end{itemize}
+If the feature used isn't one of those, the line will be rejected. The
+expected coordinates must match the AG/GT nucleotides.  Here
+an extract of \texttt{seq14ac002535g4g5.tfa.splices.gff3}:
+\begin{Verbatim}[fontsize=\tiny]
+seq14	NG2	SO:0000163	18	19	0.586	+	.	ID=SO:0000163:seq14.1;
+seq14	NG2	SO:0000163	27	28	0.614	+	.	ID=SO:0000163:seq14.2;
+seq14	NG2	SO:0000164	57	58	0.017	+	.	ID=SO:0000164:seq14.1;
+\end{Verbatim}
+
+\paragraph{Filtering input information}
+
+No filtering.
+
+\paragraph{Integration of information}
+
+The integrated score for donor/acceptor prediction is read (columns 9
+and 10). If it is not available (extremities of the sequence) then the
+non integrated score is used (columns 3 and 4).
+
+The score read $s$ is rescaled using the {\tt NG2.accP*} (\emph{P}) and {\tt
+NG2.accB*} (\emph{B}) parameters for acceptors and {\tt NG2.donP*} (\emph{P}) and {\tt
+NG2.donB*} (\emph{B}) parameters for donors as follows:
+
+\[s' = B*s^P\]
+
+All predictions that use a predicted splice site receive a $\log(s')$
+penalty while those that go through a predicted splice site while they
+could have used it receive a $\log(1-s')$ penalty.
+
+
+\paragraph{Post analyse}
+
+No post analyse.
+
+\paragraph{Graph}
+
+Predicted splice sites are visible on the intronic tracks as green
+(donor) and magenta (acceptor) vertical lines whose length indicates
+the site score.
+
+
+
+

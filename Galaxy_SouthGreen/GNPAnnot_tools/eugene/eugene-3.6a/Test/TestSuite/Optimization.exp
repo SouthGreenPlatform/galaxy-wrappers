@@ -1,0 +1,40 @@
+# ------------------------------------------------------------------
+# Copyright (C) 2004 INRA <eugene@ossau.toulouse.inra.fr>
+#
+# This program is open source; you can redistribute it and/or modify
+# it under the terms of the Artistic License (see LICENSE file).
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+#
+# You should have received a copy of Artistic License along with
+# this program; if not, please see http://www.opensource.org
+#
+# $Id: Optimization.exp,v 1.5 2005-03-17 13:49:52 cros Exp $
+# ------------------------------------------------------------------
+# File:     Optimization.exp
+# Contents: Parameters optimization test script
+# ------------------------------------------------------------------
+
+
+set test 0
+
+
+# Run EuGene
+catch {eval exec $EUGENE_DIR/$EUGENE -A $EUGENE_DIR/$EUGENE_TEST_PAR -Z test test > tmp%stdout}
+
+# Checking the output
+set test [diff $OUTPUT_DIR/$FILE_REF(Optimization) tmp%stdout]
+if {$test == 1} {
+    pass "Optimization"
+} else {
+    fail "Optimization"
+    catch {exec mv tmp%stdout $TRACE_DIR/$FILE_REF(Optimization)}
+}
+
+# Remove temporary file
+catch {exec rm tmp%stdout}
+
+
+

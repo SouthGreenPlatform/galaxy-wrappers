@@ -1,0 +1,29 @@
+\indexentry{[Remove fragmentary proteins] F}{8}
+\indexentry{[eugene PNG graph required] g}{8}
+\indexentry{[eugene PNG graph lower bound] u}{8}
+\indexentry{[eugene PNG graph higher bound] v}{8}
+\indexentry{[eugene PNG graph overlapping] c}{9}
+\indexentry{[eugene PNG graph smoothing window] w}{9}
+\indexentry{[eugene textual output format] p}{9}
+\indexentry{[eugene nucleotide position offset] o}{9}
+\indexentry{[eugene output directory] O}{9}
+\indexentry{[splice isoform prediction] a}{10}
+\indexentry{[FrameShift activation] f}{14}
+\indexentry{[BlastX activation] b}{29}
+\indexentry{[BlastX   postprocessing activation] B}{32}
+\indexentry{[EST activation]     d}{32}
+\indexentry{[EST postprocessing activation] E}{36}
+\indexentry{[Homology activation] t}{36}
+\indexentry{[MarkovIMM Markov models file] m}{40}
+\indexentry{[MarkovProt Markov matrix file] M}{41}
+\indexentry{[Repeat activation] r}{41}
+\indexentry{[Riken activation] R}{49}
+\indexentry{[GFF activation] G}{53}
+\indexentry{[parameters optimization] Z}{59}
+\indexentry{[eugene parameter definition] D}{62}
+\indexentry{[eugene help] h}{62}
+\indexentry{[eugene image size] l}{62}
+\indexentry{[eugene graphical score normalization] n}{62}
+\indexentry{[eugene non partial gene mode] s}{62}
+\indexentry{[eugene image horizontal resolution] x}{63}
+\indexentry{[eugene image vertical resolution] y}{63}

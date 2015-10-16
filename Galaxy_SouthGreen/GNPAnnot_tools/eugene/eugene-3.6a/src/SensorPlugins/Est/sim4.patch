@@ -1,0 +1,109 @@
+diff -C3 sim4.2000-10-19/sim4.init.c sim4/sim4.init.c
+*** sim4.2000-10-19/sim4.init.c	Fri Oct 20 00:15:24 2000
+--- sim4/sim4.init.c	Thu Nov  2 11:39:33 2000
+***************
+*** 417,423 ****
+                           }
+                        }
+                        break;
+!  
+                default:fatal("Unrecognized option for alignment output.");
+             }
+  #ifdef _STATS
+--- 417,438 ----
+                           }
+                        }
+                        break;
+! 
+! 		      /* Special EuGene - Modif par T.Schiex - */		      
+! 	   case 6:
+! 	     if (match_ori==FWD) {
+! 	       print_eugene_exons(Exons,
+! 				  &st,0,
+! 				  (file_type==EST_GEN) ? argv[1]:tok);
+! 	     } else { 
+! 	       if (file_type==EST_GEN) 
+! 		 complement_exons(&rev_Exons, len2, len1);
+! 	       print_eugene_exons(rev_Exons,
+! 				  &rev_st,1,
+! 				  (file_type==EST_GEN) ? argv[1]:tok);
+! 	     }
+! 	     break;
+! 	     
+                default:fatal("Unrecognized option for alignment output.");
+             }
+  #ifdef _STATS
+***************
+*** 429,435 ****
+                            (file_type==EST_GEN) ? len1-pA-pT:len2-pA-pT);
+  #endif                
+  
+-            (void)printf("\n");
+             if (Aligns) { free_align(Aligns); Aligns = NULL; }
+             if (rev_Aligns) { free_align(rev_Aligns); rev_Aligns = NULL; }
+             if (Exons) { free_list(Exons); Exons = NULL; }
+--- 444,449 ----
+***************
+*** 546,552 ****
+          
+          if (!get_argval('A', &(args->ali_flag)))
+               args->ali_flag = 0; 
+!         if ((args->ali_flag>5) || (args->ali_flag<0))
+               fatal("A options: 0, 1, 2, 3, 4, 5.");
+          
+          if (!get_argval('P', &(args->poly_flag)))
+--- 560,566 ----
+          
+          if (!get_argval('A', &(args->ali_flag)))
+               args->ali_flag = 0; 
+!         if ((args->ali_flag>6) || (args->ali_flag<0))
+               fatal("A options: 0, 1, 2, 3, 4, 5.");
+          
+          if (!get_argval('P', &(args->poly_flag)))
+diff -C3 sim4.2000-10-19/sim4b1.c sim4/sim4b1.c
+*** sim4.2000-10-19/sim4b1.c	Fri Oct 20 00:15:24 2000
+--- sim4/sim4b1.c	Thu Nov  2 11:43:43 2000
+***************
+*** 1259,1264 ****
+--- 1259,1299 ----
+    }  
+  }    
+  
++ void print_eugene_exons(Exon *left,sim4_stats_t *st, int dir,char *seq_name)
++ {
++   Exon  *tmp_block, *tmp_block1;
++ 
++   // for a spliced alignement, we require that more than 80% of the
++   // sequence is covered and that at least 90% of matches are correct
++   // on the coverage. All other alignements are ignored.
++   
++   if ((st->fcoverage > 0.8) && (st->nmatches > (st->icoverage*0.9)))
++     {
++       tmp_block = left;
++       while (tmp_block!=NULL) {
++ 	if (tmp_block->to1) {
++ 	  
++ 	  if (file_type==EST_GEN) 
++ 	    (void)fprintf(stdout,"%6d %6d %d 0 %d %s %4d %4d\n",
++ 			  tmp_block->from2, tmp_block->to2,
++ 			  st->icoverage, dir,
++ 			  seq_name,
++ 			  tmp_block->from1, tmp_block->to1);
++ 	  else  
++ 	    /* file_type==GEN_EST */
++ 	    (void)fprintf(stdout,"%6d %6d %d 0 %d %s %4d %4d\n", 
++ 			  tmp_block->from1, tmp_block->to1,
++ 			  st->icoverage, dir,
++ 			  seq_name,
++ 			  tmp_block->from2, tmp_block->to2);
++ 	}
++ 	tmp_block = tmp_block->next_exon;
++       }
++     }
++ }    
++ 
++ 
++ 
+  /* to and from are in the original cDNA sequence */
+  void print_pipmaker_exons(Exon *exons, edit_script_list *aligns, char *gene, 
+                            int from, int to, int M, int N, uchar *seq1, uchar *seq2, 

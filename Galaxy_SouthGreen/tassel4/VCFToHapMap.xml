@@ -1,0 +1,48 @@
+<tool id="vcftohapmap4" name="VCFToHapMap" version="4.0">
+	<description>Convert VCF to HapMap.</description>
+	<command>
+		source $__tool_directory__/module_tassel4.sh;
+		$__tool_directory__/VCFToHapMap.sh $vcf $hapmap</command>
+	<inputs>
+    	<param name="vcf" type="data" format="vcf" label="VCF file" />	
+  	</inputs>
+	<outputs>
+    	<data format="txt" name="hapmap" from_work_dir="out.recode.vcf" label="HapMap file"/> 
+  	</outputs>
+  	<help>
+  
+  .. class:: infomark
+
+**Program encapsulated in Galaxy by South Green**
+
+.. class:: infomark
+
+**Tassel**
+
+-----
+
+==========
+ Overview
+==========
+
+**TASSEL-GBS: A High Capacity Genotyping by Sequencing Analysis Pipeline**
+
+**VCFToHapMap Plugin (Tassel 4.0)**
+ 
+This plugin convert a VCF file on HapMap file 
+
+-----
+
+For further informations, please visite the website of TASSEL_.
+
+
+.. _TASSEL: http://www.maizegenetics.net/#!tassel/c17q9
+
+-------
+
+**References**
+
+Glaubitz JC, Casstevens TM, Lu F, Harriman J, Elshire RJ, et al. (2014) TASSEL-GBS: A High Capacity Genotyping by Sequencing Analysis Pipeline. PLoS ONE 9(2): e90346. doi:10.1371/journal.pone.0090346
+
+	</help>
+</tool>

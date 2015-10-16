@@ -1,0 +1,65 @@
+<tool id="blastp2gff3" name="GNPAnnot Converter : Blastp" version="1.0.0"> 
+    <description>Convert output in GFF3 and add product to EuGene prediction</description> 
+    <command interpreter="perl">./blastp2gff3.pl $input1 $input2 $input3 $input_gff $input_embl $output1_gff3 $output2_gff3 $output3_gff3 $output_eugene_gff3 $output_eugene_embl</command> 
+    <inputs>
+        <param format="txt" name="input1" type="data" label="Blastp1 result"/>
+        <param format="txt" name="input2" type="data" label="Blastp2 result"/>
+        <param format="txt" name="input3" type="data" label="Blastp3 result"/>
+        <param format="gff3" name="input_gff" type="data" label="EuGene GFF3 result"/>
+        <param format="txt" name="input_embl" type="data" label="EuGene EMBL result"/>
+    </inputs>
+    <outputs>
+        <data format="gff3" name="output1_gff3" label="Blastp1 (gff3)" />
+        <data format="gff3" name="output2_gff3" label="Blastp2 (gff3)" />
+        <data format="gff3" name="output3_gff3" label="Blastp3 (gff3)" />
+        <data format="gff3" name="output_eugene_gff3" label="EuGene (gff3)" /> 
+        <data format="txt" name="output_eugene_embl" label="EuGene (EMBL)" />
+    </outputs>
+    <help>
+    
+.. class:: infomark
+
+**Program encapsulated and developed in Galaxy by Southgreen**
+
+.. class:: infomark
+
+**Part of the GNPAnnot Converters package**
+
+-----
+
+==============
+Author: 
+==============
+
+Gaetan Droc
+
+-----
+
+==============
+What it does: 
+==============
+
+Convert Blastp in gff3 format.
+
+Combine each blastp result and return the best product for each gene predicted by EuGene. 
+
+Add this product to gff3 and EMBL file.
+
+-----
+
+==============
+Output format:
+==============
+
+EMBL
+
+gff3
+
+-----
+
+.. class:: warningmark
+
+**No support website**
+
+    </help>
+</tool>

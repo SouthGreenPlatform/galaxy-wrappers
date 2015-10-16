@@ -1,0 +1,43 @@
+% Documentation of the EuStop sensor
+
+\subsubsection{\texttt{Sensor.EuStop}}
+
+\paragraph{Description}
+
+This simple plugin predicts translation stops. It is able to deal with
+noisy sequences and will eg. predict a possible stop on \texttt{TGN}.
+
+The sensor is activated by setting the value 1 for the parameter
+\texttt{Sensor.EuStop.use} in the parameter file.
+
+The penalty payed for using a Stop is defined by the
+\texttt{EuStop.stopP*} parameter.
+
+Here is an example of EuStop parameters definition.
+\begin{Verbatim}[fontsize=\small]
+EuStop.stopP*           4.155   # Stop penalty
+Sensor.EuStop.use       1    # Use EuStop sensor
+Sensor.EuStop           1       # Sensor priority
+\end{Verbatim}
+
+\paragraph{Input files format}
+
+No input files  needed.
+
+\paragraph{Integration of information}
+
+In the case of non degenerated sequences, all predictions using a Stop
+to end a terminal exon are given an extra \texttt{EuStop.stopP*}
+penalty. All predictions going through an in-phase Stop in an exonic
+state receive an infinite penalty.
+
+\paragraph{Post analyse}
+
+No post analyse.
+
+\paragraph{Graph}
+
+Every predicted Stop is ploted as a small vertical red bar in the
+corresponding phase on the exonics tracks.
+
+

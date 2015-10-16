@@ -1,0 +1,97 @@
+% Documentation of the PepSignal sensor
+
+\subsubsection{\texttt{Sensor.PepSignal}}
+
+
+\paragraph{Description}
+This plugin injects possible translation starts as predicted by the Predotar
+ program (http://genoplante-info.infobiogen.fr/predotar/) that looks for 
+peptide adressing sequences after every occurrence of an ATG. 
+
+The sensor is activated by setting the value \texttt{1} for the parameter
+\texttt{Sensor.PepSignal.use} in the parameter file. The score for start
+ prediction is rescaled by the parameters {\tt PepSignal.startP*} and
+{\tt PepSignal.startB*} (see below).
+
+Here is an example of PepSignal parameters definition.
+\begin{Verbatim}[fontsize=\small]
+PepSignal.startP*       0.9
+PepSignal.startB*       0.1
+Sensor.PepSignal.use    1       # Use PepSignal sensor	
+Sensor.PepSignal        10      # Sensor priority
+\end{Verbatim}
+
+
+\paragraph{Native input files format}
+The plugin reads 
+the predictions (both in forward and reverse strand) of the program 
+from a file whose name is derived 
+from the sequence name by adding the \texttt{.psignal} suffix.
+
+The file \texttt{.psignal} describes the predicted start sites
+sorted by position on the sequence (as given by Predotar).
+The format of a line is : \texttt{<position> <strand> <score> <comment>}
+
+Here is an example used for test:
+\begin{Verbatim}[fontsize=\small]
+175 start_rev 0.024083 test
+188 start 0.000151 test
+195 start_rev 0.010081 test
+261 start 0.001628 test
+270 start 0.000026 test
+[...]
+\end{Verbatim}
+
+This file can be obtained by launching the Predotar software
+available at\\
+\texttt{http://genoplante-info.infobiogen.fr/predotar/predotar.html}
+
+\paragraph{Gff3 input file format}
+
+The gff3 input mode is activated by setting the value \texttt{GFF3}
+for the parameter \texttt{PepSignal.format} in the parameter file.
+The plugin reads the predictions of the program from one file which
+name is derived from the sequence name by adding the
+\texttt{.psignal.gff3} extension.
+
+Accepted features (third column):\\
+\begin{itemize}
+\item  SO:0000318 or start\_codon
+\end{itemize}
+If the feature used isn't one of these, the line will be rejected. The
+expected coordinates must match with the first nucleotide of a
+start codon (ATG).
+
+Here an extract of \texttt{seq14ac002535g4g5.tfa.psignal.gff3}:
+\begin{Verbatim}[fontsize=\tiny]
+seq14	PepSignal	SO:0000318	175	175	0.024083	-	.	ID=SO:0000318:seq14.0;
+seq14	PepSignal	SO:0000318	188	188	0.000151	+	.	ID=SO:0000318:seq14.1;
+\end{Verbatim}
+
+\paragraph{Filtering input information}
+
+No filtering.
+
+
+\paragraph{Integration of information}
+
+The score (column 3) read $s$ is rescaled using the {\tt PepSignal.startP*} 
+(\emph{P}) and {\tt PepSignal.startB*} (\emph{B}) as follows:
+
+\[s' = e^{-P}.s^B\]
+
+All predictions that use a predicted start receive a $\log(s')$
+penalty while those that go through a predicted start while they
+could have used it receive a $\log(1-s')$ penalty.
+
+
+\paragraph{Post analyse}
+
+No post analyse.
+
+
+\paragraph{Graph}
+
+Predicted starts are visible on exonix tracks as blue vertical lines
+whose length indicates the site score.
+

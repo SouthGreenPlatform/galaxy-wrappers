@@ -1,0 +1,44 @@
+EuGene -- History of visible changes.
+
+Copyright (C) 2004, EuGene Team <eugene@ossau.toulouse.inra.fr>
+See the end for copying conditions.
+
+Please send eugene bug reports to eugene@ossau.toulouse.inra.fr.
+
+Version 2.0
+
+* Use distributions of exon (init, term, intr, sngl), intron, utr and intergenic 
+
+Version 3.0
+
+* Complete autoconfiscation of the software
+
+Version 3.1
+
+* New plugin, procedures, parameters, argument
+* debug and improvement of the Est and Repeat sensors 
+* update in documentation
+
+
+Version 3.2
+
+* Change the functioning of the software (see the ChangeLog file for more detail)
+ Version 3.5
+
+* Integrates complete GFF3 based input/output
+
+-------------------------------------------------------
+Copying information:
+
+Copyright (C) 2004, EuGene Team <eugene@ossau.toulouse.inra.fr>
+
+   Permission is granted to anyone to make or distribute verbatim copies
+   of this document as received, in any medium, provided that the
+   copyright notice and this permission notice are preserved,
+   thus giving the recipient permission to redistribute in turn.
+
+   Permission is granted to distribute modified versions
+   of this document, or of portions of it,
+   under the above conditions, provided also that they
+   carry prominent notices stating who last changed them.
+

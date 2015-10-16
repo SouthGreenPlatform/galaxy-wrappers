@@ -1,0 +1,76 @@
+-------------------------------------------------------------------------------
+v3.3 released 2 Sept. 2005 
+-------------------------------------------------------------------------------
+
+* Output.cc Output.h disapear. Now eugene textual outputs are printed by Prediction class.
+
+* Multiple textual output are possible by using -pa|d|g|h|l|s|o (example:-phg for a gff and html output)
+  Each -p create a file composed by the name of the input fasta file + an extension .gff or .html ...
+
+* For each prediction a *.misc_info file is created. This file contains some informations of the prediction and the postprocess (-E -B)
+
+* The -g argument to activate the graphical output not take argument now.
+
+* New parameter in the eugene.par to print intron in the textual output : Output.intron
+	
+
+-------------------------------------------------------------------------------
+v3.2 released 1 Apr. 2005 
+-------------------------------------------------------------------------------
+
+* change the use of the software:
+	EUGENEDIR: environment variable updating with the eugene root repertory
+        (default value /usr/local/share/eugene). This repertory contains repertories:
+	     - cfg (with eugene.par the default parameter file)
+	     - models (provided models)
+	     - doc (documentation)
+	     - plugins 
+	     - web (to vizualize eugene HTML outputs)
+
+* Allow MAC compilation
+
+* no more need to call the CREATE_LINKS procedure.
+
+* Tests as compilation are called in the root directory.
+
+* HTML outputs reference local web directory and no more WEB in the current directory.
+
+* Optimized parameter file is written in the current directory instead of the directory of the parameter file used.
+
+* New parameter Output.webdir indicating where to find files necessary to vizualize HTML outputs ('LOCAL' value to use the local web directory or a URL)
+
+* debug related to gene number (due to UTR intron)
+
+* debug related of stop just before a splice site
+
+
+-------------------------------------------------------------------------------
+v3.1 released 3 Feb. 2005 
+-------------------------------------------------------------------------------
+	
+* new plugin PepSignal
+* new procedures:
+    - Procedures/Get/egn_compseq.pl (counts composition of dimer/trimer/etc words)
+    - Procedures/Get/getRepeat4eugene.pl (build .ig files)
+* new parameters defined:
+   - EuGene.sloppy: if 1 then some sensors files can be missing
+   - EuGene.SplicedStopPen: penalty for predicting genes containing in-frame spliced STOPs
+   - Output.MinCDSLen: specify the minimum length of CDS in nucleotid
+   - Est.MinDangling: minimum length of the first and last match region in a genomic spliced alignment
+   - EstMaxIntron: maximum length for the first and last gap (intron) in a spliced alignment
+   - SMachine.isScaled: indicates if prediction is scaled after fitsigmoid in SpliceMachine
+   - Tester.SPSN.Eval: defines the type of the considering signal
+* use of 1 and 0 instead of TRUE and FALSE in the parameters file (old values are still accepted)
+* new argument -A <parameter file name>
+* no more librairies are provided (they have to be on the system)
+* debug and improvement of the Est sensor (takes into account UTR introns), 
+  the Repeat sensor (exit if the .ig files contain overlapped or non sorted repeats)
+* modification of the compilation arguments
+* little modification of the HTML output
+* update in documentation
+
+
+-------------------------------------------------------------------------------
+v3.0 released 21 Oct. 2004 
+-------------------------------------------------------------------------------
+	

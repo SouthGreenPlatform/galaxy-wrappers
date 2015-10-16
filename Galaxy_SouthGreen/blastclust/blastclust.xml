@@ -1,0 +1,51 @@
+<tool id="blastclust" name="BlastClust">
+	<description>, a blast-based clustering method</description>
+	<command>
+		source $__tool_directory__/module_blastclust.sh;
+		blastclust -i $input -o $output -L $coverage -S $similarity $type -b F</command>
+	<inputs>
+		<param format="txt" name="input" type="data" label="Source file" help="Fasta sequence file"/>
+		<param type="select" name="type" label="Data type">
+			<option value="-p F">Nucleic</option>
+			<option value="-p T">Proteic</option>
+		</param>		
+		<param type="text" name="coverage" help="Between 0 and 1" value="0.4" label="Minimum coverage" />
+		<param type="text" name="similarity" help="Percentage" value="50" label="Minimum similarity percentage" />	
+	</inputs>
+	<outputs>
+		<data format="txt" name="output" />
+	</outputs>
+	<help>
+
+.. class:: infomark
+
+**Program encapsulated in Galaxy by South Green**
+
+.. class:: infomark
+
+**BlastClust version 2.2.22, 2007**
+
+-----
+	
+==========
+ Authors: 
+==========
+	
+**Ilya Dondoshansky**
+
+-----	
+	
+==========
+ Overview
+==========	
+
+BLASTClust is a program within the standalone BLAST package used to cluster either protein or nucleotide sequences. The program begins with pairwise matches and places a sequence in a cluster if the sequence matches at least one sequence already in the cluster. In the case of proteins, the blastp algorithm is used to compute the pairwise matches; in the case of nucleotide sequences, the Megablast algorithm is used.
+
+-----
+
+For further informations, please visite the BlastClust_ website.
+
+.. _BlastClust: http://www.ncbi.nlm.nih.gov/Web/Newsltr/Spring04/blastlab.html
+	</help>
+
+</tool>

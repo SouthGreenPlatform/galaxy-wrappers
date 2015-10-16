@@ -1,0 +1,90 @@
+# ------------------------------------------------------------------
+# Copyright (C) 2004 INRA <eugene@ossau.toulouse.inra.fr>
+#
+# This program is open source; you can redistribute it and/or modify
+# it under the terms of the Artistic License (see LICENSE file).
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+#
+# You should have received a copy of Artistic License along with
+# this program; if not, please see http://www.opensource.org
+#
+# $Id: Units.exp,v 1.12 2009-01-14 14:38:51 sallet Exp $
+# ------------------------------------------------------------------
+# File:     Units.exp
+# Contents: Unit test script test each sensor separately
+# ------------------------------------------------------------------
+
+
+foreach TEST $AllSensorsList {
+
+    # To follow execution
+    puts "Performing $TEST unit test"
+
+    # Run eugene
+    if {$TEST == "Est"} {
+	catch { eval exec $EUGENE_DIR/$EUGENE -A $EUGENE_DIR/$EUGENE_TEST_PAR $OPTIONS(Sensor) -D Sensor.${TEST}.use=2 -D Sensor.NG2.use=1 $SEQ_DIR/$SEQ(Sensor).tfa 2> tmp%std } 
+    } else {
+	if {$TEST == "Homology"} {
+	    catch { eval exec $EUGENE_DIR/$EUGENE -A $EUGENE_DIR/$EUGENE_TEST_PAR $OPTIONS(Sensor) -D Sensor.${TEST}.use=2 $SEQ_DIR/$SEQ(Sensor).tfa 2> tmp%std }
+	} else {
+	    if {$TEST == "Tester"} {
+		catch { eval exec $EUGENE_DIR/$EUGENE -A $EUGENE_DIR/$EUGENE_TEST_PAR $OPTIONS(Sensor) -D Sensor.${TEST}.use=1 $SEQ_DIR/exSeqHom.fasta 2> tmp%stderr > tmp%stdout }
+		catch {exec cat tmp%stderr tmp%stdout > tmp%std} 
+		catch {exec rm  tmp%stderr tmp%stdout} 
+	    } else {
+		catch { eval exec $EUGENE_DIR/$EUGENE -A $EUGENE_DIR/$EUGENE_TEST_PAR $OPTIONS(Sensor) -D Sensor.${TEST}.use=1 $SEQ_DIR/$SEQ(Sensor).tfa 2> tmp%std }
+	    }
+	}
+    }
+
+    if {$TEST == "Tester"} {
+	set out [open exSeqHom.egn.debug {RDONLY}]
+    } else {
+	set out [open $SEQ(Sensor).egn.debug {RDONLY}]
+    }
+    set err [open tmp%std {RDONLY}]
+    set std [open tmp%$TEST w+]
+
+    # Copy std and $SEQ(Sensor).egn.debug in the reference file
+    set f [read -nonewline $err]
+    puts $std $f
+    set f [read -nonewline $out]
+    puts $std $f
+
+    close $out
+    close $err
+    close $std
+
+   
+    # Remove the first lines related to version number
+    RemoveFirstLines tmp%$TEST
+
+    # Compare ingnoring the case of letters (Linux inf/SUN Inf)
+    if {[file exists tmp%testdiff] == 1} {
+	exec rm tmp%testdiff
+    }
+    catch {exec diff -i $OUTPUT_DIR/Output_${TEST} tmp%$TEST > tmp%testdiff }
+    set t [open tmp%testdiff {RDONLY}]
+    set difference [read $t]
+    close $t
+    if {$difference == ""} {
+	pass "${TEST}"
+	exec rm tmp%$TEST
+    } else {
+	fail "${TEST}"
+	exec mv tmp%$TEST $TRACE_DIR/Output_${TEST}
+    }
+
+}
+
+# Remove temporary files
+catch {exec rm tmp%std}
+catch {exec rm tmp%testdiff}
+catch {exec rm Sensor.EuStop.SpSn}
+catch {exec rm exSeqHom.egn.debug}
+catch {exec rm exSeqHom.misc_info}
+catch {exec rm $SEQ(Sensor).egn.debug}
+catch {exec rm $SEQ(Sensor).misc_info}

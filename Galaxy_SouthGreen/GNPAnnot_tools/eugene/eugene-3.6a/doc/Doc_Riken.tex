@@ -1,0 +1,175 @@
+% Documentation of the Riken sensor
+
+\subsubsection{\texttt{Sensor.Riken}}
+
+\paragraph{Description}
+
+The plugin allows to exploit 5'/3' EST extracted from the extremities
+of full-length cDNA. This type of data was produced by the Riken
+institute for \emph{Arabidopsis thaliana}. By mapping such EST to the genomic
+sequence, it is possible to know the positions where a gene
+(transcript) must start (5' side) and stop (3' side). The plugin
+assumes that this mapping has been done and that the coordinates of
+the extremities of the 5' and 3' EST of full-length clones have been
+determined before hand.
+
+The sensor is activated by either :
+\begin{itemize}
+\item the \texttt{-R} argument \index{CmdFlags}{[Riken activation] R}
+\item the value 1 for the parameter \texttt{Sensor.Riken.use} in the
+  parameter file.
+\end{itemize}
+
+The plugin is controled by several parameters, most of which control
+sanity checks (see below). The \texttt{Riken.RAFLPenalty*} parameter
+controls the amount of penalty used to force \EuGene\ to predict a
+gene on a region defined by a valid EST pair.
+
+Here is an extract of Riken parameters definition :
+\begin{Verbatim}[fontsize=\small]
+Riken.Min_est_diff              100
+Riken.Max_overlap               60
+Riken.Max_riken_length          60000
+Riken.Max_riken_est_length      3000
+Riken.Min_riken_length          120 
+Riken.Min_riken_est_length      10
+Riken.StrandRespect             0
+Riken.RAFLPenalty*              -120
+Sensor.Riken.use                1     # Use Riken sensor
+Sensor.Riken                    7        # Sensor priority
+\end{Verbatim}
+
+\paragraph{Native input files format}
+
+A file with extension \texttt{.riken} is read.  Each line must contain
+the positions of the extremities of the match of the 5' EST then the
+name of the 5' EST, the same thing for the 3'EST and finally the name
+of the clone.
+
+Here is an exert of a typical \texttt{.riken} file:
+\begin{Verbatim}[fontsize=\small]
+417757  418379  AV826766        418902  419330  AV796216        0907A18
+341382  342036  AU235278        340748  341549  AU225941        1201K23
+40318   40969   AV821185        38800   39323   AV781490        0208M10
+309757  310341  AV830906        308043  308392  AV813791        0980B11
+387624  388227  AU236666        387383  387834  AU227623        1514C21
+148345  148909  AV822910        147090  147960  AV783778        0513A17
+\end{Verbatim}
+
+\paragraph{Gff3 input file format}
+The gff3 input mode is activated by setting the value \texttt{GFF3}
+for the parameter \texttt{Riken.format} in the parameter file.  The
+plugin reads the file which name is derived from the sequence name by
+adding the \texttt{.riken.gff3} extension. The parent link is very
+important, one parent must have two children ( 5' and 3'). The parent
+feature must be defined before the children.
+
+Gff3 attributes specifications:\\
+Required attributes:\\ 
+	\begin{itemize}
+	\item ID
+	\item Target
+	\item Parent for children feature
+	\item Ontology\_term : define 5' or 3' region for match\_part feature (children).
+	\end{itemize}
+
+Optional attributes:\\ 
+	is\_full\_length specify the type of data (eg : alignment with full length proteins )
+	\begin{itemize}
+	\item -1 not defined
+	\item 0  not full length match EST or fragment proteins 
+	\item 1  like riken type : we know the 5' and 3'
+	\item 2  match against full length proteins or cDNA
+	\end{itemize}
+
+Here an extract of : seq14ac002535g4g5.tfa.riken.gff3
+\begin{Verbatim}[fontsize=\tiny]
+seq14	Riken	cDNA_match	1400	4718	.	.	.	ID=seq14.1
+seq14	Riken	match_part	1910	4718	.	+	.	ID=seq14.1.1;Parent=seq14.1;is_full_length=1;Ontology_term=SO:0000200
+seq14	Riken	match_part	1400	1500	.	+	.	ID=seq14.1.2;Parent=seq14.1;is_full_length=1;Ontology_term=SO:0000202
+\end{Verbatim}
+
+
+\paragraph{Filtering input information}
+
+The plugin uses several parameters that control sanity
+checks on the input data.
+\begin{itemize}
+\item the \texttt{Riken.Max\_riken\_length} parameter controls the
+  maximum length for a transcript. If an EST pair defines a transcript
+  with a length of more than this number of base pairs, then it is
+  ignored. A typical value is 60kb (for \textit{Arabidopsis
+    thaliana}).
+\item the \texttt{Riken.Min\_riken\_length} parameter controls the
+  minimum length for a transcript. If an EST pair defines a transcript
+  with a length lower than this number of base pairs, then it is
+  ignored. A typical value is 120b (for \textit{Arabidopsis
+    thaliana}).
+\item the \texttt{Riken.Max\_riken\_est\_length} parameter controls the
+  maximum length of the genomic sequence matching one EST. If either
+  the 5' or the 3' EST exceed this length, then the EST pair is
+  rejected. A typical value is 3kb (for \textit{Arabidopsis
+    thaliana}).
+\item the \texttt{Riken.Min\_riken\_est\_length} parameter controls the
+  minimum length of the genomic sequence matching one EST.  If either
+  the 5' or the 3' EST are below this length, then the EST pair is
+  rejected. A typical value is 10 bp (for \textit{Arabidopsis
+    thaliana}).
+\item the \texttt{Riken.StrandRespect} parameter controls whether the
+  5'/3' information available for the EST is taken into account or
+  ignored. If this parameter is set to \texttt{0}, then the
+  information is ignored and the prediction of a gene is ``forced'' in
+  the region but with no constraint on the strand.  Otherwise, and if
+  the 5'/3' EST pair is separated enough to decide the strand, then
+  the prediction of a gene is forced on the strand detected.
+\item the \texttt{Riken.Min\_est\_diff} parameter controls the minimum
+  distance of separation between the 5' and 3' EST (computed as the
+  sum of the distances of the left and right extremities of the two
+  genomic sequences mapping the 2 EST) that is sufficient to deduce
+  the strand of the gene. A typical value is 100 bp (for
+  \textit{Arabidopsis thaliana}).
+\item the \texttt{Riken.Max\_overlap} parameter controls how
+  information on ``overlapping'' regions is handled. If two EST pairs
+  define transcribed regions with a large overlap (larger than the
+  parameter value), then it is likely that they refer to the same gene
+  (as far as they are detected as being on the same strand). In this
+  case, the two EST pairs are taken as one (merged by taking the
+  leftmost extremity as the new left extremity and the rightmost as
+  the right extremity). If the two overlapping regions are not on the
+  same strand, then they are considered as inconsistent and the
+  orientation is forgotten.
+  
+  If the two regions have a small overlap (lower than the parameter
+  value), then it is likely that there are 2 different genes with
+  overlapping UTR. Because \EuGene\ cannot predict overlapping UTR,
+  then the extremities are modified so that they do not overlap
+  anymore.
+\end{itemize}
+
+\paragraph{Integration of information}
+
+Basically, when a genomic region is validated, the plugin forces
+\EuGene\ to predict one single gene in the region. This is done by
+penalizing all tracks but the intergenic track just before and after
+the gene extremities and by penalizing the intergenic track on the
+genomic region itself. If the strand is also considered as detected,
+then all tracks on the other strand are also penalized.  Although an
+infinite (eg. \texttt{-1e999} in the current double format) penalty
+would seem more appropriate, we advocate for a strong finite penalty
+to avoid stupid uselss predictions in case of data inconsistency.
+
+\paragraph{Post analyse}
+
+No post analyze.
+
+\paragraph{Graph}
+
+The Riken information is plotted on the output graph as two small
+corners delimiting the region on the intergenic track. The corners are
+colored differently according to the strand detected for the
+transcribed region.
+
+
+
+
+
