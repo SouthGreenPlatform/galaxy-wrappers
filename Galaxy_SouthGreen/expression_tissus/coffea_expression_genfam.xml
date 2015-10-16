@@ -1,0 +1,42 @@
+<tool id="cofexp2GF" name="Coffea expression Genfam" version="1.0">
+	<description>Tissues expression of Coffea Tree</description>
+	<command interpreter="python">coffea_exp.py $input $output </command>
+	<inputs>
+		<param name="input" type="data" format="fasta" label="Select the Data"/>
+		
+	</inputs>
+	<outputs>
+		<data name="output" format="txt"/>
+	</outputs>
+	
+	<help>
+
+.. class:: infomark
+
+**Program encapsulated in Galaxy and developed by Southgreen**
+
+
+-----	
+
+==========
+Authors:
+==========	
+
+**Lariviere D**
+
+-----	
+
+===========
+Overview:
+===========	
+
+
+
+-----
+
+.. class:: warningmark
+	
+**No support website**
+		
+	</help>
+</tool>
