@@ -1,0 +1,65 @@
+<tool id="fastatophylip1" name="Fasta2Phylip">
+	<description>, a FASTA to Phylip file converter</description>
+	<command interpreter="bash">./fasta_to_phylip.sh $input $output $format</command>
+	<inputs>
+		<param format="fasta" name="input" type="data" label="Source file"/>
+		<param type="select" name="format" label="Strict, or standard, phylip format" help="Strict cut names after 9 characters, usefull only for very psychopatic programs (dnadist, included in FastME).">
+			<option value="">Standard format</option>
+			<option value="-strict">Strict format</option>
+		</param>  		
+	</inputs>
+	<outputs>
+		<data format="txt" name="output" />
+	</outputs>
+	<help>	
+	
+.. class:: infomark
+
+**Program encapsulated in Galaxy and developed by Southgreen**
+
+.. class:: infomark
+
+**Fasta2Phylip version 1.0, 2011**
+
+-----	
+
+==========
+ Authors:
+==========	
+
+**Dufayard JF**
+
+-----	
+
+===========
+ Overview:
+===========	
+
+Convert a FASTA file into a sequential Phylip file. The sequential Phylip format can be used in many phylogeny softwares, and can be cut-and-pasted as any coma separated value format.
+
+Fasta file::
+
+	>sequence1
+	ATTGCTTGC--------ATTGCTTGC
+	>sequence2
+	GATACTTGCGATACAAAATTGCTTGC
+	>sequence3
+	GATACTTGCGATAC--AATTGCAAGC
+
+
+Phylip file::
+
+	3 26
+	sequence1	ATTGCTTGC--------ATTGCTTGC
+	sequence2	GATACTTGCGATACAAAATTGCTTGC
+	sequence2	GATACTTGCGATAC--AATTGCAAGC
+
+-----
+
+.. class:: warningmark
+
+**No support website**
+
+	</help>
+
+</tool>
