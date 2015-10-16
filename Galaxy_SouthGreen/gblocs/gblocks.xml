@@ -1,0 +1,65 @@
+<tool id="gblocks1" name="Gblocks">
+	<description>, an alignment curator</description>
+	<command interpreter="bash">./gblocks.sh $input $output_alignment $output_stats $b1 $b2 -t=$datatype -b3=$b3 -b4=$b4 -b5=$b5</command>
+	<inputs>
+		<param format="txt" name="input" type="data" label="Source file" help="Fasta format"/>
+		
+		<param type="select" name="datatype" label="Data type">
+			<option value="p">Protein</option>
+			<option value="d">DNA</option>
+			<option value="c">Codon</option>
+		</param>
+		
+		<param type="text" name="b1" help="Percentage, must be superior to 50" value="51" label="Minimum number of sequences for a conserved position" />
+		<param type="text" name="b2" help="Percentage, must be superior to the minimum number of sequences for a conserved position" value="85" label="Minimum number of Sequences for a flank position" />
+		<param type="text" name="b3" help="Any integer" value="8" label="Maximum number Of contiguous nonconserved positions" />
+		<param type="text" name="b4" help="Any integer equal or bigger than 2" value="10" label="Minimum length of a block" />
+		<param type="select" name="b5" label="Allowed gap positions">
+			<option value="n">None</option>
+			<option value="h">With half</option>
+			<option value="a">All</option>
+		</param>		
+	</inputs>
+	<outputs>
+		<data format="fasta" name="output_alignment" />
+		<data format="txt" name="output_stats" />
+	</outputs>
+	<help>
+	
+.. class:: infomark
+
+**Program encapsulated in Galaxy by Southgreen**
+
+.. class:: infomark
+
+**GBlocks version 0.91b, 2000**
+
+-----
+	
+==============
+ Please cite: 
+==============
+
+"Improvement of phylogenies after removing divergent and ambiguously aligned blocks from protein sequence alignments.", **Talavera G., and Castresana J.**, Systematic Biology 56, 564-577, 2007.
+
+"Selection of conserved blocks from multiple alignments for their use in phylogenetic analysis.", **Castresana J.**; Molecular Biology and Evolution 17, 540-552, 2000. 
+
+-----
+
+==========
+ Overview
+==========
+
+Gblocks is a computer program written in ANSI C language that eliminates poorly aligned positions and divergent regions of an alignment of DNA or protein sequences. These positions may not be homologous or may have been saturated by multiple substitutions and it is convenient to eliminate them prior to phylogenetic analysis. Gblocks selects blocks in a similar way as it is usually done by hand but following a reproducible set of conditions. The selected blocks must fulfill certain requirements with respect to the lack of large segments of contiguous nonconserved positions, lack of gap positions and high conservation of flanking positions, making the final alignment more suitable for phylogenetic analysis. Gblocks outputs several files to visualize the selected blocks. 
+
+The use of a program such as Gblocks reduces the necessity of manually editing multiple alignments, makes the automation of phylogenetic analysis of large data sets feasible and, finally, facilitates the reproduction of the alignments and subsequent phylogenetic analysis by other researchers. Gblocks is very fast in processing alignments and it is therefore highly suitable for large-scale phylogenetic analyses. Several parameters can be modified to make the selection of blocks more or less stringent. In general, a relaxed selection of blocks is better for short alignments, whereas a stringent selection is more adequate for longer ones. Be aware that the default options of Gblocks are stringent. 
+
+-----
+
+For further informations, please visite the Gblocks_ website.
+
+
+.. _Gblocks: http://molevol.cmima.csic.es/castresana/Gblocks.html
+	</help>
+
+</tool>
