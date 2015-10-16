@@ -1,0 +1,55 @@
+<tool id="rapgreen1" name="RAP-Green">
+	<description>, a species/gene tree reconciler</description>
+	<command interpreter="bash">./rapgreen.sh -g $input_gene -s $input_species -og $output_gene -phyloxml $output_gene_phyloxml -os $output_species -or $output_reconciled -stats $output_stats -gt $gene_threshold -st $species_threshold -pt $polymorphism_threshold -outparalogous $misc</command>
+	<inputs>
+		<param format="txt" name="input_gene" type="data" label="Gene tree newick source file" help="Newick format"/>
+		<param format="txt" name="input_species" type="data" label="Species tree phyloxml source file" help="Newick or PhyloXML format"/>
+		<param type="text" name="gene_threshold" help="The support threshold for gene tree branch collapse" value="80.0" label="Gene tree threshold" />
+		<param type="text" name="species_threshold" help="The length threshold for species tree branch collapse" value="10.0" label="Species tree threshold" />
+		<param type="text" name="polymorphism_threshold" help="The length depth threshold to deduce to polymorphism, allelism ..." value="0.05" label="Polymorphism threshold" />
+		<param type="text" name="misc" help="Any complementary command line arguments, keep it empty for regular use" value="" label="Other arguments" />
+	</inputs>
+	<outputs>
+		<data format="txt" name="output_gene" label="Newick"/>
+		<data format="txt" name="output_gene_phyloxml" label="Output phyloxml"/>
+		<data format="txt" name="output_species" label="Output species"/>
+		<data format="txt" name="output_reconciled" label="Reconciled Newick"/>
+		<data format="txt" name="output_stats" label="Rapgreen statistics"/>
+	</outputs>
+	<help>
+	
+.. class:: infomark
+
+**Program encapsulated in Galaxy and developed by Southgreen**
+
+.. class:: infomark
+
+**RAP version 2.0, 2010**
+
+-----	
+	
+==============
+ Please cite: 
+==============
+
+"Tree pattern matching in phylogenetic trees: automatic search for orthologs or paralogs in homologous gene sequence databases.", **Dufayard J-F., Duret L., Penel S., Gouy M., Rechenmann F. and Perriere G.**, Bioinformatics, 21 (11): 2596-2603, 2005.
+
+-----
+
+==========
+ Overview
+==========
+
+RAP is a tree reconciliation software, which permits to find gene duplications in phylogenetic trees, in order to improve gene function inferences. The algorithm is applicable to realistic data, especially n-ary species tree and unrooted phylogenetic tree. The algorithm also takes branch lengths into account.
+
+RAP-Green is a revamped version, adapted to plants, and able to provide confidence scores for orthology relationships, from a functional point of vue.
+
+-----
+
+For further informations, please visite the website of the previous RAP_ software.
+
+
+.. _RAP: http://pbil.univ-lyon1.fr/software/RAP/RAP.htm
+	</help>
+
+</tool>
