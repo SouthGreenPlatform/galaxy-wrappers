@@ -8,7 +8,7 @@
 
 =head1 SYNOPSIS
 
-    qsub -q <queue> -b yes -V -N format1 perl gff3fna2gff32bed2fasta.pl <gff3_input_file> <genome_sequence_file> <fna_output_file> -bed=all|gene|mRNA|polypeptide|... -type=gene|mRNA|polypeptide|... -begin=0|-x|+x -end=0|-x|+x
+    perl gff3fna2gff32bed2fasta.pl <gff3_input_file> <genome_sequence_file> <fna_output_file> <bed_output_file> -sort=on|off -bed=all|gene|mRNA|polypeptide|... -begin=0|-x|+x -end=0|-x|+x -flank=prom|term
 
 =head1 REQUIRES
 
@@ -2126,12 +2126,13 @@ Default: [option default value if one] #+++
 #############
 
 # options processing
-my ($man, $help, $debug);
+my ($man, $help, $debug, $sort);
 
 # parse options and print usage if there is a syntax error.
 GetOptions("help|?"   => \$help,
            "man"      => \$man,
            "debug"    => \$debug, # a flag
+           "sort=s"	  => \$sort,
            "bed=s"      => \$bed,
            "flank=s"   => \$flank,
            "begin=i" => \$begin,
@@ -2148,8 +2149,10 @@ my @files = $gff3_file;
 print "Found " . @files . " files to process...\n";
 
 #Fonction pour trier et faire des stats:
-#sortGff3();
-#gff3_stat();
+if (defined($sort) && $sort eq "on"){
+	sortGff3();
+	gff3_stat();
+}
 
 if (defined($bed)){
 	gff3tobed();
