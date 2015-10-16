@@ -1,0 +1,128 @@
+<tool id="mafft1" name="MAFFT">
+	<description>, a progressive multiple alignment builder</description>
+	  <command>
+        source $__tool_directory__/module_mafft.sh ;
+        $__tool_directory__/mafft.sh $output_tree $input --quiet
+#if $datatype_condition.type == "nt": 
+ --nuc
+#end if
+#if $datatype_condition.type == "aa": 
+ --amino
+#end if
+#if $datatype_condition.type != "nt": 
+	#if $datatype_condition.PAM_value_condition.matrix == "bl30": 
+ --bl 30
+	#end if
+	#if $datatype_condition.PAM_value_condition.matrix == "bl45": 
+ --bl 45
+	#end if	
+	#if $datatype_condition.PAM_value_condition.matrix == "bl62": 
+ --bl 62
+	#end if	
+	#if $datatype_condition.PAM_value_condition.matrix == "bl80": 
+ --bl 80
+	#end if	
+	#if $datatype_condition.PAM_value_condition.matrix == "PAM": 
+ --jtt $datatype_condition.PAM_value_condition.PAM_value
+	#end if		
+#end if
+ --maxiterate $iterations --$distance_method --op $op --ep $ep $input > $output</command>
+	<inputs>
+		<param format="txt" name="input" type="data" label="Source file"/>
+		<conditional name="datatype_condition">
+			<param type="select" name="type" label="Data type">
+				<option value="auto">Automatic detection</option>
+				<option value="nt">Nucleic acids</option>
+				<option value="aa">Amino acids</option>
+			</param>   
+			<when value="aa">
+				<conditional name="PAM_value_condition">
+					<param type="select" name="matrix" label="Matrix" help="Usefull only for amino acids">
+						<option value="bl62">BLOSUM 62</option>
+						<option value="bl30">BLOSUM 30</option>
+						<option value="bl45">BLOSUM 45</option>
+						<option value="bl80">BLOSUM 80</option>
+						<option value="PAM">PAM</option>
+					</param>
+					<when value="bl30"></when>
+					<when value="bl45"></when>
+					<when value="bl62"></when>
+					<when value="bl80"></when>
+					<when value="PAM">
+						<param type="text" name="PAM_value" help="Must be greater than 0" value="80" label="Coefficient of the PAM matrix" />						
+					</when>
+				</conditional>
+			</when>
+			<when value="auto">
+				<conditional name="PAM_value_condition">
+					<param type="select" name="matrix" label="Matrix" help="Usefull only for amino acids">
+						<option value="bl62">BLOSUM 62</option>
+						<option value="bl30">BLOSUM 30</option>
+						<option value="bl45">BLOSUM 45</option>
+						<option value="bl80">BLOSUM 80</option>
+						<option value="PAM">PAM</option>
+					</param>
+					<when value="bl30"></when>
+					<when value="bl45"></when>
+					<when value="bl62"></when>
+					<when value="bl80"></when>
+					<when value="PAM">
+						<param type="text" name="PAM_value" help="Must be greater than 0" value="80" label="Coefficient of the PAM matrix" />						
+					</when>
+				</conditional>
+			</when>	
+			<when value="nt">
+			</when>			
+		</conditional>
+		<param type="text" name="iterations" help="1000 for maximum quality" value="1000" label="Maximum number of iterations" />	
+		<param type="text" name="op" help="1.53 default value" value="1.53" label="Gap opening penalty" />	
+		<param type="text" name="ep" help="0.123 default value" value="0.123" label="Gap extension penalty" />	
+		<param type="select" name="distance_method" label="Distance method" help="Distance method must be chosen regarding your data">
+			<option value="6merpair">Shared 6mers distance (fastest)</option>
+			<option value="globalpair">Global alignment (NW)</option>
+			<option value="localpair">Local alignment (SW)</option>
+			<option value="genafpair">Local, affine gap cost</option>
+			<option value="fastapair">FASTA distance</option>		
+		</param>		
+	</inputs>
+	<outputs>
+		<data format="fasta" name="output" />
+		<data format="txt" name="output_tree"/>
+	</outputs>
+	<help>
+
+.. class:: infomark
+
+**Program encapsulated in Galaxy by South Green**
+
+
+.. class:: infomark
+
+**MAFFT version 6.717b, 2009**
+
+-----
+	
+==========
+ Overview
+==========	
+
+MAFFT is a multiple sequence alignment program for unix-like operating systems. It offers a range of multiple alignment methods, L-INS-i wich is accurate for alignment with less than 200 sequences, FFT-NS-2 which is fast for alignment with less than 10000 sequences. 
+
+-----
+
+For further informations, please visite the MAFFT_ website.
+
+.. _MAFFT: http://mafft.cbrc.jp/alignment/software/
+
+	</help>
+	<citations>
+        <citation type="doi">10.1093/bioinformatics/btq224</citation> 
+        <citation type="doi">10.1007/978-1-59745-251-9_3</citation> 
+        <citation type="doi">10.1186/1471-2105-9-212</citation> 
+        <citation type="doi">10.1093/bioinformatics/btl592</citation> 
+        <citation type="doi">10.1093/bib/bbn013</citation> 
+        <citation type="doi">10.1093/nar/gki198</citation> 
+        <citation type="doi">10.1093/nar/gkf436</citation> 
+    </citations>
+
+</tool>

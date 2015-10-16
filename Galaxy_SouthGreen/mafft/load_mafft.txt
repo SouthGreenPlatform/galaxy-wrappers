@@ -1,0 +1,1 @@
+module load bioinfo/mafft/6.717
