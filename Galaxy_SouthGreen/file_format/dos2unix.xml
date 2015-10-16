@@ -1,0 +1,14 @@
+<tool id="dos2unix" name="dos2unix" version="1.0">
+	<description>Clean the fasta file to remove unwanted characters</description>
+	<command> dos2unix -q -n $input $output  </command>
+	<inputs>
+		<param name="input" type="data" format="fasta" label="Clean the file"/>
+	</inputs>
+	<outputs>
+		<data name="output" format="fasta"/>
+	</outputs>
+
+	<help>
+		
+	</help>
+</tool>
