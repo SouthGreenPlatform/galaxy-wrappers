@@ -14,7 +14,7 @@ def stop_err( msg ):
 def __main__():
     infile = sys.argv[1]
     outfile = sys.argv[2]
-    data_exp = "/home/galaxydev/galaxy/tool-data/genfam/Coffee_genes_expression_all_organs_rpkm_hub.txt"
+    data_exp = " /bank/genfam/expression//Coffee_genes_expression_all_organs_rpkm_hub.txt"
     fichier=open(infile,"r")
     destination = open(outfile,"w")
     data=open(data_exp,"r")
