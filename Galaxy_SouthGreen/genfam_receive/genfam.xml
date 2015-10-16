@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!--
+    If the value of 'URL_method' is 'get', the request will consist of the value of 'URL' coming back in
+    the initial response.  If value of 'URL_method' is 'post', any additional params coming back in the
+    initial response ( in addition to 'URL' ) will be encoded and appended to URL and a post will be performed.
+    
+    
+    http://dev.gohelle.cirad.fr/genfam/sites/gohelle.cirad.fr.genfam/extra_scripts/trunk/Index.php
+-->
+<tool name="Genfam" id="genfam" tool_type="data_source">
+    <description> : Advanced Search Browser</description>
+    <command interpreter="python">data_source.py $output $__app__.config.output_size_limit</command>
+    <inputs action="http://stage.genfam.southgreen.fr/cart" check_values="false" method="get">
+        <display>go to the Genfam $GALAXY_URL</display>
+        <param name="GALAXY_URL" type="baseurl" value="/tool_runner" />
+        <param name="tool_id" type="hidden" value="musa_browser" />
+        <param name="sendToGalaxy" type="hidden" value="1" />
+        <param name="output" type="hidden" value="fasta" />
+        <param name="comment" type="hidden" value="" />
+    </inputs>
+    <uihints minwidth="800"/>    
+    <request_param_translation>
+        <request_param galaxy_name="URL" remote_name="URL" missing="" />
+        <request_param galaxy_name="comment" remote_name="comment" missing="" />
+    </request_param_translation>
+    <outputs>
+        <data name="output" format="auto" label="${tool.name} : $getVar('comment','unknown')" />
+    </outputs>
+    <options sanitize="False" refresh="True"/>
+</tool>
