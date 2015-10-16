@@ -1,0 +1,42 @@
+<tool id="diffEXP" name="Differential expression Genfam" version="1.0">
+	<description>Differential expression in drough and salt conditions</description>
+	<command interpreter="python">expression_get.py $input $output </command>
+	<inputs>
+		<param name="input" type="data" format="fasta" label="Select the Data"/>
+		
+	</inputs>
+	<outputs>
+		<data name="output" format="txt"/>
+	</outputs>
+	
+	<help>
+
+.. class:: infomark
+
+**Program encapsulated in Galaxy and developed by Southgreen**
+
+
+-----	
+
+==========
+Authors:
+==========	
+
+**Lariviere D**
+
+-----	
+
+===========
+Overview:
+===========	
+
+
+
+-----
+
+.. class:: warningmark
+	
+**No support website**
+		
+	</help>
+</tool>
