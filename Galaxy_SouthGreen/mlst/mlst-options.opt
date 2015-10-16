@@ -1,0 +1,20 @@
+#Config file for readOptions.pm
+#Must be in the same directory
+
+#Path to files and model file (example : test.fas for test1.fas test2.fas test3.fas [...])
+DATAS_MCCP=/home/galaxydev/galaxy/tools/mlst/datas/mccp/mccp.fas
+DATAS_CBPP=/home/galaxydev/galaxy/tools/mlst/datas/cbpp/cbpp.fas
+
+#Number of locus
+NBLOCUS=8
+
+#The minimal size of a gap
+MINGAPSIZE=2
+
+#Value of each alignment style (to calculate the distance)
+match=0
+mismatch=1
+indel=1
+gap=2
+vntr=1
+

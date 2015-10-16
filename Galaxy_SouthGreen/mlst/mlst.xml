@@ -1,0 +1,74 @@
+<tool id="dc_mlst" name="MLSA">
+	<description> for CBPP and CCPP</description>
+	<command>
+		source $__tool_directory__/module_load.txt;
+		#if $input_data.input=="file"
+			$__tool_directory__/mlst.pl -f $input_data.input_target -n $name -m $out_matrix -t $out_tree -d $input_data.disease
+		#else
+			$__tool_directory__/mlst.pl -s "$input_data.disease_opt.comp1,$input_data.disease_opt.comp2,$input_data.disease_opt.comp3,$input_data.disease_opt.comp4,$input_data.disease_opt.comp5,$input_data.disease_opt.comp6,$input_data.disease_opt.comp7,$input_data.disease_opt.comp8" -n $name -m $out_matrix -t $out_tree -d $input_data.disease_opt.disease
+		#end if
+	</command>
+	<inputs>
+  		<param name="name" type="text" value="new" size="2000" label="Your strain"/>
+  		<conditional name="input_data">
+  			<param type="select" name="input" label="Select input data">
+  				<option value="sequences">locus sequences</option>
+  				<option value="file">multifasta file</option>
+  			</param>
+  			<when value="sequences">
+  				<conditional name="disease_opt">
+  					<param type="select" name="disease" label="Select agent">
+  						<option value="cbpp">Mmm</option>
+  						<option value="mccp">Mccp</option>
+  					</param>
+  					<when value="mccp">
+						<param name="comp1" type="text" size="2000" label="Loc-01"/>
+						<param name="comp2" type="text" size="2000" label="Loc-03"/>
+						<param name="comp3" type="text" size="2000" label="Loc-11"/>
+						<param name="comp4" type="text" size="2000" label="Loc-12"/>
+						<param name="comp5" type="text" size="2000" label="Loc-15"/>
+						<param name="comp6" type="text" size="2000" label="Loc-17"/>
+						<param name="comp7" type="text" size="2000" label="Loc-20"/>
+						<param name="comp8" type="text" size="2000" label="Loc-H2"/>
+  					</when>
+  					<when value="cbpp">
+						<param name="comp1" type="text" size="2000" label="Loc-PG1-0001"/>
+						<param name="comp2" type="text" size="2000" label="Loc-PG1-0103"/>
+						<param name="comp3" type="text" size="2000" label="Loc-PG1-0287"/>
+						<param name="comp4" type="text" size="2000" label="Loc-PG1-0431"/>
+						<param name="comp5" type="text" size="2000" label="Loc-PG1-0489"/>
+						<param name="comp6" type="text" size="2000" label="Loc-PG1-0523"/>
+						<param name="comp7" type="text" size="2000" label="Loc-PG1-0710"/>
+						<param name="comp8" type="text" size="2000" label="Loc-PG1-0827"/>
+  					</when>
+  				</conditional>
+  			</when>
+  			<when value="file">
+  				<param type="select" name="disease" label="Select agent">
+  					<option value="cbpp">Mmm</option>
+  					<option value="mccp">Mccp</option>
+  				</param>
+  				<param name="input_target" type="data" format="fasta" label="multifasta file" />
+  			</when>
+  		</conditional>
+	</inputs> 
+<configfiles>
+
+</configfiles>
+ 
+<outputs>
+ <data format="csv" name="out_matrix" label="MLSA matrix"/>
+ <data format="nhx" name="out_tree" label="MLSA tree "/>
+</outputs>
+ 
+<help>
+=====================
+MLSA analysis tools:
+=====================
+This tool uses programs to generate trees from allelic profile data. 
+
+</help>
+	
+
+</tool>
+

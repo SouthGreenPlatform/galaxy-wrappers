@@ -1,0 +1,96 @@
+<tool id="selectgen" name="selectRegions">
+    <description>Genes selection (en test)</description>
+    		
+<command interpreter="bash">
+	./selectGenes.sh $inputSeq $inputTags $tolerance $outputSeq $outputLogs
+</command>
+<inputs>
+ 
+ 0 i 2 0 HKY 4.0 e 1 1.0 BIONJ y n n 2 
+
+	<param format="fasta" name="inputSeq" type="data" label="Sequence in fasta format" help="Sequence in fasta format"/>
+	<param format="fasta" name="inputTags" type="data" label="Tags in fasta format" help="Tags in fasta format"/>
+	<param name="tolerance" type="integer" value ="2" label="Tolerance" help="number of max difference in seq/tag alignment (cannot be below 0!)"/>
+	<param type="select" name="wantReport" label="Do you want a report files (logs)">
+	  <option value="no">No</option>
+	  <option value="yes">Yes</option>
+	</param> 
+  </inputs>
+  
+   <outputs>
+		<data format="fasta" name="outputSeq" label="regions extract of ${inputSeq.name}" help="yours selected sequences"/>
+		<data format="txt" name="outputLogs" label="reports of ${inputSeq.name}" help="your report"><filter>wantReport == "yes"</filter></data>
+   </outputs>
+
+<help>
+===========
+Overview:
+===========
+
+SelectRegion is a tool for extract desired region between tags and and concatenate them. For example, it can be usefull for keep only exons sequences. For use it, you need to prepare the tags file adequately. The tags research is based on Needleman-Wunsch algorithm.
+
+===========
+Usage
+===========
+
+SelectGenes seq tags tolerance outputSequenceFile (outputLogsFile)
+
+-----------
+Examples
+-----------
+
+without report : ./SelectGenes ../datas/sequenceA.fas ../datas/tags.fas 3 ../results/sequenceA-cleaned.fas
+
+with report : ./SelectGenes ../datas/sequenceA.fas ../datas/tags.fas 3 ../results/sequenceA-cleaned.fas ../results/sequenceA-report.txt
+
+-----
+Where
+-----
+
+seq : path to sequence file
+
+tags : path to tags files
+
+tolerance : max acceptable differences (mismatches + in/dels) when search a tag in the sequence. MUST BE >= 0
+
+outputSequenceFile : path to the file to write with the cleaned sequenceA
+
+outputLogsFile : path to the file to write reports
+
+-----------
+Files
+-----------
+seq : a fasta file
+
+tags : a multi-fasta file where tags are in with alternance (start / end tags), the order in starts and ends tags doesn't matter:
+
+	>startTag1
+	
+	Sequence
+	
+	>endTag2
+	
+	Sequence
+	
+	>startTag2
+	
+	Sequence
+	
+	>endTag1
+	
+	Sequence
+	
+	[...]
+	
+
+=============
+Please cite:
+=============
+Verdier A, Coste C, DUPUY V. 2014-04 , cirad-cmaee
+
+	</help>
+		
+	
+	
+</tool>
+

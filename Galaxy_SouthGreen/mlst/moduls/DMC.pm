@@ -1,0 +1,276 @@
+package DMC; #Datas Manipulations and Calculs
+
+use strict;
+
+use Exporter;
+use Bio::Tools::Run::Alignment::Muscle;
+use Bio::Seq;
+
+our @ISA= qw( Exporter );
+
+# these CAN be exported.
+our @EXPORT_OK = qw( align2Seq createTypesMatrix createDistMatrix);
+
+# these are exported by default.
+our @EXPORT = qw( align2Seq createTypesMatrix createDistMatrix);
+
+=for comment
+
+	FILE		DMC.pm - Include functions for calculate distances between sequences and create matrix (2nd step)
+	AUTHOR 		Verdier Axel
+	CREATE_DATE	04-22-2014
+	LAST_DATE	05-27-2014
+	FUNCTIONS	align2Seq createTypesMatrix createDistMatrix pairwiseVntrCleaner
+			align2Seq - compare 2 sequences (use Muscle)
+			createTypesMatrix - Create an matrix of all types alleles
+			createDistMatrix - Create the distance between types matrix with the alleles distances matrix
+			pairwiseVntrCleaner - Search the vntr of the motif in 2 sequences and clean them of the sequences if they have a different size
+=cut
+
+#FUNCTIONS
+#====================
+=head1 createTypesMatrix
+
+	Overview	Create an matrix of all types alleles
+	
+	parameters	0:path 1:nbLocus
+			path: the path to the disease types matrix (.csv). In this file, the first line is basic information (name, date, ...) : this function doesn't read it.
+			nbLocus: the number of locus for this disease
+			
+	return		array of the allele of each locus of each type: @matrix[numType][numLocus]
+	
+	example		my @typesMatrix = FIT::createTypesMatrix("datas/cbpp-matrix.csv", NBLOCUS);
+=cut
+sub createTypesMatrix{
+	my $path=@_[0];
+	my $nbLocus=@_[1];
+	my $nameTypes=\@{@_[2]};
+	my @table;
+	open(FILE,'<', $path) or die("ERROR : impossible to open $path\n");
+	my $numLigne=0;
+	while (my $ligne = <FILE>){
+		chomp $ligne;
+		if ($numLigne==0){
+			#print "en-tete : $ligne\n";
+		}
+		else{
+			my @elements=split(";",$ligne);
+			my @loc;
+			$$nameTypes[$numLigne-1]=$elements[0];
+			for (my $nLoc=0; $nLoc <$nbLocus; $nLoc++){
+				$loc[$nLoc]=$elements[$nLoc+1]-1;#-1 : the file stock value with begin with 1 and not 0
+			}
+			$table[$numLigne-1]=\@loc;
+		}
+		$numLigne++;
+	}
+	close (FILE);
+	return @table;
+}
+
+#====================
+=head1 createDistMatrix
+
+	Overview	Create the distance between types matrix with the alleles distances matrix
+	
+	parameters	0:matrixTypes 1:matrixDistAlleles 2:nbLocus
+			matrixTypes: the alleles of types matrixDist
+			matrixDistAlleles: the alleles distances matrix
+			nbLocus: the number of locus
+			
+	return		the types distance matrix. format : @outMatrix[type1Id][type2Id]
+	
+	example		my @matrixDist=DMC::createDistMatrix(\@typesMatrix, \@allelesDist, 8);
+=cut
+
+sub createDistMatrix{
+	my @matrixTypes=@{@_[0]};
+	my @matrixDistAlleles=@{@_[1]};
+	my $nbLocus=@_[2];
+	
+	my $nbTypes=@matrixTypes;
+	my @distMatrix;
+	
+	for (my $i=0; $i<$nbTypes; $i++){
+		for(my $j=0; $j<=$i; $j++){
+			#calcul de la distance entre les types $i et $j
+			my $dist=0;
+			for (my $loc=0; $loc<$nbLocus; $loc++){
+				my $id1=$matrixTypes[$i][$loc];
+				my $id2=$matrixTypes[$j][$loc];
+				if($id1>=$id2){$dist+=$matrixDistAlleles[$loc][$id1][$id2];}
+				else{$dist+=$matrixDistAlleles[$loc][$id2][$id1];}
+			}
+			$distMatrix[$i][$j]=$dist;
+		}
+	}
+	
+	#On complete la matrice
+	my @outMatrix;
+	my $size=@distMatrix;
+	for (my $i=0; $i<$size; $i++){
+		for (my $j=0; $j<$size; $j++){
+			if ($i>=$j){$outMatrix[$i][$j]=$distMatrix[$i][$j];}
+			else{$outMatrix[$i][$j]=$distMatrix[$j][$i];}
+		}
+	}
+	return @outMatrix;
+}
+
+#====================
+=head1 align2Seq
+
+	Overview	compare 2 sequences (use Muscle)
+	
+	parameters	0:seqN1 1:seqN2 2:minGapSize
+			seqN1: the first sequence
+			seqN2: the second sequence
+			minGapSize: the miniaml number of indels for do a gap.
+			
+	return		An hashTable of the number of matches, mismatches, indels, gaps, vntr.
+	
+	example		The use is intern. You shouldn'h have to use it.
+			my %diff=align2Seq($seq1, $seq2, 3);
+			$distance+=$diff{mismatches}*$distValue{mismatches}+$diff{indels}*$distValue{indels}+$diff{gaps}*$distValue{gaps}+$diff{vntr}*$distValue{vntr};
+
+=cut
+sub align2Seq{
+	my $seqN1=@_[0];
+	my $seqN2=@_[1];
+	my $minGapSize=@_[2];
+	
+	my %align=(	match => "|",
+			mismatch => "X",
+			indel => "-",
+			);
+	
+	my %alignStat=(	matches => 0,
+			mismatches => 0,
+			indels => 0,
+			gaps => 0,
+			vntr => 0,
+		);
+	if ($seqN1 eq $seqN2){
+		#print "Meme sequence !\n";
+	}
+	if($seqN1=~m/^\s*$/ || $seqN2=~m/^\s*$/){
+		if($seqN1 eq "" && $seqN2 eq ""){
+			#print "Meme sequence!\n";
+		}
+		else{
+			$alignStat{gaps}=1;
+		}
+	}
+	else{
+	#search VNTR
+		$alignStat{vntr}=pairwiseVntrCleaner($seqN1,$seqN2,"ATT");
+		$alignStat{vntr}+=pairwiseVntrCleaner($seqN1,$seqN2,"TCAACAAGA");
+	#align
+		#prepare array
+		my @seqs=();
+		$seqs[0]=Bio::Seq->new(-seq => $seqN1);
+		$seqs[1]=Bio::Seq->new(-seq => $seqN2);
+		#build alignment
+		my  @params =('verbose'=>0, 'quiet'=>1); 
+		my $factory = Bio::Tools::Run::Alignment::Muscle->new(@params);
+		#build alignment
+		my $aln = $factory->align(\@seqs);
+		#Analyze alignment
+		my @match=split(//,$aln->match_line());
+		my @gap=split(//,$aln->gap_line());
+		my $alignment="";
+		if (@match != @gap){die("\nERROR 1 : in align line generation -> unequal match and gap lines lengths\n");}
+		for (my $i=0; $i<@match; $i++){
+			if($match[$i] eq '*'){$alignment.=$align{match};}
+			elsif($match[$i] eq ' ' && $gap[$i] eq '.'){$alignment.=$align{mismatch};}
+			elsif($match[$i] eq ' ' && $gap[$i] eq '-'){$alignment.=$align{indel};}
+			else{die("\nERROR 2 : in align line generation -> unknown character\n");}
+		}
+		if(length($alignment) != @match){die("\nERROR 3 : in align line generation -> unequal align and match lines lengths\n");}
+	#Comptage
+		my $char=$align{indel};
+		my $nbGap=0;
+		$alignStat{gaps}+=$alignment=~s/($char){$minGapSize,}//g;
+		my $nbInDel=0;
+		$alignStat{indels}+=$alignment=~s/$char//g;
+		my $nbMis=0;
+		$char=$align{mismatch};
+		$alignStat{mismatches}+=$alignment=~s/$char//g;
+		my $nbMatch=0;
+		$char=$align{match};
+		$alignStat{matches}+=$alignment=~s/$char//g;
+	}
+	return %alignStat;
+}
+
+#====================
+=head1 pairwiseVntrCleaner
+
+	Overview	Search the vntr of the motif in 2 sequences and clean them of the sequences if they have a different size
+	
+	parameters	0:seqN1 1:seqN2 2:motif
+			seqN1: the first sequence
+			seqN2: the second sequence
+			motif: the motif of the vntr
+			
+	return		a boolean if there is a suppression
+	
+	example		The use is intern. You shouldn'h have to use it.
+			pairwiseVntrCleaner($seq1, $seq2, "AGTCA");
+=cut
+sub pairwiseVntrCleaner{
+	my @nuc = ( "A", "T", "G", "C");
+	my $motif=$_[2];
+	my $nbFind=0;
+	my $diffFound=0;
+	my $minRepet=3;
+
+	#search it
+	my $repet=int(length($_[1])/length($motif));
+	my $motifFound=0;
+	while ($motifFound==0 && $repet>=$minRepet){
+		my $motif1=0;
+		my $motif2=0;
+		$motif1=$_[0]=~m/($motif){$repet}/;
+		$motif2=$_[1]=~m/($motif){$repet}/;
+		if($motif1==1 && $motif2==1){
+			$nbFind++;
+			$motifFound=1;
+		}
+		else{$repet--;}
+	}
+	#nettoyage si le nombre de répétition est différent !
+	if ($motifFound){
+		my $repetClean=int(length($_[0])/length($motif));
+		my $cleaned=0;
+		my $maxRepet1=0;
+		my $maxRepet2=0;
+		while ($cleaned==0 && $repetClean>=$repet){
+			if($_[0]=~m/($motif){$repetClean}/){
+				
+				$cleaned=1;
+				$maxRepet1=$repetClean;
+			}
+			$repetClean--;
+		}
+		$repetClean=int(length($_[1])/length($motif));
+		$cleaned=0;
+		while ($cleaned==0 && $repetClean>=$repet){
+			if($_[1]=~m/($motif){$repetClean}/){
+				
+				$cleaned=1;
+				$maxRepet2=$repetClean;
+			}
+			$repetClean--;
+		}
+		
+		if ($maxRepet1 != $maxRepet2){
+			$_[0]=~s/($motif){$maxRepet1}//;
+			$_[1]=~s/($motif){$maxRepet2}//;
+			$diffFound=1;
+		}
+	}
+	return $diffFound;
+}
+1;
+

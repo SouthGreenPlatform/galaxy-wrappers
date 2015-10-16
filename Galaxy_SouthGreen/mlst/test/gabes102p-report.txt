@@ -1,0 +1,13 @@
+Loading sequence
+Sequence of 20966 nucleotides.
+Loading tags
+20 found.
+Research start
+Tag ATTAATAAAATATTAAGAACAAATATTTAA find with :
+	-> 1 insertions
+
+Sequence of 15318 nucleotides found
+Write the file
+File written
+END
+Write reports file

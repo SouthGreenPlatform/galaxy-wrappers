@@ -1,0 +1,126 @@
+package readOptions;
+
+use strict;
+use Exporter;
+
+our @ISA= qw( Exporter );
+
+# these CAN be exported.
+our @EXPORT_OK = qw( readOptions );
+
+# these are exported by default.
+our @EXPORT = qw( readOptions );
+
+=for comment
+
+	FILE		read options from "inputPath/"mlst-options.opt file
+	AUTHOR 		Verdier Axel
+	CREATE_DATE	04-24-2014 (mm-dd-yyyy)
+	LAST_DATE	05-27-2014
+	FUNCTIONS	readOptions
+			readOptions - read the file mlst-options.opt and set value of the program
+=cut
+
+#FUNCTIONS
+#====================
+=head1 readOptions
+
+	Overview	read the file mlst-options.opt and set value of the program
+	
+	parameters	0:DATAS_MCCP 1:DATAS_CBPP 2:NBLOCUS 3:MINGAPSIZE 4:DISTANCE_VALUE
+			DATAS_MCCP: a pointer for the path to mccp datas
+			DATAS_CBPP: a pointer for the path to cbpp datas
+			NBLOCUS: a pointeur for the number of locus
+			MINGAPSIZE: a pointer for the minimal size of gaps
+			DISTANCE_VALUE: a pointeur to an hashtable for match, mismatch, gap, vntr and indel distance value
+			
+	return		nothing, all work with the pointers
+	
+	example		use readOptions;
+			my $DATAS_MCCP;
+			my $DATAS_CBPP;
+			my $NBLOCUS;
+			my $MINGAPSIZE;
+			my %DISTANCE_VALUE;
+			readOptions::readOptions($DATAS_MCCP, $DATAS_CBPP, $NBLOCUS, $MINGAPSIZE, \%DISTANCE_VALUE);
+=cut
+sub readOptions{
+	my $path=@_[0];
+	open (OPTIONS, '<', $path."/mlst-options.opt") or die ("ERROR : can't load the mlst-options.opt file !\n\tPlease check it and if you find nothing report it\n");
+	my $DATAS_MCCP=\@_[1];
+	my $DATAS_CBPP=\@_[2];
+	my $NBLOCUS =\@_[3];
+	my $MINGAPSIZE =\@_[4];
+	my $DISTANCE_VALUE=\%{@_[5]};
+	my $match;
+	my $mismatch;
+	my $indel;
+	my $gap;
+	my $vntr;
+	
+	foreach my $line (<OPTIONS>){
+		chomp $line;
+		#Empty or comment line
+		if (!$line or $line=~m/^#/){next;}
+		#Options list
+		if ($line=~m/^DATAS_MCCP=/){
+			my ($end)=$line=~m/=(.*)$/;
+			$$DATAS_MCCP=$path."/".$end;
+			next;
+		}
+
+		if ($line=~m/^DATAS_CBPP=/){
+			my ($end)=$line=~m/=(.*)$/;
+			$$DATAS_CBPP=$path."/".$end;
+			next;
+		}
+
+		if ($line=~m/^NBLOCUS=/){
+			($$NBLOCUS)=$line=~m/=(.*)$/;
+			next;
+		}
+
+		if ($line=~m/^MINGAPSIZE=/){
+			($$MINGAPSIZE)=$line=~m/=(.*)$/;
+			next;
+		}
+
+		if ($line=~m/^match=/){
+			($match)=$line=~m/=(.*)$/;
+			next;
+		}
+
+		if ($line=~m/^mismatch=/){
+			($mismatch)=$line=~m/=(.*)$/;
+			next;
+		}
+
+		if ($line=~m/^indel=/){
+			($indel)=$line=~m/=(.*)$/;
+			next;
+		}
+
+		if ($line=~m/^gap=/){
+			($gap)=$line=~m/=(.*)$/;
+			next;
+		}
+
+		if ($line=~m/^vntr=/){
+			($vntr)=$line=~m/=(.*)$/;
+			next;
+		}
+		#If a line is not an option, a comment or empty
+		print "\n/!\\ WARNING : \"$line\" unrecognized !\n";
+	}
+	close (OPTIONS);
+	%$DISTANCE_VALUE=(	match => $match,
+				mismatch => $mismatch,
+				indel => $indel,
+				gap => $gap,
+				vntr => $vntr,
+			);
+}
+1;
+
+
+
