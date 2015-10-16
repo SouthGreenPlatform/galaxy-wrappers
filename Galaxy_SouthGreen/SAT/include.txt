@@ -1,0 +1,2 @@
+module load bioinfo/ssrit/20151001
+module load bioinfo/primer3/2.2.3

@@ -1,0 +1,50 @@
+<tool id="SSRIT" name="SSRIT">
+	<description> finds all perfect SSRs in a set of sequences</description>
+	<command>source $__tool_directory__/include.txt;$__tool_directory__/SSRIT.sh $input $output $di $tri $tetra $penta $hexa</command>
+	<inputs> 
+		<param format="fasta" name="input" type="data" label="FASTA sequences"/>
+		<param type="text" name="di" label="Minimal number of repetitions of dinucleotides" value="9"/>
+		<param type="text" name="tri" label="Minimal number of repetitions of trinucleotides" value="6"/>
+		<param type="text" name="tetra" label="Minimal number of repetitions of tetranucleotides" value="5"/>
+		<param type="text" name="penta" label="Minimal number of repetitions of pentanucleotides" value="3"/>
+		<param type="text" name="hexa" label="Minimal number of repetitions of hexanucleotides" value="3"/>
+	</inputs>
+	<outputs>
+		<data format="txt" name="output" type="data" label="SSR list"/>
+	</outputs>
+	<help>
+
+.. class:: infomark
+
+**Program encapsulated in Galaxy by Southgreen**
+
+.. class:: infomark
+
+**SSRIT 05/2000**
+
+-----
+
+==============
+ Please cite:
+==============
+
+Temnykh S, DeClerck G, Lukashova A, Lipovich L, Cartinhour S, McCouch S. Computational and experimental analysis of microsatellites in rice (Oryza sativa L.): frequency, length variation, transposon associations, and genetic marker potential. Genome Res. 2001 Aug;11(8):1441-52.
+
+-----
+
+==========
+ Overview
+==========
+
+SSRIT (Simple Sequence Repeat Identification Tool) searches for perfect simple sequence repeats in FASTA-formatted DNA sequences.
+
+-----
+
+For further informations, please visite the website of SSRIT_.
+
+
+.. _SSRIT: http://www.gramene.org/db/markers/ssrtool
+
+	</help>
+
+</tool>

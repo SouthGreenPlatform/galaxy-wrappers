@@ -1,0 +1,53 @@
+<tool id="primer3_batch" name="Primer3 Batch">
+	<description>Pick primers from a set of DNA sequences and a list of targets</description>
+	<command>source $__tool_directory__/include.txt;$__tool_directory__/primer3_batch.sh $input $targets $output $min_Tm $max_Tm $opt_Tm $min_size $max_size $opt_size $min_gc $max_gc</command>
+	<inputs> 
+		<param format="fasta" name="input" type="data" label="DNA sequences in FASTA format"/>
+		<param format="txt" name="targets" type="data" label="Tabular file listing targets (field1:sequence name, field6:start, field7:end)"/>
+		<param type="text" name="min_Tm" label="Min Tm" value="50"/>
+		<param type="text" name="max_Tm" label="Max Tm" value="63"/>
+		<param type="text" name="opt_Tm" label="Optimal Tm" value="55"/>
+		<param type="text" name="min_size" label="Min size" value="18"/>
+		<param type="text" name="max_size" label="Max size" value="27"/>
+		<param type="text" name="opt_size" label="Optimal size" value="20"/>
+		<param type="text" name="min_gc" label="Min %GC" value="20"/>
+		<param type="text" name="max_gc" label="Max %GC" value="80"/>
+	</inputs>
+	<outputs>
+		<data format="txt" name="output" label="Primer3 output" />
+	</outputs>
+	<help>
+
+.. class:: infomark
+
+**Program encapsulated in Galaxy by Southgreen**
+
+.. class:: infomark
+
+**Primer3 2.2.3**
+
+-----
+
+==============
+ Please cite:
+==============
+
+Koressaar T, Remm M. Enhancements and modifications of primer design program Primer3. Bioinformatics. 2007 May 15;23(10):1289-91. Epub 2007 Mar 22.
+
+-----
+
+==========
+ Overview
+==========
+
+Primer3 is a widely used program for designing PCR primers (PCR = Polymerase Chain Reaction). PCR is an essential and ubiquitous tool in genetics and molecular biology. Primer3 can also design hybridization probes and sequencing primers.
+
+-----
+
+For further informations, please visite the website of Primer3_.
+
+.. _Primer3: http://primer3.sourceforge.net/
+
+	</help>
+
+</tool>
