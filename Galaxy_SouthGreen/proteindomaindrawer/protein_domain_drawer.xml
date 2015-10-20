@@ -1,6 +1,8 @@
 <tool id="protdraw" name="Protein domain drawer">
 	<description>, a program to draw a set of multi-domain proteins</description>
-	<command interpreter="bash">./protein_domain_drawer.sh -input $input -output $output 
+	<command>
+	source $__tool_directory__/include.txt ; 
+	$__tool_directory__/protein_domain_drawer.sh -input $input -output $output 
 		#if $center: 
 		-center $center
 		#end if	
