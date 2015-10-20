@@ -1,6 +1,6 @@
 <tool id="phasedVCFtoHapMap" name="phasedVCFtoHapMap" >
 	<description>Take a phased VCF format file from Beagle and split individuals into two (one per haplotype) in a HapMap format</description>
-	<command interpreter="bash">./from_beagle_phased_vcf_file_to_hapmap_file.sh $vcf_input $hapmap_output $del_output</command>
+	<command interpreter="bash">$__tool_directory__/from_beagle_phased_vcf_file_to_hapmap_file.sh $vcf_input $hapmap_output $del_output</command>
 	<inputs>
 		<param format="vcf" name="vcf_input" type="data" label="Variant call format"/>
 	</inputs>

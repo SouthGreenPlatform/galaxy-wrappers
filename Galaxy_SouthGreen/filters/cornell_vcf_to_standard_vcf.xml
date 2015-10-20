@@ -1,6 +1,6 @@
 <tool id="CornellVCFStandardization" name="CornellVCFStandardization" >
 	<description>Take a MAJOR/MINOR VCF format file from TASSEL pipeline (tbt2vcfPlugin) and make it standard (REFERENCE/ALTERNATE format)</description>
-	<command interpreter="bash">./cornell_vcf_to_standard_vcf.sh $vcf_input $reference_input $vcf_ouput</command>
+	<command interpreter="bash">$__tool_directory__/cornell_vcf_to_standard_vcf.sh $vcf_input $reference_input $vcf_ouput</command>
 	<inputs>
 		<param format="vcf" name="vcf_input" type="data" label="Variant call format"/>
 		<param format="fasta" name="reference_input" type="data" label="Reference file (in fasta format)"/>

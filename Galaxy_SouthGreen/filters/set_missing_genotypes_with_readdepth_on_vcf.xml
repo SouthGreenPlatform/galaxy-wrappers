@@ -1,6 +1,6 @@
 <tool id="Read depth filter" name="Read depth filter" >
         <description>Change a given genotype into missing based on the read depth in a VCF file</description>
-        <command interpreter="bash">./set_missing_genotypes_with_readdepth_on_vcf.sh $vcf_input $readdepthlimit $maxmissingindiv $vcf_ouput</command>
+        <command interpreter="bash">$__tool_directory__/set_missing_genotypes_with_readdepth_on_vcf.sh $vcf_input $readdepthlimit $maxmissingindiv $vcf_ouput</command>
         <inputs>
                 <param format="vcf" name="vcf_input" type="data" label="Variant call format"/>
                 <param type="text" name="readdepthlimit" value="10" help="Must be a positive integer (>=1)" label="Genotypes with read depth below this parameter will be set to missing ('./.')"/>
