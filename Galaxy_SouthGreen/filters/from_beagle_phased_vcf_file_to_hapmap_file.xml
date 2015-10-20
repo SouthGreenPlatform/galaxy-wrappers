@@ -1,0 +1,30 @@
+<tool id="phasedVCFtoHapMap" name="phasedVCFtoHapMap" >
+	<description>Take a phased VCF format file from Beagle and split individuals into two (one per haplotype) in a HapMap format</description>
+	<command interpreter="bash">./from_beagle_phased_vcf_file_to_hapmap_file.sh $vcf_input $hapmap_output $del_output</command>
+	<inputs>
+		<param format="vcf" name="vcf_input" type="data" label="Variant call format"/>
+	</inputs>
+	<outputs>
+		<data format="txt" name="hapmap_output" label="HapMap file"/>
+		<data format="txt" name="del_output" label="Txt file with positions of deletions"/>
+	</outputs>
+	<help>
+
+
+.. class:: infomark
+
+**Program encapsulated in Galaxy by Southgreen**
+
+.. class:: infomark
+
+
+===========
+ Overview
+===========
+
+VCF(Variant Call format) is a format for holding variant (SNPs, small indels) information. Phased VCF file with imputation of ungenotyped markers from Beagle 4.0 is converted into a HapMap file format where individuals were divied into two, one per haplotype. For instance, Individal name MUSA048 in the VCF file will appear as MUSA048A and MUSA048B for each haplotype in the HapMap file.
+Also, indels are arbitrary recoded into simple SNP. Information about deletions are saved in a separated txt file.
+
+
+	</help>
+</tool>

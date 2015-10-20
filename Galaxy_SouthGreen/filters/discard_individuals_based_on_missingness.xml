@@ -1,0 +1,29 @@
+<tool id="Individual missingness filter" name="Individual missingness filter" >
+	<description>Discard individuals in a VCF file based on missingness</description>
+	<command interpreter="bash">./discard_individuals_based_on_missingness.sh $vcf_input $missingness $ploidy $vcf_ouput</command>
+	<inputs>
+		<param format="vcf" name="vcf_input" type="data" label="Variant call format"/>
+		<param type="text" name="missingness" value="50" help="Must be a positive integer" label="Maximum missingness (in percent) allowed for an individual"/>
+		<param type="text" name="ploidy" value="2" help="Available now: 2 or 3" label="Ploidy set for SNP calling"/>
+	</inputs>
+	<outputs>
+		<data format="vcf" name="vcf_ouput" label="VCF without individuals that has a missingness superior to the maximum missingness parameter"/>
+	</outputs>
+	<help>
+
+
+.. class:: infomark
+
+**Program encapsulated in Galaxy by Southgreen**
+
+.. class:: infomark
+
+
+===========
+ Overview
+===========
+
+Discard individuals from a VCF file based on missingness on a per-individual basis. 
+
+	</help>
+</tool>

@@ -1,0 +1,29 @@
+<tool id="Read depth filter" name="Read depth filter" >
+        <description>Change a given genotype into missing based on the read depth in a VCF file</description>
+        <command interpreter="bash">./set_missing_genotypes_with_readdepth_on_vcf.sh $vcf_input $readdepthlimit $maxmissingindiv $vcf_ouput</command>
+        <inputs>
+                <param format="vcf" name="vcf_input" type="data" label="Variant call format"/>
+                <param type="text" name="readdepthlimit" value="10" help="Must be a positive integer (>=1)" label="Genotypes with read depth below this parameter will be set to missing ('./.')"/>
+                <param type="text" name="maxmissingindiv" value="0" help="Must be a positive integer (>=0)" label="Remove sites having a number of missing genotypes above this parameter"/>
+        </inputs>
+        <outputs>
+                <data format="vcf" name="vcf_ouput" label="VCF filtered on read depth"/>
+        </outputs>
+        <help>
+
+
+.. class:: infomark
+
+**Program encapsulated in Galaxy by Southgreen**
+
+.. class:: infomark
+
+
+===========
+ Overview
+===========
+
+Process a VCF file and set to missing genotype each genotype that has a read depth below the readdepthlimit parameter. It removes also all sites having a number of missing genotypes (for all the individuals) above the maxindivwithmissingdata parameter.
+
+        </help>
+</tool>

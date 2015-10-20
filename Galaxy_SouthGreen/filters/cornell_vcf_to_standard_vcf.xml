@@ -1,0 +1,35 @@
+<tool id="CornellVCFStandardization" name="CornellVCFStandardization" >
+	<description>Take a MAJOR/MINOR VCF format file from TASSEL pipeline (tbt2vcfPlugin) and make it standard (REFERENCE/ALTERNATE format)</description>
+	<command interpreter="bash">./cornell_vcf_to_standard_vcf.sh $vcf_input $reference_input $vcf_ouput</command>
+	<inputs>
+		<param format="vcf" name="vcf_input" type="data" label="Variant call format"/>
+		<param format="fasta" name="reference_input" type="data" label="Reference file (in fasta format)"/>
+	</inputs>
+	<outputs>
+		<data format="vcf" name="vcf_ouput" label="VCF standardized"/>
+	</outputs>
+	<help>
+
+
+.. class:: infomark
+
+**Program encapsulated in Galaxy by Southgreen**
+
+.. class:: infomark
+
+
+===========
+ Overview
+===========
+
+VCF(Variant Call format) is a format for holding variant (SNPs, small indels) information. TASSEL pipeline from Cornell University can output such format but in some cases, the alleles are in the format major/minor rather than reference/alternate. Also, deletion can be coded as '-', which is not the standard format. Softwares that takes this VCF as an input frequently throw an error.
+
+This perl script takes as input two files: a non-standard VCF file from TASSEL 4.0 pipeline (plugin tbt2vcfPlugin), and the reference file in FASTA format. The output is the corresponding standard VCF.
+
+What it does?
+- change major/minor SNPs format to reference/alternate
+- change deletion format (ex: REF 'A'; alt '-') to standard format (ex: REF 'TA'; ALT 'T')
+
+
+	</help>
+</tool>
