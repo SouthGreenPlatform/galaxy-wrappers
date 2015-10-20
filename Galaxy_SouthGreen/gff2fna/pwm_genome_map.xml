@@ -44,7 +44,7 @@
 			<when value="no">		
 				<repeat name="bases" title="Transcription Factor" min="1" max="50">	
 				<param name="input" type="select" label="Transcription Factor name">
-					<options from_file="promoter_data.loc">
+					<options from_file="SouthGreen/promoter_data.loc">
 						<column name="value" index="2"/>
 						<column name="name" index="3"/>
 					</options>

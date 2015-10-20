@@ -187,7 +187,7 @@ my $work_dir = $tmpfoldname."/";
 
 my $genome_file;
 #Changed DS
-my $moods_mapper = '/home/galaxydev/galaxy/tools/gff2fna/cpp/find_pssm_dna';
+my $moods_mapper = '/home/galaxydev/galaxy/tools/SouthGreen/gff2fna/cpp/find_pssm_dna';
 
 my $thresh = 0.001;
 my $assembly;

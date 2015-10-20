@@ -35,7 +35,7 @@ print(myset)
 
 	
 #path_file=open('/usr/local/bioinfo/galaxy_dev/galaxy_dist/tool-data/gff2fasta.loc','r')
-path_file=open('/home/galaxydev/galaxy/tool-data/gff2fasta.loc','r')
+path_file=open('/home/galaxydev/galaxy/tool-data/SouthGreen/gff2fasta.loc','r')
 spec=path_file.readlines()
 path_file.close()
 bases_gff=[]
@@ -83,7 +83,7 @@ for path in bases_fna:
 #print (jobarray)
 
 #cc2-login:
-jobarray="#!/bin/bash\n\n#$ -N gff2fnaclust\n#$ -wd "+tmpfoldname+"/\n#$ -e "+tmpfoldname+"/logs/\n#$ -o "+tmpfoldname+"/logs/\n#$ -q normal.q\n#$ -t 1-"+str(i-1)+"\n#$ -tc "+str(i-1)+"\n#$ -S /bin/bash\n#$ -b y\n#$ -V\n#$ -l h_vmem=8G\n\nperl /home/galaxydev/galaxy/tools/gff2fna/multi_gff2fna.pl "+tmpfoldname+"/gff${SGE_TASK_ID} "+tmpfoldname+"/fna${SGE_TASK_ID} "+tmpfoldname+"/outputs/output_fna${SGE_TASK_ID} "+tmpfoldname+"/outputs/output_bed${SGE_TASK_ID} "+input_file+" "+flank+" -begin="+begin+" -end="+end+"\n"
+jobarray="#!/bin/bash\n\n#$ -N gff2fnaclust\n#$ -wd "+tmpfoldname+"/\n#$ -e "+tmpfoldname+"/logs/\n#$ -o "+tmpfoldname+"/logs/\n#$ -q normal.q\n#$ -t 1-"+str(i-1)+"\n#$ -tc "+str(i-1)+"\n#$ -S /bin/bash\n#$ -b y\n#$ -V\n#$ -l h_vmem=8G\n\nperl /home/galaxydev/galaxy/tools/SouthGreen/gff2fna/multi_gff2fna.pl "+tmpfoldname+"/gff${SGE_TASK_ID} "+tmpfoldname+"/fna${SGE_TASK_ID} "+tmpfoldname+"/outputs/output_fna${SGE_TASK_ID} "+tmpfoldname+"/outputs/output_bed${SGE_TASK_ID} "+input_file+" "+flank+" -begin="+begin+" -end="+end+"\n"
 
 array_file=open(tmpfoldname+'/jobs.sge','w')
 array_file.write(jobarray)

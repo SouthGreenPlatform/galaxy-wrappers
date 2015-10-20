@@ -8,7 +8,7 @@
 	perl $__tool_directory__/pwm_genome_map.pl -o $output -c $input -t consensus
     </command>
 	<inputs>		
-		<param name="input" type="txt" label="get consensus sequence" help="consensus sequence"/>	
+	<param name="input" format="txt" type="data" label="get consensus sequence" help="consensus sequence"/>	
 	</inputs>
 	<outputs>
 		<data format="txt" name="output" label="${tool.name} on ${on_string}"/>
