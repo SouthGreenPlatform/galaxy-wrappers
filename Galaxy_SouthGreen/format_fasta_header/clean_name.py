@@ -49,9 +49,9 @@ pat_MALDO=r'(MD[CP][0-9]{10}(\.)*[0-9]*[^_])'
 pat_manes=r'(cassava4\.1_[0-9]{6}m[^_])'
 pat_medtr=r'(Medtr[0-9]+g[0-9]{6}[^_\.])'
 pat_medtr_transcr=r'(Medtr[0-9]+g[0-9]{6}[^_][0-9]+)'
-pat_musa=r'(GSMUA_Achr[[0-9]+(Un_random)][TGP][0-9]{5}_[0-9]{3}[^_])'
-pat_orysj_MSU=r'((LOC_)?Os[0-9]{2}g[0-9]{5}\.[0-9])'
-pat_orysj_RAP=r'(Os[0-9]{2}g[0-9]{7})'
+pat_musa=r'(GSMUA_Achr([0-9]+|(Un_random))[TGP][0-9]{5}\_[0-9]{3}[^_])'
+pat_orysj_MSU=r'((LOC_)?Os[0-9]{2}g[0-9]{5}(\.[0-9]+)?[^0-9])'
+pat_orysj_RAP=r'(Os[0-9]{2}g[0-9]{7}[a|b]?)'
 pat_ricco=r'([0-9]{5}.m[0-9]{6}(\.[0-9]+)*[^_])'
 pat_sollc=r'(Solyc[0-9]{2}g[0-9]{6}\.[0-9]+\.[0-9]+[^_])'
 pat_soltu=r'(PGSC[0-9]{4}DM[GTP][0-9]{9}(\.[0-9]+)*[^_])'
@@ -64,8 +64,10 @@ pat_MUSBA=r'(ITC[0-9]{4}_Bchr[0-9]+_[TPG][0-9]+[^_])'
 pat_POPTR=r'(Potri\.[0-9]{3}G[0-9]{6}\.[1-9]+[^_])' #pb id avec coge
 pat_PHODC=r'(PDK_[0-9]{2}s[0-9]+[Lg][0-9]{3}[^_])'
 pat_thecc=r'(Tc[0-9]{2}_[tg][0-9]{6}[^_])' #pb id avec coge
-
+pat_theccbis=r'(TCM\_[0-9]{6}[^_])' #pb id avec coge
 pat_vitvi=r'(GSVIVT[0-9]{11}[^_])'
+pat_vitvibis=r'(LOC[0-9]{9}[^_])'
+
 
 seqfasta=""
 for line in fasta:
@@ -82,8 +84,8 @@ for line in fasta:
 		and re.search(r'(_0[1-9]{2}_MUSAC)', seqfasta, flags=0)==None \
 		and re.search(r'(_P0[2-9]_MAIZE)', seqfasta, flags=0)==None \
 		and re.search(r'(_P[1-9]{2}_MAIZE)', seqfasta, flags=0)==None \
-		and re.search(r'(g0[1-9]{2}_PHODA)', seqfasta, flags=0)==None \
-		and re.search(r'(g00[2-9]_PHODA)', seqfasta, flags=0)==None : 
+		and re.search(r'(g0[1-9]{2}_PHODC)', seqfasta, flags=0)==None \
+		and re.search(r'(g00[2-9]_PHODC)', seqfasta, flags=0)==None : 
 			output_file.write(seqfasta)
 		elif remove_tr=="no":
 			output_file.write(seqfasta)
@@ -92,26 +94,43 @@ for line in fasta:
 		line = line.replace("_SOLLY","_SOLLC")
 		line = line.replace("_PHODA","_PHODC")
 		line = line.replace('\"',"")
+		if re.search(pat_vitvibis, line, flags=0):
+			arathres=re.search(pat_vitvibis, line, flags=0)
+			name = arathres.group(0).strip()
+			newname=name+"_VITVI"
+			line = line.replace(name,newname)
 		if re.search(pat_vitvi, line, flags=0):
 			arathres=re.search(pat_vitvi, line, flags=0)
-			name = arathres.group(0)
+			name = arathres.group(0).strip()
 			newname=name+"_VITVI"
 			line = line.replace(name,newname)
 		elif re.search(pat_thecc, line, flags=0):
 			arathres=re.search(pat_thecc, line, flags=0)
-			name = arathres.group(0)
+			name = arathres.group(0).strip()
 			line = line.replace("t","g")
+			newname=name+"_THECC"
+			line = line.replace(name,newname)
+		elif re.search(pat_theccbis, line, flags=0):
+			arathres=re.search(pat_theccbis, line, flags=0)
+			name = arathres.group(0).strip()
 			newname=name+"_THECC"
 			line = line.replace(name,newname)
 		elif re.search(pat_orysj_MSU, line, flags=0): #si locus tag au format msu
 			arathres=re.search(pat_orysj_MSU, line, flags=0)
-			name = arathres.group(0)
+			name = arathres.group(0).strip()
 			if re.search("LOC_", name, flags=0):
 				gene_name =name
 			else:
 				gene_name = "LOC_"+name
+			if re.search("\.[0-9]+", name, flags=0):
+				gene_name = gene_name
+			else:
+				gene_name = gene_name+".1"
 			newname= dic_msu_to_rap[gene_name[:-1]+"1"]
-			newname=newname+gene_name[-2:]
+			if newname!="None":
+				newname=newname+gene_name[-2:]
+			else:
+				newname = gene_name
 			if re.search("_ORYSJ", line, flags=0):
 				newname=newname
 			else :
@@ -119,32 +138,38 @@ for line in fasta:
 			line = line.replace(name,newname)
 		elif re.search(pat_orysj_RAP, line, flags=0): #si locus tag au format RAP
 			arathres=re.search(pat_orysj_RAP, line, flags=0)
-			name = arathres.group(0)
+			name = arathres.group(0).strip()
 			if re.search("_ORYSJ", line, flags=0):
 				newname=name
 			else:
-				newname=name+"_ORYSJ"
+				if name[-1:]=="a":
+					newname = name[0:-1]+".1"
+				elif name[-1:]=="b":
+					newname = name[0:-1]+".2"
+				else:
+					newname= name
+				newname=newname+"_ORYSJ"
 			line = line.replace(name,newname)
 		elif re.search(pat_PHODC, line, flags=0):
 			arathres=re.search(pat_PHODC, line, flags=0)
-			name = arathres.group(0)
-			name = name.replace("L","g")
-			newname=name+"_PHODC"
+			name = arathres.group(0).strip()
+			newname = name.replace("L","g")
+			newname=newname+"_PHODC"
 			line = line.replace(name,newname)
 		elif re.search(pat_MALDO, line, flags=0):
 			arathres=re.search(pat_MALDO, line, flags=0)
-			name = arathres.group(0)
+			name = arathres.group(0).strip()
 			name = name.replace("C","P")
-			newname=name[:-1]+"_MALDO"
+			newname=name+"_MALDO"
 			line = line.replace(name,newname)
 		elif re.search(pat_cucsa, line, flags=0):
 			arathres=re.search(pat_cucsa, line, flags=0)
-			name = arathres.group(0)
-			name = name.replace('CDS:','')
+			name = arathres.group(0).strip()
 			if re.search("_CUCSA", line, flags=0):
 				newname=name
 			else:
 				newname=name+"_CUCSA"
+			newname = newname.replace('CDS:','')
 			line = line.replace(name,newname)
 			line = line.replace(".1_","_")
 			# print line
@@ -157,8 +182,8 @@ for line in fasta:
 			arathres=re.search(pat_MUSBA, line, flags=0)
 			name = arathres.group(0)
 			newname=name[:-1]+"_MUSBA"
-			name = name.replace('G','T')
-			name = name.replace('P','T')
+			newname = newname.replace('G','T')
+			newname = newname.replace('P','T')
 			line = line.replace(name,newname)
 		elif re.search(pat_CAJCA, line, flags=0):
 			arathres=re.search(pat_CAJCA, line, flags=0)
@@ -184,8 +209,8 @@ for line in fasta:
 			arathres=re.search(pat_soltu, line, flags=0)
 			name = arathres.group(0)
 			newname=name[:-1]+"_SOLTU"
-			name = name.replace('T','G')
-			name = name.replace('P','G')
+			newname = newname.replace('T','G')
+			newname = newname.replace('P','G')
 			line = line.replace(name,newname)
 		elif re.search(pat_sollc, line, flags=0):
 			arathres=re.search(pat_sollc, line, flags=0)
@@ -219,10 +244,10 @@ for line in fasta:
 			line = line.replace(name,newname)
 		elif re.search(pat_musa, line, flags=0):
 			arathres=re.search(pat_musa, line, flags=0)
-			name = arathres.group(0)
-			name = name.replace('T','G')
-			name = name.replace('P','G')
-			newname=name[:-1]+"_MUSAC"
+			name = arathres.group(0)[:-1]
+			newname = name.replace('T','G')
+			newname = newname.replace('P','G')
+			newname=name+"_MUSAC"
 			line = line.replace(name,newname)
 		elif re.search(pat_medtr, line, flags=0):
 			arathres=re.search(pat_medtr, line, flags=0)
@@ -244,11 +269,11 @@ for line in fasta:
 			line = line.replace(name,newname)
 		elif re.search(pat_maize, line, flags=0):
 			bradires=re.search(pat_maize, line, flags=0)
-			name = bradires.group(0)
+			name = bradires.group(0)[:-1]
 			newname=name.replace(".v6a","_MAIZE")
-			newname=name.replace("P","G")
-			newname=name.replace("T","G")
-			newname=name[:-1]+"_MAIZE"
+			newname=newname.replace("P","G")
+			newname=newname.replace("T","G")
+			newname=name+"_MAIZE"
 			line = line.replace(name,newname)
 		elif re.search(pat_glyma, line, flags=0):
 			bradires=re.search(pat_glyma, line, flags=0)
@@ -283,8 +308,8 @@ and re.search(r'(_00[2-9]_MUSAC)', seqfasta, flags=0)==None \
 and re.search(r'(_0[1-9]{2}_MUSAC)', seqfasta, flags=0)==None \
 and re.search(r'(_P0[2-9]_MAIZE)', seqfasta, flags=0)==None \
 and re.search(r'(_P[1-9]{2}_MAIZE)', seqfasta, flags=0)==None \
-and re.search(r'(g0[1-9]{2}_PHODA)', seqfasta, flags=0)==None \
-and re.search(r'(g00[2-9]_PHODA)', seqfasta, flags=0)==None :
+and re.search(r'(g0[1-9]{2}_PHODC)', seqfasta, flags=0)==None \
+and re.search(r'(g00[2-9]_PHODC)', seqfasta, flags=0)==None :
 	output_file.write(seqfasta)
 elif remove_tr=="no":
 	output_file.write(seqfasta)	
