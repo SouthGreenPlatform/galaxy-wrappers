@@ -1,0 +1,104 @@
+<tool id="protdraw" name="Protein domain drawer">
+	<description>, a program to draw a set of multi-domain proteins</description>
+	<command interpreter="bash">./protein_domain_drawer.sh -input $input -output $output 
+		#if $center: 
+		-center $center
+		#end if	
+		#for $a in $colors
+		-color "${a.domaincolor} ${a.colorvalue}"
+		#end for
+		#if $advanced_condition.advanced == "yes": 
+		 -width $advanced_condition.width -height $advanced_condition.height -margin $advanced_condition.margin -large $advanced_condition.large -namemargin $advanced_condition.namemargin -legendmargin $advanced_condition.legendmargin -fontsize $advanced_condition.fontsize -scale $advanced_condition.scale -linecolor "$advanced_condition.linecolor" -fontcolor "$advanced_condition.fontcolor" -fontfamily $advanced_condition.fontfamily
+		#end if			
+    </command>
+	<inputs>
+		<param format="txt" name="input" type="data" label="Protein domain descriptions" help="CSV file, using ; as a separator, see example below"/>	
+		<param type="text" name="center" help="Left blank and proteins will be aligned to the left ; or type a domain name, and protein without this domain will be aligned to the left" value="" label="Central domain to align proteins" />
+        <repeat name="colors" title="Defined color/domain association" min="0" max="50"> 
+			<param type="text" name="domaincolor" help="Type a domain name or prefix" value="" label="Domain name or prefix to color" />
+			<param type="text" name="colorvalue" help="Domain color can be expressed in #RRGGBB hexa, or litteraly (red, blue...)" value="" label="Color to apply" />
+        </repeat> 
+        
+   		<conditional name="advanced_condition">
+   			<param type="select" name="advanced" label="Display advanced options">
+				<option value="no">No</option>
+				<option value="yes">Yes</option>
+			</param>  
+			<when value="yes">
+				<param type="text" name="width" help="Total width, with margin, in pixel" value="800" label="Total width" />
+				<param type="text" name="height" help="Height in pixel of one protein" value="40" label="Protein height" />
+				<param type="text" name="margin" help="Width in pixel of the white margin around the image"  value="20" label="Margin" />
+				<param type="text" name="large" help="Distance in pixel between the line and the border of protein domain rectangles" value="8" label="Domain height" />
+				<param type="text" name="namemargin" help="Width in pixel of the left margin containing protein names"  value="80" label="Left protein name margin" />
+				<param type="text" name="legendmargin" help="Height in pixel of the bottom margin containing legend and scale"  value="70" label="Bottom legend margin" />
+				<param type="text" name="scale" help="Width in aa or na of one scale split"  value="100" label="Scale split size" />
+				<param type="text" name="linecolor" help="Line color can be expressed in #RRGGBB hexa, or litteraly (red, blue...)" value="#888888" label="Line color" />
+				<param type="text" name="fontcolor" help="Font color can be expressed in #RRGGBB hexa, or litteraly (red, blue...)"  value="#444444" label="Font color" />
+				<param type="text" name="fontfamily" help="Font family availibilities depend of your web navigator"  value="Candara" label="Font family" />
+				<param type="text" name="fontsize" help="Impact both protein names, and legends"  value="14" label="Font size" />
+			</when>
+			<when value="no">
+			</when>
+		</conditional>        		
+	</inputs>
+	<outputs>
+		<data format="svg" name="output" label="Output SVG image"/>
+	</outputs>
+	<help>
+	
+.. class:: infomark
+
+**Program encapsulated in Galaxy and developed by Southgreen**
+
+.. class:: infomark
+
+**proteindomaindrawer version 1.0, 2014**
+
+-----
+
+========
+Author: 
+========
+
+Dufayard JF
+
+-----
+
+==========
+ Overview
+==========
+
+Generate an SVG image from a CSV file containing protein descriptions. Each line must contain a protein name, a domain name, and the start and stop position of the domain. For each protein you must add a line to specify its whole length, leaving blank the domain name.
+
+Example of CSV valid file::
+
+	Name_prot;Name_domain;start;end
+	SGIA;;1;832
+	SGIA;SP;13;31
+	SGIA;Malectin-like;50;323
+	SGIA;LRR1;371;392
+	SGIA;LRR2;393;415
+	SGIA;LRR3;416;437
+	SGIA;TM;474;496
+	SGIA;KD;529;788
+	SGIB;;1;907
+	SGIB;SP;9;31
+	SGIB;Malectin-like;37;350
+	SGIB;LRR1;409;430
+	SGIB;LRR2;431;451
+	SGIB;LRR3;452;472
+	SGIB;LRR4;473;494
+	SGIB;TM;518;540
+	SGIB;KD;591;851
+
+The output SVG file can be displayed directly on any recent navigator, or can be converted in other image formats (PNG, GIF...) using a convenient image editor (for example the Gimp).
+
+-----
+
+.. class:: warningmark
+
+**No support website**
+
+	</help>
+
+</tool>
