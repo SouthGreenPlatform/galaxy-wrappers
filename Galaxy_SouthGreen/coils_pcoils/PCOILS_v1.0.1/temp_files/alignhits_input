@@ -1,0 +1,1569 @@
+BLASTP 2.2.22 [Sep-27-2009]
+
+
+Reference: Altschul, Stephen F., Thomas L. Madden, Alejandro A. Schaffer, 
+Jinghui Zhang, Zheng Zhang, Webb Miller, and David J. Lipman (1997), 
+"Gapped BLAST and PSI-BLAST: a new generation of protein database search
+programs",  Nucleic Acids Res. 25:3389-3402.
+
+
+Reference for compositional score matrix adjustment: Altschul, Stephen F., 
+John C. Wootton, E. Michael Gertz, Richa Agarwala, Aleksandr Morgulis,
+Alejandro A. Schaffer, and Yi-Kuo Yu (2005) "Protein database searches
+using compositionally adjusted substitution matrices", FEBS J. 272:5101-5109.
+
+
+Reference for composition-based statistics starting in round 2:
+Schaffer, Alejandro A., L. Aravind, Thomas L. Madden,
+Sergei Shavirin, John L. Spouge, Yuri I. Wolf,  
+Eugene V. Koonin, and Stephen F. Altschul (2001), 
+"Improving the accuracy of PSI-BLAST protein database searches with 
+composition-based statistics and other refinements",  Nucleic Acids Res. 29:2994-3005.
+
+Query= Cc00g00660
+         (1210 letters)
+
+Database: /bank/nr/nr_txid10239.faa 
+           2,240,883 sequences; 657,208,759 total letters
+
+Searching..................................................done
+
+
+Results from round 1
+
+
+                                                                 Score    E
+Sequences producing significant alignments:                      (bits) Value
+
+gi|322510775|gb|ADX06089.1| putative leucine-rich repeat ribonuc...    65   1e-08
+gi|312599359|gb|ADQ91381.1| hypothetical protein OlV1_004c [Ostr...    60   4e-07
+gi|313843974|ref|YP_004061637.1| hypothetical protein OlV1_004c ...    60   4e-07
+gi|506565627|ref|WP_016031944.1| hypothetical protein [Ostreococ...    60   4e-07
+gi|322510773|gb|ADX06087.1| leucine-rich repeat-containing prote...    54   3e-05
+
+>gi|322510775|gb|ADX06089.1| putative leucine-rich repeat
+           ribonuclease inhibitor family protein [Organic Lake
+           phycodnavirus 1]
+          Length = 598
+
+ Score = 64.7 bits (156), Expect = 1e-08,   Method: Compositional matrix adjust.
+ Identities = 47/141 (33%), Positives = 71/141 (50%), Gaps = 4/141 (2%)
+
+Query: 528 KLYIRPISKKFLHEILPNLTSLRVLSLAGYSLPYLPDSIQRLKQLRLLNLSLSNIENLPD 587
+           +LYI       L E + NLT+LR+L +    L  LP  I  L  L++L ++ + +  LP+
+Sbjct: 256 ELYIENNQLTQLPESITNLTNLRMLYIHNNQLSQLPLRIGNLTHLQILAIANNKLSELPE 315
+
+Query: 588 WVCTFYNLQTLLLSDCKNLEELPDDMGKLLNLRHLDITGTPLKKLPAQIGELKCLQVLTT 647
+            +    NLQ L + + + L  LP  +G L NL+ LDI    L ++P  I  L  L+   T
+Sbjct: 316 RISNLTNLQKLYIQNNQ-LTRLPLRIGNLTNLKVLDIKNNQLTQIPESISNLTNLE---T 371
+
+Query: 648 FVCNKDPGLMIEDLGKLCNLR 668
+            V   +P L I D  +  N+R
+Sbjct: 372 LVLTNNPNLFIPDWLRQMNIR 392
+
+
+
+ Score = 56.2 bits (134), Expect = 4e-06,   Method: Compositional matrix adjust.
+ Identities = 76/319 (23%), Positives = 140/319 (43%), Gaps = 49/319 (15%)
+
+Query: 538 FLHEILPNLTSLRVLSLAGYSLPYLPDSIQRLKQLRLLNLSLSNIENLPDWVCTFYNLQT 597
+            L E + N+  +R L +    L  LP SI  L+ L  L  S + +  +P+ +C   NLQ 
+Sbjct: 128 LLPENIGNIKKMRSLYIESNELTLLPVSIGGLQNLEQLFTSSNRLSQIPESICNLTNLQM 187
+
+Query: 598 LLLSDCKNLEELPDDMGKLLNLRHLDITGTPLKKLPAQIGELKCLQVLTTFVCNKDPGLM 657
+           L + D + L +LP  +GKL  L+ LDI    L +LP  I  L  LQ+L   +   +   +
+Sbjct: 188 LDIKDNE-LTQLPKHIGKLRKLKKLDIGNNELSELPESITNLTHLQMLD--IGYNELSEL 244
+
+Query: 658 IEDLGKLCNLR------GKLT-----VSGLEN------AGNGLDATLANMKGKKHLEDLS 700
+            E +  L NL+       +LT     ++ L N        N L      +    HL+ L+
+Sbjct: 245 PESISNLTNLQELYIENNQLTQLPESITNLTNLRMLYIHNNQLSQLPLRIGNLTHLQILA 304
+
+Query: 701 LEWNGTADDSQEAIDI--LQKLQPS--------------SRIKRLEVKGYGGTRFPDWLA 744
+           +  N  ++  +   ++  LQKL                 + +K L++K    T+ P+ ++
+Sbjct: 305 IANNKLSELPERISNLTNLQKLYIQNNQLTRLPLRIGNLTNLKVLDIKNNQLTQIPESIS 364
+
+Query: 745 DQSFHNVVSVILSRCSNCFCLPALGQLPSLKFLTIADMGKISIIDMQFYGNGSVFEIFQS 804
+           +    N+ +++L+   N F    L Q+ +++F+   D+  + +         + FE+   
+Sbjct: 365 N--LTNLETLVLTNNPNLFIPDWLRQM-NIRFIH-YDVNNVDV---------NPFEVHDV 411
+
+Query: 805 LQILRIEEMPEWKDWLVPR 823
+              +  E++ E  D+L+ +
+Sbjct: 412 FNKISDEQVEELNDFLLNK 430
+
+
+
+ Score = 54.3 bits (129), Expect = 2e-05,   Method: Compositional matrix adjust.
+ Identities = 40/119 (33%), Positives = 64/119 (53%), Gaps = 7/119 (5%)
+
+Query: 553 SLAGYSLPYLPDSIQRLKQLRLLNLSLSNIENLPDWVCTFYNLQTLLLSDCKNLE--ELP 610
+           +LA   L  +PDSI  L  L+ L++  + +  LPD +    +LQ L   D +N E  +LP
+Sbjct: 28  NLANNELSTIPDSIGNLIHLQQLDIRNNELGQLPDSIGNLIHLQQL---DIRNNELGQLP 84
+
+Query: 611 DDMGKLLNLRHLDITGTPLKKLPAQIGELKCLQVLTTFVCNKDPGLMIEDLGKLCNLRG 669
+           D +G L++L+ LDI    L +LP  IG L  L++L   +      L+ E++G +  +R 
+Sbjct: 85  DSIGNLIHLQQLDIEDNWLNQLPESIGNLIELEILNVNL--NRLTLLPENIGNIKKMRS 141
+
+
+>gi|312599359|gb|ADQ91381.1| hypothetical protein OlV1_004c
+           [Ostreococcus lucimarinus virus OlV1]
+          Length = 351
+
+ Score = 59.7 bits (143), Expect = 4e-07,   Method: Composition-based stats.
+ Identities = 38/101 (37%), Positives = 52/101 (51%), Gaps = 1/101 (0%)
+
+Query: 539 LHEILPNLTSLRVLSLAGYSLPYLPDSIQRLKQLRLLNLSLSNIENLPDWVCTFYNLQTL 598
+           L E +  LT+L  L L    L  LP+SI RL +L  L+LS +N   LP+ +     L+ L
+Sbjct: 46  LPESIGRLTNLERLDLDNNELTSLPESIGRLTKLEKLDLSYNNFTRLPESIGRLTKLEIL 105
+
+Query: 599 LLSDCKNLEELPDDMGKLLNLRHLDITGTPLKKLPAQIGEL 639
+            L    NL  LP+ +G L NL +L++T   L  LP     L
+Sbjct: 106 SLH-TSNLTSLPESIGNLTNLEYLELTDNNLTSLPESFKNL 145
+
+
+>gi|313843974|ref|YP_004061637.1| hypothetical protein OlV1_004c
+           [Ostreococcus lucimarinus virus OlV1]
+          Length = 351
+
+ Score = 59.7 bits (143), Expect = 4e-07,   Method: Composition-based stats.
+ Identities = 38/101 (37%), Positives = 52/101 (51%), Gaps = 1/101 (0%)
+
+Query: 539 LHEILPNLTSLRVLSLAGYSLPYLPDSIQRLKQLRLLNLSLSNIENLPDWVCTFYNLQTL 598
+           L E +  LT+L  L L    L  LP+SI RL +L  L+LS +N   LP+ +     L+ L
+Sbjct: 46  LPESIGRLTNLERLDLDNNELTSLPESIGRLTKLEKLDLSYNNFTRLPESIGRLTKLEIL 105
+
+Query: 599 LLSDCKNLEELPDDMGKLLNLRHLDITGTPLKKLPAQIGEL 639
+            L    NL  LP+ +G L NL +L++T   L  LP     L
+Sbjct: 106 SLH-TSNLTSLPESIGNLTNLEYLELTDNNLTSLPESFKNL 145
+
+
+>gi|506565627|ref|WP_016031944.1| hypothetical protein [Ostreococcus
+           lucimarinus virus OlV1]
+          Length = 351
+
+ Score = 59.7 bits (143), Expect = 4e-07,   Method: Composition-based stats.
+ Identities = 38/101 (37%), Positives = 52/101 (51%), Gaps = 1/101 (0%)
+
+Query: 539 LHEILPNLTSLRVLSLAGYSLPYLPDSIQRLKQLRLLNLSLSNIENLPDWVCTFYNLQTL 598
+           L E +  LT+L  L L    L  LP+SI RL +L  L+LS +N   LP+ +     L+ L
+Sbjct: 46  LPESIGRLTNLERLDLDNNELTSLPESIGRLTKLEKLDLSYNNFTRLPESIGRLTKLEIL 105
+
+Query: 599 LLSDCKNLEELPDDMGKLLNLRHLDITGTPLKKLPAQIGEL 639
+            L    NL  LP+ +G L NL +L++T   L  LP     L
+Sbjct: 106 SLH-TSNLTSLPESIGNLTNLEYLELTDNNLTSLPESFKNL 145
+
+
+>gi|322510773|gb|ADX06087.1| leucine-rich repeat-containing protein
+           [Organic Lake phycodnavirus 1]
+          Length = 161
+
+ Score = 53.9 bits (128), Expect = 3e-05,   Method: Compositional matrix adjust.
+ Identities = 40/103 (38%), Positives = 57/103 (55%), Gaps = 1/103 (0%)
+
+Query: 543 LPNLTSLRVLSLAGYSLPYLPDSIQRLKQLRLLNLSLSNIENLPDWVCTFYNLQTLLLSD 602
+           L NL  L+ L L    L  L + I  L  L++L+L  + I +LPD +     L++L + D
+Sbjct: 38  LLNLIQLKKLYLDNNQLDTLSEIISELDNLQILSLKNNKIVSLPDSIGNLTKLRSLTMGD 97
+
+Query: 603 CKNLEELPDDMGKLLNLRHLDITGTPLKKLPAQIGELKCLQVL 645
+            K L  LP+ +G L++L +LDI    L +LP  IGELK L  L
+Sbjct: 98  NK-LFLLPESIGNLIHLENLDIRSNILTRLPESIGELKKLSFL 139
+
+
+Searching..................................................done
+
+
+Results from round 2
+
+
+                                                                 Score    E
+Sequences producing significant alignments:                      (bits) Value
+Sequences used in model and found again:
+
+gi|322510775|gb|ADX06089.1| putative leucine-rich repeat ribonuc...   277   9e-73
+gi|312599359|gb|ADQ91381.1| hypothetical protein OlV1_004c [Ostr...   150   2e-34
+gi|313843974|ref|YP_004061637.1| hypothetical protein OlV1_004c ...   150   2e-34
+gi|506565627|ref|WP_016031944.1| hypothetical protein [Ostreococ...   150   2e-34
+gi|322510773|gb|ADX06087.1| leucine-rich repeat-containing prote...   145   7e-33
+
+Sequences not found previously or not previously below threshold:
+
+gi|322510677|gb|ADX05991.1| leucine-rich repeat-containing prote...   189   4e-46
+gi|322510680|gb|ADX05994.1| leucine-rich repeat-containing prote...    86   5e-15
+gi|4049775|gb|AAC97735.1| ORF MSV261 leucine rich repeat gene fa...    63   4e-08
+gi|9631422|ref|NP_048332.1| ORF MSV261 leucine rich repeat gene ...    63   4e-08
+gi|506554792|ref|WP_016021302.1| ORF MSV261 leucine rich repeat ...    63   4e-08
+gi|9944528|gb|AAG02711.1|AF250284_5 AMV005 [Amsacta moorei entom...    60   3e-07
+gi|9964319|ref|NP_064787.1| Possible surface protein [Amsacta mo...    60   3e-07
+gi|506556135|ref|WP_016022627.1| Possible surface protein [Amsac...    60   3e-07
+gi|9944790|gb|AAG02973.1|AF250284_267 AMVITR01 [Amsacta moorei e...    59   6e-07
+gi|9944815|gb|AAG02998.1| AMVITR01 [Amsacta moorei entomopoxviru...    59   6e-07
+gi|9964581|ref|NP_064770.1| internalin [Amsacta moorei entomopox...    59   6e-07
+gi|9964606|ref|NP_065061.1| similar to internalin A precursor [A...    59   6e-07
+gi|506556400|ref|WP_016022888.1| internalin [Amsacta moorei ento...    59   6e-07
+gi|4049773|gb|AAC97733.1| ORF MSV257 leucine rich repeat gene fa...    58   2e-06
+gi|9631420|ref|NP_048328.1| ORF MSV257 leucine rich repeat gene ...    58   2e-06
+gi|506554790|ref|WP_016021300.1| ORF MSV257 leucine rich repeat ...    58   2e-06
+gi|9944786|gb|AAG02969.1|AF250284_263 AMV263 [Amsacta moorei ent...    54   2e-05
+gi|9964577|ref|NP_065045.1| Possible surface protein [Amsacta mo...    54   2e-05
+gi|506556396|ref|WP_016022884.1| Possible surface protein [Amsac...    54   2e-05
+gi|322510473|gb|ADX05787.1| leucine-rich repeat protein [Organic...    53   3e-05
+gi|322510679|gb|ADX05993.1| hypothetical protein 162313485 [Orga...    53   4e-05
+
+>gi|322510775|gb|ADX06089.1| putative leucine-rich repeat
+           ribonuclease inhibitor family protein [Organic Lake
+           phycodnavirus 1]
+          Length = 598
+
+ Score =  277 bits (709), Expect = 9e-73,   Method: Composition-based stats.
+ Identities = 69/339 (20%), Positives = 141/339 (41%), Gaps = 67/339 (19%)
+
+Query: 507 EKFKQLSQATHLRTFLPI------RKDKLYIRPISKKFLHEILPNLTSLRVLSLAGYSLP 560
+           +K + L   ++  T LP+        ++L+        + E + NLT+L++L +    L 
+Sbjct: 137 KKMRSLYIESNELTLLPVSIGGLQNLEQLFTSSNRLSQIPESICNLTNLQMLDIKDNELT 196
+
+Query: 561 YLPDSIQRLKQLRLLNLSLSNIENLPDWVCTFYNLQTLLLSDCKNLEELPDDMGKLLNLR 620
+            LP  I +L++L+ L++  + +  LP+ +    +LQ L +   + L ELP+ +  L NL+
+Sbjct: 197 QLPKHIGKLRKLKKLDIGNNELSELPESITNLTHLQMLDIGYNE-LSELPESISNLTNLQ 255
+
+Query: 621 HLDITGTPLKKLPAQIGELKCLQVLTTFVCNKDPGLMIEDLGKLCNLRGKLTVSGLENAG 680
+            L I    L +LP  I  L  L++L                                   
+Sbjct: 256 ELYIENNQLTQLPESITNLTNLRMLYI-------------------------------HN 284
+
+Query: 681 NGLDATLANMKGKKHLEDLSLEWNGTADDSQEAIDI--LQKLQPS--------------S 724
+           N L      +    HL+ L++  N  ++  +   ++  LQKL                 +
+Sbjct: 285 NQLSQLPLRIGNLTHLQILAIANNKLSELPERISNLTNLQKLYIQNNQLTRLPLRIGNLT 344
+
+Query: 725 RIKRLEVKGYGGTRFPDWLADQSFHNVVSVILSRCSNCFCLPALGQLPSLKFLTIADMGK 784
+            +K L++K    T+ P+ +++    N+ +++L+   N F    L Q+ +++F+   D+  
+Sbjct: 345 NLKVLDIKNNQLTQIPESISN--LTNLETLVLTNNPNLFIPDWLRQM-NIRFIH-YDVNN 400
+
+Query: 785 ISIIDMQFYGNGSVFEIFQSLQILRIEEMPEWKDWLVPR 823
+           + +         + FE+      +  E++ E  D+L+ +
+Sbjct: 401 VDV---------NPFEVHDVFNKISDEQVEELNDFLLNK 430
+
+
+
+ Score =  201 bits (510), Expect = 1e-49,   Method: Composition-based stats.
+ Identities = 60/217 (27%), Positives = 96/217 (44%), Gaps = 9/217 (4%)
+
+Query: 528 KLYIRPISKKFLHEILPNLTSLRVLSLAGYSLPYLPDSIQRLKQLRLLNLSLSNIENLPD 587
+           +LYI       L E + NLT+LR+L +    L  LP  I  L  L++L ++ + +  LP+
+Sbjct: 256 ELYIENNQLTQLPESITNLTNLRMLYIHNNQLSQLPLRIGNLTHLQILAIANNKLSELPE 315
+
+Query: 588 WVCTFYNLQTLLLSDCKNLEELPDDMGKLLNLRHLDITGTPLKKLPAQIGELKCLQVLTT 647
+            +    NLQ L + + + L  LP  +G L NL+ LDI    L ++P  I  L  L+   T
+Sbjct: 316 RISNLTNLQKLYIQNNQ-LTRLPLRIGNLTNLKVLDIKNNQLTQIPESISNLTNLE---T 371
+
+Query: 648 FVCNKDPGLMIEDLGKLCNLRG-KLTVSGLENAGNGLDATLANMKGKKHLEDLSLEWNGT 706
+            V   +P L I D  +  N+R     V+ ++     +      +  ++  E      N  
+Sbjct: 372 LVLTNNPNLFIPDWLRQMNIRFIHYDVNNVDVNPFEVHDVFNKISDEQVEELNDFLLNKI 431
+
+Query: 707 ADDSQEAIDILQKLQPSSRIKRL--EVKGYGGTRFPD 741
+            +D  E I I  K    ++I  L  E+      R P+
+Sbjct: 432 TNDIDETIHI--KTFIKTKIDALIDELSDQRLQRKPE 466
+
+
+
+ Score =  167 bits (424), Expect = 1e-39,   Method: Composition-based stats.
+ Identities = 75/380 (19%), Positives = 162/380 (42%), Gaps = 46/380 (12%)
+
+Query: 531 IRPISKKFLHEILPNLTSLRVLSLAGYSLPYLPDSIQRLKQLRLLNLSLSNIENLPDWVC 590
+           +       + + + NL  L+ L +    L  LPDSI  L  L+ L++  + +  LPD + 
+Sbjct: 29  LANNELSTIPDSIGNLIHLQQLDIRNNELGQLPDSIGNLIHLQQLDIRNNELGQLPDSIG 88
+
+Query: 591 TFYNLQTLLLSDCKNLEELPDDMGKLLNLRHLDITGTPLKKLPAQIGELKCLQVLTTFVC 650
+              +LQ L + D   L +LP+ +G L+ L  L++    L  LP  IG +K ++ L  ++ 
+Sbjct: 89  NLIHLQQLDIEDN-WLNQLPESIGNLIELEILNVNLNRLTLLPENIGNIKKMRSL--YIE 145
+
+Query: 651 NKDPGLMIEDLGKLCNLRGKLT-----------VSGLEN------AGNGLDATLANMKGK 693
+           + +  L+   +G L NL    T           +  L N        N L     ++   
+Sbjct: 146 SNELTLLPVSIGGLQNLEQLFTSSNRLSQIPESICNLTNLQMLDIKDNELTQLPKHIGKL 205
+
+Query: 694 KHLEDLSLEWNGTADDSQEAIDILQKLQPSSRIKRLEVKGYGGTRFPDWLADQSFHNVVS 753
+           + L+ L +  N  ++  +   ++       + ++ L++     +  P+ +++    N+  
+Sbjct: 206 RKLKKLDIGNNELSELPESITNL-------THLQMLDIGYNELSELPESISN--LTNLQE 256
+
+Query: 754 VILSRCSNCFCLPALGQLPSLKFLTIADMGKISIIDMQFYGNGSVFEIFQSLQILRIEEM 813
+           + +          ++  L +L+ L I +  ++S + ++  GN +  +I       ++ E+
+Sbjct: 257 LYIENNQLTQLPESITNLTNLRMLYIHN-NQLSQLPLRI-GNLTHLQILAIANN-KLSEL 313
+
+Query: 814 PEWKDWLVPRKGVFCGLQELHIINCPKLVGDLPK-QLLSLTEFELSGCPGLVLSDGRFSM 872
+           PE    L   + ++  +Q   +   P  +G+L   ++L +   +L+  P  +        
+Sbjct: 314 PERISNLTNLQKLY--IQNNQLTRLPLRIGNLTNLKVLDIKNNQLTQIPESI-------- 363
+
+Query: 873 FNSLDLYSLKKLKISNMPSL 892
+               +L +L+ L ++N P+L
+Sbjct: 364 ---SNLTNLETLVLTNNPNL 380
+
+
+>gi|322510677|gb|ADX05991.1| leucine-rich repeat-containing protein
+           [Organic Lake phycodnavirus 1]
+          Length = 707
+
+ Score =  189 bits (479), Expect = 4e-46,   Method: Composition-based stats.
+ Identities = 67/270 (24%), Positives = 113/270 (41%), Gaps = 27/270 (10%)
+
+Query: 528 KLYIRPISKKFLHEILPNLTSLRVLSLAGYSLPYLPDSIQRLKQLRLLNLSLSNIENLPD 587
+           KL +   +   L   L NL  L+ L L    L  L + I  L  L++L+L  + I +LPD
+Sbjct: 23  KLVLSGQNLTTLPPSLLNLIQLKKLYLDNNQLDTLSEIISELDNLQILSLKNNKIVSLPD 82
+
+Query: 588 WVCTFYNLQTLLLSDCKNLEELPDDMGKLLNLRHLDITGTPLKKLPAQIGELKCLQVLTT 647
+            +     L++L + D K L  LP+ +G L++L +LDI    L +LP  IGELK L  L  
+Sbjct: 83  SIGNLTKLRSLTMGDNK-LFLLPESIGNLIHLENLDIRSNILTRLPESIGELKKLSFL-- 139
+
+Query: 648 FVCNKDPGLMIEDLGKLCNLRGKLTVSGLENAGNGLDATLANMKGKKHLEDLSLEWNGTA 707
+            + + +   + E +  L NL      + L    N +     N+     ++++ L  N  +
+Sbjct: 140 ILDDNNLNELPETIVNLSNL------TNLSLRNNKITTIPENIGQLVKIKNMLLNNNQLS 193
+
+Query: 708 DDSQEAIDI--LQKLQPS--------------SRIKRLEVKGYGGTRFPDWLADQSFHNV 751
+              +   ++  L+KL  +                IK LE+      + P+ +   S   +
+Sbjct: 194 SLPESFGNLVKLEKLFLTYNMLVTLPKSFDNLINIKILELNNNRLIQIPENIG--SLTLL 251
+
+Query: 752 VSVILSRCSNCFCLPALGQLPSLKFLTIAD 781
+             + L          ++  L  LK L I +
+Sbjct: 252 EKISLQDNKLTMLPESMCNLTLLKSLIIMN 281
+
+
+
+ Score =  165 bits (417), Expect = 7e-39,   Method: Composition-based stats.
+ Identities = 63/318 (19%), Positives = 126/318 (39%), Gaps = 47/318 (14%)
+
+Query: 529 LYIRPISKKFLHEILPNLTSLRVLSLAGYSLPYLPDSIQRLKQLRLLNLSLSNIENLPDW 588
+           L +   +   L E + NL++L  LSL    +  +P++I +L +++ + L+ + + +LP+ 
+Sbjct: 139 LILDDNNLNELPETIVNLSNLTNLSLRNNKITTIPENIGQLVKIKNMLLNNNQLSSLPES 198
+
+Query: 589 VCTFYNLQTLLLSDCKNLEELPDDMGKLLNLRHLDITGTPLKKLPAQIGELKCLQVLTTF 648
+                 L+ L L+    L  LP     L+N++ L++    L ++P  IG L  L+ ++  
+Sbjct: 199 FGNLVKLEKLFLTYN-MLVTLPKSFDNLINIKILELNNNRLIQIPENIGSLTLLEKIS-- 255
+
+Query: 649 VCNKDPGLMIEDLGKLCNLRGKLTVSGLENAGNGLDATLANMKGKKHLEDLSLEWNGTAD 708
+               +   M+ +   +CNL     +  L    N L    A +    +LE+L LE N    
+Sbjct: 256 -LQDNKLTMLPE--SMCNLT---LLKSLIIMNNQLTTLPARIGKLNNLENLFLENNLLTA 309
+
+Query: 709 DSQEAIDILQKLQPSSRIKRLEVKGYGGTRFPDWLADQSFHNVVSVILSRC-----SNCF 763
+             +   D+        +I  L +K    T  P+    Q   N+ ++ L           F
+Sbjct: 310 LPESIGDL-------RKISILLLKNNQLTTLPEQF--QYLTNLNTLTLKNNQLTTLPEQF 360
+
+Query: 764 ------------------CLPALGQLPSLKFLTIADMGKISIIDMQFYGNGSVFEIFQSL 805
+                                 L  + ++  L + D+  +    +   GN + FE+ +  
+Sbjct: 361 QYLTNLNTLTLNNNPNLVVPGWLMNM-NIPIL-LYDIPDL----LYDIGNVNAFEVHKVF 414
+
+Query: 806 QILRIEEMPEWKDWLVPR 823
+           + +   ++ E   +L  +
+Sbjct: 415 EKISDAQIDELNTFLSSK 432
+
+
+
+ Score = 62.4 bits (150), Expect = 7e-08,   Method: Composition-based stats.
+ Identities = 16/61 (26%), Positives = 27/61 (44%)
+
+Query: 527 DKLYIRPISKKFLHEILPNLTSLRVLSLAGYSLPYLPDSIQRLKQLRLLNLSLSNIENLP 586
+           + L++       L E + +L  + +L L    L  LP+  Q L  L  L L  + +  LP
+Sbjct: 298 ENLFLENNLLTALPESIGDLRKISILLLKNNQLTTLPEQFQYLTNLNTLTLKNNQLTTLP 357
+
+Query: 587 D 587
+           +
+Sbjct: 358 E 358
+
+
+>gi|312599359|gb|ADQ91381.1| hypothetical protein OlV1_004c
+           [Ostreococcus lucimarinus virus OlV1]
+          Length = 351
+
+ Score =  150 bits (379), Expect = 2e-34,   Method: Composition-based stats.
+ Identities = 45/155 (29%), Positives = 73/155 (47%), Gaps = 5/155 (3%)
+
+Query: 528 KLYIRPISKKFLHEILPNLTSLRVLSLAGYSLPYLPDSIQRLKQLRLLNLSLSNIENLPD 587
+           +L +       L E +  LT+L  L L    L  LP+SI RL +L  L+LS +N   LP+
+Sbjct: 35  RLDLSYNKLTSLPESIGRLTNLERLDLDNNELTSLPESIGRLTKLEKLDLSYNNFTRLPE 94
+
+Query: 588 WVCTFYNLQTLLLSDCKNLEELPDDMGKLLNLRHLDITGTPLKKLPAQIGEL-KCLQVL- 645
+            +     L+ L L    NL  LP+ +G L NL +L++T   L  LP     L + L++  
+Sbjct: 95  SIGRLTKLEILSLH-TSNLTSLPESIGNLTNLEYLELTDNNLTSLPESFKNLNRHLEIHY 153
+
+Query: 646 --TTFVCNKDPGLMIEDLGKLCNLRGKLTVSGLEN 678
+             +T+  N+   +   ++ K  +   +L    + N
+Sbjct: 154 SGSTYTRNEFIKIFRPNIPKRISKNTQLFNKEISN 188
+
+
+
+ Score =  119 bits (298), Expect = 4e-25,   Method: Composition-based stats.
+ Identities = 46/201 (22%), Positives = 80/201 (39%), Gaps = 20/201 (9%)
+
+Query: 545 NLTSLRVLSLAGYSLPYLPDSIQRLKQLRLLNLSLSNIENLPDWVCTFYNLQTLLLSDCK 604
+           N+ +   L L+   L  LP+SI RL  L  L+L  + + +LP+ +     L+ L LS   
+Sbjct: 29  NINTTTRLDLSYNKLTSLPESIGRLTNLERLDLDNNELTSLPESIGRLTKLEKLDLSYN- 87
+
+Query: 605 NLEELPDDMGKLLNLRHLDITGTPLKKLPAQIGELKCLQVLTTFVCNKDPGLMIEDLGKL 664
+           N   LP+ +G+L  L  L +  + L  LP  IG L  L+ L       +    + +  K 
+Sbjct: 88  NFTRLPESIGRLTKLEILSLHTSNLTSLPESIGNLTNLEYLE---LTDNNLTSLPESFKN 144
+
+Query: 665 CNLRGKLTVSGLENAGNGL-----DATLANMKGKKHLEDLSLEWNGTADDSQEAIDIL-- 717
+            N   ++  SG     N             +     L      +N    ++++  +I   
+Sbjct: 145 LNRHLEIHYSGSTYTRNEFIKIFRPNIPKRISKNTQL------FNKEISNTKKISNIPRN 198
+
+Query: 718 QKLQPSSRIKRLEVKGYGGTR 738
+           +++  ++      VK  G  R
+Sbjct: 199 KRVYINTNS---NVKNNGELR 216
+
+
+
+ Score =  102 bits (254), Expect = 6e-20,   Method: Composition-based stats.
+ Identities = 57/268 (21%), Positives = 103/268 (38%), Gaps = 28/268 (10%)
+
+Query: 506 YEKFKQLSQATHLRTFLPIRKDKLYIRPISKKFLHEILPNLTSLRVLSLAGYSLPYLPDS 565
+           Y K   L ++    T L    ++L +       L E +  LT L  L L+  +   LP+S
+Sbjct: 40  YNKLTSLPESIGRLTNL----ERLDLDNNELTSLPESIGRLTKLEKLDLSYNNFTRLPES 95
+
+Query: 566 IQRLKQLRLLNLSLSNIENLPDWVCTFYNLQTLLLSDCKNLEELPDDMGKLLNLRHLDI- 624
+           I RL +L +L+L  SN+ +LP+ +    NL+ L L+D  NL  LP+    L   RHL+I 
+Sbjct: 96  IGRLTKLEILSLHTSNLTSLPESIGNLTNLEYLELTDN-NLTSLPESFKNLN--RHLEIH 152
+
+Query: 625 -TGTPLKK----------LPAQIG---ELKCLQVLTTFVCNKDPGLMIEDLGKLCNLRGK 670
+            +G+   +          +P +I    +L   ++  T   +  P      +    N++  
+Sbjct: 153 YSGSTYTRNEFIKIFRPNIPKRISKNTQLFNKEISNTKKISNIPRNKRVYINTNSNVKNN 212
+
+Query: 671 LTVSGLENAGNGLDATLANMKGKKHLEDLSLEWNGTADDSQEAIDILQKLQPSSRIKRLE 730
+             +  L N             G+ H  +  +       ++      +      SR+    
+Sbjct: 213 GELRRLYNKNGINRYMNVRYTGRLHGGNFRMSNVKNLKNTNIVNKNVYLRNIKSRLNNSS 272
+
+Query: 731 VKGYG------GTRFPDWLADQSFHNVV 752
+           +  +        T  P  ++    +N+V
+Sbjct: 273 LNNFKQTVERIKTNLPSNISRNDINNMV 300
+
+
+
+ Score = 60.8 bits (146), Expect = 2e-07,   Method: Composition-based stats.
+ Identities = 27/144 (18%), Positives = 59/144 (40%), Gaps = 13/144 (9%)
+
+Query: 661 LGKLCNLRGKLTVSGLENAGNGLDATLANMKGKKHLEDLSLEWNGTADDSQEAIDILQKL 720
+           LGK  N+    T + L+ + N L +   ++    +LE L L+ N      +    +    
+Sbjct: 24  LGKRYNIN---TTTRLDLSYNKLTSLPESIGRLTNLERLDLDNNELTSLPESIGRL---- 76
+
+Query: 721 QPSSRIKRLEVKGYGGTRFPDWLADQSFHNVVSVILSRCSNCFCLPALGQLPSLKFLTIA 780
+              +++++L++     TR P+ +       +  + L   +      ++G L +L++L + 
+Sbjct: 77  ---TKLEKLDLSYNNFTRLPESIG--RLTKLEILSLHTSNLTSLPESIGNLTNLEYLELT 131
+
+Query: 781 DMGKISIIDMQFYGNGSVFEIFQS 804
+           D   ++ +   F       EI  S
+Sbjct: 132 D-NNLTSLPESFKNLNRHLEIHYS 154
+
+
+>gi|313843974|ref|YP_004061637.1| hypothetical protein OlV1_004c
+           [Ostreococcus lucimarinus virus OlV1]
+          Length = 351
+
+ Score =  150 bits (379), Expect = 2e-34,   Method: Composition-based stats.
+ Identities = 45/155 (29%), Positives = 73/155 (47%), Gaps = 5/155 (3%)
+
+Query: 528 KLYIRPISKKFLHEILPNLTSLRVLSLAGYSLPYLPDSIQRLKQLRLLNLSLSNIENLPD 587
+           +L +       L E +  LT+L  L L    L  LP+SI RL +L  L+LS +N   LP+
+Sbjct: 35  RLDLSYNKLTSLPESIGRLTNLERLDLDNNELTSLPESIGRLTKLEKLDLSYNNFTRLPE 94
+
+Query: 588 WVCTFYNLQTLLLSDCKNLEELPDDMGKLLNLRHLDITGTPLKKLPAQIGEL-KCLQVL- 645
+            +     L+ L L    NL  LP+ +G L NL +L++T   L  LP     L + L++  
+Sbjct: 95  SIGRLTKLEILSLH-TSNLTSLPESIGNLTNLEYLELTDNNLTSLPESFKNLNRHLEIHY 153
+
+Query: 646 --TTFVCNKDPGLMIEDLGKLCNLRGKLTVSGLEN 678
+             +T+  N+   +   ++ K  +   +L    + N
+Sbjct: 154 SGSTYTRNEFIKIFRPNIPKRISKNTQLFNKEISN 188
+
+
+
+ Score =  119 bits (298), Expect = 4e-25,   Method: Composition-based stats.
+ Identities = 46/201 (22%), Positives = 80/201 (39%), Gaps = 20/201 (9%)
+
+Query: 545 NLTSLRVLSLAGYSLPYLPDSIQRLKQLRLLNLSLSNIENLPDWVCTFYNLQTLLLSDCK 604
+           N+ +   L L+   L  LP+SI RL  L  L+L  + + +LP+ +     L+ L LS   
+Sbjct: 29  NINTTTRLDLSYNKLTSLPESIGRLTNLERLDLDNNELTSLPESIGRLTKLEKLDLSYN- 87
+
+Query: 605 NLEELPDDMGKLLNLRHLDITGTPLKKLPAQIGELKCLQVLTTFVCNKDPGLMIEDLGKL 664
+           N   LP+ +G+L  L  L +  + L  LP  IG L  L+ L       +    + +  K 
+Sbjct: 88  NFTRLPESIGRLTKLEILSLHTSNLTSLPESIGNLTNLEYLE---LTDNNLTSLPESFKN 144
+
+Query: 665 CNLRGKLTVSGLENAGNGL-----DATLANMKGKKHLEDLSLEWNGTADDSQEAIDIL-- 717
+            N   ++  SG     N             +     L      +N    ++++  +I   
+Sbjct: 145 LNRHLEIHYSGSTYTRNEFIKIFRPNIPKRISKNTQL------FNKEISNTKKISNIPRN 198
+
+Query: 718 QKLQPSSRIKRLEVKGYGGTR 738
+           +++  ++      VK  G  R
+Sbjct: 199 KRVYINTNS---NVKNNGELR 216
+
+
+
+ Score =  102 bits (254), Expect = 6e-20,   Method: Composition-based stats.
+ Identities = 57/268 (21%), Positives = 103/268 (38%), Gaps = 28/268 (10%)
+
+Query: 506 YEKFKQLSQATHLRTFLPIRKDKLYIRPISKKFLHEILPNLTSLRVLSLAGYSLPYLPDS 565
+           Y K   L ++    T L    ++L +       L E +  LT L  L L+  +   LP+S
+Sbjct: 40  YNKLTSLPESIGRLTNL----ERLDLDNNELTSLPESIGRLTKLEKLDLSYNNFTRLPES 95
+
+Query: 566 IQRLKQLRLLNLSLSNIENLPDWVCTFYNLQTLLLSDCKNLEELPDDMGKLLNLRHLDI- 624
+           I RL +L +L+L  SN+ +LP+ +    NL+ L L+D  NL  LP+    L   RHL+I 
+Sbjct: 96  IGRLTKLEILSLHTSNLTSLPESIGNLTNLEYLELTDN-NLTSLPESFKNLN--RHLEIH 152
+
+Query: 625 -TGTPLKK----------LPAQIG---ELKCLQVLTTFVCNKDPGLMIEDLGKLCNLRGK 670
+            +G+   +          +P +I    +L   ++  T   +  P      +    N++  
+Sbjct: 153 YSGSTYTRNEFIKIFRPNIPKRISKNTQLFNKEISNTKKISNIPRNKRVYINTNSNVKNN 212
+
+Query: 671 LTVSGLENAGNGLDATLANMKGKKHLEDLSLEWNGTADDSQEAIDILQKLQPSSRIKRLE 730
+             +  L N             G+ H  +  +       ++      +      SR+    
+Sbjct: 213 GELRRLYNKNGINRYMNVRYTGRLHGGNFRMSNVKNLKNTNIVNKNVYLRNIKSRLNNSS 272
+
+Query: 731 VKGYG------GTRFPDWLADQSFHNVV 752
+           +  +        T  P  ++    +N+V
+Sbjct: 273 LNNFKQTVERIKTNLPSNISRNDINNMV 300
+
+
+
+ Score = 60.8 bits (146), Expect = 2e-07,   Method: Composition-based stats.
+ Identities = 27/144 (18%), Positives = 59/144 (40%), Gaps = 13/144 (9%)
+
+Query: 661 LGKLCNLRGKLTVSGLENAGNGLDATLANMKGKKHLEDLSLEWNGTADDSQEAIDILQKL 720
+           LGK  N+    T + L+ + N L +   ++    +LE L L+ N      +    +    
+Sbjct: 24  LGKRYNIN---TTTRLDLSYNKLTSLPESIGRLTNLERLDLDNNELTSLPESIGRL---- 76
+
+Query: 721 QPSSRIKRLEVKGYGGTRFPDWLADQSFHNVVSVILSRCSNCFCLPALGQLPSLKFLTIA 780
+              +++++L++     TR P+ +       +  + L   +      ++G L +L++L + 
+Sbjct: 77  ---TKLEKLDLSYNNFTRLPESIG--RLTKLEILSLHTSNLTSLPESIGNLTNLEYLELT 131
+
+Query: 781 DMGKISIIDMQFYGNGSVFEIFQS 804
+           D   ++ +   F       EI  S
+Sbjct: 132 D-NNLTSLPESFKNLNRHLEIHYS 154
+
+
+>gi|506565627|ref|WP_016031944.1| hypothetical protein [Ostreococcus
+           lucimarinus virus OlV1]
+          Length = 351
+
+ Score =  150 bits (379), Expect = 2e-34,   Method: Composition-based stats.
+ Identities = 45/155 (29%), Positives = 73/155 (47%), Gaps = 5/155 (3%)
+
+Query: 528 KLYIRPISKKFLHEILPNLTSLRVLSLAGYSLPYLPDSIQRLKQLRLLNLSLSNIENLPD 587
+           +L +       L E +  LT+L  L L    L  LP+SI RL +L  L+LS +N   LP+
+Sbjct: 35  RLDLSYNKLTSLPESIGRLTNLERLDLDNNELTSLPESIGRLTKLEKLDLSYNNFTRLPE 94
+
+Query: 588 WVCTFYNLQTLLLSDCKNLEELPDDMGKLLNLRHLDITGTPLKKLPAQIGEL-KCLQVL- 645
+            +     L+ L L    NL  LP+ +G L NL +L++T   L  LP     L + L++  
+Sbjct: 95  SIGRLTKLEILSLH-TSNLTSLPESIGNLTNLEYLELTDNNLTSLPESFKNLNRHLEIHY 153
+
+Query: 646 --TTFVCNKDPGLMIEDLGKLCNLRGKLTVSGLEN 678
+             +T+  N+   +   ++ K  +   +L    + N
+Sbjct: 154 SGSTYTRNEFIKIFRPNIPKRISKNTQLFNKEISN 188
+
+
+
+ Score =  119 bits (298), Expect = 4e-25,   Method: Composition-based stats.
+ Identities = 46/201 (22%), Positives = 80/201 (39%), Gaps = 20/201 (9%)
+
+Query: 545 NLTSLRVLSLAGYSLPYLPDSIQRLKQLRLLNLSLSNIENLPDWVCTFYNLQTLLLSDCK 604
+           N+ +   L L+   L  LP+SI RL  L  L+L  + + +LP+ +     L+ L LS   
+Sbjct: 29  NINTTTRLDLSYNKLTSLPESIGRLTNLERLDLDNNELTSLPESIGRLTKLEKLDLSYN- 87
+
+Query: 605 NLEELPDDMGKLLNLRHLDITGTPLKKLPAQIGELKCLQVLTTFVCNKDPGLMIEDLGKL 664
+           N   LP+ +G+L  L  L +  + L  LP  IG L  L+ L       +    + +  K 
+Sbjct: 88  NFTRLPESIGRLTKLEILSLHTSNLTSLPESIGNLTNLEYLE---LTDNNLTSLPESFKN 144
+
+Query: 665 CNLRGKLTVSGLENAGNGL-----DATLANMKGKKHLEDLSLEWNGTADDSQEAIDIL-- 717
+            N   ++  SG     N             +     L      +N    ++++  +I   
+Sbjct: 145 LNRHLEIHYSGSTYTRNEFIKIFRPNIPKRISKNTQL------FNKEISNTKKISNIPRN 198
+
+Query: 718 QKLQPSSRIKRLEVKGYGGTR 738
+           +++  ++      VK  G  R
+Sbjct: 199 KRVYINTNS---NVKNNGELR 216
+
+
+
+ Score =  102 bits (254), Expect = 6e-20,   Method: Composition-based stats.
+ Identities = 57/268 (21%), Positives = 103/268 (38%), Gaps = 28/268 (10%)
+
+Query: 506 YEKFKQLSQATHLRTFLPIRKDKLYIRPISKKFLHEILPNLTSLRVLSLAGYSLPYLPDS 565
+           Y K   L ++    T L    ++L +       L E +  LT L  L L+  +   LP+S
+Sbjct: 40  YNKLTSLPESIGRLTNL----ERLDLDNNELTSLPESIGRLTKLEKLDLSYNNFTRLPES 95
+
+Query: 566 IQRLKQLRLLNLSLSNIENLPDWVCTFYNLQTLLLSDCKNLEELPDDMGKLLNLRHLDI- 624
+           I RL +L +L+L  SN+ +LP+ +    NL+ L L+D  NL  LP+    L   RHL+I 
+Sbjct: 96  IGRLTKLEILSLHTSNLTSLPESIGNLTNLEYLELTDN-NLTSLPESFKNLN--RHLEIH 152
+
+Query: 625 -TGTPLKK----------LPAQIG---ELKCLQVLTTFVCNKDPGLMIEDLGKLCNLRGK 670
+            +G+   +          +P +I    +L   ++  T   +  P      +    N++  
+Sbjct: 153 YSGSTYTRNEFIKIFRPNIPKRISKNTQLFNKEISNTKKISNIPRNKRVYINTNSNVKNN 212
+
+Query: 671 LTVSGLENAGNGLDATLANMKGKKHLEDLSLEWNGTADDSQEAIDILQKLQPSSRIKRLE 730
+             +  L N             G+ H  +  +       ++      +      SR+    
+Sbjct: 213 GELRRLYNKNGINRYMNVRYTGRLHGGNFRMSNVKNLKNTNIVNKNVYLRNIKSRLNNSS 272
+
+Query: 731 VKGYG------GTRFPDWLADQSFHNVV 752
+           +  +        T  P  ++    +N+V
+Sbjct: 273 LNNFKQTVERIKTNLPSNISRNDINNMV 300
+
+
+
+ Score = 60.8 bits (146), Expect = 2e-07,   Method: Composition-based stats.
+ Identities = 27/144 (18%), Positives = 59/144 (40%), Gaps = 13/144 (9%)
+
+Query: 661 LGKLCNLRGKLTVSGLENAGNGLDATLANMKGKKHLEDLSLEWNGTADDSQEAIDILQKL 720
+           LGK  N+    T + L+ + N L +   ++    +LE L L+ N      +    +    
+Sbjct: 24  LGKRYNIN---TTTRLDLSYNKLTSLPESIGRLTNLERLDLDNNELTSLPESIGRL---- 76
+
+Query: 721 QPSSRIKRLEVKGYGGTRFPDWLADQSFHNVVSVILSRCSNCFCLPALGQLPSLKFLTIA 780
+              +++++L++     TR P+ +       +  + L   +      ++G L +L++L + 
+Sbjct: 77  ---TKLEKLDLSYNNFTRLPESIG--RLTKLEILSLHTSNLTSLPESIGNLTNLEYLELT 131
+
+Query: 781 DMGKISIIDMQFYGNGSVFEIFQS 804
+           D   ++ +   F       EI  S
+Sbjct: 132 D-NNLTSLPESFKNLNRHLEIHYS 154
+
+
+>gi|322510773|gb|ADX06087.1| leucine-rich repeat-containing protein
+           [Organic Lake phycodnavirus 1]
+          Length = 161
+
+ Score =  145 bits (365), Expect = 7e-33,   Method: Composition-based stats.
+ Identities = 47/141 (33%), Positives = 72/141 (51%), Gaps = 3/141 (2%)
+
+Query: 528 KLYIRPISKKFLHEILPNLTSLRVLSLAGYSLPYLPDSIQRLKQLRLLNLSLSNIENLPD 587
+           KL +   +   L   L NL  L+ L L    L  L + I  L  L++L+L  + I +LPD
+Sbjct: 23  KLVLSGQNLTTLPPSLLNLIQLKKLYLDNNQLDTLSEIISELDNLQILSLKNNKIVSLPD 82
+
+Query: 588 WVCTFYNLQTLLLSDCKNLEELPDDMGKLLNLRHLDITGTPLKKLPAQIGELKCLQVLTT 647
+            +     L++L + D K L  LP+ +G L++L +LDI    L +LP  IGELK L  L  
+Sbjct: 83  SIGNLTKLRSLTMGDNK-LFLLPESIGNLIHLENLDIRSNILTRLPESIGELKKLSFL-- 139
+
+Query: 648 FVCNKDPGLMIEDLGKLCNLR 668
+            + + +   + E +  L NL+
+Sbjct: 140 ILDDNNLNELPETIVNLSNLQ 160
+
+
+
+ Score =  104 bits (259), Expect = 2e-20,   Method: Composition-based stats.
+ Identities = 39/121 (32%), Positives = 61/121 (50%), Gaps = 1/121 (0%)
+
+Query: 524 IRKDKLYIRPISKKFLHEILPNLTSLRVLSLAGYSLPYLPDSIQRLKQLRLLNLSLSNIE 583
+           I+  KLY+       L EI+  L +L++LSL    +  LPDSI  L +LR L +  + + 
+Sbjct: 42  IQLKKLYLDNNQLDTLSEIISELDNLQILSLKNNKIVSLPDSIGNLTKLRSLTMGDNKLF 101
+
+Query: 584 NLPDWVCTFYNLQTLLLSDCKNLEELPDDMGKLLNLRHLDITGTPLKKLPAQIGELKCLQ 643
+            LP+ +    +L+ L +     L  LP+ +G+L  L  L +    L +LP  I  L  LQ
+Sbjct: 102 LLPESIGNLIHLENLDIRSN-ILTRLPESIGELKKLSFLILDDNNLNELPETIVNLSNLQ 160
+
+Query: 644 V 644
+           +
+Sbjct: 161 I 161
+
+
+
+ Score = 80.5 bits (197), Expect = 2e-13,   Method: Composition-based stats.
+ Identities = 33/150 (22%), Positives = 64/150 (42%), Gaps = 9/150 (6%)
+
+Query: 567 QRLKQLRLLNLSLSNIENLPDWVCTFYNLQTLLLSDCKNLEELPDDMGKLLNLRHLDITG 626
+           QR   +  L LS  N+  LP  +     L+ L L + + L+ L + + +L NL+ L +  
+Sbjct: 16  QRNTNVSKLVLSGQNLTTLPPSLLNLIQLKKLYLDNNQ-LDTLSEIISELDNLQILSLKN 74
+
+Query: 627 TPLKKLPAQIGELKCLQVLTTFVCNKDPGLMIEDLGKLCNLRGKLTVSGLENAGNGLDAT 686
+             +  LP  IG L  L+ LT      +   ++ +     ++   + +  L+   N L   
+Sbjct: 75  NKIVSLPDSIGNLTKLRSLT---MGDNKLFLLPE-----SIGNLIHLENLDIRSNILTRL 126
+
+Query: 687 LANMKGKKHLEDLSLEWNGTADDSQEAIDI 716
+             ++   K L  L L+ N   +  +  +++
+Sbjct: 127 PESIGELKKLSFLILDDNNLNELPETIVNL 156
+
+
+
+ Score = 62.7 bits (151), Expect = 4e-08,   Method: Composition-based stats.
+ Identities = 31/183 (16%), Positives = 64/183 (34%), Gaps = 41/183 (22%)
+
+Query: 593 YNLQTLLLSDCKNLEELPDDMGKLLNLRHLDITGTPLKKLPAQIGELKCLQVLTTFVCNK 652
+            N+  L+LS  +NL  LP  +  L+ L+ L +    L  L   I EL  LQ+L+      
+Sbjct: 19  TNVSKLVLSG-QNLTTLPPSLLNLIQLKKLYLDNNQLDTLSEIISELDNLQILSL----- 72
+
+Query: 653 DPGLMIEDLGKLCNLRGKLTVSGLENAGNGLDATLANMKGKKHLEDLSLEWNGTADDSQE 712
+                                       N + +   ++     L  L++  N      + 
+Sbjct: 73  --------------------------KNNKIVSLPDSIGNLTKLRSLTMGDNKLFLLPES 106
+
+Query: 713 AIDILQKLQPSSRIKRLEVKGYGGTRFPDWLADQSFHNVVSVILSRCSNCFCLPALGQLP 772
+             +++        ++ L+++    TR P+ + +     +  +IL   +       +  L 
+Sbjct: 107 IGNLIH-------LENLDIRSNILTRLPESIGE--LKKLSFLILDDNNLNELPETIVNLS 157
+
+Query: 773 SLK 775
+           +L+
+Sbjct: 158 NLQ 160
+
+
+>gi|322510680|gb|ADX05994.1| leucine-rich repeat-containing protein
+           [Organic Lake phycodnavirus 1]
+          Length = 98
+
+ Score = 85.9 bits (211), Expect = 5e-15,   Method: Composition-based stats.
+ Identities = 31/99 (31%), Positives = 54/99 (54%), Gaps = 1/99 (1%)
+
+Query: 543 LPNLTSLRVLSLAGYSLPYLPDSIQRLKQLRLLNLSLSNIENLPDWVCTFYNLQTLLLSD 602
+           + NL  L +L++    L  LP++I  +K++R L +  + +  LP  +    NL+ L  S 
+Sbjct: 1   MVNLIELEILNVNLNRLTLLPENIGNIKKMRSLYIESNELTLLPVSIGGLQNLEQLFTSS 60
+
+Query: 603 CKNLEELPDDMGKLLNLRHLDITGTPLKKLPAQIGELKC 641
+            + L ++P+ +  L NL+ LDI    L +LP  IG+L+ 
+Sbjct: 61  NR-LSQIPESICNLTNLQMLDIKDNELTQLPKHIGKLRN 98
+
+
+
+ Score = 80.8 bits (198), Expect = 2e-13,   Method: Composition-based stats.
+ Identities = 29/90 (32%), Positives = 44/90 (48%), Gaps = 1/90 (1%)
+
+Query: 529 LYIRPISKKFLHEILPNLTSLRVLSLAGYSLPYLPDSIQRLKQLRLLNLSLSNIENLPDW 588
+           L +       L E + N+  +R L +    L  LP SI  L+ L  L  S + +  +P+ 
+Sbjct: 10  LNVNLNRLTLLPENIGNIKKMRSLYIESNELTLLPVSIGGLQNLEQLFTSSNRLSQIPES 69
+
+Query: 589 VCTFYNLQTLLLSDCKNLEELPDDMGKLLN 618
+           +C   NLQ L + D + L +LP  +GKL N
+Sbjct: 70  ICNLTNLQMLDIKDNE-LTQLPKHIGKLRN 98
+
+
+
+ Score = 71.6 bits (174), Expect = 1e-10,   Method: Composition-based stats.
+ Identities = 23/78 (29%), Positives = 41/78 (52%), Gaps = 1/78 (1%)
+
+Query: 568 RLKQLRLLNLSLSNIENLPDWVCTFYNLQTLLLSDCKNLEELPDDMGKLLNLRHLDITGT 627
+            L +L +LN++L+ +  LP+ +     +++L +   + L  LP  +G L NL  L  +  
+Sbjct: 3   NLIELEILNVNLNRLTLLPENIGNIKKMRSLYIESNE-LTLLPVSIGGLQNLEQLFTSSN 61
+
+Query: 628 PLKKLPAQIGELKCLQVL 645
+            L ++P  I  L  LQ+L
+Sbjct: 62  RLSQIPESICNLTNLQML 79
+
+
+
+ Score = 56.2 bits (134), Expect = 4e-06,   Method: Composition-based stats.
+ Identities = 24/131 (18%), Positives = 45/131 (34%), Gaps = 38/131 (29%)
+
+Query: 613 MGKLLNLRHLDITGTPLKKLPAQIGELKCLQVLTTFVCNKDPGLMIEDLGKLCNLRGKLT 672
+           M  L+ L  L++    L  LP  IG +K ++            L IE             
+Sbjct: 1   MVNLIELEILNVNLNRLTLLPENIGNIKKMR-----------SLYIE------------- 36
+
+Query: 673 VSGLENAGNGLDATLANMKGKKHLEDLSLEWNGTADDSQEAIDILQKLQPSSRIKRLEVK 732
+                   N L     ++ G ++LE L    N  +   +   ++       + ++ L++K
+Sbjct: 37  -------SNELTLLPVSIGGLQNLEQLFTSSNRLSQIPESICNL-------TNLQMLDIK 82
+
+Query: 733 GYGGTRFPDWL 743
+               T+ P  +
+Sbjct: 83  DNELTQLPKHI 93
+
+
+
+ Score = 56.2 bits (134), Expect = 5e-06,   Method: Composition-based stats.
+ Identities = 23/126 (18%), Positives = 43/126 (34%), Gaps = 32/126 (25%)
+
+Query: 591 TFYNLQTLLLSDCKNLEELPDDMGKLLNLRHLDITGTPLKKLPAQIGELKCLQVLTTFVC 650
+               L+ L ++  + L  LP+++G +  +R L I    L  LP  IG L+ L+ L T   
+Sbjct: 3   NLIELEILNVNLNR-LTLLPENIGNIKKMRSLYIESNELTLLPVSIGGLQNLEQLFT--- 58
+
+Query: 651 NKDPGLMIEDLGKLCNLRGKLTVSGLENAGNGLDATLANMKGKKHLEDLSLEWNGTADDS 710
+                                       + N L     ++    +L+ L ++ N      
+Sbjct: 59  ----------------------------SSNRLSQIPESICNLTNLQMLDIKDNELTQLP 90
+
+Query: 711 QEAIDI 716
+           +    +
+Sbjct: 91  KHIGKL 96
+
+
+>gi|4049775|gb|AAC97735.1| ORF MSV261 leucine rich repeat gene
+           family protein, similar to Amsacta moorei entomopoxvirus
+           Q3 ORF SW:P28854 [Melanoplus sanguinipes entomopoxvirus]
+          Length = 624
+
+ Score = 63.1 bits (152), Expect = 4e-08,   Method: Composition-based stats.
+ Identities = 98/430 (22%), Positives = 169/430 (39%), Gaps = 75/430 (17%)
+
+Query: 541 EILPNLTSLRVLSLAGYSLPYLPDSIQRLK--QLRLLNLSLSNIENLPDWVCTFYNLQTL 598
+           + L   T+L+VL+++  S  +L +SI  LK   L  LN S  NI++  +++  F NLQ L
+Sbjct: 72  DFLNKFTNLKVLNISNNS--HLSESIDDLKLPNLINLNCSSCNIKSF-NFLRNFNNLQIL 128
+
+Query: 599 LLSDCKNL--EELPDDMGKLLNLRHLDITGTPLKKLPAQIGELKCLQVLTTFVCNKDPGL 656
+            +S+ K +   ELP+ +          I     K        LK L  L     +    L
+Sbjct: 129 DISNNKYIWCYELPESL----------IKLNISKCYIENDRYLKNLNNLQELNISNKLDL 178
+
+Query: 657 MIEDLGKLCNLRGKLTVSGLENAGNGLDATLANMKGKKHLEDLSLEWNGTADDSQEA-ID 715
+              +   + NL   L    + N  N ++A   ++K   +L++L +      D S E  I+
+Sbjct: 179 DFPNEIDINNLPKSLIKLNISNC-NIINAN--SLKNLINLKELDISNKLYLDFSNEIDIN 235
+
+Query: 716 ILQKLQPSSRIKRLEVKGYGGTRFPDWLADQSFHNVVSVILSRCSNCFCLPALGQLPSLK 775
+            L K      I    +            + ++  N+  + +S   N         L  L 
+Sbjct: 236 NLTKSLIKLNISNCNIINAS--------SLKNLINLKELDISNNYNINISSLPKTLIKLN 287
+
+Query: 776 FLT--------IADMGKISIIDMQFYGNGSVFEIFQSLQILRIEEMPEWK-DWLVPRKGV 826
+             +        I ++  +  +D+    N ++  + +SL  L I        ++++     
+Sbjct: 288 ISSCNIKNTNFIINLDNLKELDISRNFNINISSLPKSLIKLNIRTCYIKNTNFIINLD-- 345
+
+Query: 827 FCGLQELHII-NCPKLVGDLPKQLLSLTEFELSGCPGLVLSDGRFSMFNSLDLYSLKKLK 885
+              L+EL I  N    +  LPK L++L    ++ C    +    F      DLY+LK+L 
+Sbjct: 346 --NLKELDISRNFNINISSLPKSLITLN---INSC---YIKHTNFIN----DLYNLKELD 393
+
+Query: 886 IS-----NMPSLEDF-------------TSELKKLTGLEDFEIGNCPKLISIFDMGRLPA 927
+           IS     N+ SL                T+ +  L  L++ +I N   +    ++  LP 
+Sbjct: 394 ISRNYNINISSLPKSLIKLNISDCDIKNTNFINDLDNLKELDISNNYNI----NISSLPK 449
+
+Query: 928 SLKTLKISGC 937
+           +L TL IS C
+Sbjct: 450 TLTTLNISSC 459
+
+
+>gi|9631422|ref|NP_048332.1| ORF MSV261 leucine rich repeat gene
+           family protein, similar to Amsacta moorei entomopoxvirus
+           Q3 ORF SW:P28854 [Melanoplus sanguinipes entomopoxvirus]
+          Length = 624
+
+ Score = 63.1 bits (152), Expect = 4e-08,   Method: Composition-based stats.
+ Identities = 98/430 (22%), Positives = 169/430 (39%), Gaps = 75/430 (17%)
+
+Query: 541 EILPNLTSLRVLSLAGYSLPYLPDSIQRLK--QLRLLNLSLSNIENLPDWVCTFYNLQTL 598
+           + L   T+L+VL+++  S  +L +SI  LK   L  LN S  NI++  +++  F NLQ L
+Sbjct: 72  DFLNKFTNLKVLNISNNS--HLSESIDDLKLPNLINLNCSSCNIKSF-NFLRNFNNLQIL 128
+
+Query: 599 LLSDCKNL--EELPDDMGKLLNLRHLDITGTPLKKLPAQIGELKCLQVLTTFVCNKDPGL 656
+            +S+ K +   ELP+ +          I     K        LK L  L     +    L
+Sbjct: 129 DISNNKYIWCYELPESL----------IKLNISKCYIENDRYLKNLNNLQELNISNKLDL 178
+
+Query: 657 MIEDLGKLCNLRGKLTVSGLENAGNGLDATLANMKGKKHLEDLSLEWNGTADDSQEA-ID 715
+              +   + NL   L    + N  N ++A   ++K   +L++L +      D S E  I+
+Sbjct: 179 DFPNEIDINNLPKSLIKLNISNC-NIINAN--SLKNLINLKELDISNKLYLDFSNEIDIN 235
+
+Query: 716 ILQKLQPSSRIKRLEVKGYGGTRFPDWLADQSFHNVVSVILSRCSNCFCLPALGQLPSLK 775
+            L K      I    +            + ++  N+  + +S   N         L  L 
+Sbjct: 236 NLTKSLIKLNISNCNIINAS--------SLKNLINLKELDISNNYNINISSLPKTLIKLN 287
+
+Query: 776 FLT--------IADMGKISIIDMQFYGNGSVFEIFQSLQILRIEEMPEWK-DWLVPRKGV 826
+             +        I ++  +  +D+    N ++  + +SL  L I        ++++     
+Sbjct: 288 ISSCNIKNTNFIINLDNLKELDISRNFNINISSLPKSLIKLNIRTCYIKNTNFIINLD-- 345
+
+Query: 827 FCGLQELHII-NCPKLVGDLPKQLLSLTEFELSGCPGLVLSDGRFSMFNSLDLYSLKKLK 885
+              L+EL I  N    +  LPK L++L    ++ C    +    F      DLY+LK+L 
+Sbjct: 346 --NLKELDISRNFNINISSLPKSLITLN---INSC---YIKHTNFIN----DLYNLKELD 393
+
+Query: 886 IS-----NMPSLEDF-------------TSELKKLTGLEDFEIGNCPKLISIFDMGRLPA 927
+           IS     N+ SL                T+ +  L  L++ +I N   +    ++  LP 
+Sbjct: 394 ISRNYNINISSLPKSLIKLNISDCDIKNTNFINDLDNLKELDISNNYNI----NISSLPK 449
+
+Query: 928 SLKTLKISGC 937
+           +L TL IS C
+Sbjct: 450 TLTTLNISSC 459
+
+
+>gi|506554792|ref|WP_016021302.1| ORF MSV261 leucine rich repeat
+           gene family protein, similar to Amsacta moorei
+           entomopoxvirus Q3 ORF SW:P28854 [Melanoplus sanguinipes
+           entomopoxvirus]
+          Length = 624
+
+ Score = 63.1 bits (152), Expect = 4e-08,   Method: Composition-based stats.
+ Identities = 98/430 (22%), Positives = 169/430 (39%), Gaps = 75/430 (17%)
+
+Query: 541 EILPNLTSLRVLSLAGYSLPYLPDSIQRLK--QLRLLNLSLSNIENLPDWVCTFYNLQTL 598
+           + L   T+L+VL+++  S  +L +SI  LK   L  LN S  NI++  +++  F NLQ L
+Sbjct: 72  DFLNKFTNLKVLNISNNS--HLSESIDDLKLPNLINLNCSSCNIKSF-NFLRNFNNLQIL 128
+
+Query: 599 LLSDCKNL--EELPDDMGKLLNLRHLDITGTPLKKLPAQIGELKCLQVLTTFVCNKDPGL 656
+            +S+ K +   ELP+ +          I     K        LK L  L     +    L
+Sbjct: 129 DISNNKYIWCYELPESL----------IKLNISKCYIENDRYLKNLNNLQELNISNKLDL 178
+
+Query: 657 MIEDLGKLCNLRGKLTVSGLENAGNGLDATLANMKGKKHLEDLSLEWNGTADDSQEA-ID 715
+              +   + NL   L    + N  N ++A   ++K   +L++L +      D S E  I+
+Sbjct: 179 DFPNEIDINNLPKSLIKLNISNC-NIINAN--SLKNLINLKELDISNKLYLDFSNEIDIN 235
+
+Query: 716 ILQKLQPSSRIKRLEVKGYGGTRFPDWLADQSFHNVVSVILSRCSNCFCLPALGQLPSLK 775
+            L K      I    +            + ++  N+  + +S   N         L  L 
+Sbjct: 236 NLTKSLIKLNISNCNIINAS--------SLKNLINLKELDISNNYNINISSLPKTLIKLN 287
+
+Query: 776 FLT--------IADMGKISIIDMQFYGNGSVFEIFQSLQILRIEEMPEWK-DWLVPRKGV 826
+             +        I ++  +  +D+    N ++  + +SL  L I        ++++     
+Sbjct: 288 ISSCNIKNTNFIINLDNLKELDISRNFNINISSLPKSLIKLNIRTCYIKNTNFIINLD-- 345
+
+Query: 827 FCGLQELHII-NCPKLVGDLPKQLLSLTEFELSGCPGLVLSDGRFSMFNSLDLYSLKKLK 885
+              L+EL I  N    +  LPK L++L    ++ C    +    F      DLY+LK+L 
+Sbjct: 346 --NLKELDISRNFNINISSLPKSLITLN---INSC---YIKHTNFIN----DLYNLKELD 393
+
+Query: 886 IS-----NMPSLEDF-------------TSELKKLTGLEDFEIGNCPKLISIFDMGRLPA 927
+           IS     N+ SL                T+ +  L  L++ +I N   +    ++  LP 
+Sbjct: 394 ISRNYNINISSLPKSLIKLNISDCDIKNTNFINDLDNLKELDISNNYNI----NISSLPK 449
+
+Query: 928 SLKTLKISGC 937
+           +L TL IS C
+Sbjct: 450 TLTTLNISSC 459
+
+
+>gi|9944528|gb|AAG02711.1|AF250284_5 AMV005 [Amsacta moorei
+           entomopoxvirus 'L']
+          Length = 350
+
+ Score = 60.4 bits (145), Expect = 3e-07,   Method: Composition-based stats.
+ Identities = 50/198 (25%), Positives = 82/198 (41%), Gaps = 30/198 (15%)
+
+Query: 528 KLYIRPISKKFLHEILPNLTSLRVLSLAGYSLPYLPDSIQRLKQLRLLNLSLSNIENLPD 587
+           +LY        L E + N T+LR L      +  L + I+ L  LR L    +NI++L  
+Sbjct: 142 ELYCYNTKINSLKE-IENTTNLRKLYCHNTKINSLKE-IKNLINLRELYCFNTNIDSLI- 198
+
+Query: 588 WVCTFYNLQTLLLSDC--------KNLEELPD------------DMGKLLNLRHLDITGT 627
+            +  F NL+ L   +         +NL  L +             +  L+NL+ LD   T
+Sbjct: 199 GIENFINLRELYCFNTNIDSLIGIENLINLRELCCFNTNIYSLSGINNLINLKKLDCNNT 258
+
+Query: 628 PLKKLPAQIGELKCLQVLTTFVCNKDPGLMIEDLGKL----CNLRGKLTVSGLENAGN-- 681
+            +  L   I  L  L+ L  F    D  L I++L  L    C+     +++G+EN  N  
+Sbjct: 259 KINSLKE-IKNLINLRELYCFDTKIDTLLEIKNLINLEKLNCSYTNINSLTGIENLINLK 317
+
+Query: 682 GLDATLANMKGKKHLEDL 699
+            L+ +  N+     +++L
+Sbjct: 318 KLNCSYTNINSLYEIKNL 335
+
+
+>gi|9964319|ref|NP_064787.1| Possible surface protein [Amsacta
+           moorei entomopoxvirus 'L']
+          Length = 350
+
+ Score = 60.4 bits (145), Expect = 3e-07,   Method: Composition-based stats.
+ Identities = 50/198 (25%), Positives = 82/198 (41%), Gaps = 30/198 (15%)
+
+Query: 528 KLYIRPISKKFLHEILPNLTSLRVLSLAGYSLPYLPDSIQRLKQLRLLNLSLSNIENLPD 587
+           +LY        L E + N T+LR L      +  L + I+ L  LR L    +NI++L  
+Sbjct: 142 ELYCYNTKINSLKE-IENTTNLRKLYCHNTKINSLKE-IKNLINLRELYCFNTNIDSLI- 198
+
+Query: 588 WVCTFYNLQTLLLSDC--------KNLEELPD------------DMGKLLNLRHLDITGT 627
+            +  F NL+ L   +         +NL  L +             +  L+NL+ LD   T
+Sbjct: 199 GIENFINLRELYCFNTNIDSLIGIENLINLRELCCFNTNIYSLSGINNLINLKKLDCNNT 258
+
+Query: 628 PLKKLPAQIGELKCLQVLTTFVCNKDPGLMIEDLGKL----CNLRGKLTVSGLENAGN-- 681
+            +  L   I  L  L+ L  F    D  L I++L  L    C+     +++G+EN  N  
+Sbjct: 259 KINSLKE-IKNLINLRELYCFDTKIDTLLEIKNLINLEKLNCSYTNINSLTGIENLINLK 317
+
+Query: 682 GLDATLANMKGKKHLEDL 699
+            L+ +  N+     +++L
+Sbjct: 318 KLNCSYTNINSLYEIKNL 335
+
+
+>gi|506556135|ref|WP_016022627.1| Possible surface protein [Amsacta
+           moorei entomopoxvirus 'L']
+          Length = 350
+
+ Score = 60.4 bits (145), Expect = 3e-07,   Method: Composition-based stats.
+ Identities = 50/198 (25%), Positives = 82/198 (41%), Gaps = 30/198 (15%)
+
+Query: 528 KLYIRPISKKFLHEILPNLTSLRVLSLAGYSLPYLPDSIQRLKQLRLLNLSLSNIENLPD 587
+           +LY        L E + N T+LR L      +  L + I+ L  LR L    +NI++L  
+Sbjct: 142 ELYCYNTKINSLKE-IENTTNLRKLYCHNTKINSLKE-IKNLINLRELYCFNTNIDSLI- 198
+
+Query: 588 WVCTFYNLQTLLLSDC--------KNLEELPD------------DMGKLLNLRHLDITGT 627
+            +  F NL+ L   +         +NL  L +             +  L+NL+ LD   T
+Sbjct: 199 GIENFINLRELYCFNTNIDSLIGIENLINLRELCCFNTNIYSLSGINNLINLKKLDCNNT 258
+
+Query: 628 PLKKLPAQIGELKCLQVLTTFVCNKDPGLMIEDLGKL----CNLRGKLTVSGLENAGN-- 681
+            +  L   I  L  L+ L  F    D  L I++L  L    C+     +++G+EN  N  
+Sbjct: 259 KINSLKE-IKNLINLRELYCFDTKIDTLLEIKNLINLEKLNCSYTNINSLTGIENLINLK 317
+
+Query: 682 GLDATLANMKGKKHLEDL 699
+            L+ +  N+     +++L
+Sbjct: 318 KLNCSYTNINSLYEIKNL 335
+
+
+>gi|9944790|gb|AAG02973.1|AF250284_267 AMVITR01 [Amsacta moorei
+           entomopoxvirus 'L']
+          Length = 460
+
+ Score = 59.3 bits (142), Expect = 6e-07,   Method: Composition-based stats.
+ Identities = 94/435 (21%), Positives = 170/435 (39%), Gaps = 71/435 (16%)
+
+Query: 492 KVRHFSYTCSFWDVYEKFKQLSQATHLRTFLPIRKDKLYIRPISKKFLHEILPNLTSLRV 551
+           K++     C    +  K K  S    ++ F+ ++  +L       K L E + N T L  
+Sbjct: 20  KLQFIDSKCIISKLIYKLKYNSCLKEIKNFINLK--ELIYNNYYIKSL-EGIENFTKLIK 76
+
+Query: 552 LSLAGYSLPYLPDSIQRLKQLRLLNLSLSNIENLPDWVCTFYNLQTLLLSDCKNLEELPD 611
+           L      +  L   I+ L +L+ L    +NI +L  ++    NL  L   +  N+  L  
+Sbjct: 77  LYCYNTRIDSL-KGIENLIKLKELYCFNTNINSLV-YLKNLINLTELYCFET-NIYSL-K 132
+
+Query: 612 DMGKLLNLRHLDITGTPLKKLPAQIGELKCLQVLTTFVCNKDPGLMIEDLGKLCNLR--- 668
+            +  L+NL+  D + T    L   + E+K L  L    C+      +E +  L NL    
+Sbjct: 133 GIENLINLKEFDCSYT----LIDSLKEIKNLINLQKLNCSHTIIYSLEGIENLINLEKLD 188
+
+Query: 669 -GKLTVSGLENAGN-----GLDATLANMKGKKHLEDLSLEWNGTADDSQEAIDILQKLQP 722
+               +++ L+   N      L+    N+   K L++L        D S   I+ L++LQ 
+Sbjct: 189 CSYTSINSLKEIKNLINLKKLECYETNIYSLKELQNLI--NLKKLDCSYTKINSLKELQN 246
+
+Query: 723 SSRIKRLEVKGYGGTRFPDWLADQSFHNVVSVILSRCSNCFC--LPALGQLPSLKFLTIA 780
+              +K+L+               +   N++++    CSN     L  L  L +LK L   
+Sbjct: 247 LINLKKLDFHNTNIYSL------KGIENLINIEKLNCSNTNIDSLKYLENLTNLKNLICY 300
+
+Query: 781 DMGKISIIDMQFYGNGSVFEIFQSLQILRIEEMPEWKDWLVPRKGV--FCGLQELHI--- 835
+            +  I  I++                ++ +EE+   +  +V  KG+     L+EL     
+Sbjct: 301 GI-NIDFIEILK-------------NLINLEELDCSETKIVSLKGIENLINLKELDCSYT 346
+
+Query: 836 -INCPKLVGDLPKQLLSLTEFELSGCPGLVLSDGRFSMFNSLDLYSLKKLK-ISNMPSLE 893
+            IN  K +    + L++L + + S              +  +D  SLK+ K + N+  + 
+Sbjct: 347 KINSLKGI----ENLINLKKLDCS--------------YTKID--SLKQTKNLINLEQIH 386
+
+Query: 894 DFTSELKKLTGLEDF 908
+            + +EL  L G+E+ 
+Sbjct: 387 CYVTELDSLKGIENL 401
+
+
+
+ Score = 54.3 bits (129), Expect = 2e-05,   Method: Composition-based stats.
+ Identities = 60/302 (19%), Positives = 108/302 (35%), Gaps = 58/302 (19%)
+
+Query: 541 EILPNLTSLRVLSLAGYSLPYLPDS---------------------IQRLKQLRLLNLSL 579
+           E + NL +L  L  +  S+  L +                      +Q L  L+ L+ S 
+Sbjct: 176 EGIENLINLEKLDCSYTSINSLKEIKNLINLKKLECYETNIYSLKELQNLINLKKLDCSY 235
+
+Query: 580 SNIENLPDWVCTFYNLQTLLLSDCKNLEELPDDMGKLLNLRHLDITGTPLKKLPAQIGEL 639
+           + I +L + +    NL+ L   +  N+  L   +  L+N+  L+ + T +  L   +  L
+Sbjct: 236 TKINSLKE-LQNLINLKKLDFHNT-NIYSL-KGIENLINIEKLNCSNTNIDSL-KYLENL 291
+
+Query: 640 KCLQVLTTFVCNKDPGLMIEDLGKLCNLRGKLTVSGLENAGNGLDATLANMKGKKHLEDL 699
+             L+ L  +  N D    IE L  L NL               LD +   +   K +E+L
+Sbjct: 292 TNLKNLICYGINID---FIEILKNLINLE-------------ELDCSETKIVSLKGIENL 335
+
+Query: 700 SLEWNGTADDSQEAIDILQKLQPSSRIKRLE---VKGYGGTRFPDWLADQSFHNVVSVI- 755
+                   D S   I+ L+ ++    +K+L+    K     +  + +  +  H  V+ + 
+Sbjct: 336 I--NLKELDCSYTKINSLKGIENLINLKKLDCSYTKIDSLKQTKNLINLEQIHCYVTELD 393
+
+Query: 756 -------LSRCSNCFC----LPALGQLPSLKFLTIADMGKISIIDMQFYGNGSVFEIFQS 804
+                  L      FC    + +L  + +L  L I      +II ++   N    E    
+Sbjct: 394 SLKGIENLINLKKLFCHNTKINSLKGIENLINLEILYCNNTNIISLEGIKNLIKLEELYY 453
+
+Query: 805 LQ 806
+             
+Sbjct: 454 FN 455
+
+
+>gi|9944815|gb|AAG02998.1| AMVITR01 [Amsacta moorei entomopoxvirus
+           'L']
+          Length = 460
+
+ Score = 59.3 bits (142), Expect = 6e-07,   Method: Composition-based stats.
+ Identities = 94/435 (21%), Positives = 170/435 (39%), Gaps = 71/435 (16%)
+
+Query: 492 KVRHFSYTCSFWDVYEKFKQLSQATHLRTFLPIRKDKLYIRPISKKFLHEILPNLTSLRV 551
+           K++     C    +  K K  S    ++ F+ ++  +L       K L E + N T L  
+Sbjct: 20  KLQFIDSKCIISKLIYKLKYNSCLKEIKNFINLK--ELIYNNYYIKSL-EGIENFTKLIK 76
+
+Query: 552 LSLAGYSLPYLPDSIQRLKQLRLLNLSLSNIENLPDWVCTFYNLQTLLLSDCKNLEELPD 611
+           L      +  L   I+ L +L+ L    +NI +L  ++    NL  L   +  N+  L  
+Sbjct: 77  LYCYNTRIDSL-KGIENLIKLKELYCFNTNINSLV-YLKNLINLTELYCFET-NIYSL-K 132
+
+Query: 612 DMGKLLNLRHLDITGTPLKKLPAQIGELKCLQVLTTFVCNKDPGLMIEDLGKLCNLR--- 668
+            +  L+NL+  D + T    L   + E+K L  L    C+      +E +  L NL    
+Sbjct: 133 GIENLINLKEFDCSYT----LIDSLKEIKNLINLQKLNCSHTIIYSLEGIENLINLEKLD 188
+
+Query: 669 -GKLTVSGLENAGN-----GLDATLANMKGKKHLEDLSLEWNGTADDSQEAIDILQKLQP 722
+               +++ L+   N      L+    N+   K L++L        D S   I+ L++LQ 
+Sbjct: 189 CSYTSINSLKEIKNLINLKKLECYETNIYSLKELQNLI--NLKKLDCSYTKINSLKELQN 246
+
+Query: 723 SSRIKRLEVKGYGGTRFPDWLADQSFHNVVSVILSRCSNCFC--LPALGQLPSLKFLTIA 780
+              +K+L+               +   N++++    CSN     L  L  L +LK L   
+Sbjct: 247 LINLKKLDFHNTNIYSL------KGIENLINIEKLNCSNTNIDSLKYLENLTNLKNLICY 300
+
+Query: 781 DMGKISIIDMQFYGNGSVFEIFQSLQILRIEEMPEWKDWLVPRKGV--FCGLQELHI--- 835
+            +  I  I++                ++ +EE+   +  +V  KG+     L+EL     
+Sbjct: 301 GI-NIDFIEILK-------------NLINLEELDCSETKIVSLKGIENLINLKELDCSYT 346
+
+Query: 836 -INCPKLVGDLPKQLLSLTEFELSGCPGLVLSDGRFSMFNSLDLYSLKKLK-ISNMPSLE 893
+            IN  K +    + L++L + + S              +  +D  SLK+ K + N+  + 
+Sbjct: 347 KINSLKGI----ENLINLKKLDCS--------------YTKID--SLKQTKNLINLEQIH 386
+
+Query: 894 DFTSELKKLTGLEDF 908
+            + +EL  L G+E+ 
+Sbjct: 387 CYVTELDSLKGIENL 401
+
+
+
+ Score = 54.3 bits (129), Expect = 2e-05,   Method: Composition-based stats.
+ Identities = 60/302 (19%), Positives = 108/302 (35%), Gaps = 58/302 (19%)
+
+Query: 541 EILPNLTSLRVLSLAGYSLPYLPDS---------------------IQRLKQLRLLNLSL 579
+           E + NL +L  L  +  S+  L +                      +Q L  L+ L+ S 
+Sbjct: 176 EGIENLINLEKLDCSYTSINSLKEIKNLINLKKLECYETNIYSLKELQNLINLKKLDCSY 235
+
+Query: 580 SNIENLPDWVCTFYNLQTLLLSDCKNLEELPDDMGKLLNLRHLDITGTPLKKLPAQIGEL 639
+           + I +L + +    NL+ L   +  N+  L   +  L+N+  L+ + T +  L   +  L
+Sbjct: 236 TKINSLKE-LQNLINLKKLDFHNT-NIYSL-KGIENLINIEKLNCSNTNIDSL-KYLENL 291
+
+Query: 640 KCLQVLTTFVCNKDPGLMIEDLGKLCNLRGKLTVSGLENAGNGLDATLANMKGKKHLEDL 699
+             L+ L  +  N D    IE L  L NL               LD +   +   K +E+L
+Sbjct: 292 TNLKNLICYGINID---FIEILKNLINLE-------------ELDCSETKIVSLKGIENL 335
+
+Query: 700 SLEWNGTADDSQEAIDILQKLQPSSRIKRLE---VKGYGGTRFPDWLADQSFHNVVSVI- 755
+                   D S   I+ L+ ++    +K+L+    K     +  + +  +  H  V+ + 
+Sbjct: 336 I--NLKELDCSYTKINSLKGIENLINLKKLDCSYTKIDSLKQTKNLINLEQIHCYVTELD 393
+
+Query: 756 -------LSRCSNCFC----LPALGQLPSLKFLTIADMGKISIIDMQFYGNGSVFEIFQS 804
+                  L      FC    + +L  + +L  L I      +II ++   N    E    
+Sbjct: 394 SLKGIENLINLKKLFCHNTKINSLKGIENLINLEILYCNNTNIISLEGIKNLIKLEELYY 453
+
+Query: 805 LQ 806
+             
+Sbjct: 454 FN 455
+
+
+>gi|9964581|ref|NP_064770.1| internalin [Amsacta moorei
+           entomopoxvirus 'L']
+          Length = 460
+
+ Score = 59.3 bits (142), Expect = 6e-07,   Method: Composition-based stats.
+ Identities = 94/435 (21%), Positives = 170/435 (39%), Gaps = 71/435 (16%)
+
+Query: 492 KVRHFSYTCSFWDVYEKFKQLSQATHLRTFLPIRKDKLYIRPISKKFLHEILPNLTSLRV 551
+           K++     C    +  K K  S    ++ F+ ++  +L       K L E + N T L  
+Sbjct: 20  KLQFIDSKCIISKLIYKLKYNSCLKEIKNFINLK--ELIYNNYYIKSL-EGIENFTKLIK 76
+
+Query: 552 LSLAGYSLPYLPDSIQRLKQLRLLNLSLSNIENLPDWVCTFYNLQTLLLSDCKNLEELPD 611
+           L      +  L   I+ L +L+ L    +NI +L  ++    NL  L   +  N+  L  
+Sbjct: 77  LYCYNTRIDSL-KGIENLIKLKELYCFNTNINSLV-YLKNLINLTELYCFET-NIYSL-K 132
+
+Query: 612 DMGKLLNLRHLDITGTPLKKLPAQIGELKCLQVLTTFVCNKDPGLMIEDLGKLCNLR--- 668
+            +  L+NL+  D + T    L   + E+K L  L    C+      +E +  L NL    
+Sbjct: 133 GIENLINLKEFDCSYT----LIDSLKEIKNLINLQKLNCSHTIIYSLEGIENLINLEKLD 188
+
+Query: 669 -GKLTVSGLENAGN-----GLDATLANMKGKKHLEDLSLEWNGTADDSQEAIDILQKLQP 722
+               +++ L+   N      L+    N+   K L++L        D S   I+ L++LQ 
+Sbjct: 189 CSYTSINSLKEIKNLINLKKLECYETNIYSLKELQNLI--NLKKLDCSYTKINSLKELQN 246
+
+Query: 723 SSRIKRLEVKGYGGTRFPDWLADQSFHNVVSVILSRCSNCFC--LPALGQLPSLKFLTIA 780
+              +K+L+               +   N++++    CSN     L  L  L +LK L   
+Sbjct: 247 LINLKKLDFHNTNIYSL------KGIENLINIEKLNCSNTNIDSLKYLENLTNLKNLICY 300
+
+Query: 781 DMGKISIIDMQFYGNGSVFEIFQSLQILRIEEMPEWKDWLVPRKGV--FCGLQELHI--- 835
+            +  I  I++                ++ +EE+   +  +V  KG+     L+EL     
+Sbjct: 301 GI-NIDFIEILK-------------NLINLEELDCSETKIVSLKGIENLINLKELDCSYT 346
+
+Query: 836 -INCPKLVGDLPKQLLSLTEFELSGCPGLVLSDGRFSMFNSLDLYSLKKLK-ISNMPSLE 893
+            IN  K +    + L++L + + S              +  +D  SLK+ K + N+  + 
+Sbjct: 347 KINSLKGI----ENLINLKKLDCS--------------YTKID--SLKQTKNLINLEQIH 386
+
+Query: 894 DFTSELKKLTGLEDF 908
+            + +EL  L G+E+ 
+Sbjct: 387 CYVTELDSLKGIENL 401
+
+
+
+ Score = 54.3 bits (129), Expect = 2e-05,   Method: Composition-based stats.
+ Identities = 60/302 (19%), Positives = 108/302 (35%), Gaps = 58/302 (19%)
+
+Query: 541 EILPNLTSLRVLSLAGYSLPYLPDS---------------------IQRLKQLRLLNLSL 579
+           E + NL +L  L  +  S+  L +                      +Q L  L+ L+ S 
+Sbjct: 176 EGIENLINLEKLDCSYTSINSLKEIKNLINLKKLECYETNIYSLKELQNLINLKKLDCSY 235
+
+Query: 580 SNIENLPDWVCTFYNLQTLLLSDCKNLEELPDDMGKLLNLRHLDITGTPLKKLPAQIGEL 639
+           + I +L + +    NL+ L   +  N+  L   +  L+N+  L+ + T +  L   +  L
+Sbjct: 236 TKINSLKE-LQNLINLKKLDFHNT-NIYSL-KGIENLINIEKLNCSNTNIDSL-KYLENL 291
+
+Query: 640 KCLQVLTTFVCNKDPGLMIEDLGKLCNLRGKLTVSGLENAGNGLDATLANMKGKKHLEDL 699
+             L+ L  +  N D    IE L  L NL               LD +   +   K +E+L
+Sbjct: 292 TNLKNLICYGINID---FIEILKNLINLE-------------ELDCSETKIVSLKGIENL 335
+
+Query: 700 SLEWNGTADDSQEAIDILQKLQPSSRIKRLE---VKGYGGTRFPDWLADQSFHNVVSVI- 755
+                   D S   I+ L+ ++    +K+L+    K     +  + +  +  H  V+ + 
+Sbjct: 336 I--NLKELDCSYTKINSLKGIENLINLKKLDCSYTKIDSLKQTKNLINLEQIHCYVTELD 393
+
+Query: 756 -------LSRCSNCFC----LPALGQLPSLKFLTIADMGKISIIDMQFYGNGSVFEIFQS 804
+                  L      FC    + +L  + +L  L I      +II ++   N    E    
+Sbjct: 394 SLKGIENLINLKKLFCHNTKINSLKGIENLINLEILYCNNTNIISLEGIKNLIKLEELYY 453
+
+Query: 805 LQ 806
+             
+Sbjct: 454 FN 455
+
+
+>gi|9964606|ref|NP_065061.1| similar to internalin A precursor
+           [Amsacta moorei entomopoxvirus 'L']
+          Length = 460
+
+ Score = 59.3 bits (142), Expect = 6e-07,   Method: Composition-based stats.
+ Identities = 94/435 (21%), Positives = 170/435 (39%), Gaps = 71/435 (16%)
+
+Query: 492 KVRHFSYTCSFWDVYEKFKQLSQATHLRTFLPIRKDKLYIRPISKKFLHEILPNLTSLRV 551
+           K++     C    +  K K  S    ++ F+ ++  +L       K L E + N T L  
+Sbjct: 20  KLQFIDSKCIISKLIYKLKYNSCLKEIKNFINLK--ELIYNNYYIKSL-EGIENFTKLIK 76
+
+Query: 552 LSLAGYSLPYLPDSIQRLKQLRLLNLSLSNIENLPDWVCTFYNLQTLLLSDCKNLEELPD 611
+           L      +  L   I+ L +L+ L    +NI +L  ++    NL  L   +  N+  L  
+Sbjct: 77  LYCYNTRIDSL-KGIENLIKLKELYCFNTNINSLV-YLKNLINLTELYCFET-NIYSL-K 132
+
+Query: 612 DMGKLLNLRHLDITGTPLKKLPAQIGELKCLQVLTTFVCNKDPGLMIEDLGKLCNLR--- 668
+            +  L+NL+  D + T    L   + E+K L  L    C+      +E +  L NL    
+Sbjct: 133 GIENLINLKEFDCSYT----LIDSLKEIKNLINLQKLNCSHTIIYSLEGIENLINLEKLD 188
+
+Query: 669 -GKLTVSGLENAGN-----GLDATLANMKGKKHLEDLSLEWNGTADDSQEAIDILQKLQP 722
+               +++ L+   N      L+    N+   K L++L        D S   I+ L++LQ 
+Sbjct: 189 CSYTSINSLKEIKNLINLKKLECYETNIYSLKELQNLI--NLKKLDCSYTKINSLKELQN 246
+
+Query: 723 SSRIKRLEVKGYGGTRFPDWLADQSFHNVVSVILSRCSNCFC--LPALGQLPSLKFLTIA 780
+              +K+L+               +   N++++    CSN     L  L  L +LK L   
+Sbjct: 247 LINLKKLDFHNTNIYSL------KGIENLINIEKLNCSNTNIDSLKYLENLTNLKNLICY 300
+
+Query: 781 DMGKISIIDMQFYGNGSVFEIFQSLQILRIEEMPEWKDWLVPRKGV--FCGLQELHI--- 835
+            +  I  I++                ++ +EE+   +  +V  KG+     L+EL     
+Sbjct: 301 GI-NIDFIEILK-------------NLINLEELDCSETKIVSLKGIENLINLKELDCSYT 346
+
+Query: 836 -INCPKLVGDLPKQLLSLTEFELSGCPGLVLSDGRFSMFNSLDLYSLKKLK-ISNMPSLE 893
+            IN  K +    + L++L + + S              +  +D  SLK+ K + N+  + 
+Sbjct: 347 KINSLKGI----ENLINLKKLDCS--------------YTKID--SLKQTKNLINLEQIH 386
+
+Query: 894 DFTSELKKLTGLEDF 908
+            + +EL  L G+E+ 
+Sbjct: 387 CYVTELDSLKGIENL 401
+
+
+
+ Score = 54.3 bits (129), Expect = 2e-05,   Method: Composition-based stats.
+ Identities = 60/302 (19%), Positives = 108/302 (35%), Gaps = 58/302 (19%)
+
+Query: 541 EILPNLTSLRVLSLAGYSLPYLPDS---------------------IQRLKQLRLLNLSL 579
+           E + NL +L  L  +  S+  L +                      +Q L  L+ L+ S 
+Sbjct: 176 EGIENLINLEKLDCSYTSINSLKEIKNLINLKKLECYETNIYSLKELQNLINLKKLDCSY 235
+
+Query: 580 SNIENLPDWVCTFYNLQTLLLSDCKNLEELPDDMGKLLNLRHLDITGTPLKKLPAQIGEL 639
+           + I +L + +    NL+ L   +  N+  L   +  L+N+  L+ + T +  L   +  L
+Sbjct: 236 TKINSLKE-LQNLINLKKLDFHNT-NIYSL-KGIENLINIEKLNCSNTNIDSL-KYLENL 291
+
+Query: 640 KCLQVLTTFVCNKDPGLMIEDLGKLCNLRGKLTVSGLENAGNGLDATLANMKGKKHLEDL 699
+             L+ L  +  N D    IE L  L NL               LD +   +   K +E+L
+Sbjct: 292 TNLKNLICYGINID---FIEILKNLINLE-------------ELDCSETKIVSLKGIENL 335
+
+Query: 700 SLEWNGTADDSQEAIDILQKLQPSSRIKRLE---VKGYGGTRFPDWLADQSFHNVVSVI- 755
+                   D S   I+ L+ ++    +K+L+    K     +  + +  +  H  V+ + 
+Sbjct: 336 I--NLKELDCSYTKINSLKGIENLINLKKLDCSYTKIDSLKQTKNLINLEQIHCYVTELD 393
+
+Query: 756 -------LSRCSNCFC----LPALGQLPSLKFLTIADMGKISIIDMQFYGNGSVFEIFQS 804
+                  L      FC    + +L  + +L  L I      +II ++   N    E    
+Sbjct: 394 SLKGIENLINLKKLFCHNTKINSLKGIENLINLEILYCNNTNIISLEGIKNLIKLEELYY 453
+
+Query: 805 LQ 806
+             
+Sbjct: 454 FN 455
+
+
+>gi|506556400|ref|WP_016022888.1| internalin [Amsacta moorei
+           entomopoxvirus 'L']
+          Length = 460
+
+ Score = 59.3 bits (142), Expect = 6e-07,   Method: Composition-based stats.
+ Identities = 94/435 (21%), Positives = 170/435 (39%), Gaps = 71/435 (16%)
+
+Query: 492 KVRHFSYTCSFWDVYEKFKQLSQATHLRTFLPIRKDKLYIRPISKKFLHEILPNLTSLRV 551
+           K++     C    +  K K  S    ++ F+ ++  +L       K L E + N T L  
+Sbjct: 20  KLQFIDSKCIISKLIYKLKYNSCLKEIKNFINLK--ELIYNNYYIKSL-EGIENFTKLIK 76
+
+Query: 552 LSLAGYSLPYLPDSIQRLKQLRLLNLSLSNIENLPDWVCTFYNLQTLLLSDCKNLEELPD 611
+           L      +  L   I+ L +L+ L    +NI +L  ++    NL  L   +  N+  L  
+Sbjct: 77  LYCYNTRIDSL-KGIENLIKLKELYCFNTNINSLV-YLKNLINLTELYCFET-NIYSL-K 132
+
+Query: 612 DMGKLLNLRHLDITGTPLKKLPAQIGELKCLQVLTTFVCNKDPGLMIEDLGKLCNLR--- 668
+            +  L+NL+  D + T    L   + E+K L  L    C+      +E +  L NL    
+Sbjct: 133 GIENLINLKEFDCSYT----LIDSLKEIKNLINLQKLNCSHTIIYSLEGIENLINLEKLD 188
+
+Query: 669 -GKLTVSGLENAGN-----GLDATLANMKGKKHLEDLSLEWNGTADDSQEAIDILQKLQP 722
+               +++ L+   N      L+    N+   K L++L        D S   I+ L++LQ 
+Sbjct: 189 CSYTSINSLKEIKNLINLKKLECYETNIYSLKELQNLI--NLKKLDCSYTKINSLKELQN 246
+
+Query: 723 SSRIKRLEVKGYGGTRFPDWLADQSFHNVVSVILSRCSNCFC--LPALGQLPSLKFLTIA 780
+              +K+L+               +   N++++    CSN     L  L  L +LK L   
+Sbjct: 247 LINLKKLDFHNTNIYSL------KGIENLINIEKLNCSNTNIDSLKYLENLTNLKNLICY 300
+
+Query: 781 DMGKISIIDMQFYGNGSVFEIFQSLQILRIEEMPEWKDWLVPRKGV--FCGLQELHI--- 835
+            +  I  I++                ++ +EE+   +  +V  KG+     L+EL     
+Sbjct: 301 GI-NIDFIEILK-------------NLINLEELDCSETKIVSLKGIENLINLKELDCSYT 346
+
+Query: 836 -INCPKLVGDLPKQLLSLTEFELSGCPGLVLSDGRFSMFNSLDLYSLKKLK-ISNMPSLE 893
+            IN  K +    + L++L + + S              +  +D  SLK+ K + N+  + 
+Sbjct: 347 KINSLKGI----ENLINLKKLDCS--------------YTKID--SLKQTKNLINLEQIH 386
+
+Query: 894 DFTSELKKLTGLEDF 908
+            + +EL  L G+E+ 
+Sbjct: 387 CYVTELDSLKGIENL 401
+
+
+
+ Score = 54.3 bits (129), Expect = 2e-05,   Method: Composition-based stats.
+ Identities = 60/302 (19%), Positives = 108/302 (35%), Gaps = 58/302 (19%)
+
+Query: 541 EILPNLTSLRVLSLAGYSLPYLPDS---------------------IQRLKQLRLLNLSL 579
+           E + NL +L  L  +  S+  L +                      +Q L  L+ L+ S 
+Sbjct: 176 EGIENLINLEKLDCSYTSINSLKEIKNLINLKKLECYETNIYSLKELQNLINLKKLDCSY 235
+
+Query: 580 SNIENLPDWVCTFYNLQTLLLSDCKNLEELPDDMGKLLNLRHLDITGTPLKKLPAQIGEL 639
+           + I +L + +    NL+ L   +  N+  L   +  L+N+  L+ + T +  L   +  L
+Sbjct: 236 TKINSLKE-LQNLINLKKLDFHNT-NIYSL-KGIENLINIEKLNCSNTNIDSL-KYLENL 291
+
+Query: 640 KCLQVLTTFVCNKDPGLMIEDLGKLCNLRGKLTVSGLENAGNGLDATLANMKGKKHLEDL 699
+             L+ L  +  N D    IE L  L NL               LD +   +   K +E+L
+Sbjct: 292 TNLKNLICYGINID---FIEILKNLINLE-------------ELDCSETKIVSLKGIENL 335
+
+Query: 700 SLEWNGTADDSQEAIDILQKLQPSSRIKRLE---VKGYGGTRFPDWLADQSFHNVVSVI- 755
+                   D S   I+ L+ ++    +K+L+    K     +  + +  +  H  V+ + 
+Sbjct: 336 I--NLKELDCSYTKINSLKGIENLINLKKLDCSYTKIDSLKQTKNLINLEQIHCYVTELD 393
+
+Query: 756 -------LSRCSNCFC----LPALGQLPSLKFLTIADMGKISIIDMQFYGNGSVFEIFQS 804
+                  L      FC    + +L  + +L  L I      +II ++   N    E    
+Sbjct: 394 SLKGIENLINLKKLFCHNTKINSLKGIENLINLEILYCNNTNIISLEGIKNLIKLEELYY 453
+
+Query: 805 LQ 806
+             
+Sbjct: 454 FN 455
+
+
+>gi|4049773|gb|AAC97733.1| ORF MSV257 leucine rich repeat gene
+           family protein, similar to Amsacta moorei entomopoxvirus
+           Q3 ORF SW:P28854 [Melanoplus sanguinipes entomopoxvirus]
+          Length = 707
+
+ Score = 57.7 bits (138), Expect = 2e-06,   Method: Composition-based stats.
+ Identities = 101/491 (20%), Positives = 190/491 (38%), Gaps = 125/491 (25%)
+
+Query: 546 LTSLRVLSLAGYSLPY-LPDSIQRLKQ-LRLLNLSLS-------NIENLPDWV------- 589
+           LT+L++L+++  +  Y + D++ +LK+ L++LN+S +       +   LP+ +       
+Sbjct: 149 LTNLKILNISNNNCDYKIIDNLNKLKKRLQVLNISNNEQLSKKIDYLRLPNLIDFNCSSC 208
+
+Query: 590 --------CTFYNLQTLLLSDCKNL--EELPD------------DMGK------LLNLRH 621
+                     F  LQ L +S+ +N+    LP             ++        + NL  
+Sbjct: 209 NIKSFNFLNNFTKLQILDISNNENIWTYALPLPPFLIKVNCSGCNITNSDFLRYVDNLEE 268
+
+Query: 622 LDITGTPLKKLPAQIGELKCLQVLTTFVCNKDPGLMIEDLGKLCNLRGKLTVS------- 674
+           LDI+  P  K+     ++K L +   ++ N +         K  N   +L +S       
+Sbjct: 269 LDISNNPDLKIEYMPTKIKKLNISECYIKNDN-------FLKGLNNLQELNISYNPYNYF 321
+
+Query: 675 ------GLENAGNGLDATLAN---------MKGKKHLEDLSLEWNGTADDSQEAIDILQK 719
+                  ++N  N L                K   +L++L +  N      Q  I+ L  
+Sbjct: 322 RKSIEIDIDNLSNTLIKLYLRKCNIKNVSSFKNLINLQELVISENR-----QVNINNLPD 376
+
+Query: 720 LQPSSRIKRLEVKGYGGTRFPDWLADQSFHNVVSVILSRCSNCFCLPALGQLP----SLK 775
+              S  +   ++       FP  L +    N+    +S   N     +L +L     +LK
+Sbjct: 377 ELISLNLSSCKIIN---IEFPKKLKEL---NLSKTYISNIKNL--PKSLIKLDISYCNLK 428
+
+Query: 776 FLT-IADMGKISIIDMQFYGNGSVFEIFQSLQILRIEEMPEWK-DWLVPRKGVFCGLQEL 833
+               + D+  +  +D+          + +S+  ++ +       D+L         LQEL
+Sbjct: 429 NDNCLKDLNNLKELDISGNWEICFSSLPKSIIKIKCKNCNITNTDFLNNLD----NLQEL 484
+
+Query: 834 HI-------INCPKLVGDLPKQLLSLTEFELSGCPGLVLSDGRFSMFNSLDLYSLKKLKI 886
+            +       IN  + + +LPK+L+ L    ++ C      D  +  F  LD  +L++L++
+Sbjct: 485 DMSVNYYININKSRRIDNLPKKLIKLN---INNC------DCAYISFKGLD--NLEELEM 533
+
+Query: 887 SNMPSLEDFTSE-LKKLTGL-EDFEIGNCPKLISI-------FDMGRLPASLKTLKISGC 937
+                L D+  + L KL G    F+I +  KL ++        ++  LP SL  L IS C
+Sbjct: 534 IRNTCLIDYLPKSLIKLHGYTHTFKIKDLNKLTTLCLPGIIKINIEDLPKSLIELDISTC 593
+
+Query: 938 PQMQFLPKDCL 948
+             +  + +DCL
+Sbjct: 594 KYI--INEDCL 602
+
+
+>gi|9631420|ref|NP_048328.1| ORF MSV257 leucine rich repeat gene
+           family protein, similar to Amsacta moorei entomopoxvirus
+           Q3 ORF SW:P28854 [Melanoplus sanguinipes entomopoxvirus]
+          Length = 707
+
+ Score = 57.7 bits (138), Expect = 2e-06,   Method: Composition-based stats.
+ Identities = 101/491 (20%), Positives = 190/491 (38%), Gaps = 125/491 (25%)
+
+Query: 546 LTSLRVLSLAGYSLPY-LPDSIQRLKQ-LRLLNLSLS-------NIENLPDWV------- 589
+           LT+L++L+++  +  Y + D++ +LK+ L++LN+S +       +   LP+ +       
+Sbjct: 149 LTNLKILNISNNNCDYKIIDNLNKLKKRLQVLNISNNEQLSKKIDYLRLPNLIDFNCSSC 208
+
+Query: 590 --------CTFYNLQTLLLSDCKNL--EELPD------------DMGK------LLNLRH 621
+                     F  LQ L +S+ +N+    LP             ++        + NL  
+Sbjct: 209 NIKSFNFLNNFTKLQILDISNNENIWTYALPLPPFLIKVNCSGCNITNSDFLRYVDNLEE 268
+
+Query: 622 LDITGTPLKKLPAQIGELKCLQVLTTFVCNKDPGLMIEDLGKLCNLRGKLTVS------- 674
+           LDI+  P  K+     ++K L +   ++ N +         K  N   +L +S       
+Sbjct: 269 LDISNNPDLKIEYMPTKIKKLNISECYIKNDN-------FLKGLNNLQELNISYNPYNYF 321
+
+Query: 675 ------GLENAGNGLDATLAN---------MKGKKHLEDLSLEWNGTADDSQEAIDILQK 719
+                  ++N  N L                K   +L++L +  N      Q  I+ L  
+Sbjct: 322 RKSIEIDIDNLSNTLIKLYLRKCNIKNVSSFKNLINLQELVISENR-----QVNINNLPD 376
+
+Query: 720 LQPSSRIKRLEVKGYGGTRFPDWLADQSFHNVVSVILSRCSNCFCLPALGQLP----SLK 775
+              S  +   ++       FP  L +    N+    +S   N     +L +L     +LK
+Sbjct: 377 ELISLNLSSCKIIN---IEFPKKLKEL---NLSKTYISNIKNL--PKSLIKLDISYCNLK 428
+
+Query: 776 FLT-IADMGKISIIDMQFYGNGSVFEIFQSLQILRIEEMPEWK-DWLVPRKGVFCGLQEL 833
+               + D+  +  +D+          + +S+  ++ +       D+L         LQEL
+Sbjct: 429 NDNCLKDLNNLKELDISGNWEICFSSLPKSIIKIKCKNCNITNTDFLNNLD----NLQEL 484
+
+Query: 834 HI-------INCPKLVGDLPKQLLSLTEFELSGCPGLVLSDGRFSMFNSLDLYSLKKLKI 886
+            +       IN  + + +LPK+L+ L    ++ C      D  +  F  LD  +L++L++
+Sbjct: 485 DMSVNYYININKSRRIDNLPKKLIKLN---INNC------DCAYISFKGLD--NLEELEM 533
+
+Query: 887 SNMPSLEDFTSE-LKKLTGL-EDFEIGNCPKLISI-------FDMGRLPASLKTLKISGC 937
+                L D+  + L KL G    F+I +  KL ++        ++  LP SL  L IS C
+Sbjct: 534 IRNTCLIDYLPKSLIKLHGYTHTFKIKDLNKLTTLCLPGIIKINIEDLPKSLIELDISTC 593
+
+Query: 938 PQMQFLPKDCL 948
+             +  + +DCL
+Sbjct: 594 KYI--INEDCL 602
+
+
+>gi|506554790|ref|WP_016021300.1| ORF MSV257 leucine rich repeat
+           gene family protein, similar to Amsacta moorei
+           entomopoxvirus Q3 ORF SW:P28854 [Melanoplus sanguinipes
+           entomopoxvirus]
+          Length = 707
+
+ Score = 57.7 bits (138), Expect = 2e-06,   Method: Composition-based stats.
+ Identities = 101/491 (20%), Positives = 190/491 (38%), Gaps = 125/491 (25%)
+
+Query: 546 LTSLRVLSLAGYSLPY-LPDSIQRLKQ-LRLLNLSLS-------NIENLPDWV------- 589
+           LT+L++L+++  +  Y + D++ +LK+ L++LN+S +       +   LP+ +       
+Sbjct: 149 LTNLKILNISNNNCDYKIIDNLNKLKKRLQVLNISNNEQLSKKIDYLRLPNLIDFNCSSC 208
+
+Query: 590 --------CTFYNLQTLLLSDCKNL--EELPD------------DMGK------LLNLRH 621
+                     F  LQ L +S+ +N+    LP             ++        + NL  
+Sbjct: 209 NIKSFNFLNNFTKLQILDISNNENIWTYALPLPPFLIKVNCSGCNITNSDFLRYVDNLEE 268
+
+Query: 622 LDITGTPLKKLPAQIGELKCLQVLTTFVCNKDPGLMIEDLGKLCNLRGKLTVS------- 674
+           LDI+  P  K+     ++K L +   ++ N +         K  N   +L +S       
+Sbjct: 269 LDISNNPDLKIEYMPTKIKKLNISECYIKNDN-------FLKGLNNLQELNISYNPYNYF 321
+
+Query: 675 ------GLENAGNGLDATLAN---------MKGKKHLEDLSLEWNGTADDSQEAIDILQK 719
+                  ++N  N L                K   +L++L +  N      Q  I+ L  
+Sbjct: 322 RKSIEIDIDNLSNTLIKLYLRKCNIKNVSSFKNLINLQELVISENR-----QVNINNLPD 376
+
+Query: 720 LQPSSRIKRLEVKGYGGTRFPDWLADQSFHNVVSVILSRCSNCFCLPALGQLP----SLK 775
+              S  +   ++       FP  L +    N+    +S   N     +L +L     +LK
+Sbjct: 377 ELISLNLSSCKIIN---IEFPKKLKEL---NLSKTYISNIKNL--PKSLIKLDISYCNLK 428
+
+Query: 776 FLT-IADMGKISIIDMQFYGNGSVFEIFQSLQILRIEEMPEWK-DWLVPRKGVFCGLQEL 833
+               + D+  +  +D+          + +S+  ++ +       D+L         LQEL
+Sbjct: 429 NDNCLKDLNNLKELDISGNWEICFSSLPKSIIKIKCKNCNITNTDFLNNLD----NLQEL 484
+
+Query: 834 HI-------INCPKLVGDLPKQLLSLTEFELSGCPGLVLSDGRFSMFNSLDLYSLKKLKI 886
+            +       IN  + + +LPK+L+ L    ++ C      D  +  F  LD  +L++L++
+Sbjct: 485 DMSVNYYININKSRRIDNLPKKLIKLN---INNC------DCAYISFKGLD--NLEELEM 533
+
+Query: 887 SNMPSLEDFTSE-LKKLTGL-EDFEIGNCPKLISI-------FDMGRLPASLKTLKISGC 937
+                L D+  + L KL G    F+I +  KL ++        ++  LP SL  L IS C
+Sbjct: 534 IRNTCLIDYLPKSLIKLHGYTHTFKIKDLNKLTTLCLPGIIKINIEDLPKSLIELDISTC 593
+
+Query: 938 PQMQFLPKDCL 948
+             +  + +DCL
+Sbjct: 594 KYI--INEDCL 602
+
+
+>gi|9944786|gb|AAG02969.1|AF250284_263 AMV263 [Amsacta moorei
+           entomopoxvirus 'L']
+          Length = 288
+
+ Score = 53.9 bits (128), Expect = 2e-05,   Method: Composition-based stats.
+ Identities = 38/139 (27%), Positives = 63/139 (45%), Gaps = 23/139 (16%)
+
+Query: 528 KLYIRPISKKFLHEILPNLTSLRVLSLAGYSLPYLPDSIQRLKQLRLLNLSLSNIENLPD 587
+           ++ I   +     E + NLT LR L  +  S+  L + I+    L++LN S +NI +L D
+Sbjct: 126 QVLICNNTNISSLEGIENLTKLRELKCSFTSINSLKE-IKNHSNLQILNFSSTNISSLED 184
+
+Query: 588 WVCTFYNLQTLLLSDC-----------KNLEELPDD---------MGKLLNLRHLDITGT 627
+            +    NL+ L+               KNL++L            +  L NL++LD + T
+Sbjct: 185 -IKNLVNLKNLIFHKTNINSLLDIYNLKNLQKLCCSYTKINSLNGIQNLFNLKNLDCSNT 243
+
+Query: 628 PLKKLPAQIGELKCLQVLT 646
+            +  L   I +L  LQ+L+
+Sbjct: 244 NITSL-KGIEKLNNLQILS 261
+
+
+>gi|9964577|ref|NP_065045.1| Possible surface protein [Amsacta
+           moorei entomopoxvirus 'L']
+          Length = 288
+
+ Score = 53.9 bits (128), Expect = 2e-05,   Method: Composition-based stats.
+ Identities = 38/139 (27%), Positives = 63/139 (45%), Gaps = 23/139 (16%)
+
+Query: 528 KLYIRPISKKFLHEILPNLTSLRVLSLAGYSLPYLPDSIQRLKQLRLLNLSLSNIENLPD 587
+           ++ I   +     E + NLT LR L  +  S+  L + I+    L++LN S +NI +L D
+Sbjct: 126 QVLICNNTNISSLEGIENLTKLRELKCSFTSINSLKE-IKNHSNLQILNFSSTNISSLED 184
+
+Query: 588 WVCTFYNLQTLLLSDC-----------KNLEELPDD---------MGKLLNLRHLDITGT 627
+            +    NL+ L+               KNL++L            +  L NL++LD + T
+Sbjct: 185 -IKNLVNLKNLIFHKTNINSLLDIYNLKNLQKLCCSYTKINSLNGIQNLFNLKNLDCSNT 243
+
+Query: 628 PLKKLPAQIGELKCLQVLT 646
+            +  L   I +L  LQ+L+
+Sbjct: 244 NITSL-KGIEKLNNLQILS 261
+
+
+>gi|506556396|ref|WP_016022884.1| Possible surface protein [Amsacta
+           moorei entomopoxvirus 'L']
+          Length = 288
+
+ Score = 53.9 bits (128), Expect = 2e-05,   Method: Composition-based stats.
+ Identities = 38/139 (27%), Positives = 63/139 (45%), Gaps = 23/139 (16%)
+
+Query: 528 KLYIRPISKKFLHEILPNLTSLRVLSLAGYSLPYLPDSIQRLKQLRLLNLSLSNIENLPD 587
+           ++ I   +     E + NLT LR L  +  S+  L + I+    L++LN S +NI +L D
+Sbjct: 126 QVLICNNTNISSLEGIENLTKLRELKCSFTSINSLKE-IKNHSNLQILNFSSTNISSLED 184
+
+Query: 588 WVCTFYNLQTLLLSDC-----------KNLEELPDD---------MGKLLNLRHLDITGT 627
+            +    NL+ L+               KNL++L            +  L NL++LD + T
+Sbjct: 185 -IKNLVNLKNLIFHKTNINSLLDIYNLKNLQKLCCSYTKINSLNGIQNLFNLKNLDCSNT 243
+
+Query: 628 PLKKLPAQIGELKCLQVLT 646
+            +  L   I +L  LQ+L+
+Sbjct: 244 NITSL-KGIEKLNNLQILS 261
+
+
+>gi|322510473|gb|ADX05787.1| leucine-rich repeat protein [Organic
+           Lake phycodnavirus 1]
+          Length = 225
+
+ Score = 53.5 bits (127), Expect = 3e-05,   Method: Composition-based stats.
+ Identities = 28/109 (25%), Positives = 50/109 (45%), Gaps = 17/109 (15%)
+
+Query: 527 DKLYIRPISKKFLHEILPNLTSLRVLSLAGYSLPYLPDSIQRLKQLRLLNLSLSNIENLP 586
+           D LYI   +   L E+     SL+VL +    L  LP+    L +L+  +  L+++ +LP
+Sbjct: 25  DFLYIENTNVIQLPELS---ASLQVLKINNNQLTSLPELPDELGELKANDNQLTSLPDLP 81
+
+Query: 587 DWVCTFYNLQTLLLSDCK--NLEELPDDMGKLLNLRHLDITGTPLKKLP 633
+           D +        L +++ +  +L +LPD++G       L+     L   P
+Sbjct: 82  DELG------VLEVNNNQLTSLPDLPDELG------VLEACNNKLTTCP 118
+
+
+>gi|322510679|gb|ADX05993.1| hypothetical protein 162313485 [Organic
+           Lake phycodnavirus 1]
+          Length = 83
+
+ Score = 53.1 bits (126), Expect = 4e-05,   Method: Composition-based stats.
+ Identities = 7/51 (13%), Positives = 21/51 (41%), Gaps = 10/51 (19%)
+
+Query: 773 SLKFLTIADMGKISIIDMQFYGNGSVFEIFQSLQILRIEEMPEWKDWLVPR 823
+           +++F+   D+  + +         + FE+      +  E++ E   +L  +
+Sbjct: 2   NIRFIH-YDVNNVDV---------NPFEVHDVFNKISDEQIDELNTFLSSK 42
+
+
+  Database: /bank/nr/nr_txid10239.faa
+    Posted date:  May 27, 2013 10:24 AM
+  Number of letters in database: 657,208,759
+  Number of sequences in database:  2,240,883
+  
+Lambda     K      H
+   0.320    0.137    0.399 
+
+Lambda     K      H
+   0.267   0.0430    0.140 
+
+
+Matrix: BLOSUM62
+Gap Penalties: Existence: 11, Extension: 1
+Number of Hits to DB: 3,382,729,788
+Number of Sequences: 2240883
+Number of extensions: 153392018
+Number of successful extensions: 329056
+Number of sequences better than 1.0e-04: 73
+Number of HSP's better than  0.0 without gapping: 8
+Number of HSP's successfully gapped in prelim test: 71
+Number of HSP's that attempted gapping in prelim test: 327984
+Number of HSP's gapped (non-prelim): 298
+length of query: 1210
+length of database: 657,208,759
+effective HSP length: 136
+effective length of query: 1074
+effective length of database: 352,448,671
+effective search space: 378529872654
+effective search space used: 378529872654
+T: 11
+A: 40
+X1: 16 ( 7.4 bits)
+X2: 38 (14.6 bits)
+X3: 64 (24.7 bits)
+S1: 41 (21.8 bits)
+S2: 123 (51.9 bits)

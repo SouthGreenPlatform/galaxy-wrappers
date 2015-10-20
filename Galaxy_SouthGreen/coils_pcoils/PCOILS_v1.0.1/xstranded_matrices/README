@@ -1,0 +1,5 @@
+2/3/4_stranded_matrix: matrices for 2/3/4-stranded coiled coils as described in Markus Gruber's PhD thesis (NOTE: these matrices are NOT in log format; if you are not happy with that or if you need to use it for COILS convert it with the get_logarithmic_profile.pl tool). They were created as follows:
+
+perl get_pure_ccs_easy.pl > get_pure_ccs_easy.output
+perl get_pure_ccs_with_orientation.pl (data is stored in ~/write/{x}stranded, here it is also evident which protein (superfamilies) were used)
+perl xstranded_matrix.pl (!!!specify the strandedness in the code: 2stranded, 3stranded or 4stranded!!!)

@@ -1,0 +1,59 @@
+<tool id="coils_batch" name="Coils/Pcoils" version="1.0.1">
+	<description>compares protein sequences to a database of known coiled-coils and derives similarity scores.</description>
+	<command interpreter="bash">./coils_pcoils.sh $input $window_length $output $logfile $threshold</command>
+	<inputs>
+		<param format="fasta" name="input" type="data" label="Protein sequences in FASTA format"/>
+		<param type="text" name="threshold" label="Residues above this score are predicted to be in a coiled coil" value="0.9"/>
+		<param name="window_length" type="select" label="Minimum search window length">
+			<option value="21">21</option>
+			<option value="28">28</option>
+		</param>
+
+	</inputs>
+	<outputs>
+		<data format="txt" name="output" label="Output" />
+		<data format="txt" name="logfile" label="Logfile" />
+	</outputs>
+
+	<help>
+
+
+
+
+
+.. class:: infomark
+
+**Program encapsulated in Galaxy by Southgreen**
+
+.. class:: infomark
+
+**PCoils version 1.0.1**
+
+-----
+
+==============
+ Please cite:
+==============
+
+"Predicting coiled coils from protein sequences.", **Lupas, A., Van Dyke, M., and Stock, J.**, Science, 252, 1162-1164. (1991).
+
+"Prediction and analysis of coiled-coil structures.", **Lupas, A.**, Methods Enzymol., 266, 513-525. (1996).
+
+-----
+
+===========
+ Overview:
+===========
+
+This tool runs COILS/PCOILS in a batch mode for several sequences. COILS compares sequences to a database of known coiled-coils and derives similarity scores. The program then calculates the probability that the sequence will adopt a coiled-coil conformation.
+
+-----
+
+For further informations, please visite the pcoils_ website.
+
+
+.. _pcoils: http://toolkit.tuebingen.mpg.de/pcoils
+        </help>
+
+</tool>
+

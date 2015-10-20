@@ -1,0 +1,133 @@
+//******//
+//PCOILS//
+//******//
+
+/* Copyright (c) 2006 Markus Gruber 
+ *  Max-Planck-Institute for Developmental Biology, Spemannstr.35, 
+ *  72076 Tübingen, Germany 
+ *    Email: markus.gruber@tuebingen.mpg.de / mpi-toolkit@tuebingen.mpg.de
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
+ */
+
+
+---PCOILS on the Web---
+
+See ftp://ftp.tuebingen.mpg.de/pub/protevo/PCOILS/
+
+
+---Preparation / Installation---
+
+Generate Executables
+
+In the folder Documentation, you can find the descriptions (README
+files) how to generate following executables (you can use the commands
+in brackets below):
+- PCoils_core (source Documentation/PCoils_core.README)
+- run_coils (source Documentation/run_coils.README)
+- run_play_without_window_max (source Documentation/run_play_without_window_max.README)
+
+Folders
+
+For this tool, there are some folder dependencies.
+- Following folders (although they are empty) have to stay inside the
+  PCOILS directory: dummy, temp_files
+- You have to create a new folder called 'blast' inside the PCOILS
+  directory which includes the BLAST software or you have to set a
+  symbolic link to the directory where you have BLAST. If you set a symbolic
+  link, it has to be called blast.
+
+---Preparation---
+
+Additionally to the sourcecode you downloaded, you need to include the blast software (64 Bit).
+It has to be included as symbolic link within the PCOILS directory.
+
+1) Download and install the 64 Bit Blast Version from NCBI:
+   Server: ftp://ftp.ncbi.nlm.nih.gov/blast/executables/release/LATEST/
+   Blast Version: blast-2.2.23-x64-linux.tar.gz
+
+2) Copy the executables (blastall, etc., but especially blastall) inside blast from the /bin directory 
+   directly into the /blast directory.
+
+3) Set a symbolic link to Blast:
+   cd {into the PCoils directory}
+   ln -s {path to the blast directory} blast
+
+IMPORTANT: Use the 64 Bit Version of Blast!
+
+---Usage---
+
+perl PCoils.pl <input_file> <database>
+
+
+---Input File---
+
+Any single sequence or multiple sequence alignment in FASTA format is
+possible.
+An input example file is included (PCoils.input).
+
+
+---Database---
+
+The database is ideally the NR90 filtered by Pfilt with the -c option
+(leaving the coiled-coil regions unfiltered).
+For PCoils the NCBI databases are used (Link to the databases:
+ftp://ftp.ncbi.nlm.nih.gov/blast/db/FASTA/nr.gz). An older version (from
+March 2008) to download is available at
+ftp://ftp.tuebingen.mpg.de/pub/protevo/old
+!!! You need to specify the database with its absolute path. !!!
+
+
+---Output File---
+
+The output file is written into the actual folder, where also the PCoils
+sourcecode can be found.
+
+
+---Content---
+
+Following sourcecode is included in this folder:
+
+- PCoils.pl: main PCOILS script (it needs the executable PCoils_core
+  that is compiled according to PCoils_core.README)
+- PCoils_core: is called by PCoils.pl (also see PCoils_core.README)
+- alignhits.pl: written by Johannes Soeding
+- get_logarithmic_profile.c: tool that converts a non-log COILS matrix
+  into one in log space
+- hhfilter: executable by Johannes Soeding
+- hhmake: executable by Johannes Soeding
+- manipulate_pdbaa.pl: puts sequences in one line per sequence
+- myhmmmake_PCoils.pl: called by PCoils.pl
+- ncoils.h: COILS header file
+- ncoils_play_without_window_maximization.c: version of Coils that only
+  gives the scores as output
+- ncoils_profile.c: modified COILS code (PCOILS)
+- ncoils_profile.h: belongs to modified COILS code (PCOILS)
+- ncoils_public.c: COILS code
+- new.mat: MTIDK matrix in log format
+- old.mat: MTK matrix in log format
+- pdb_matrix_log: PDB matrix in log format
+- read_log_matrix_public.c: belongs to modified COILS code (reads matrix
+- in log format)
+- score988.11_log: iterated matrix in log format (it converged after 11
+  iterations with a probability cutoff of 98.8%)
+
+---Contact---
+
+Problems?
+Questions?
+Suggestions?
+
+Contact: mpi-toolkit@tuebingen.mpg.de

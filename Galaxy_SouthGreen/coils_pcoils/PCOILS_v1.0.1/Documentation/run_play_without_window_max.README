@@ -1,0 +1,3 @@
+#version of Coils that only gives the scores as output
+#compiled as follows:
+gcc -lm -o run_play_without_window_max ncoils_play_without_window_maximization.c read_log_matrix_public.c

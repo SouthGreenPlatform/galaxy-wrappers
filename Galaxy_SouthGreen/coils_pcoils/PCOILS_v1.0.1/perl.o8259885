@@ -1,0 +1,18 @@
+PCoils window size is 21
+[blastpgp] WARNING:  [000.000]  posPurgeMatches: Due to purging near identical sequences, only the query is used to construct the position-specific score matrix
+
+564 sequences extracted from temp_files/alignhits_input and written to temp_files/alignhits_output.psi
+Reformatted temp_files/alignhits_output.psi with 564 sequences from psi to a3m and written to file temp_files/hhfilter_input.a3m
+Input file = temp_files/hhfilter_input.a3m
+Output file = temp_files/hhfilter_output.a3m
+Read temp_files/hhfilter_input.a3m with 564 sequences
+Alignment in temp_files/hhfilter_input.a3m contains 1937 match states
+1 out of 564 sequences passed filter (20% min coverage, 40% min sequence identity to query, up to 92% position-dependent max pairwise sequence identity)
+Writing A3M alignment to temp_files/hhfilter_output.a3m
+Done
+Reformatted temp_files/hhfilter_output.a3m with 1 sequence from a3m to fas and written to file temp_files/hhfilter_output.fas
+Read in temp_files/hhfilter_output.a3m with 1 sequences
+Alignment in temp_files/hhfilter_output.a3m contains 1937 match states
+1 out of 1 sequences passed filter for 90% maximum sequence identity, 20%, minimum coverage, and 0% minimum sequence identity to query
+Effective number of sequences exp(entropy) = 1.0 
+Writing HMM to temp_files/hhmake_output

@@ -1,0 +1,2 @@
+#PCoils_core was obtained by the following compilation:
+gcc -lm -o PCoils_core ncoils_profile.c read_log_matrix_public.c
