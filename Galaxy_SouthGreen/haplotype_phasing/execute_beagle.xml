@@ -3,7 +3,7 @@
 	<requirements>
 		<requirement type="package" version="4.0">Beagle</requirement>
 	</requirements>
-	<command interpreter="bash">execute_beagle.sh $vcf_input $phase $impute</command>
+	<command interpreter="bash">$__tool_directory__/execute_beagle.sh $vcf_input $phase $impute</command>
 	<inputs>
 		<param format="vcf" name="vcf_input" type="data" label="Variant call format"/>
 		<param type="text" name="phase" value="5" help="Non-negative integer" label="specifies the number of iterations for estimating genotype phase (default: phase-its=5).Increasing this parameter will typicall increase genotype phaseaccuracy."/>

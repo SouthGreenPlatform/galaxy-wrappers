@@ -6,14 +6,14 @@ phase=$2
 impute=$3
 out_prefix="out"
 
-
+directory=`dirname $0`
 
 mkdir tmpdir$$
 
 cp -rf $vcf_input tmpdir$$/input.vcf
 
 
-/usr/local/jdk1.7.0_40/bin/java -Xmx2g -jar /usr/local/bioinfo/galaxy_dev/galaxy_dist/tools/GWAS_analysis/beagle/beagle.r1399.jar gt=$vcf_input phase-its=$phase impute-its=$impute out=$out_prefix
+java -Xmx2g -jar $directory/beagle.r1399.jar gt=$vcf_input phase-its=$phase impute-its=$impute out=$out_prefix
 
 gunzip $out_prefix.vcf.gz
 
