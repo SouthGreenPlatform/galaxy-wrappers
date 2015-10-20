@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<tool_dependency>
+    <package name="beagle" version="4.0">
+        <repository changeset_revision="eb20a9479114" name="package_beagle_4_0" owner="farcy" toolshed="http://gohelle.cirad.fr/toolshed/" />
+    </package>
+</tool_dependency>

@@ -1,0 +1,49 @@
+<tool id="Beagle" name="Beagle" >
+	<description>Beagle version 4.0 performs genotype calling, genotype phasing, imputation of ungenotyped markers, and identity-by-descent segment detection.</description>
+	<requirements>
+		<requirement type="package" version="4.0">Beagle</requirement>
+	</requirements>
+	<command interpreter="bash">execute_beagle.sh $vcf_input $phase $impute</command>
+	<inputs>
+		<param format="vcf" name="vcf_input" type="data" label="Variant call format"/>
+		<param type="text" name="phase" value="5" help="Non-negative integer" label="specifies the number of iterations for estimating genotype phase (default: phase-its=5).Increasing this parameter will typicall increase genotype phaseaccuracy."/>
+		<param type="text" name="impute" value="5" help="Non-negative integer" label="specifies the number of iterations for estimating genotypes at ungenotyped markers (default:impute-its=5). Increasing this parameter (up to ~10 iterations) will typically increase genotype imputation accuracy."/>
+	</inputs>
+	<outputs>
+		<data format="vcf" name="vcf_ouput" label="Phased and imputed VCF" from_work_dir="out.vcf"/>
+		<data format="txt" name="log" label="Beagle log file" from_work_dir="out.log"/>
+	</outputs>
+	<help>
+
+
+.. class:: infomark
+
+**Program encapsulated in Galaxy by Southgreen**
+
+.. class:: infomark
+
+
+===========
+ Overview
+===========
+
+ Beagle version 4.0 performs genotype calling, genotype phasing, imputation of ungenotyped markers, and identity-by-descent segment detection.
+
+Version 4 has multiple improvements:
+
+    a standard format (Variant Call Format) for input and output files
+    a powerful identity by descent detection algorithm: Refined IBD
+    support for multi-threaded computation
+    support for multi-allelic markers
+    improved methods for phasing and genotype imputation
+    elimination of temporary files
+    use of a sliding window permit control memory use
+
+The next major release (version 4.1) will provide substantial improved haplotype phasing and genotype imputation. Look for version 4.1 to be released in April or May 2015.
+
+If you use Beagle in a published analysis, please report the program version and cite the following article:
+
+S R Browning and B L Browning (2007) Rapid and accurate haplotype phasing and missing data inference for whole genome association studies by use of localized haplotype clustering. Am J Hum Genet 81:1084-97. doi:10.1086/521987 
+
+	</help>
+</tool>
