@@ -1,0 +1,56 @@
+<tool id="TGICL" name="TGICL">
+	<description> automates clustering (megablast) and assembly (Cap3) of a large EST/mRNA dataset. </description>
+	<command>
+source $__tool_directory__/include.txt;
+$__tool_directory__/TGICL.sh $input $quality $ace $contigs $singletons $unigenes $align $minimum_identity $minimum_overlap_length $log
+</command>
+	<inputs> 
+		<param format="fasta" name="input" type="data" label="FASTA sequences"/>
+		<param format="txt" name="quality" type="data" label="Quality file"/>
+		<param type="text" name="minimum_identity" label="minimum percent identity for overlaps" value="95"/>
+		<param type="text" name="minimum_overlap_length" label="miminum overlap length" value="60"/>
+	</inputs>
+	<outputs>
+		<data format="txt" name="ace" label="Ace output"/>
+		<data format="fasta" name="contigs" label="Contigs"/>
+		<data format="fasta" name="singletons" label="Singletons"/>
+		<data format="fasta" name="unigenes" label="Unigenes"/>
+		<data format="fasta" name="align" label="Alignment"/>
+		<data format="txt" name="log" label="Log file"/>
+	</outputs>
+	<help>
+
+.. class:: infomark
+
+**Program encapsulated in Galaxy by Southgreen**
+
+.. class:: infomark
+
+**TGICL**
+
+-----
+
+==========
+ Authors:
+==========
+
+**Computational Biology and Functional Genomics Laboratory**
+
+-----
+
+==========
+ Overview
+==========
+
+This package automates clustering and assembly of a large EST/mRNA dataset. The clustering is performed by a slightly modified version of NCBI's megablast , and the resulting clusters are then assembled using CAP3 assembly program. TGICL starts with a large multi-FASTA file (and an optional peer quality values file) and outputs the assembly files as produced by CAP3. Both clustering and assembly phases can be parallelized by distributing the searches and the assembly jobs across multiple CPUs, as TGICL can take advantage of either SMP machines or PVM (Parallel Virtual Machine) clusters. The two full precompiled packages below were built on Linux and SunOS, respectively. They include CAP3, mgblast and all the other binaries for this platform (of course, except the base Unix utilities like 'sed', 'sort' etc.). Please note that only the Linux version was thoroughly tested at DFCI. 
+
+-----
+
+For further informations, please visite the website of TGICL_.
+
+
+.. _TGICL: http://compbio.dfci.harvard.edu/tgi/software/
+
+	</help>
+
+</tool>
