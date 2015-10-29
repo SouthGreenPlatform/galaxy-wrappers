@@ -1,0 +1,66 @@
+#This is a sample file distributed with Galaxy that is used to define a
+#list of protein BLAST databases, using three columns tab separated
+#(longer whitespace are TAB characters):
+#
+#<unique_id>      <database_caption>     <base_name_path>
+#
+#The captions typically contain spaces and might end with the build date.
+#It is important that the actual database name does not have a space in it,
+#and that the first tab that appears in the line is right before the path.
+#
+#So, for example, if your database is NR and the path to your base name 
+#is /data/blastdb/nr, then the blastdb_p.loc entry would look like this:
+#
+#nr    NCBI NR (non redundant)      /data/blastdb/nr
+#
+#and your /data/blastdb directory would contain all of the files associated
+#with the database, /data/blastdb/nr.*.
+#
+#Your blastdb_p.loc file should include an entry per line for each "base name" 
+#you have stored. For example:
+#
+#nr_05Jun2010    NCBI NR (non redundant) 05 Jun 2010      /data/blastdb/05Jun2010/nr
+#nr_15Aug2010    NCBI NR (non redundant) 15 Aug 2010      /data/blastdb/15Aug2010/nr
+#...etc...
+#
+#See also blastdb.loc which is for any nucleotide BLAST database.
+#
+ARATH	ARATH Arabidopsis thaliana (with species annotation)	/bank/genfam/genome_data/ARATH/ARATH-TAIR10-polypeptide-genfam.faa
+BRADI	BRADI Brachypodium distachyon (with species annotation)	/bank/genfam/genome_data/BRADI/BRADI-JGI1-polypeptide-genfam.faa
+GLYMA	GLYMA Glycine max (with species annotation)	/bank/genfam/genome_data/GLYMA/GLYMA-JGI1-polypeptide-genfam.faa
+GOSRA	GOSRA Gossypium raimondii (with species annotation)	/bank/genfam/genome_data/GOSRA/GOSRA-JGI1-polypeptide-genfam.faa
+LOTJA	LOTJA Lotus japonicus (with species annotation)	/bank/genfam/genome_data/LOTJA/LOTJA-Kazusa2.5-polypeptide-genfam.faa
+MAIZE	MAIZE Zea mays (with species annotation)	/bank/genfam/genome_data/MAIZE/MAIZE-MGDB5b60-polypeptide-genfam.faa
+MALDO	MALDO Malus domestica (with species annotation)	/bank/genfam/genome_data/MALDO/MALDO-JGI1-polypeptide-genfam.faa
+MANES	MANES Manihot esculenta (with species annotation)	/bank/genfam/genome_data/MANES/MANES-JGI4.1-polypeptide-genfam.faa
+MEDTR	MEDTR Medicago truncatula (with species annotation)	/bank/genfam/genome_data/MEDTR/MEDTR-Mt3.5v5-polypeptide-genfam.faa
+MUSAC	MUSAC Musa acuminata (with species annotation)	/bank/genfam/genome_data/MUSAC/MUSAC-Musa1-polypeptide-genfam.faa
+ORYSI	ORYSI Oryza sativa subsp. indica (with species annotation)	/bank/genfam/genome_data/ORYSI/ORYSI-BGI2-polypeptide-genfam.faa
+ORYSJ	ORYSJ Oryza sativa subsp. japonica (with species annotation)	/bank/genfam/genome_data/ORYSJ/ORYSJ-MSU7-polypeptide-genfam.faa
+POPTR	POPTR Populus trichocarpa (with species annotation) /bank/genfam/genome_data/POPTR/POPTR-JGI2-polypeptide-genfam.faa
+RICCO	RICCO Ricinus communis (with species annotation)	/bank/genfam/genome_data/RICCO/RICCO-JGI0.1-polypeptide-genfam.faa
+SETIT	SETIT Setaria italica (with species annotation)	/bank/genfam/genome_data/SETIT/SETIT-JGI1-polypeptide-genfam.faa
+SOLLC	SOLLC Solanum lycopersicum (with species annotation)	/bank/genfam/genome_data/SOLLC/SOLLC-ITAG2.40-polypeptide-genfam.faa
+SOLTU	SOLTU Solanum tuberosum (with species annotation)	/bank/genfam/genome_data/SOLTU/SOLTU-JGI3-polypeptide-genfam.faa
+SORBI	SORBI Sorghum bicolor (with species annotation)	/bank/genfam/genome_data/SORBI/SORBI-JGI1.4-polypeptide-genfam.faa
+THECC	THECC Theobroma cacao (with species annotation)	/bank/genfam/genome_data/THECC/THECC-COCOA1-polypeptide-genfam.faa
+VITVI	VITVI Vitis vinifera (with species annotation)	/bank/genfam/genome_data/VITVI/VITVI-GENOSCOPE1-polypeptide-genfam.faa
+COFCA	COFCA Coffea canephora (with species annotation)	/bank/genfam/genome_data/COFCA/COFCA-GENOSCOPE1-polypeptide-genfam.faa
+
+ARALY	ARALY Arabidopsis lyrata (with species annotation)	/bank/proteome_annotated/ARALY_annotated.fa
+BRARA	BBRARA rassica rapa (with species annotation)	/bank/proteome_annotated/BRARA_annotated.fa
+CAJCA	CAJCA Cajanus cajan (with species annotation)	/bank/proteome_annotated/CAJCA_annotated.fa
+CARPA	CARPA Carica papaya (with species annotation)	/bank/proteome_annotated/CARPA_annotated.fa
+CUCME	CUCME Cucumis melo (with species annotation)	/bank/proteome_annotated/CUCME_annotated.fa
+CUCSA	CUCSA Cucumis sativus (with species annotation)	/bank/proteome_annotated/CUCSA_annotated.fa
+ELAGV	ELAGV Elaeis guineensis (with species annotation)	/bank/elaeis_guineensis/EG_genes_annotated.aa
+ELAGV5	ELAGV5 Elaeis guineensis (with species annotation)	/bank/elaeis_guineensis/EG5_Genes.V2.faa
+EUTPR	EUTPR Thellungiella parvula (with species annotation)	/bank/proteome_annotated/EUTPR_annotated.fa
+JATCU	JATCU Jatropha curcas (with species annotation)	/bank/proteome_annotated/JATCU_annotated.fa
+PHODC	PHODC Phoenix dactylifera (with species annotation)	/bank/proteome_annotated/PHODC_annotated.fa
+PHYPA	PHYPA Physcomitrella patens (with species annotation) /bank/proteome_annotated/PHYPA_annotated.fa
+PICABHC	PICAB Picea Abies High Confidence (with species annotation)	/bank/picea_abies/Pabies1.0-HC-pep_annotated.faa
+PICAB	PICAB Picea Abies Complete (with species annotation)	/bank/picea_abies/Pabies1.0-pep_annotated.faa
+PRUPE	PRUPE Prunus persica (with species annotation)	/bank/proteome_annotated/PRUPE_annotated.fa
+SELML	SELML Selaginella moellendorffii (with species annotation)	/bank/proteome_annotated/SELML_annotated.fa
+THEHA	THEHA Thellungiella halophila (with species annotation)	/bank/proteome_annotated/THEHA_annotated.fa

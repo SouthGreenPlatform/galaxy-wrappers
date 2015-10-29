@@ -1,0 +1,70 @@
+#This is a sample file distributed with Galaxy that is used to define a
+#list of protein BLAST databases, using three columns tab separated
+#(longer whitespace are TAB characters):
+#
+#<unique_id>      <database_caption>     <base_name_path>
+#
+#The captions typically contain spaces and might end with the build date.
+#It is important that the actual database name does not have a space in it,
+#and that the first tab that appears in the line is right before the path.
+#
+#So, for example, if your database is NR and the path to your base name 
+#is /data/blastdb/nr, then the blastdb_p.loc entry would look like this:
+#
+#nr    NCBI NR (non redundant)      /data/blastdb/nr
+#
+#and your /data/blastdb directory would contain all of the files associated
+#with the database, /data/blastdb/nr.*.
+#
+#Your blastdb_p.loc file should include an entry per line for each "base name" 
+#you have stored. For example:
+#
+#nr_05Jun2010    NCBI NR (non redundant) 05 Jun 2010      /data/blastdb/05Jun2010/nr
+#nr_15Aug2010    NCBI NR (non redundant) 15 Aug 2010      /data/blastdb/15Aug2010/nr
+#...etc...
+#
+#See also blastdb.loc which is for any nucleotide BLAST database.
+#
+ARATH	ARATH Arabidopsis thaliana (with species annotation)	/bank/genfam/genome_data/ARATH/ARATH-TAIR10-sequence_feature-locus_tag-genfam.gff3	/bank/genfam/genome_data/ARATH/ARATH-TAIR10-chromosome-genfam.fna
+BRADI	BRADI Brachypodium distachyon (with species annotation)	/bank/genfam/genome_data/BRADI/BRADI-JGI1-sequence_feature-locus_tag-genfam.gff3	/bank/genfam/genome_data/BRADI/BRADI-JGI1-chromosome-genfam.fna
+GLYMA	GLYMA Glycine max (with species annotation)	/bank/genfam/genome_data/GLYMA/GLYMA-JGI1-sequence_feature-locus_tag-genfam.gff3	/bank/genfam/genome_data/GLYMA/GLYMA-JGI1-chromosome-genfam.fna
+GOSRA	GOSRA Gossypium raimondii (with species annotation)	/bank/genfam/genome_data/GOSRA/GOSRA-JGI1-sequence_feature-locus_tag-genfam.gff3	/bank/genfam/genome_data/GOSRA/GOSRA-JGI1-chromosome-genfam.fna
+LOTJA	LOTJA Lotus japonicus (with species annotation)	/bank/genfam/genome_data/LOTJA/LOTJA-Kazusa2.5-sequence_feature-locus_tag-genfam.gff3	/bank/genfam/genome_data/LOTJA/LOTJA-Kazusa2.5-chromosome-genfam.fna
+MAIZE	MAIZE Zea mays (with species annotation)	/bank/genfam/genome_data/MAIZE/MAIZE-MGDB5b60-sequence_feature-locus_tag-genfam.gff3	/bank/genfam/genome_data/MAIZE/MAIZE-MGDB5b60-chromosome-genfam.fna
+MALDO	MALDO Malus domestica (with species annotation)	/bank/genfam/genome_data/MALDO/MALDO-JGI1-sequence_feature-locus_tag-genfam.gff3	/bank/genfam/genome_data/MALDO/MALDO-JGI1-chromosome-genfam.fna
+MANES	MANES Manihot esculenta (with species annotation)	/bank/genfam/genome_data/MANES/MANES-JGI4.1-sequence_feature-locus_tag-genfam.gff3	/bank/genfam/genome_data/MANES/MANES-JGI4.1-chromosome-genfam.fna
+MEDTR	MEDTR Medicago truncatula (with species annotation)	/bank/genfam/genome_data/MEDTR/MEDTR-Mt3.5v5-sequence_feature-locus_tag-genfam.gff3	/bank/genfam/genome_data/MEDTR/MEDTR-Mt3.5v5-chromosome-genfam.fna
+MUSAC	MUSAC Musa acuminata (with species annotation)	/bank/genfam/genome_data/MUSAC/MUSAC-Musa1-sequence_feature-locus_tag-genfam.gff3	/bank/genfam/genome_data/MUSAC/MUSAC-Musa1-chromosome-genfam.fna
+ORYSI	ORYSI Oryza sativa subsp. indica (with species annotation)	/bank/genfam/genome_data/ORYSI/ORYSI-BGI2-sequence_feature-locus_tag-genfam.gff3	/bank/genfam/genome_data/ORYSI/ORYSI-BGI2-chromosome-genfam.fna
+ORYSJ	ORYSJ Oryza sativa subsp. japonica (with species annotation)	/bank/genfam/genome_data/ORYSJ/ORYSJ-MSU7-sequence_feature-locus_tag-genfam.gff3	/bank/genfam/genome_data/ORYSJ/ORYSJ-MSU7-chromosome-genfam.fna
+POPTR	POPTR Populus trichocarpa (with species annotation) /bank/genfam/genome_data/POPTR/POPTR-JGI2-sequence_feature-locus_tag-genfam.gff3	/bank/genfam/genome_data/POPTR/POPTR-JGI2-chromosome-genfam.fna
+RICCO	RICCO Ricinus communis (with species annotation)	/bank/genfam/genome_data/RICCO/RICCO-JGI0.1-sequence_feature-locus_tag-genfam.gff3	/bank/genfam/genome_data/RICCO/RICCO-JGI0.1-chromosome-genfam.fna
+SETIT	SETIT Setaria italica (with species annotation)	/bank/genfam/genome_data/SETIT/SETIT-JGI1-sequence_feature-locus_tag-genfam.gff3	/bank/genfam/genome_data/SETIT/SETIT-JGI1-chromosome-genfam.fna
+SOLLC	SOLLC Solanum lycopersicum (with species annotation)	/bank/genfam/genome_data/SOLLC/SOLLC-ITAG2.40-sequence_feature-locus_tag-genfam.gff3	/bank/genfam/genome_data/SOLLC/SOLLC-ITAG2.40-chromosome-genfam.fna
+SOLTU	SOLTU Solanum tuberosum (with species annotation)	/bank/genfam/genome_data/SOLTU/SOLTU-JGI3-sequence_feature-locus_tag-genfam.gff3	/bank/genfam/genome_data/SOLTU/SOLTU-JGI3-chromosome-genfam.fna
+SORBI	SORBI Sorghum bicolor (with species annotation)	/bank/genfam/genome_data/SORBI/SORBI-JGI1.4-sequence_feature-locus_tag-genfam.gff3	/bank/genfam/genome_data/SORBI/SORBI-JGI1.4-chromosome-genfam.fna
+THECC	THECC Theobroma cacao (with species annotation)	/bank/genfam/genome_data/THECC/THECC-COCOA1-sequence_feature-locus_tag-genfam.gff3	/bank/genfam/genome_data/THECC/THECC-COCOA1-chromosome-genfam.fna
+VITVI	VITVI Vitis vinifera (with species annotation)	/bank/genfam/genome_data/VITVI/VITVI-GENOSCOPE1-sequence_feature-locus_tag-genfam.gff3	/bank/genfam/genome_data/VITVI/VITVI-GENOSCOPE1-chromosome-genfam.fna
+COFCA	COFCA Coffea canephora (with species annotation)	/bank/genfam/genome_data/COFCA/COFCA-GENOSCOPE1-sequence_feature-locus_tag-genfam.gff3	/bank/genfam/genome_data/COFCA/COFCA-GENOSCOPE1-chromosome-genfam.fna
+	
+# ARATH	ARATH Arabidopsis thaliana (with species annotation)	/usr/local/bioinfo/galaxy/genfam/ARATH-TAIR10-sequence_feature-locus_tag-genfam.gff3	/bank/genfam/genome_data/ARATH/ARATH-TAIR10-chromosome-genfam.fna
+# BRADI	BRADI Brachypodium distachyon (with species annotation)	/usr/local/bioinfo/galaxy/genfam/BRADI-JGI1-sequence_feature-locus_tag-genfam.gff3	/bank/genfam/genome_data/BRADI/BRADI-JGI1-chromosome-genfam.fna
+# GLYMA	GLYMA Glycine max (with species annotation)	/usr/local/bioinfo/galaxy/genfam/GLYMA-JGI1-sequence_feature-locus_tag-genfam.gff3	/bank/genfam/genome_data/GLYMA/GLYMA-JGI1-chromosome-genfam.fna
+# GOSRA	GOSRA Gossypium raimondii (with species annotation)	/usr/local/bioinfo/galaxy/genfam/GOSRA-JGI1-sequence_feature-locus_tag-genfam.gff3	/bank/genfam/genome_data/GOSRA/GOSRA-JGI1-chromosome-genfam.fna
+# LOTJA	LOTJA Lotus japonicus (with species annotation)	/usr/local/bioinfo/galaxy/genfam/LOTJA-Kazusa2.5-sequence_feature-locus_tag-genfam.gff3	/bank/genfam/genome_data/LOTJA/LOTJA-Kazusa2.5-chromosome-genfam.fna
+# MAIZE	MAIZE Zea mays (with species annotation)	/usr/local/bioinfo/galaxy/genfam/MAIZE-MGDB5b60-sequence_feature-locus_tag-genfam.gff3	/bank/genfam/genome_data/MAIZE/MAIZE-MGDB5b60-chromosome-genfam.fna
+# MALDO	MALDO Malus domestica (with species annotation)	/usr/local/bioinfo/galaxy/genfam/MALDO-JGI1-sequence_feature-locus_tag-genfam.gff3	/bank/genfam/genome_data/MALDO/MALDO-JGI1-chromosome-genfam.fna
+# MANES	MANES Manihot esculenta (with species annotation)	/usr/local/bioinfo/galaxy/genfam/MANES-JGI4.1-sequence_feature-locus_tag-genfam.gff3	/bank/genfam/genome_data/MANES/MANES-JGI4.1-chromosome-genfam.fna
+# MEDTR	MEDTR Medicago truncatula (with species annotation)	/usr/local/bioinfo/galaxy/genfam/MEDTR-Mt3.5v5-sequence_feature-locus_tag-genfam.gff3	/bank/genfam/genome_data/MEDTR/MEDTR-Mt3.5v5-chromosome-genfam.fna
+# MUSAC	MUSAC Musa acuminata (with species annotation)	/usr/local/bioinfo/galaxy/genfam/MUSAC-Musa1-sequence_feature-locus_tag-genfam.gff3	/bank/genfam/genome_data/MUSAC/MUSAC-Musa1-chromosome-genfam.fna
+# ORYSI	ORYSI Oryza sativa subsp. indica (with species annotation)	/usr/local/bioinfo/galaxy/genfam/ORYSI-BGI2-sequence_feature-locus_tag-genfam.gff3	/bank/genfam/genome_data/ORYSI/ORYSI-BGI2-chromosome-genfam.fna
+# ORYSJ	ORYSJ Oryza sativa subsp. japonica (with species annotation)	/usr/local/bioinfo/galaxy/genfam/ORYSJ-MSU7-sequence_feature-locus_tag-genfam.gff3	/bank/genfam/genome_data/ORYSJ/ORYSJ-MSU7-chromosome-genfam.fna
+# POPTR	POPTR Populus trichocarpa (with species annotation)	/usr/local/bioinfo/galaxy/genfam/POPTR-JGI2-sequence_feature-locus_tag-genfam.gff3	/bank/genfam/genome_data/POPTR/POPTR-JGI2-chromosome-genfam.fna
+# RICCO	RICCO Ricinus communis (with species annotation)	/usr/local/bioinfo/galaxy/genfam/RICCO-JGI0.1-sequence_feature-locus_tag-genfam.gff3	/bank/genfam/genome_data/RICCO/RICCO-JGI0.1-chromosome-genfam.fna
+# SETIT	SETIT Setaria italica (with species annotation)	/usr/local/bioinfo/galaxy/genfam/SETIT-JGI1-sequence_feature-locus_tag-genfam.gff3	/bank/genfam/genome_data/SETIT/SETIT-JGI1-chromosome-genfam.fna
+# SOLLC	SOLLC Solanum lycopersicum (with species annotation)	/usr/local/bioinfo/galaxy/genfam/SOLLC-ITAG2.40-sequence_feature-locus_tag-genfam.gff3	/bank/genfam/genome_data/SOLLC/SOLLC-ITAG2.40-chromosome-genfam.fna
+# SOLTU	SOLTU Solanum tuberosum (with species annotation)	/usr/local/bioinfo/galaxy/genfam/SOLTU-JGI3-sequence_feature-locus_tag-genfam.gff3	/bank/genfam/genome_data/SOLTU/SOLTU-JGI3-chromosome-genfam.fna
+# SORBI	SORBI Sorghum bicolor (with species annotation)	/usr/local/bioinfo/galaxy/genfam/SORBI-JGI1.4-sequence_feature-locus_tag-genfam.gff3	/usr/local/bioinfo/galaxy/genfam/SORBI-JGI1.4-chromosome-genfam.fna
+# THECC	THECC Theobroma cacao (with species annotation)	/usr/local/bioinfo/galaxy/genfam/THECC-COCOA1-sequence_feature-locus_tag-genfam.gff3	/bank/genfam/genome_data/THECC/THECC-COCOA1-chromosome-genfam.fna
+# VITVI	VITVI Vitis vinifera (with species annotation)	/usr/local/bioinfo/galaxy/genfam/VITVI-GENOSCOPE1-sequence_feature-locus_tag-genfam.gff3	/bank/genfam/genome_data/VITVI/VITVI-GENOSCOPE1-chromosome-genfam.fna
+# COFCA	COFCA Coffea canephora (with species annotation)	/usr/local/bioinfo/galaxy/genfam/COFCA-GENOSCOPE1-sequence_feature-locus_tag-genfam.gff3	/bank/genfam/genome_data/COFCA/COFCA-GENOSCOPE1-chromosome-genfam.fna
