@@ -1,0 +1,152 @@
+<tool id="SNiPloid" name="SNiPloid">
+	<description>Comparison of SNP between a Tetraploid and its Parental Genomes</description>
+	<command interpreter="bash">./SNiPloid.sh 
+	$Poly_Analysis.polyornot <!-- $1 -->
+	#if $Poly_Analysis.polyornot == "poly":
+		
+		$Poly_Analysis.depthPolyploid1 $Poly_Analysis.depthPolyploid2 	<!-- $4 $5 -->
+		$Poly_Analysis.VCFpolyploid1 $Poly_Analysis.DOCpolyploid1 		<!-- $6 $7 -->
+		$Poly_Analysis.VCFpolyploid2 $Poly_Analysis.DOCpolyploid2 		<!-- $8 $9 -->
+	#else:
+		$Poly_Analysis.Reference.ref <!-- $2 -->
+		
+		#if $Poly_Analysis.Reference.ref == "1":
+			$Poly_Analysis.Reference.genome2Name
+		#end if
+		
+		$Poly_Analysis.Reference.depthPolyploid1 $Poly_Analysis.Reference.depthGenome1					<!-- $6 $7 -->
+		$Poly_Analysis.Reference.VCFpolyploid1 $Poly_Analysis.Reference.DOCpolyploid1						<!-- $8 $9 -->
+		$Poly_Analysis.Reference.VCFgenome1 $Poly_Analysis.Reference.DOCgenome1						<!-- $10 $11 -->
+		#if $Poly_Analysis.Reference.ref == "0":
+			$Poly_Analysis.Reference.depthGenome2																			<!-- $12 -->
+			$Poly_Analysis.Reference.VCFgenome2 $Poly_Analysis.Reference.DOCgenome2					<!-- $13 $14 -->
+		#end if
+	#end if
+	$SNP_csv $SNP_html $SNP_count $SNP_count_csv $enableLowQuality $log
+	#if $Poly_Analysis.polyornot == "poly":
+		$Poly_Analysis.value_filter_p1 $Poly_Analysis.value_filter_p2
+	#end if
+	#if $annotation.add_annot == "yes":
+		$annotation.add_annot $annotation.annotation_file $map
+	#end if
+	</command>
+	
+	<inputs>
+
+		<conditional name="Poly_Analysis">
+		
+			<param type="select" name="polyornot" label="Type of analysis">
+    	   		<option value="poly" selected="True">POLYPLOID vs POLYPLOID</option>
+				<option value="notpoly">POLYPLOID vs PARENTAL DIPLOID GENOMES</option>
+   			</param>
+
+			<when value="poly">
+				<param type="text" name="depthPolyploid1" label="Minimum read depth at a position to make a call (Polyploid 1)" value="20"/>
+				<param type="text" name="depthPolyploid2" label="Minimum read depth at a position to make a call (Polyploid 2)" value="20"/>
+				<param format="vcf" name="VCFpolyploid1" type="data" label="VCF file (Polyploid 1)"/>
+				<param format="vcf" name="VCFpolyploid2" type="data" label="VCF file (Polyploid 2)"/>
+				<param format="coverage" name="DOCpolyploid1" type="data" label="Depth of coverage information (Polyploid 1)"/>
+				<param format="coverage" name="DOCpolyploid2" type="data" label="Depth of coverage information (Polyploid 2)"/>
+				<param type="text" name="value_filter_p1" label="Minimum minor allele frequency (in %) (Polyploid 1)" value="10"/>
+				<param type="text" name="value_filter_p2" label="Minimum minor allele frequency (in %) (Polyploid 2)" value="10"/>
+			</when>
+
+			<when value="notpoly">
+				<conditional name="Reference">
+				
+					<param type="select" name="ref" label="Reference" help="INTERN (Genome 2 as reference) or EXTERN">
+						<option value="1" selected="True">INTERN</option>
+						<option value="0">EXTERN</option>
+					</param>
+
+					<when value="0">
+						<param type="text" name="depthPolyploid1" label="Minimum read depth at a position to make a call (Polyploid)" value="20"/>
+						<param type="text" name="depthGenome1" label="Minimum read depth at a position to make a call (Genome 1)" value="20"/>
+						<param type="text" name="depthGenome2" label="Minimum read depth at a position to make a call (Genome 2)" value="20"/>
+						<param format="vcf" name="VCFpolyploid1" type="data" label="VCF file (Polyploid)"/>
+						<param format="vcf" name="VCFgenome1" type="data" label="VCF file (Genome 1)"/>
+						<param format="vcf" name="VCFgenome2" type="data" label="VCF file (Genome 2)"/>
+						<param format="coverage" name="DOCpolyploid1" type="data" label="Depth of coverage information (Polyploid)"/>
+						<param format="coverage" name="DOCgenome1" type="data" label="Depth of coverage information (Genome 1)"/>
+						<param format="coverage" name="DOCgenome2" type="data" label="Depth of coverage information (Genome2)"/>
+					</when>
+
+					<when value="1">
+						<param type="text" name="genome2Name" label="Genome 2 Name (Reference)" value="GenomeName"/>
+						<param type="text" name="depthPolyploid1" label="Minimum read depth at a position to make a call (Polyploid)" value="20"/>
+						<param type="text" name="depthGenome1" label="Minimum read depth at a position to make a call (Genome 1)" value="20"/>
+						<param format="vcf" name="VCFpolyploid1" type="data" label="VCF file (Polyploid)"/>
+						<param format="vcf" name="VCFgenome1" type="data" label="VCF file (Genome 1)" help="VCF file with [Genome 1] vs. [Genome 2] as Reference. /!\ Lost of heterozygosity for [Genome 2]"/>
+						<param format="coverage" name="DOCpolyploid1" type="data" label="Depth of coverage information (Polyploid)"/>
+						<param format="coverage" name="DOCgenome1" type="data" label="Depth of coverage information (Genome 1)"/>
+					</when>
+
+				</conditional>
+
+			</when>
+
+		</conditional>
+
+		<conditional name="annotation">
+            		<param name="add_annot" type="select" label="Add a genome annotation file">
+              			<option value="no" selected="True">No annotation available</option>
+		                <option value="yes">Add a genome annotation</option>
+            		</param>
+            		<when value="yes">
+				<param format="gff3" name="annotation_file" type="data" label="Enter a genome annotation in GFF3 format"/>
+            		</when>
+	                <when value="no">
+            		</when>
+	        </conditional>	
+
+		<param name="enableLowQuality" type="boolean" truevalue="1" falsevalue="0" checked="false" label="Enable LowQual SNP ?" help="Default : only PASS SNP are considered" />
+   		
+		
+	</inputs>
+	
+	<outputs>
+	
+		<data format="txt" name="SNP_csv" label="SNP output" />
+		<data format="html" name="SNP_html" label="SNP output (HTML)" />
+		<data format="html" name="SNP_count" label="Synthesis output (HTML)" />
+		<data format="txt" name="SNP_count_csv" label="Synthesis output" />
+		<data format="txt" name="log" label="log" />
+		<data format="png" name="map" label="map" />
+	</outputs>
+	
+	<help>
+.. class:: infomark
+
+**Program encapsulated in Galaxy by Southgreen**
+
+.. class:: infomark
+
+**SNiPlay utilities**
+
+-----
+
+==============
+ Authors:
+==============
+
+**Marine Peralta, Alexis Dereeper**
+
+-----
+
+==========
+ Overview
+==========
+
+SNiPloid compares SNP between a tetraploid and its parental genomes, or between two polyploids.
+
+-----
+
+For further informations, please visite the website of the SNiPloid_ software.
+
+
+.. _SNiPloid: http://sniplay.cirad.fr/cgi-bin/sniploid.cgi
+
+
+	</help>
+
+</tool>
