@@ -1,0 +1,51 @@
+<tool id="AceToFastaAlignments" name="AceToFastaAlignments">
+	<description>Creates a collection of FASTA alignments from a ACE assembly output</description>
+	<command interpreter="bash">./AceToFastaAlignments.sh $ace_input $min_depth $hetero_depth $occ_min $freq_min $zip_of_alignments $heterozygous_sites $SNP</command>
+	<inputs>
+		<param format="txt" name="ace_input" type="data" label="ACE assembly"/>
+		<param type="text" name="min_depth" label="Minimum depth to call a position" value="3"/>
+		<param type="text" name="hetero_depth" label="Minimum depth to estimate heterozygote" value="6"/>
+	 	<param type="text" name="occ_min" label="Minimal allele occurence to call heterozygous" value="3"/>
+		<param type="text" name="freq_min" label="Minimal allele frequency to call heterozygous" value="0.2"/>
+	</inputs>
+	<outputs>
+		<data format="zip" name="zip_of_alignments" label="Zip of FASTA alignments" />	
+		<data format="txt" name="heterozygous_sites" label="Heterozygous sites" />
+		<data format="txt" name="SNP" label="SNP" />
+	</outputs>
+	<help>
+.. class:: infomark
+
+**Program encapsulated in Galaxy by Southgreen**
+
+.. class:: infomark
+
+**SNiPlay utilities**
+
+-----
+
+==============
+ Authors:
+==============
+
+**Alexis Dereeper**
+
+-----
+
+==========
+ Overview
+==========
+
+AceToFastaAlignments creates a collection of FASTA alignments from a ACE assembly output.
+
+-----
+
+For further informations, please visite the website of the SNiPlay_ software.
+
+
+.. _SNiPlay: http://sniplay.cirad.fr
+
+
+	</help>
+
+</tool>
