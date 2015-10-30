@@ -1,0 +1,39 @@
+<tool id="Pileup2snp" name="Pileup2snp">
+	<description>Identify SNPs from a pileup file</description>
+	<command interpreter="bash">./Pileup2snp.sh $pileup_input $SNP $stats $min_coverage $min_reads2 $min_avg_qual $min_var_freq $min_freq_for_hom</command>
+	<inputs>
+		<param format="tabular" name="pileup_input" type="data" label="Pileup format"/>
+		
+		<param type="text" name="min_avg_qual" label="Minimum base quality at a position to count a read" value="15"/>
+		<param type="text" name="min_coverage" label="Minimum read depth at a position to make a call" value="8"/>
+
+	 	<param type="text" name="min_reads2" label="Minimum supporting reads at a position to call variants" value="2"/>
+			
+		<param type="text" name="min_var_freq" label="Minimum variant allele frequency threshold" value="0.01"/>
+		<param type="text" name="min_freq_for_hom" label="Minimum frequency to call homozygote" value="0.75"/>
+
+	</inputs>
+	<outputs>
+		<data format="txt" name="SNP" label="SNP" />
+		<data format="txt" name="stats" label="stats" />
+	</outputs>
+	<help>
+
+Pileup2snp
+
+-----
+
+**What it does**
+
+Pileup2snp identify SNPs from a pileup file.
+
+-----
+
+**Reference**
+
+Koboldt DC, Chen K, Wylie T, Larson DE, McLellan MD, Mardis ER, Weinstock GM, Wilson RK, Ding L. VarScan: variant detection in massively parallel sequencing of individual and pooled samples. Bioinformatics. 2009 Sep 1;25(17):2283-5. Epub 2009 Jun 19.
+
+
+	</help>
+
+</tool>
