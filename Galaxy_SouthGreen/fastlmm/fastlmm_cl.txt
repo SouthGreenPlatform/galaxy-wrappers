@@ -1,0 +1,1 @@
+-tfile /SATA/galaxy/database/files/000/136/dataset_136938.dat -sim /SATA/galaxy/database/files/000/136/dataset_136938.dat -pheno /SATA/galaxy/database/files/000/136/dataset_136938.dat -mpheno 1 -out /SATA/galaxy/database/files/000/136/dataset_136945.dat

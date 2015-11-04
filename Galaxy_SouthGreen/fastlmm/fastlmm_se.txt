@@ -1,0 +1,35 @@
+
+
+FastLmmC v2.07.20140723 - Factored Spectrally Transformed Linear Mixed Models [Release]
+  Copyright Microsoft Corporation -- Licensed Only for Non-Commercial use.
+  Compiled Jul 23 2014 at 19:33:22 by erg00lx for Linux v3.x kernel
+  using MKL v11.00.04 - Build: 20130517
+
+ ++    Start Processing CommandLine:
+ --      End Processing CommandLine:
+
+ ++      Start Loading FastLmm Data:
+  ++  Start Loading Covariance Data:
+   ++      Processing PLINK fileset: [/work/GALAXY/galaxy_dev/database/tmp/006/dataset_6148.dat]
+     Number of Individuals Selected:     167
+               Number of Phenotypes:       1
+                Number of SNPs Read:   16444
+                Number of SNPs Used:   16444
+   --  End Processing PLINK fileset: [/work/GALAXY/galaxy_dev/database/tmp/006/dataset_6148.dat]
+  --    End Loading Covariance Data:
+  ++        Start Loading Test Data:
+   ++      Processing PLINK fileset: [/work/GALAXY/galaxy_dev/database/tmp/006/dataset_6148.dat]
+     Number of Individuals Selected:     167
+               Number of Phenotypes:       1
+                Number of SNPs Read:   16444
+                Number of SNPs Used:   16444
+   --  End Processing PLINK fileset: [/work/GALAXY/galaxy_dev/database/tmp/006/dataset_6148.dat]
+  --          End Loading Test Data:
+
+ --        End Loading FastLmm Data:
+
+              Compute/Load EigenSym:
+             Compute GWAS using LMM:
+                  GWAS elapsed time:  1:16 mins
+                  Write output file: [/work/GALAXY/galaxy_dev/database/tmp/006/dataset_6153.dat]
+                 Total elapsed time:  1:18 mins
