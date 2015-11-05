@@ -1,0 +1,20 @@
+<tool id="mat2submat" name="mat2submat" version="0.1"> 
+    <description> : Create a sub matrix of a matrix file</description>  
+    <command>
+		source $__tool_directory__/include_scaffhunter.sh ;
+        $__tool_directory__/mat2submat.py  
+		--mark $mark
+		--mat $mat
+		--out $out
+    </command>
+    <inputs>
+    	<param name="mat" type="data" format="txt" label="The data matrix" />
+    	<param name="mark" type="data" format="txt" label="A tabulated file containing in col 1 markers ids that will be contained in the sub-matrix" />
+		<param name="OUT" type="text" label="Prefix of output files" />
+    </inputs>
+    <outputs>
+        <data format="txt" name="out" label="$OUT sub-matrix" />
+    </outputs>
+    <help>
+    </help>
+</tool>

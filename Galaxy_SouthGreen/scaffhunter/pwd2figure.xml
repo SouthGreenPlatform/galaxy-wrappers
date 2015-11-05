@@ -1,0 +1,29 @@
+<tool id="pwd2figure" name="pwd2figure" version="0.1"> 
+    <description> : Convert JoinMap pair-wise file to figure and create .dis and .don files for DARwin</description>  
+    <command>
+		source $__tool_directory__/include_scaffhunter.sh ;
+        $__tool_directory__/pwd2figure.py  
+		--pwd $pwd
+		--order $order
+		--type $type
+		--png $png
+		--dis $dis
+		--don $don
+    </command>
+    <inputs>  
+    	<param name="pwd" type="data" format="txt" label="JoinMap pair-wise file" />
+    	<param name="order" type="data" format="txt" label="Tabulated file containing in col1 : markers names and col2 : chromosome name. Marker should be grouped by chromosome and ordered by their position on chromosome" />
+		<param name="type" type="select" label="The type of data to use LOD or REC" >
+			<option value="LOD">LOD</option>
+			<option value="REC">REC</option>
+		</param>
+		<param name="OUT" type="text" label="Prefix of output files" />
+    </inputs>
+    <outputs>
+        <data format="png" name="png" label="$OUT .png" />
+        <data format="txt" name="dis" label="$OUT .dis" />
+        <data format="txt" name="don" label="$OUT .don" />
+    </outputs>
+    <help>
+    </help>
+</tool>

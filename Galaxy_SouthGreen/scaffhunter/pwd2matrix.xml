@@ -1,0 +1,18 @@
+<tool id="pwd2matrix" name="pwd2matrix" version="0.1"> 
+    <description> : Convert pair-wise file to a tabulated matrix</description>  
+    <command>
+		source $__tool_directory__/include_scaffhunter.sh ;
+        $__tool_directory__/pwd2matrix.py  
+		--pwd $pwd
+		--out $out
+    </command>
+    <inputs>  
+    	<param name="pwd" type="data" format="txt" label="Pairwise file" />
+		<param name="OUT" type="text" label="Prefix of output file" />
+    </inputs>
+    <outputs>
+        <data format="txt" name="out" label="$OUT matrix" />
+    </outputs>
+    <help>
+    </help>
+</tool>

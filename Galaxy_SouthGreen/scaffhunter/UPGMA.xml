@@ -1,0 +1,27 @@
+<tool id="UPGMA" name="UPGMA" version="0.1"> 
+    <description> : Order scaffold based on pseudo UPGMA method</description>  
+    <command>
+		source $__tool_directory__/include_scaffhunter.sh ;
+        $__tool_directory__/UPGMA.py  
+		--mat $mat
+		--scaff $scaff
+		--type $type
+		--out1 $out1
+		--out2 $out2
+    </command>
+    <inputs>  
+    	<param name="mat" type="data" format="txt" label="The data matrix with pair-wise statistics between markers" />
+    	<param name="scaff" type="data" format="txt" label="A tabulated file containing in col 1 : markers name, col2 : scaffold name (the file should be ordered by scaffold and marker order on scaffold)" />
+		<param name="type" type="select" label="The type of data. IDENT for identity statistics (ex LOD), DIF for difference statistics (ex REC)" >
+			<option value="IDENT">IDENT</option>
+			<option value="DIF">DIF</option>
+		</param>
+		<param name="OUT" type="text" label="Prefix of output files" />
+    </inputs>
+    <outputs>
+        <data format="txt" name="out1" label="$OUT first scaff order" />
+        <data format="txt" name="out2" label="$OUT first marker order" />
+    </outputs>
+    <help>
+    </help>
+</tool>

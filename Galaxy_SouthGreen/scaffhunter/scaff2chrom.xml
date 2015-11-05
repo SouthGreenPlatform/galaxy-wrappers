@@ -1,0 +1,27 @@
+<tool id="scaff2chrom" name="scaff2chrom" version="0.1"> 
+    <description> : Assemble scaffolds in a chromosome </description>  
+    <command>
+		source $__tool_directory__/include_scaffhunter.sh ;
+        $__tool_directory__/scaff2chrom.py  
+		--table $table
+		--seq $seq
+		--out $out
+		--agp $agp
+		--unknown $unknown
+    </command>
+    <inputs>
+		<param name="seq" type="data" format="fasta" label="Scaffold fasta file" />
+    	<param name="table" type="data" format="txt" label="Table file containing in column 1: chromosome name, column 2: scaffold name, column 3: expected orientation (FWD or REV)" />
+		<param name="OUT" type="text" label="Prefix of output files" />
+		<param name="unknown" type="select" label="Create unknown chromosome with remaining sequences" >
+			<option value="yes">yes</option>
+			<option value="no">no</option>
+		</param>
+    </inputs>
+    <outputs>
+        <data format="fasta" name="out" label="$OUT fasta" />
+        <data format="txt" name="agp" label="$OUT agp" />
+    </outputs>
+    <help>
+    </help>
+</tool>

@@ -1,0 +1,26 @@
+<tool id="matrix2ortho" name="matrix2ortho" version="0.1"> 
+    <description> : Convert matrix to a dot-plot figure</description>  
+    <command>
+		source $__tool_directory__/include_scaffhunter.sh ;
+        $__tool_directory__/matrix2ortho.py  
+		--mat $mat
+		--order $order
+		--type $type
+		--png $png
+    </command>
+    <inputs>  
+    	<param name="mat" type="data" format="txt" label="The data matrix" />
+    	<param name="order" type="data" format="txt" label="A table file containing in col 1 : marker name, col 2 : marker group" />
+		<param name="type" type="select" label="The type of statistics in the matrix" >
+			<option value="LOD">LOD</option>
+			<option value="REC">REC</option>
+			<option value="COR">COR</option>
+		</param>
+		<param name="OUT" type="text" label="Prefix of output files" />
+    </inputs>
+    <outputs>
+        <data format="png" name="png" label="$OUT .png" />
+    </outputs>
+    <help>
+    </help>
+</tool>

@@ -1,0 +1,28 @@
+<tool id="GBS_corrector" name="GBS_corrector" version="0.1"> 
+    <description> : Correct GBS markers based on their order along scaffold or chromosome or other</description>  
+    <command>
+		source $__tool_directory__/include_scaffhunter.sh ;
+        $__tool_directory__/GBS_corrector.py  
+		--table $table
+		--order $order
+		--fen $fen
+		--suspect $suspect
+		--nr $nr
+		--cor $cor
+		--Nosu $Nosu
+    </command>
+    <inputs>  
+    	<param name="table" type="data" format="txt" label="A table file containing phased data. col 1 : markers name, col 2, 3, 4 necessary but not used by the program, col 5 to end : individual genotypes. First line contain header. Rendundant names (markers and individuals) are not allowed" />
+    	<param name="order" type="data" format="txt" label="A table file with markers names in column 1 and scaffold they match with in column2. Markers should be ordered first on scaffold and second on markers position on scaffold" />
+		<param name="fen" type="text" label="Minimal marker number in a scaffold followed by half window size. Both values should be separated by '='. If different classes, couple can be repeated and separated by '='" />
+		<param name="suspect" type="integer" value="0" label="The minimal number of corrections in a marker to consider this marker as supect" />
+		<param name="OUT" type="text" label="Prefix of output files" />
+    </inputs>
+    <outputs>
+        <data format="txt" name="nr" label="$OUT corrected_non_redundant" />
+        <data format="txt" name="cor" label="$OUT corrected" />
+        <data format="txt" name="Nosu" label="$OUT no_suspect" />
+    </outputs>
+    <help>
+    </help>
+</tool>
