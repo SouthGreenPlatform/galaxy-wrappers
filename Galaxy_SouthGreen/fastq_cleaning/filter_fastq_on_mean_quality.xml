@@ -1,0 +1,47 @@
+<tool id="filter_fastq_on_mean_quality" name="Filter FastQ" version="2.1.2">
+	<description>- Filter FastQ read on mean quality</description>
+	
+	<command>
+		source $__tool_directory__/module_load.txt;
+		mkdir tmp_$$;
+		arcad_hts_2_Filter_Fastq_On_Mean_Quality.pl -f $input -o tmp_$$ -a $phred -m $mean -l $length;
+		mv tmp_$$/* $output
+	</command>
+	
+	<inputs>
+		<param format="fastq,fastqsanger,fastqillumina,fastqsolexa" name="input" type="data" label="Fastq File" />
+		<param type="integer" name="mean" help="Reads with mean quality below this threshold will be removed" value="30" label="Mean"/>
+		<param name="phred" type="select" label="Phred scale">
+			<option value="33" selected="true">33</option>
+			<option value="64" selected="true">64</option>
+		</param>
+		<param type="integer" name="length" help="Reads below this length threshold will be removed" value="0" label="Length"/>
+	</inputs>
+	
+	<outputs>
+		<data format_source="input" name="output" metadata_source="input" label="${tool.name} on ${on_string} (Reads)"/>
+	</outputs>
+
+	<help>
+.. class:: infomark
+
+**Program encapsulated in Galaxy by Southgreen**
+
+.. class:: infomark
+
+-----	
+
+==========
+ Authors:
+==========	
+
+**Gautier SARAH**
+
+-----
+
+This tool used the following script:
+
+https://github.com/SouthGreenPlatform/arcad-hts/blob/master/scripts/arcad_hts_2_Filter_Fastq_On_Mean_Quality.pl
+	</help>
+</tool>
+
