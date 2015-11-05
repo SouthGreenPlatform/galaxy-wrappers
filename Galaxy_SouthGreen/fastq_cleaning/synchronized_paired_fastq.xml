@@ -1,0 +1,43 @@
+<tool id="synchronized_paired_fastq" name="Synchronized paired FastQ" version="2.1.2">
+	<description>Synchronize paired Fastq after cleaning steps</description>
+	
+	<command>
+		source $__tool_directory__/module_load.txt;
+		arcad_hts_3_synchronized_paired_fastq.pl -f $input_f -r $input_r -of $output_f -or $output_r -os $output_s;
+	</command>
+	
+	<inputs>
+		<param format="fastq,fastqsanger,fastqillumina,fastqsolexa" name="input_f" type="data" label="Forward fastq File" />
+		<param format="fastq,fastqsanger,fastqillumina,fastqsolexa" name="input_r" type="data" label="Reverse fastq File" />
+	</inputs>
+	
+	<outputs>
+		<data format_source="input_f" name="output_f" metadata_source="input_f" label="${tool.name} on ${on_string} (Reads Forward)"/>
+		<data format_source="input_r" name="output_r" metadata_source="input_r" label="${tool.name} on ${on_string} (Reads Reverse)"/>
+		<data format_source="input_f" name="output_s" metadata_source="input_f" label="${tool.name} on ${on_string} (Reads Single)"/>
+	</outputs>
+
+	<help>
+.. class:: infomark
+
+**Program encapsulated in Galaxy by Southgreen**
+
+.. class:: infomark
+
+-----	
+
+==========
+ Authors:
+==========	
+
+**Gautier SARAH**
+
+-----
+
+This tool used the following script:
+https://github.com/SouthGreenPlatform/arcad-hts/blob/master/scripts/arcad_hts_3_synchronized_paired_fastq.pl
+
+**To work properly, the inputs for this script must have their reads in the same order in both file. This is usually the case.**
+	</help>
+</tool>
+
