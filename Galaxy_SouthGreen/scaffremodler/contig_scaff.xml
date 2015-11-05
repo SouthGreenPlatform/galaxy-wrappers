@@ -1,0 +1,23 @@
+<tool id="contig_scaff" name="contig_scaff" version="0.1"> 
+    <description> : Join scaffolds unsing a tabulated file</description>  
+    <command>
+		source $__tool_directory__/include_scaffremodler.sh ;
+        $__tool_directory__/contig_scaff.py
+		--table $table
+		--fasta $fasta
+		--out $out
+		--out_verif $out_verif
+		
+    </command>
+    <inputs>
+		<param name="table" type="data" label="The table file of scaffold to join" />
+		<param name="fasta" type="data" label="The multi-fasta scaffold file" />
+		<param name="OUT" type="text" label="Identifier for output" />
+    </inputs>
+    <outputs>
+        <data format="fasta" name="out" label="$OUT contig.fasta" />
+        <data format="txt" name="out_verif" label="$OUT contig.txt" />
+    </outputs>
+    <help>
+    </help>
+</tool>  

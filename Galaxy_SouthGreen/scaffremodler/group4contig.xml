@@ -1,0 +1,19 @@
+<tool id="group4contig" name="group4contig" version="0.1"> 
+    <description> : Create a file grouping scaffold name that should be joined together</description>  
+    <command>
+		source $__tool_directory__/include_scaffremodler.sh ;
+        $__tool_directory__/group4contig.py
+		--table $table
+		--out $out
+		
+    </command>
+    <inputs>
+		<param name="table" type="data" label="The table file of scaffold to join" />
+		<param name="OUT" type="text" label="Identifier for output" />
+    </inputs>
+    <outputs>
+        <data format="txt" name="out" label="$OUT grouped.txt" />
+    </outputs>
+    <help>
+    </help>
+</tool>

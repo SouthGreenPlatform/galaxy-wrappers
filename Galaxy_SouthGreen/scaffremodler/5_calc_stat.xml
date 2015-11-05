@@ -1,0 +1,66 @@
+<tool id="5_calc_stat" name="5_calc_stat" version="0.1">
+    <description> : Calculate statistics on insert size, and coverage</description>
+    <command>
+		source $__tool_directory__/include_scaffremodler.sh ;
+        $__tool_directory__/5_calc_stat.py
+		--sam $sam
+		#if $input.have_config == "yes"
+			--config $input.config
+        #end if       
+        #if $input.have_config == "no"
+			#if str($reference_genome.source) == "history":
+        	    --ref $reference_genome.own_file  
+       	 	#else:
+				--ref $reference_genome.index.fields.path
+        	#end if 
+			--type $input.type
+        #end if
+		--out $out
+		--stat $stat
+		--outconf $outconf
+    </command>
+    <inputs>
+		<param name="sam" type="data" label="Sam/bam file" />
+		<conditional name="input">
+            <param name="have_config" type="select" label="Do you have a config file?">
+				<option value="yes">yes</option>
+				<option value="no">no</option>
+            </param>
+            <when value="yes">
+                <param name="config" type="data" label="conf file"/>
+            </when>
+            <when value="no">
+				<conditional name="reference_genome">
+        			<param name="source" type="select" label="Will you select a reference genome from your history or use a built-in index?" help="Built-ins were indexed using default options. See `Indexes` section of help below">
+            			<option value="indexed">Use a built-in genome index</option>
+            			<option value="history">Use a genome from the history and build index</option>
+          			</param>
+          			<when value="indexed">
+            			<param name="index" type="select" label="Select reference genome" help="If your genome of interest is not listed, contact the Galaxy team">
+							<options from_file="scaffremodler.loc">
+								<column name="value" index="0"/>
+								<column name="name" index="1"/>
+								<column name="path" index="2"/>
+							</options>
+            			</param>
+          			</when>
+          			<when value="history">
+            			<param name="own_file" type="data" format="fasta" metadata_name="dbkey" label="Select reference genome" />
+          			</when>
+       		 	</conditional>	  
+				<param name="type" type="select" label="Is it a sam or a bam?">
+					<option value="sam">sam</option>
+					<option value="bam">bam</option>
+				</param>
+            </when>
+		</conditional>
+		<param name="OUT" type="text" label="Identifier for output" />
+    </inputs>
+    <outputs>
+        <data format="txt" name="out" label="$OUT coverage" />
+        <data format="txt" name="stat" label="$OUT stat" />
+        <data format="txt" name="outconf" label="$OUT stat.conf" />
+    </outputs>
+    <help>
+    </help>
+</tool>

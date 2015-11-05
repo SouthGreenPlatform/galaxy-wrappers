@@ -1,0 +1,19 @@
+<tool id="SplitOnX" name="SplitOnX" version="0.1"> 
+    <description> : Split fasta sequence on X and rename sequence based on length</description>
+    <command>
+		source $__tool_directory__/include_scaffremodler.sh ;
+        $__tool_directory__/SplitOnX.py
+		--fasta $fasta
+		--out $out
+		
+    </command>
+    <inputs>
+		<param name="fasta" type="data" label="The fasta file" />
+		<param name="OUT" type="text" label="Identifier for output" />
+    </inputs>
+    <outputs>
+        <data format="fasta" name="out" label="$OUT split.fasta" />
+    </outputs>
+    <help>
+    </help>
+</tool>  

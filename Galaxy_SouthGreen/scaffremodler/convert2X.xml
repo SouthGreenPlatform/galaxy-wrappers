@@ -1,0 +1,21 @@
+<tool id="convert2X" name="convert2X" version="0.1"> 
+    <description> : Replace specified DNA regions (in the provided table file) by X</description>  
+    <command>
+		source $__tool_directory__/include_scaffremodler.sh ;
+        $__tool_directory__/convert2X.py
+		--table $table
+		--fasta $fasta
+		--out $out
+		
+    </command>
+    <inputs>
+		<param name="table" type="data" label="The table file with region to convert to X" />
+		<param name="fasta" type="data" label="The multifasta sequence file" />
+		<param name="OUT" type="text" label="Identifier for output" />
+    </inputs>
+    <outputs>
+        <data format="fasta" name="out" label="$OUT X_convert.fasta" />
+    </outputs>
+    <help>
+    </help>
+</tool>  

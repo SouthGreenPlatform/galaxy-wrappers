@@ -1,0 +1,1 @@
+module load compiler/gcc/4.9.2 system/python/2.7.9 bioinfo/bowtie2/2.2.5 bioinfo/bowtie/1.1.1 bioinfo/bwa/0.7.12 system/java/jre8 bioinfo/picard-tools/1.130 bioinfo/samtools/0.1.18 bioinfo/circos/0.67-7

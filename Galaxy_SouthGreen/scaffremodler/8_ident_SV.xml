@@ -1,0 +1,65 @@
+<tool id="8_ident_SV" name="8_ident_SV" version="0.1">
+	<description> : Try to identify pattern of structural variation</description>
+	<command>
+		source $__tool_directory__/include_scaffremodler.sh ;
+        $__tool_directory__/8_ident_SV.py
+		--frf $frf
+		--ff $ff
+		--rr $rr
+		--ins $ins
+		--delet $delet
+		--chr_rr $chr_rr
+		--chr_fr $chr_fr
+		--chr_rf $chr_rf
+		--chr_ff $chr_ff
+		#if $input.have_config == "yes"
+			--config $input.config
+        #end if       
+        #if $input.have_config == "no"
+			--chr $input.chr
+			--covf $input.covf
+			--orient $input.orient
+			--insert $input.insert
+			--exp_cov $input.exp_cov
+			--ploid $input.ploid
+        #end if
+		--out $out
+	</command>
+	<inputs>
+		<param name="ins" type="data" label="Discordant ins_score file"/>
+		<param name="delet" type="data" label="Discordant del_score file"/>
+		<param name="frf" type="data" label="Discordant fr_score or rf_score file depending on expected orientation"/>
+		<param name="ff" type="data" label="Discordant ff_score file"/>
+		<param name="rr" type="data" label="Discordant rr_score file"/>
+		<param name="chr_fr" type="data" label="Discordant chr-fr_score file"/>
+		<param name="chr_rf" type="data" label="Discordant chr-rf_score file"/>
+		<param name="chr_ff" type="data" label="Discordant chr-ff_score file"/>
+		<param name="chr_rr" type="data" label="Discordant chr-rr_score file"/>
+		<conditional name="input">
+			<param name="have_config" type="select" label="Do you have a config file?">
+				<option value="yes">yes</option>
+				<option value="no">no</option>
+			</param>
+			<when value="yes">
+				<param name="config" type="data" label="conf file"/>
+			</when>
+			<when value="no">
+				<param name="ref" type="data" label="Multifasta reference file" />
+				<param name="covf" type="data" label="The coverage file" />
+				<param name="orient" type="select" label="The upstream/downstream mate orientation for valid paired-end alignment against the forward reference strand">
+					<option value="rf">RF</option>
+					<option value="fr">FR</option>
+				</param>
+				<param name="insert" type="integer" value="5000" label="Expected insert size" />
+				<param name="exp_cov" type="float" value="25" label="Expected coverage" />
+				<param name="ploid" type="float" value="0.33" label="Multiplicator for coverage variation detection in SV identification (ex : If homozygous duplication expected in diploid: expected = coverage + coverage*1, if heterozygous duplication expected in diploid => expected = coverage + coverage*0.5). Choose a value lower than the expected one" />
+			</when>
+		</conditional>
+		<param name="OUT" type="text" label="Identifier for output" />
+	</inputs>
+	<outputs>
+		<data format="txt" name="out" label="$OUT SV_detected " />
+	</outputs>
+	<help>
+	</help>
+</tool>

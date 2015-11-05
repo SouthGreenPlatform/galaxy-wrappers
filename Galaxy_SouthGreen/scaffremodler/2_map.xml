@@ -1,0 +1,93 @@
+<tool id="2_map" name="2_map" version="0.1">
+    <description> : Map read onto a reference fasta file</description>
+    <command>
+		source $__tool_directory__/include_scaffremodler.sh ;
+        $__tool_directory__/2_map.py
+		#if $input.have_config == "yes"
+			--config $input.config
+        #end if       
+        #if $input.have_config == "no"
+			--tool $input.tool
+			#if str($reference_genome.source) == "history":
+        	    --ref $reference_genome.own_file  
+       	 	#else:
+				--ref $reference_genome.index.fields.path
+        	#end if 
+			--q1 $input.q1
+			--q2 $input.q2
+			--orient $input.orient
+			--qual $input.qual
+			--mini $input.mini
+			--maxi $input.maxi
+			--index $input.index
+			--rmindex $input.rmindex
+			--thread $input.thread
+        #end if
+		--out $out
+    </command>
+    <inputs>
+        <conditional name="input">
+            <param name="have_config" type="select" label="Do you have a config file?">
+				<option value="yes">yes</option>
+				<option value="no">no</option>
+            </param>
+            <when value="yes">
+                <param name="config" type="data" label="conf file"/>
+            </when>
+            <when value="no">
+				<param name="tool" type="select" label="Mapping tool">
+					<option selected="true" value="bowtie2_single">bowtie2_single</option>
+					<option value="bowtie">bowtie</option>
+					<option value="bowtie2">bowtie2</option>
+					<option value="bwa">bwa</option>
+					<option value="bwa_mem">bwa_mem</option>
+				</param>	
+				<conditional name="reference_genome">
+        			<param name="source" type="select" label="Will you select a reference genome from your history or use a built-in index?" help="Built-ins were indexed using default options. See `Indexes` section of help below">
+            			<option value="indexed">Use a built-in genome index</option>
+            			<option value="history">Use a genome from the history and build index</option>
+          			</param>
+          			<when value="indexed">
+            			<param name="index" type="select" label="Select reference genome" help="If your genome of interest is not listed, contact the Galaxy team">
+							<options from_file="scaffremodler.loc">
+								<column name="value" index="0"/>
+								<column name="name" index="1"/>
+								<column name="path" index="2"/>
+							</options>
+            			</param>
+          			</when>
+          			<when value="history">
+            			<param name="own_file" type="data" format="fasta" metadata_name="dbkey" label="Select reference genome" />
+          			</when>
+       		 	</conditional>	
+				<param name="q1" type="data" label="Mate1 fastq file" />
+				<param name="q2" type="data" label="Mate2 fastq file" />
+				<param name="orient" type="select" label="The upstream/downstream mate orientation for valid paired-end alignment against the forward reference strand">
+					<option value="rf">RF</option>
+					<option value="fr">FR</option>
+				</param>
+				<param name="qual" type="select" label="Fastq file quality encoding 33 or 64">
+					<option selected="true" value="33">33</option>
+					<option value="64">64</option>
+				</param>
+				<param name="mini" type="integer" value="2500" label="minimum good fragment length" />
+				<param name="maxi" type="integer" value="7500" label="maximum good fragment length" />
+				<param name="index" type="select" label="Create index if reference not indexed">
+					<option selected="true" value="y">y</option>
+					<option value="n">n</option>
+				</param>
+				<param name="rmindex" type="select" label="Remove index">
+					<option selected="true" value="y">y</option>
+					<option value="n">n</option>
+				</param>
+				<param name="thread" type="integer" value="1" label="Thread number used for mapping" />
+            </when>
+        </conditional>
+		<param name="OUT" type="text" label="Identifier for output" />
+    </inputs>
+    <outputs>
+        <data format="sam" name="out" label="$OUT mapped.sam" />
+    </outputs>
+    <help>
+    </help>
+</tool>
