@@ -1,0 +1,36 @@
+<tool id="Parser_ACE" name="Parser_ACE">
+	<description>Retreive contig sequence and quality from ACE file</description>
+	<command interpreter="perl">
+./parserACE.pl $input1 $output1 $output2
+    </command>
+	<inputs>
+		<param format="txt" name="input1" type="data" label="Input ACE file" help="Select ACE file"/>
+		</inputs>
+	<outputs>
+		<data format="fasta" name="output1" />
+		<data format="qual" name="output2" />
+	</outputs>
+		<help>
+	
+	
+.. class:: infomark
+
+**Program encapsulated in Galaxy by Southgreen**
+
+-----
+
+===========
+ Authors:
+===========
+
+Marilyne Summo
+
+-----
+
+===========
+ Overview:
+===========
+
+The program retrieves contig sequences and quality sequences from a ACE file.
+	</help>
+</tool>
