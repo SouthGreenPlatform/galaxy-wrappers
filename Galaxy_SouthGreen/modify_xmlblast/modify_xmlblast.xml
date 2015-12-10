@@ -1,0 +1,28 @@
+<tool id="ModifyXMLblast" name="ModifyXMLblast">
+	<description> modify the XML Blast output to be taken in charge by Blast2GO. </description>
+	<!--command interpreter="bash">
+/usr/local/bioinfo/galaxy/galaxy_dist/tools/ESTtik/modify_xmlblast.sh $input $output
+</command-->
+	<command interpreter="perl">
+$__tool_directory__/modify_xmlblast.pl $input $output
+    </command>
+	<!--command interpreter="bash">$__tool_directory__/modify_xmlblast.sh $input $output</command-->
+	<inputs> 
+		<param format="blastxml" name="input" type="data" label="XML Blast output"/>
+	</inputs>
+	<outputs>
+		<data format="blastxml" name="output" label="Modified XML Blast output"/>
+	</outputs>
+	<help>
+
+.. class:: infomark
+
+**Program encapsulated in Galaxy by Southgreen**
+
+.. class:: infomark
+
+**ModifyXMLBlast**
+
+	</help>
+
+</tool>
