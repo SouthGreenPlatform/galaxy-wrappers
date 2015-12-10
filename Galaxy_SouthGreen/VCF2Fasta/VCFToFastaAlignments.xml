@@ -1,0 +1,61 @@
+<tool id="VCFToFastaAlignments" name="VCFToFastaAlignments">
+	<description>Creates a collection of FASTA alignments from a VCF output obtained from GATK</description>
+	<command interpreter="bash">./VCFToFastaAlignments.sh $vcf_input $reference_input $depth_of_coverage $min_depth $min_freq $zip_of_results $heterozygotes</command>
+	<inputs>
+		<param format="VCF" name="vcf_input" type="data" label="SNP file in VCF format (Variant Call Format)"/>
+		<param format="fasta" name="reference_input" type="data" label="Reference sequences or genome in FASTA format"/>
+	 	<param type="data" name="depth_of_coverage" label="Depth of coverage (obtained from GATK)"/>
+		<param type="text" name="min_depth" label="Minimum depth of coverage to consider position" value="1"/>
+		<param type="text" name="min_freq" label="Minimum frequency of variation to consider heterozygous" value="30"/>
+	</inputs>
+	<outputs>
+		<data format="zip" name="zip_of_results" label="Zip of outputs" />	
+		<data format="tabular" name="heterozygotes" label="Heterozygotes" />
+	</outputs>
+	<help>
+.. class:: infomark
+
+**Program encapsulated in Galaxy by Southgreen**
+
+.. class:: infomark
+
+**SNiPlay utilities**
+
+-----
+
+==============
+ Authors:
+==============
+
+**Alexis Dereeper**
+
+-----
+
+==========
+ Overview
+==========
+
+VCFToFastaAlignments creates a collection of FASTA alignments from a SNP file obtained from GATK (in the VCF format).
+
+-----
+
+For further informations, please visite the website of the SNiPlay_ software.
+
+
+.. _SNiPlay: http://sniplay.cirad.fr
+
+
+	</help>
+<tests>
+  <test>
+      <param name="vcf_input" value="GATK.vcf" />
+      <param name="reference_input" value="GATK_Reference.fasta" />
+      <param name="depth_of_coverage" value="GATK_DepthOfCoverage.txt"/>
+      <param name="min_depth" value="1" />
+      <param name="min_freq" value="30" />
+      <!--<output name="zip_of_alignments" file="Zip_of_FASTA_alignments.zip" />   
+      <output name="zip_of_depths" file="Zip_of_depth_of_coverage.zip" /> -->
+      <output name="heterozygotes" file="GATK/Heterozygotes.tabular" />
+   </test>
+</tests>
+</tool>
