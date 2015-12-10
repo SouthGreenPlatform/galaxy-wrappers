@@ -1,0 +1,47 @@
+<tool id="create_pseudomolecules" name="Create Pseudomolecules">
+	<description> from scaffold sequences and scaffold order/orientation</description>
+	<command interpreter="bash">./CreatePseudochromosomes.sh $scaffolds $anchoring $species $number_N $agp $pseudomolecules $pseudomolecules_gff $scaffolds_gff
+    </command>
+	<inputs>
+		<param format="fasta" name="scaffolds" type="data" label="Scaffold sequences in FASTA format"/>	
+		<param format="tabular" name="anchoring" type="data" label="Scaffold order and orientation" help="Tabular format (1:chrom, 2:scaffold order, 3:scaffold name, 4:sens=AS/S)"/>
+		<param name="species" type="text" label="Species"/>
+		<param name="number_N" type="text" value="100" label="Number of N for gaps"/>
+	</inputs>
+	<outputs>
+		<data format="tabular" name="agp" label="AGP"/>
+		<data format="fasta" name="pseudomolecules" label="Pseudomolecules sequences"/>
+		<data format="gff3" name="pseudomolecules_gff" label="Pseudomolecules GFF"/>
+		<data format="gff3" name="scaffolds_gff" label="Scaffolds GFF"/>
+	</outputs>
+	<help>
+	
+.. class:: infomark
+
+**Program developed and encapsulated in Galaxy by Southgreen**
+
+.. class:: infomark
+
+**CreatePseudochromosomes.pl version 1, 2012**
+
+-----
+
+==============
+ Authors:
+==============
+
+**Alexis Dereeper**
+
+-----
+
+==========
+ Overview
+==========
+
+This module enables to reconstruct the complete pseudomolecule sequences in FASTA format and an associated AGP file, using the scaffold sequences and scaffold order/orientation as inputs.
+
+
+
+	</help>
+
+</tool>
