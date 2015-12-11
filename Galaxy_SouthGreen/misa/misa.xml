@@ -2,7 +2,7 @@
 	<description>, search for microsatellites and design primers</description>
 	<command>
 source $__tool_directory__/include.txt;
-perl $__tool_directory__/brick_misa.pl $input $output $stats
+perl $__tool_directory__/brick_misa.pl $input $output $stats $__tool_directory__
 </command>
 	<inputs> 
 		<param format="fasta" name="input" type="data" label="FASTA sequences"/>
