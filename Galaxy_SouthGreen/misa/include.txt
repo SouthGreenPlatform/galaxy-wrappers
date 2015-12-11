@@ -1,0 +1,1 @@
+module load bioinfo/primer3/1.1.1

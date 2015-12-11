@@ -1,0 +1,49 @@
+<tool id="misa" name="MISA+Primer3">
+	<description>, search for microsatellites and design primers</description>
+	<command>
+source $__tool_directory__/include.txt;
+perl $__tool_directory__/brick_misa.pl $input $output $stats
+</command>
+	<inputs> 
+		<param format="fasta" name="input" type="data" label="FASTA sequences"/>
+	</inputs>
+	<outputs>
+		<data format="txt" name="output" label="Results file"/>
+		<data format="txt" name="stats" label="Statistics file"/>
+	</outputs>
+	<help>
+	
+	
+.. class:: infomark
+
+**Program encapsulated in Galaxy by Southgreen**
+
+.. class:: infomark
+
+**MISA version 1.0, 2001**
+
+-----
+
+==========
+ Authors:
+==========
+
+Thomas Thiel
+
+-----
+
+==============
+ Description:
+==============
+
+Tool for the identification and localization of (I)  perfect microsatellites as well as (II) compound microsatellites (two individual microsatellites, disrupted by a certain number of bases)
+
+-----
+
+For further informations, please visite the MISA_ website.
+
+
+.. _MISA: http://pgrc-35.ipk-gatersleben.de/portal/page/portal/PG_BICGH/P_BICGH/P_BICGH_TOOLS/P_BICGH_ITOOLS_MISA
+
+	</help>
+</tool>

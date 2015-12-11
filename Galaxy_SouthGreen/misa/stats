@@ -1,0 +1,41 @@
+Specifications
+==============
+
+Sequence source file: "dataset_misa.fasta"
+
+Definement of microsatellites (unit size / minimum number of repeats):
+(2/5) (3/4) (4/3) (5/3) (6/3) 
+
+Maximal number of bases interrupting 2 SSRs in a compound microsatellite:  100
+
+
+
+RESULTS OF MICROSATELLITE SEARCH
+================================
+
+Total number of sequences examined:              23
+Total size of examined sequences (bp):           18336
+Total number of identified SSRs:                 18
+Number of SSR containing sequences:              9
+Number of sequences containing more than 1 SSR:  9
+Number of SSRs present in compound formation:    9
+
+
+Distribution to different repeat type classes
+---------------------------------------------
+
+Unit size	Number of SSRs
+2	18
+
+Frequency of identified SSR motifs
+----------------------------------
+
+Repeats	3	4	5	6	7	8	9	10	11	total
+AT	-	-				9				9
+TA	-	-							9	9
+
+Frequency of classified repeat types (considering sequence complementary)
+-------------------------------------------------------------------------
+
+Repeats	3	4	5	6	7	8	9	10	11	total
+AT/AT	-	-				9			9	18

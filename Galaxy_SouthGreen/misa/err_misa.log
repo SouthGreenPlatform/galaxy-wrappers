@@ -1,0 +1,4 @@
+Use of uninitialized value $count_failed in concatenation (.) or string at ./p3_out.pl line 82, <SRC> chunk 9.
+Use of uninitialized value $count_failed in concatenation (.) or string at /home/galaxydev/galaxy/tools/SouthGreen/misa/p3_out.pl line 82, <SRC> chunk 9.
+Use of uninitialized value $count_failed in concatenation (.) or string at /home/galaxydev/galaxy/tools/SouthGreen/misa/p3_out.pl line 82, <SRC> chunk 9.
+Use of uninitialized value $count_failed in concatenation (.) or string at /home/galaxydev/galaxy/tools/SouthGreen/misa/p3_out.pl line 82, <SRC> chunk 9.
