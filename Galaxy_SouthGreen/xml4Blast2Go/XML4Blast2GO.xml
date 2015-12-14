@@ -1,0 +1,55 @@
+<tool id="XML4Blast2GO" name="XML4Blast2GO">
+	<description>, convert XML format for Blast to GO</description>
+	<command interpreter="perl">./XML4Blast2GO.pl $output_file $input_file</command>
+	<inputs>
+		<param format="txt" name="input_file" type="data" label="blast result (xml format)"/>
+		<!--param format="blastxml" name="input_file" type="data" label="blast result (xml format)"/-->
+	</inputs>
+	<outputs>
+		<data format="txt" name="output_file" label="blast result formatted"/>
+		<!--data format="blastxml" name="output_file" label="blast result formatted"/-->
+	</outputs>
+	<help>
+	
+.. class:: infomark
+
+**Program encapsulated in Galaxy and developed by Southgreen**
+
+.. class:: infomark
+
+**XML4BLAST2GO version 1.0, 2011**
+
+-----	
+
+==========
+ Authors:
+==========	
+
+**Marilyne Summo**
+**Xavier Argout**
+
+-----	
+
+============
+ Hacked by:
+============
+
+**Marilyne Summo**
+
+-----
+
+===========
+ Overview:
+===========	
+
+Modify the XML BLAST output in order to be compliant for BLAST2GO. Modifications are minor, and concern the iteration query IDs.
+Iteration_query-ID takes the same value as Iteration_query-def.
+
+-----
+
+.. class:: warningmark
+
+**No support website**
+
+	</help>
+</tool>
