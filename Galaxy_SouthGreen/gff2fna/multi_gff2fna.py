@@ -50,7 +50,8 @@ for line in spec :
 curdir=os.getcwd()
     	
 numb=str(random.randint(1,100000))
-tmpfoldname=curdir+"/"+numb
+# tmpfoldname=curdir+"/"+numb
+tmpfoldname="/home/galaxy/galaxy/tools/SouthGreen/gff2fna/"+numb
 os.system("mkdir "+tmpfoldname)
 os.system("mkdir "+tmpfoldname+"/logs")
 os.system("mkdir "+tmpfoldname+"/outputs")
@@ -66,7 +67,7 @@ os.system("mkdir "+tmpfoldname+"/outputs")
 
 i=1
 for path in bases_gff:
-	os.system("ln -s "+ path +" "+tmpfoldname+"/gff"+str(i))
+	os.system("ln -s "+path+" "+tmpfoldname+"/gff"+str(i))
 	#print path
 	i=i+1
 	
@@ -125,4 +126,4 @@ fo.close()
 fo1.close()
 
 #os.chdir("../")
-os.system("rm -rf "+tmpfoldname)
+# os.system("rm -rf "+tmpfoldname)
