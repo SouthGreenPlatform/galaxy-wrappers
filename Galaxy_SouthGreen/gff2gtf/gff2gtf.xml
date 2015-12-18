@@ -1,0 +1,15 @@
+<tool id="gff2gtf" name="gff2gtf">
+	<description>Convert GFF to GTF file</description>
+	<command interpreter="bash">
+./gff2gtf.sh $gff3 $gtf $log
+    </command>
+	<inputs>
+		<param format="gff3" name="gff3" type="data" label="Input gff file" help="Select gff file"/>		
+	</inputs>
+	<outputs>
+		<data format="gtf" name="gtf" label="gtf file" metadata_source="gff3"/>
+		<data format="txt" name="log" label="log file" />
+	</outputs>
+		<help>
+	</help>
+</tool>
