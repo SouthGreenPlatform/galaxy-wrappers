@@ -46,18 +46,19 @@ SORBI	SORBI Sorghum bicolor (with species annotation)	/bank/genfam/genome_data/S
 THECC	THECC Theobroma cacao (with species annotation)	/bank/genfam/genome_data/THECC/THECC-COCOA1-polypeptide-genfam.faa
 VITVI	VITVI Vitis vinifera (with species annotation)	/bank/genfam/genome_data/VITVI/VITVI-GENOSCOPE1-polypeptide-genfam.faa
 COFCA	COFCA Coffea canephora (with species annotation)	/bank/genfam/genome_data/COFCA/COFCA-GENOSCOPE1-polypeptide-genfam.faa
+ELAGV5	ELAGV5 Elaeis guineensis (with species annotation)	/bank/genfam/genome_data/ELAGV/ELAGV-MPOB5-polypeptide-genfam.faa
+PHODC	PHODC Phoenix dactylifera (with species annotation)	/bank/genfam/genome_data/PHODC/PHODC-WCMCQ3-polypeptide-genfam.faa
+ELAGV_REF	ELAGV_REF Elaeis guineensis NCBI100 (with species annotation) 	/bank/genfam/genome_data/ELAGV_REF/ELAGV-NCBI100-polypeptide-genfam.faa
 
 ARALY	ARALY Arabidopsis lyrata (with species annotation)	/bank/proteome_annotated/ARALY_annotated.fa
-BRARA	BBRARA rassica rapa (with species annotation)	/bank/proteome_annotated/BRARA_annotated.fa
+BRARA	BRARA Brassica rapa (with species annotation)	/bank/proteome_annotated/BRARA_annotated.fa
 CAJCA	CAJCA Cajanus cajan (with species annotation)	/bank/proteome_annotated/CAJCA_annotated.fa
 CARPA	CARPA Carica papaya (with species annotation)	/bank/proteome_annotated/CARPA_annotated.fa
 CUCME	CUCME Cucumis melo (with species annotation)	/bank/proteome_annotated/CUCME_annotated.fa
 CUCSA	CUCSA Cucumis sativus (with species annotation)	/bank/proteome_annotated/CUCSA_annotated.fa
 ELAGV	ELAGV Elaeis guineensis (with species annotation)	/bank/elaeis_guineensis/EG_genes_annotated.aa
-ELAGV5	ELAGV5 Elaeis guineensis (with species annotation)	/bank/elaeis_guineensis/EG5_Genes.V2.faa
 EUTPR	EUTPR Thellungiella parvula (with species annotation)	/bank/proteome_annotated/EUTPR_annotated.fa
 JATCU	JATCU Jatropha curcas (with species annotation)	/bank/proteome_annotated/JATCU_annotated.fa
-PHODC	PHODC Phoenix dactylifera (with species annotation)	/bank/proteome_annotated/PHODC_annotated.fa
 PHYPA	PHYPA Physcomitrella patens (with species annotation) /bank/proteome_annotated/PHYPA_annotated.fa
 PICABHC	PICAB Picea Abies High Confidence (with species annotation)	/bank/picea_abies/Pabies1.0-HC-pep_annotated.faa
 PICAB	PICAB Picea Abies Complete (with species annotation)	/bank/picea_abies/Pabies1.0-pep_annotated.faa
