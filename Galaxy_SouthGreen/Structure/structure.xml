@@ -1,0 +1,225 @@
+<?xml version="1.0"?>
+<tool id="structure" name="Structure">
+	<description>Population structure from multi-locus genotype data</description>
+	<command interpreter="bash"> structure_analysis.sh $datafile $output $logfile $kmin $runs $simsum $kmax $Rfile 
+#if $newMainparams.main_param_file_selector == "yes":
+  mainparam
+  NUMINDS,$newMainparams.NUMINDS
+  NUMLOCI,$newMainparams.NUMLOCI
+  LABEL,$newMainparams.LABEL
+  POPDATA,$newMainparams.POPDATA
+  POPFLAG,$newMainparams.POPFLAG
+  PHENOTYPE,$newMainparams.PHENOTYPE
+  EXTRACOLS,$newMainparams.EXTRACOLS
+  PHASEINFO,$newMainparams.PHASEINFO
+  MARKOVPHASE,$newMainparams.MARKOVPHASE
+  MISSING,$newMainparams.MISSING
+  PLOIDY,$newMainparams.PLOIDY
+  ONEROWPERIND,$newMainparams.ONEROWPERIND
+  MARKERNAMES,$newMainparams.MARKERNAMES
+  MAPDISTANCES,$newMainparams.MAPDISTANCES
+  MAXPOPS,$newMainparams.MAXPOPS
+  BURNIN,$newMainparams.BURNIN
+  NUMREPS,$newMainparams.NUMREPS
+#else if $newMainparams.main_param_file_selector == "no":
+  $mainparams
+#end if
+
+#if $newExtraparams.extra_param_file_selector == "yes":
+  extraparam
+  FREQSCORR,$newExtraparams.FREQSCORR
+  ONEFST,$newExtraparams.ONEFST
+  INFERALPHA,$newExtraparams.INFERALPHA
+  POPALPHAS,$newExtraparams.POPALPHAS
+  INFERLAMBDA,$newExtraparams.INFERLAMBDA
+  POPSPECIFICLAMBDA,$newExtraparams.POPSPECIFICLAMBDA
+  NOADMIX,$newExtraparams.NOADMIX
+  LINKAGE,$newExtraparams.LINKAGE
+  PHASED,$newExtraparams.PHASED
+  LOG10RMIN,$newExtraparams.LOG10RMIN
+  LOG10RMAX,$newExtraparams.LOG10RMAX
+  LOG10RPROPSD,$newExtraparams.LOG10RPROPSD
+  LOG10RSTART,$newExtraparams.LOG10RSTART
+  COMPUTEPROB,$newExtraparams.COMPUTEPROB
+  ADMBURNIN,$newExtraparams.ADMBURNIN
+  USEPOPINFO,$newExtraparams.USEPOPINFO
+  GENSBACK,$newExtraparams.GENSBACK
+  MIGRPRIOR,$newExtraparams.MIGRPRIOR
+  PFROMPOPFLAGONLY,$newExtraparams.PFROMPOPFLAGONLY
+  PRINTKLD,$newExtraparams.PRINTKLD
+  PRINTLAMBDA,$newExtraparams.PRINTLAMBDA
+  PRINTQSUM,$newExtraparams.PRINTQSUM
+  SITEBYSITE,$newExtraparams.SITEBYSITE
+  PRINTQHAT,$newExtraparams.PRINTQHAT
+  UPDATEFREQ,$newExtraparams.UPDATEFREQ
+  PRINTLIKES,$newExtraparams.PRINTLIKES
+  INTERMEDSAVE,$newExtraparams.INTERMEDSAVE
+  ECHODATA,$newExtraparams.ECHODATA
+  ANCESTDIST,$newExtraparams.ANCESTDIST
+  NUMBOXES,$newExtraparams.NUMBOXES
+  ANCESTPINT,$newExtraparams.ANCESTPINT
+  ALPHA,$newExtraparams.ALPHA
+  FPRIORMEAN,$newExtraparams.FPRIORMEAN
+  FPRIORSD,$newExtraparams.FPRIORSD
+  LAMBDA,$newExtraparams.LAMBDA
+  UNIFPRIORALPHA,$newExtraparams.UNIFPRIORALPHA
+  ALPHAMAX,$newExtraparams.ALPHAMAX
+  ALPHAPRIORA,$newExtraparams.ALPHAPRIORA
+  ALPHAPRIORB,$newExtraparams.ALPHAPRIORB
+  ALPHAPROPSD,$newExtraparams.ALPHAPROPSD
+  STARTATPOPINFO,$newExtraparams.STARTATPOPINFO
+  RANDOMIZE,$newExtraparams.RANDOMIZE
+  METROFREQ,$newExtraparams.METROFREQ
+  REPORTHITRATE,$newExtraparams.REPORTHITRATE
+  
+#else if $newExtraparams.extra_param_file_selector == "no":
+  $extraparams
+#end if
+	</command>
+
+	<inputs>
+	<param name="datafile" format="txt" type="data" label="datafile"  />
+	<conditional name="newMainparams">
+		<param name="main_param_file_selector" type="select" label="Create a new Mainparams file">
+			<option value="no" selected="True">no</option>
+			<option value="yes">yes</option>
+		</param>
+		<!-- Mainparams Data File -->
+		<when value="yes">
+			<!--param name="INFILE" label="INFILE" type="data" format="txt" size="30"/-->
+				<!--validator type="length" message="File name is too long, only name of 30 characters or less are accepted" metadata_column="30" /-->
+			<!--/param-->
+			<!-- param name="OUTFILE" label="OUTFILE" type="data" format="txt" size="30" / -->
+			
+			<param name="NUMINDS" label="NUMINDS" type="integer" value="2" help="number of diploid individuals in data file" />
+			<param name="NUMLOCI" label="NUMLOCI" type="integer" value="5" help="number of loci in data file" />
+			<param name="LABEL" label="LABEL" type="boolean" checked="true"  help="Input file contains individual labels"/>
+			<param name="POPDATA" label="POPDATA" type="boolean" checked="true" help="Input file contains a population identifier"/>
+			
+			<param name="POPFLAG" label="POPFLAG" type="boolean" checked="true" help="Input file contains a flag which says whether to use popinfo when USEPOPINFO==1"/>
+			
+			<param name="PHENOTYPE" label="PHENOTYPE" type="boolean" checked="true" help="Input file contains phenotype information"/>
+			<param name="EXTRACOLS" label="EXTRACOLS" type="integer" value="0" help="Number of additional columns of data before the genotype data start."/>
+			
+			<param name="PHASEINFO" label="PHASEINFO" type="boolean" help="The data for each individual contains a line indicating phase"/>
+			
+			<param name="MARKOVPHASE" label="MARKOVPHASE" type="boolean" help="the phase info follows a Markov model" />
+			
+			<param name="MISSING" label="MISSING" type="integer" value="-999" help="value given to missing genotype data" />
+			<param name="PLOIDY" label="PLOIDY" type="integer" value="2" help="ploidy of data" />
+			
+			<param name="ONEROWPERIND" label="ONEROWPERIND" type="boolean" help="store data for individuals in a single line" />
+			<param name="MARKERNAMES" label="MARKERNAMES" type="boolean" help="data file contains row of marker names" />
+			<param name="MAPDISTANCES" label="MAPDISTANCES" type="boolean" help="data file contains row of map distances between loci" />
+			
+			<!-- Program Parameters -->
+			<param name="MAXPOPS" label="MAXPOPS" type="integer" value="2" help="number of populations assumed" />
+			<param name="BURNIN" label="BURNIN" type="integer" value="2000" help="length of burnin period" />
+			<param name="NUMREPS" label="NUMREPS" type="integer" value="1000" help="number of MCMC reps after burnin" />
+		</when>
+	</conditional><!-- end new mainparams -->
+	
+	<conditional name="newExtraparams">
+		<param name="extra_param_file_selector" type="select" label="Create a new Extraparams file">
+			<option value="no" selected="True">no</option>
+			<option value="yes">yes</option>
+		</param>
+		<when value="yes">
+			<!-- Extraparams Program options -->
+			<param name="FREQSCORR" label="FREQSCORR" type="boolean" checked="true" help="allele frequencies are correlated among pops"/>
+			<param name="ONEFST" label="ONEFST" type="boolean" hel="assume same value of Fst for all subpopulations" />
+			
+			<param name="INFERALPHA" label="INFERALPHA" type="boolean" checked="true" help="Infer ALPHA (the admixture parameter)" />
+			<param name="POPALPHAS" label="POPALPHAS" type="boolean" help="Individual alpha for each population" />
+			
+			<param name="INFERLAMBDA" label="INFERLAMBDA" type="boolean" help="Infer LAMBDA (the allele frequencies parameter)" />
+			<param name="POPSPECIFICLAMBDA" label="POPSPECIFICLAMBDA" type="boolean" help="infer a separate lambda for each pop (only if INFERLAMBDA=1)" />
+			
+			<param name="NOADMIX" label="NOADMIX" type="boolean" help="Use no admixture model" />
+			<param name="LINKAGE" label="LINKAGE" type="boolean" help="Use the linkage model model" />
+			<param name="PHASED" label="PHASED" type="boolean" help="Data are in correct phase (required unless data are diploid)
+                      If (LINKAGE=1, PHASED=0), then PHASEINFO can be used--this is an extra line in the input file that gives phase probabilities.
+                      When PHASEINFO =0 each value is set to 0.5, implying no phase information"/>
+					  
+			<param name="LOG10RMIN" label="LOG10RMIN" type="float" value="-4.0" help="Log10 of minimum allowed value of r under linkage model" />
+			<param name="LOG10RMAX" label="LOG10RMAX" type="float" value="1.0" help="Log10 of maximum allowed value of r"/>
+			<param name="LOG10RPROPSD" label="LOG10RPROPSD" type="float" value="0.1" help="standard deviation of log r in update" />
+			<param name="LOG10RSTART" label="LOG10RSTART" type="float" value="-2.0" help="initial value of log10 r" />
+			
+			<param name="COMPUTEPROB" label="COMPUTEPROB" type="boolean" checked="true" help="Estimate the probability of the Data under 
+                         the model.  This is used when choosing the best number of subpopulations" />
+			
+			<param name="ADMBURNIN" label="ADMBURNIN" type="integer" value="500" help="initial period of burnin with admixture model. 
+			The admixture model normally has the best mixing properties, and therefore should be used as the first phase of the burnin.
+                        A significant burnin is highly recommended under the linkage model which otherwise can perform very badly" />
+					
+		<!-- USING PRIOR POPULATION INFO -->
+			<param name="USEPOPINFO" label="USEPOPINFO" type="boolean" help="Use prior population information to assist clustering. Need POPDATA=1" />
+			<param name="GENSBACK" label="GENSBACK" type="integer" value="1" help="For use when inferring whether an indiv-
+                         idual is an immigrant, or has an immigrant ancestor in the past GENSBACK generations.  
+			 eg, if GENSBACK==2, it tests for immigrant ancestry back to grandparents" />
+			<param name="MIGRPRIOR" label="MIGRPRIOR" type="float" value="0.001" help="prior prob that an individual is a migrant 
+                          (used only when USEPOPINFO==1). This should be small, eg 0.01 or 0.1" />
+			<param name="PFROMPOPFLAGONLY" label="PFROMPOPFLAGONLY" type="boolean" help="only use individuals with POPFLAG=1 to update P.
+                        This is to enable use of a reference set of individuals for clustering additional 'test' individuals" />
+			
+		<!-- OUTPUT OPTIONS -->
+			<param name="PRINTKLD" label="PRINTKLD" type="boolean" checked="true" help="Print estimated Kullback-Leibler divergence to screen during the run" />
+			<param name="PRINTLAMBDA" label="PRINTLAMBDA" type="boolean" checked="true" help="Print current value(s) of lambda to screen" />
+			<param name="PRINTQSUM" label="PRINTQSUM" type="boolean" checked="true" help="Print summary of current population membership to screen" />
+			
+			<param name="SITEBYSITE" label="SITEBYSITE" type="boolean" help="whether or not to print site by site results. Large!" />
+			
+			<param name="PRINTQHAT" label="PRINTQHAT" type="boolean" help="Q-hat printed to a separate file.  Turn this on before using STRAT" />
+			<param name="UPDATEFREQ" label="UPDATEFREQ" type="integer" value="0" help="frequency of printing update on the screen. Set automatically if this is 0" />
+			<param name="PRINTLIKES" label="PRINTLIKES" type="boolean" help="print current likelihood to screen every rep" />
+			<param name="INTERMEDSAVE" label="INTERMEDSAVE" type="integer" value="0" help="number of saves to file during run" />
+			
+			<param name="ECHODATA" label="ECHODATA" type="boolean" checked="true" help="Print some of data file to screen to check that the data entry is correct." />
+			
+		<!-- NEXT 3 ARE FOR COLLECTING DISTRIBUTION OF Q -->
+			<param name="ANCESTDIST" label="ANCESTDIST" type="boolean" help="collect data about the distribution of ancestry coefficients (Q) for each individual" />
+			<param name="NUMBOXES" label="NUMBOXES" type="integer" value="1000" help="the distribution of Q values is stored as a histogram with this number of boxes" />
+			<param name="ANCESTPINT" label="ANCESTPINT" type="float" value="0.90" help="the size of the displayed probability interval on Q (values between 0.0--1.0)" />
+			
+		<!-- PRIORS -->
+			<param name="ALPHA" label="ALPHA" type="float" value="1.0" help="Dirichlet parameter for degree of admixture (this is the initial value if INFERALPHA==1)" />
+			<param name="FPRIORMEAN" label="FPRIORMEAN" type="float" value="0.01" help="Prior mean and SD of Fst for pops." />
+			<param name="FPRIORSD" label="FPRIORSD" type="float" value="0.05" help="The prior is a Gamma distribution with these parameters" />
+			
+			<param name="LAMBDA" label="LAMBDA" type="float" value="1.0" help="Dirichlet parameter for allele frequencies" />
+			<param name="UNIFPRIORALPHA" label="UNIFPRIORALPHA" type="boolean" checked="true" help="use a uniform prior for alpha; otherwise gamma prior" />
+			<param name="ALPHAMAX" label="ALPHAMAX" type="float" value="20.0" help="max value of alpha if uniform prior" />
+			<param name="ALPHAPRIORA" label="ALPHAPRIORA" type="float" value="0.05" help="(only if UNIFPRIORALPHA==0): alpha has a gamma prior with mean A*B, and..." />
+			<param name="ALPHAPRIORB" label="ALPHAPRIORB" type="float" value="0.001" help="variance A*B^2.  Suggest A=0.1, B=1.0" />
+			
+		<!-- MISCELLANEOUS -->
+			<param name="ALPHAPROPSD" label="ALPHAPROPSD" type="float" value="0.025" help="SD of proposal for updating alpha" />
+			<param name="STARTATPOPINFO" label="STARTATPOPINFO" type="boolean" help="Use given populations as the initial condition 
+                         for population origins.  (Need POPDATA==1). It is assumed that the PopData in the input file are between 1 and k where k__lt__=MAXPOPS."/>
+			<param name="RANDOMIZE" label="RANDOMIZE" type="boolean" checked="true" help="use new random seed for each run" />
+			<param name="METROFREQ" label="METROFREQ" type="integer" value="10" help="Frequency of using Metropolis step to update
+                         Q under admixture model (ie use the metr. move every i steps).  If this is set to 0, it is never used.
+                         (Proposal for each q^(i) sampled from prior.  The goal is to improve mixing for small alpha.)"/>
+			<param name="REPORTHITRATE" label="REPORTHITRATE" type="boolean" help="report hit rate if using METROFREQ" />
+		</when>
+	</conditional>
+	
+		<param name="mainparams" format="txt" type="data" label="mainparams"  />
+		<param name="extraparams" format="txt" type="data" label="extraparams"  />
+		<param name="kmin" label="k-min" type="integer" value="1" min="1" />
+		<param name="kmax" label="k-max" type="integer" value="1" min="1" max="200" />
+		<param name="runs" label="runs" type="integer" value="1" min="1" max="100" />
+
+		<!--repeat name="series" title="Add runs">
+			<param name="K" label="K" type="integer" value="1" min="1" max="100"/>
+			<param name="runs" label="runs" type="integer" value="1" min="1" max="100"/>
+		</repeat-->
+	</inputs>
+	<outputs>
+		<data format="tgz" name="output" label="Output" />
+		<data format="txt" name="logfile" label="logfile" />
+		<data format="txt" name="simsum" label="simsum file" />
+		<data format="txt" name="Rfile" label="Rfile" />
+	</outputs>
+</tool>
