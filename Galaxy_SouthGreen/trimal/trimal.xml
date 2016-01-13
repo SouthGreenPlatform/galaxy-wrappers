@@ -3,19 +3,34 @@
 	<command>
 	source $__tool_directory__/module_trimal.sh;
 	trimal -in $input -out $output1 -htmlout $output2
-			-gt $gtin
-		#if $stin
-			-st $stin
+#if $manual_condition.manual == "manual":	
+			-gt $manual_condition.gtin
+		#if $manual_condition.stin
+			-st $manual_condition.stin
 		#end if
-		#if $consin
-			-cons $consin
+		#if $manual_condition.consin
+			-cons $manual_condition.consin
 		#end if
+#end if
+#if $manual_condition.manual == "automatic":	
+			-automated1
+#end if
 	</command>
 	<inputs>
 		<param format="fasta" name="input" type="data" label="Source file"/>
-		<param name="gtin" type="text" label="gt option" value="0.0" help="0 to 1, with 1 will remove all columns with any gap"/>
-		<param name="stin" type="float" label="st option" optional="true" help="0 to 1, for example 0.001 value will remove all columns with a similarity score lower than 0.001"/>
-		<param name="consin" type="integer" label="cons option" optional="true" help="0 to 100, for example 60 value will conserve at least 60% of the columns"/>
+		<conditional name="manual_condition">
+			<param type="select" name="manual" label="Data type">
+				<option value="manual">Manual configuration</option>
+				<option value="automatic">Automatic configuration</option>
+			</param>   		
+			<when value="manual">		
+			<param name="gtin" type="text" label="gt option" value="0.0" help="0 to 1, with 1 will remove all columns with any gap"/>
+			<param name="stin" type="float" label="st option" optional="true" help="0 to 1, for example 0.001 value will remove all columns with a similarity score lower than 0.001"/>
+			<param name="consin" type="integer" label="cons option" optional="true" help="0 to 100, for example 60 value will conserve at least 60% of the columns"/>
+			</when>
+			<when value="automatic">		
+			</when>			
+		</conditional>
 	</inputs>
 	<outputs>
 		<data format="input" name="output1" />
