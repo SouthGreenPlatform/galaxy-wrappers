@@ -16,15 +16,6 @@ output_file=open(output_path,'w')
 rap_msu_file=open("/bank/genfam/RAP-MSU.txt",'r') #fichier d'équivalence RAP/MSU pour le riz
 dic_rap_to_msu={}
 dic_msu_to_rap={}
-
-# lotja_file=open("/bank/genfam/genome_data/LOTJA/LOTJA-Kazusa2.5-locus_tag.json",'r')
-# lotja_dic=json.loads(lotja_file.read())
-# lotja_file.close()
-
-# poptr_file=open("/bank/genfam/genome_data/POPTR/POPTR-JGI2-locus_tag.json",'r')
-# poptr_dic=json.loads(poptr_file.read())
-# poptr_file.close()
-
 # création des dictionnaires de traduction RAP vers MSU et MSU vers RAP
 for line in rap_msu_file :
     rap_msu = line.split('\t')
@@ -68,7 +59,141 @@ pat_theccbis=r'(TCM\_[0-9]{6}[^_])' #pb id avec coge
 pat_vitvi=r'(GSVIVT[0-9]{11}[^_])'
 pat_vitvibis=r'(LOC[0-9]{9}[^_])'
 
+gfpat_ARATH= "AT{1-9}G04860.1-PROTEIN"
+gfpat_COFCA=
+gfpat_BRADI=
+gfpat_ELAGV=
+gfpat_ELAGV_REF=
+gfpat_EUCGR_REF=
+gfpat_GLYMA=
+gfpat_GOSRA=
+gfpat_LOTJA=
+gfpat_MAIZE=
+gfpat_MALDO=
+gfpat_MANES=
+gfpat_MEDTR=
+gfpat_MUSAC=
+gfpat_ORYSI=
+gfpat_ORYSJ=
+gfpat_RICCO=
+gfpat_PHODC=
+gfpat_POPTR=
+gfpat_SOLTU=
+gfpat_SETIT=
+gfpat_SOLLC=
+gfpat_VITVI=
+gfpat_SORBI=
+gfpat_THECC=
 
+
+# pour emélioration : mettre dico en mempoire vive, ou préprer des fichiers binaires des dico pour un acces plus rapide
+
+rap_msu_file=open("/bank/genfam/RAP-MSU.txt",'r') #fichier d'équivalence RAP/MSU pour le riz
+dic_rap_to_msu={}
+dic_msu_to_rap={}
+
+
+ARATH_file=open("/bank/genfam/genome_data/ARATH/ARATH-TAIR10-sequence_feature-locus_tag-genfam.json",'r')
+ARATH_dic=json.loads(ARATH_file.read())
+ARATH_file.close()
+
+BRADI_file=open("/bank/genfam/genome_data/BRADI/BRADI-JGI1-sequence_feature-locus_tag-genfam.json",'r')
+BRADI_dic=json.loads(BRADI_file.read())
+BRADI_file.close()
+
+COFCA_file=open("/bank/genfam/genome_data/COFCA/COFCA-GENOSCOPE1-sequence_feature-locus_tag-genfam.json",'r')
+COFCA_dic=json.loads(COFCA_file.read())
+COFCA_file.close()
+
+ELAGV_file=open("/bank/genfam/genome_data/ELAGV/ELAGV-MPOB5-sequence_feature-locus_tag-genfam.json",'r')
+ELAGV_dic=json.loads(ELAGV_file.read())
+ELAGV_file.close()
+
+ELAGV_REF_file=open("/bank/genfam/genome_data/ELAGV_REF/ELAGV-NCBI100-sequence_feature-locus_tag-genfam.json",'r')
+ELAGV_REF_dic=json.loads(ELAGV_REF_file.read())
+ELAGV_REF_file.close()
+
+EUCGR_REF_file=open("/bank/genfam/genome_data/EUCGR_REF/EUCGR-NCBI100-sequence_feature-locus_tag-genfam.json",'r')
+EUCGR_REF_dic=json.loads(EUCGR_REF_file.read())
+EUCGR_REF_file.close()
+
+GLYMA_file=open("/bank/genfam/genome_data/GLYMA/GLYMA-JGI1-sequence_feature-locus_tag-genfam.json",'r')
+GLYMA_dic=json.loads(GLYMA_file.read())
+GLYMA_file.close()
+
+GOSRA_file=open("/bank/genfam/genome_data/GOSRA/GOSRA-JGI1-sequence_feature-locus_tag-genfam.json",'r')
+GOSRA_dic=json.loads(GOSRA_file.read())
+GOSRA_file.close()
+
+GOSRA_file=open("/bank/genfam/genome_data/GOSRA/GOSRA-JGI1-sequence_feature-locus_tag-genfam.json",'r')
+GOSRA_dic=json.loads(GOSRA_file.read())
+GOSRA_file.close()
+
+LOTJA_file=open("/bank/genfam/genome_data/LOTJA/LOTJA-Kazusa2.5-sequence_feature-locus_tag-genfam.json",'r')
+LOTJA_dic=json.loads(LOTJA_file.read())
+LOTJA_file.close()
+
+MAIZE_file=open("/bank/genfam/genome_data/MAIZE/MAIZE-MGDB5b60-sequence_feature-locus_tag-genfam.json",'r')
+MAIZE_dic=json.loads(MAIZE_file.read())
+MAIZE_file.close()
+
+MALDO_file=open("/bank/genfam/genome_data/MALDO/MALDO-JGI1-sequence_feature-locus_tag-genfam.json",'r')
+MALDO_dic=json.loads(MALDO_file.read())
+MALDO_file.close()
+
+MANES_file=open("/bank/genfam/genome_data/MANES/MANES-JGI4.1-sequence_feature-locus_tag-genfam.json",'r')
+MANES_dic=json.loads(MANES_file.read())
+MANES_file.close()
+
+MEDTR_file=open("/bank/genfam/genome_data/MEDTR/MEDTR-Mt3.5v5-sequence_feature-locus_tag-genfam.json",'r')
+MEDTR_dic=json.loads(MEDTR_file.read())
+MEDTR_file.close()
+
+ORYSI_file=open("/bank/genfam/genome_data/ORYSI/ORYSI-BGI2-sequence_feature-locus_tag-genfam.json",'r')
+ORYSI_dic=json.loads(ORYSI_file.read())
+ORYSI_file.close()
+
+ORYSJ_file=open("/bank/genfam/genome_data/ORYSJ/ORYSJ-MSU7-sequence_feature-locus_tag-genfam.json",'r')
+ORYSJ_dic=json.loads(ORYSJ_file.read())
+ORYSJ_file.close()
+
+PHODC_file=open("/bank/genfam/genome_data/PHODC/PHODC-WCMCQ3-sequence_feature-locus_tag-genfam.json",'r')
+PHODC_dic=json.loads(PHODC_file.read())
+PHODC_file.close()
+
+POPTR_file=open("/bank/genfam/genome_data/POPTR/POPTR-JGI2-sequence_feature-locus_tag-genfam.json",'r')
+POPTR_dic=json.loads(POPTR_file.read())
+POPTR_file.close()
+
+RICCO_file=open("/bank/genfam/genome_data/RICCO/RICCO-JGI0.1-sequence_feature-locus_tag-genfam.json",'r')
+RICCO_dic=json.loads(RICCO_file.read())
+RICCO_file.close()
+
+SETIT_file=open("/bank/genfam/genome_data/SETIT/SETIT-JGI1-sequence_feature-locus_tag-genfam.json",'r')
+SETIT_dic=json.loads(SETIT_file.read())
+SETIT_file.close()
+
+SOLLC_file=open("/bank/genfam/genome_data/SOLLC/SOLLC-ITAG2.40-sequence_feature-locus_tag-genfam.json",'r')
+SOLLC_dic=json.loads(SOLLC_file.read())
+SOLLC_file.close()
+
+SORBI_file=open("/bank/genfam/genome_data/SORBI/SORBI-JGI1.4-sequence_feature-locus_tag-genfam.json",'r')
+SORBI_dic=json.loads(SORBI_file.read())
+SORBI_file.close()
+
+THECC_file=open("/bank/genfam/genome_data/THECC/THECC-COCOA1-sequence_feature-locus_tag-genfam.json",'r')
+THECC_dic=json.loads(THECC_file.read())
+THECC_file.close()
+
+
+VITVI_file=open("/bank/genfam/genome_data/VITVI/VITVI-GENOSCOPE1-sequence_feature-locus_tag-genfam.json",'r')
+VITVI_dic=json.loads(VITVI_file.read())
+VITVI_file.close()
+
+fasta_file.close()
+
+
+fasta_file=open(fasta_path,'r')
 seqfasta=""
 for line in fasta:
 	if line[0]==">":
