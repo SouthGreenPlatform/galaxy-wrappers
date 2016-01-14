@@ -48,8 +48,8 @@ VITVI	VITVI Vitis vinifera (with species annotation)	/bank/genfam/genome_data/VI
 COFCA	COFCA Coffea canephora (with species annotation)	/bank/genfam/genome_data/COFCA/COFCA-GENOSCOPE1-polypeptide-genfam.faa
 ELAGV5	ELAGV5 Elaeis guineensis (with species annotation)	/bank/genfam/genome_data/ELAGV/ELAGV-MPOB5-polypeptide-genfam.faa
 PHODC	PHODC Phoenix dactylifera (with species annotation)	/bank/genfam/genome_data/PHODC/PHODC-WCMCQ3-polypeptide-genfam.faa
-ELAGV_REF	ELAGV_REF Elaeis guineensis NCBI100 (with species annotation)	/bank/genfam/genome_data/ELAGV_REF/ELAGV-NCBI100-polypeptide-genfam.faa
-EUCGR_REF	EUCGR_REF Eucalyptus grandis NCBI100 (with species annotation)	/bank/genfam/genome_data/EUCGR_REF/EUCGR-NCBI100-polypeptide-genfam.faa
+REF_ELAGV	ELAGV_REF Elaeis guineensis NCBI100 (with species annotation)	/bank/genfam/genome_data/REF_ELAGV/ELAGV-NCBI100-polypeptide-genfam.faa
+REF_EUCGR	EUCGR_REF Eucalyptus grandis NCBI100 (with species annotation)	/bank/genfam/genome_data/REF_EUCGR/EUCGR-NCBI100-polypeptide-genfam.faa
 
 ARALY	ARALY Arabidopsis lyrata (with species annotation)	/bank/proteome_annotated/ARALY_annotated.fa
 BRARA	BRARA Brassica rapa (with species annotation)	/bank/proteome_annotated/BRARA_annotated.fa
