@@ -1,0 +1,15 @@
+<tool id="ideven" name="Ideven : Identification of evolutive events based on syntenic studies">
+	<description>
+	</description>
+	<command interpreter="python">IDEVEN.py $family 
+		$output_file
+	</command>
+    <inputs>
+    <param format="fasta" name="family" type="data" label="Family Fasta File"/>
+    </inputs>
+    <outputs>
+        <data format="txt" name="output_file"/>
+    </outputs>
+    <help>
+    </help>
+</tool>
