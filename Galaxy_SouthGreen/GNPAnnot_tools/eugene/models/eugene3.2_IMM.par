@@ -60,7 +60,7 @@ Output.webdir                            http://www.inra.fr/bia/T/EuGene/
 Transcript.Start*                        3.914128
 Transcript.Stop*                         3.914128
 #
-Sensor.Transcript.use                    FALSE
+Sensor.Transcript.use                    TRUE
 #
 ##### EuStop parameters #####
 #
