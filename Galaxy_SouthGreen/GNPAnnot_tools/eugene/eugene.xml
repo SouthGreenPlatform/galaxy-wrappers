@@ -1,6 +1,6 @@
 <tool id="eugene" name="EuGene" version="1.0.0"> 
 	<description>A gene finding software</description> 
-	<command>export EUGENEDIR=/home/galaxydev/galaxy/tools/GNPAnnot_tools/eugene/eugene-3.2;$__tool_directory__/eugene.pl 
+	<command>export EUGENEDIR=$__tool_directory__/eugene-3.2;$__tool_directory__/eugene.pl 
         -fasta $input_fasta
         -mst $input_mst
         -mad $input_mad
