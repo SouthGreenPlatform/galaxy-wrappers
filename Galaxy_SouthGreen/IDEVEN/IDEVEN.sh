@@ -20,7 +20,7 @@ do
 	ortho=$ofiles;
 done 
 
-ls /bank/genfam/IDEVEN/${spe1}_${spe2}/*.ks | grep -v 'old' | \
+ls /bank/genfam/IDEVEN/${spe1}_${spe2}/*-*.ks | grep -v 'old' | \
 (while read afiles
     do
         allks=$afiles;
@@ -32,7 +32,7 @@ ls /bank/genfam/IDEVEN/${spe1}_${spe1}/*.aligncoords | \
         para1=$p1files;
     done 
 
-ls /bank/genfam/IDEVEN/${spe1}_${spe1}/*.ks | grep -v 'old'  | \
+ls /bank/genfam/IDEVEN/${spe1}_${spe1}/*-*.ks | grep -v 'old'  | \
 (while read pk1files
     do
         para1ks=$pk1files;
@@ -44,7 +44,7 @@ ls /bank/genfam/IDEVEN/${spe2}_${spe2}/*.aligncoords | \
         para2=$p2files;
     done 
 
-ls /bank/genfam/IDEVEN/${spe2}_${spe2}/*.ks | grep -v 'old' | \
+ls /bank/genfam/IDEVEN/${spe2}_${spe2}/*-*.ks | grep -v 'old' | \
 (while read pk2files
     do
         para2ks=$pk2files;
@@ -89,7 +89,7 @@ do
 	ortho=$ofiles;
 done 
 
-ls /bank/genfam/IDEVEN/${spe2}_${spe1}/*.ks | grep -v 'old' | \
+ls /bank/genfam/IDEVEN/${spe2}_${spe1}/*-*.ks | grep -v 'old' | \
 (while read afiles
     do
         allks=$afiles;
@@ -101,7 +101,7 @@ ls /bank/genfam/IDEVEN/${spe1}_${spe1}/*.aligncoords | \
         para1=$p1files;
     done 
 
-ls /bank/genfam/IDEVEN/${spe1}_${spe1}/*.ks | grep -v 'old' | \
+ls /bank/genfam/IDEVEN/${spe1}_${spe1}/*-*.ks | grep -v 'old' | \
 (while read pk1files
     do
         para1ks=$pk1files;
@@ -113,7 +113,7 @@ ls /bank/genfam/IDEVEN/${spe2}_${spe2}/*.aligncoords | \
         para2=$p2files;
     done 
 
-ls /bank/genfam/IDEVEN/${spe2}_${spe2}/*.ks | grep -v 'old' | \
+ls /bank/genfam/IDEVEN/${spe2}_${spe2}/*-*.ks | grep -v 'old' | \
 (while read pk2files
     do
         para2ks=$pk2files;
