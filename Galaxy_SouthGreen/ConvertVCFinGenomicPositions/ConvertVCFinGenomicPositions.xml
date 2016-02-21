@@ -1,0 +1,35 @@
+<tool id="convert_VCF_in_genomic_positions" name="Convert VCF in Genomic Positions" version="1.0">
+	<description>Modifies VCF transcriptome based positions into genome positions</description>
+	<command interpreter="bash">./ConvertVCFinGenomicPositions.sh $vcf $gff $type $out $log
+    </command>
+	<inputs>
+		<param format="vcf" name="vcf" type="data" label="VCF input (based on transcriptome positions)" help="Reference used for SNP calling was the transcriptome"/>
+		<param format="gff3" name="gff" type="data" label="GFF annotation file" help="GFF annotation file of the genome (including exons/CDS features)"/>
+		<param name="type" type="select" label="Positions in VCF input refers to this GFF feature:">
+                        <option value="CDS">CDS</option>
+                        <option value="mRNA">mRNA</option>
+                </param>	
+	</inputs>
+	<outputs>
+		<data format="vcf" name="out" label="VCF genomic"/>
+		<data format="txt" name="log" label="Logfile"/>
+	</outputs>
+	<help>
+	
+
+.. class:: infomark
+
+**Program encapsulated in Galaxy by Southgreen**
+
+
+-----
+
+===========
+ Overview:
+===========
+
+ConvertVCFinGenomicPositions modifies VCF transcriptome based positions into genome positions.
+
+	</help>
+
+</tool>
