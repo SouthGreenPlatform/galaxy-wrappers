@@ -37,7 +37,7 @@ MEDTR	MEDTR Medicago truncatula (with species annotation)	/bank/genfam/genome_da
 MUSAC	MUSAC Musa acuminata (with species annotation)	/bank/genfam/genome_data/MUSAC/MUSAC-Musa1-polypeptide-genfam.faa
 ORYSI	ORYSI Oryza sativa subsp. indica (with species annotation)	/bank/genfam/genome_data/ORYSI/ORYSI-BGI2-polypeptide-genfam.faa
 ORYSJ	ORYSJ Oryza sativa subsp. japonica (with species annotation)	/bank/genfam/genome_data/ORYSJ/ORYSJ-MSU7-polypeptide-genfam.faa
-POPTR	POPTR Populus trichocarpa (with species annotation) /bank/genfam/genome_data/POPTR/POPTR-JGI2-polypeptide-genfam.faa
+POPTR	POPTR Populus trichocarpa (with species annotation)	/bank/genfam/genome_data/POPTR/POPTR-JGI2-polypeptide-genfam.faa
 RICCO	RICCO Ricinus communis (with species annotation)	/bank/genfam/genome_data/RICCO/RICCO-JGI0.1-polypeptide-genfam.faa
 SETIT	SETIT Setaria italica (with species annotation)	/bank/genfam/genome_data/SETIT/SETIT-JGI1-polypeptide-genfam.faa
 SOLLC	SOLLC Solanum lycopersicum (with species annotation)	/bank/genfam/genome_data/SOLLC/SOLLC-ITAG2.40-polypeptide-genfam.faa
