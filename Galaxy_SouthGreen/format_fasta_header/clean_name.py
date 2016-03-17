@@ -59,136 +59,136 @@ pat_theccbis=r'(TCM\_[0-9]{6}[^_])' #pb id avec coge
 pat_vitvi=r'(GSVIVT[0-9]{11}[^_])'
 pat_vitvibis=r'(LOC[0-9]{9}[^_])'
 
-gfpat_ARATH= "AT{1-9}G04860.1-PROTEIN"
-gfpat_COFCA=
-gfpat_BRADI=
-gfpat_ELAGV=
-gfpat_ELAGV_REF=
-gfpat_EUCGR_REF=
-gfpat_GLYMA=
-gfpat_GOSRA=
-gfpat_LOTJA=
-gfpat_MAIZE=
-gfpat_MALDO=
-gfpat_MANES=
-gfpat_MEDTR=
-gfpat_MUSAC=
-gfpat_ORYSI=
-gfpat_ORYSJ=
-gfpat_RICCO=
-gfpat_PHODC=
-gfpat_POPTR=
-gfpat_SOLTU=
-gfpat_SETIT=
-gfpat_SOLLC=
-gfpat_VITVI=
-gfpat_SORBI=
-gfpat_THECC=
-
-
-# pour emélioration : mettre dico en mempoire vive, ou préprer des fichiers binaires des dico pour un acces plus rapide
-
-rap_msu_file=open("/bank/genfam/RAP-MSU.txt",'r') #fichier d'équivalence RAP/MSU pour le riz
-dic_rap_to_msu={}
-dic_msu_to_rap={}
-
-
-ARATH_file=open("/bank/genfam/genome_data/ARATH/ARATH-TAIR10-sequence_feature-locus_tag-genfam.json",'r')
-ARATH_dic=json.loads(ARATH_file.read())
-ARATH_file.close()
-
-BRADI_file=open("/bank/genfam/genome_data/BRADI/BRADI-JGI1-sequence_feature-locus_tag-genfam.json",'r')
-BRADI_dic=json.loads(BRADI_file.read())
-BRADI_file.close()
-
-COFCA_file=open("/bank/genfam/genome_data/COFCA/COFCA-GENOSCOPE1-sequence_feature-locus_tag-genfam.json",'r')
-COFCA_dic=json.loads(COFCA_file.read())
-COFCA_file.close()
-
-ELAGV_file=open("/bank/genfam/genome_data/ELAGV/ELAGV-MPOB5-sequence_feature-locus_tag-genfam.json",'r')
-ELAGV_dic=json.loads(ELAGV_file.read())
-ELAGV_file.close()
-
-ELAGV_REF_file=open("/bank/genfam/genome_data/ELAGV_REF/ELAGV-NCBI100-sequence_feature-locus_tag-genfam.json",'r')
-ELAGV_REF_dic=json.loads(ELAGV_REF_file.read())
-ELAGV_REF_file.close()
-
-EUCGR_REF_file=open("/bank/genfam/genome_data/EUCGR_REF/EUCGR-NCBI100-sequence_feature-locus_tag-genfam.json",'r')
-EUCGR_REF_dic=json.loads(EUCGR_REF_file.read())
-EUCGR_REF_file.close()
-
-GLYMA_file=open("/bank/genfam/genome_data/GLYMA/GLYMA-JGI1-sequence_feature-locus_tag-genfam.json",'r')
-GLYMA_dic=json.loads(GLYMA_file.read())
-GLYMA_file.close()
-
-GOSRA_file=open("/bank/genfam/genome_data/GOSRA/GOSRA-JGI1-sequence_feature-locus_tag-genfam.json",'r')
-GOSRA_dic=json.loads(GOSRA_file.read())
-GOSRA_file.close()
-
-GOSRA_file=open("/bank/genfam/genome_data/GOSRA/GOSRA-JGI1-sequence_feature-locus_tag-genfam.json",'r')
-GOSRA_dic=json.loads(GOSRA_file.read())
-GOSRA_file.close()
-
-LOTJA_file=open("/bank/genfam/genome_data/LOTJA/LOTJA-Kazusa2.5-sequence_feature-locus_tag-genfam.json",'r')
-LOTJA_dic=json.loads(LOTJA_file.read())
-LOTJA_file.close()
-
-MAIZE_file=open("/bank/genfam/genome_data/MAIZE/MAIZE-MGDB5b60-sequence_feature-locus_tag-genfam.json",'r')
-MAIZE_dic=json.loads(MAIZE_file.read())
-MAIZE_file.close()
-
-MALDO_file=open("/bank/genfam/genome_data/MALDO/MALDO-JGI1-sequence_feature-locus_tag-genfam.json",'r')
-MALDO_dic=json.loads(MALDO_file.read())
-MALDO_file.close()
-
-MANES_file=open("/bank/genfam/genome_data/MANES/MANES-JGI4.1-sequence_feature-locus_tag-genfam.json",'r')
-MANES_dic=json.loads(MANES_file.read())
-MANES_file.close()
-
-MEDTR_file=open("/bank/genfam/genome_data/MEDTR/MEDTR-Mt3.5v5-sequence_feature-locus_tag-genfam.json",'r')
-MEDTR_dic=json.loads(MEDTR_file.read())
-MEDTR_file.close()
-
-ORYSI_file=open("/bank/genfam/genome_data/ORYSI/ORYSI-BGI2-sequence_feature-locus_tag-genfam.json",'r')
-ORYSI_dic=json.loads(ORYSI_file.read())
-ORYSI_file.close()
-
-ORYSJ_file=open("/bank/genfam/genome_data/ORYSJ/ORYSJ-MSU7-sequence_feature-locus_tag-genfam.json",'r')
-ORYSJ_dic=json.loads(ORYSJ_file.read())
-ORYSJ_file.close()
-
-PHODC_file=open("/bank/genfam/genome_data/PHODC/PHODC-WCMCQ3-sequence_feature-locus_tag-genfam.json",'r')
-PHODC_dic=json.loads(PHODC_file.read())
-PHODC_file.close()
-
-POPTR_file=open("/bank/genfam/genome_data/POPTR/POPTR-JGI2-sequence_feature-locus_tag-genfam.json",'r')
-POPTR_dic=json.loads(POPTR_file.read())
-POPTR_file.close()
-
-RICCO_file=open("/bank/genfam/genome_data/RICCO/RICCO-JGI0.1-sequence_feature-locus_tag-genfam.json",'r')
-RICCO_dic=json.loads(RICCO_file.read())
-RICCO_file.close()
-
-SETIT_file=open("/bank/genfam/genome_data/SETIT/SETIT-JGI1-sequence_feature-locus_tag-genfam.json",'r')
-SETIT_dic=json.loads(SETIT_file.read())
-SETIT_file.close()
-
-SOLLC_file=open("/bank/genfam/genome_data/SOLLC/SOLLC-ITAG2.40-sequence_feature-locus_tag-genfam.json",'r')
-SOLLC_dic=json.loads(SOLLC_file.read())
-SOLLC_file.close()
-
-SORBI_file=open("/bank/genfam/genome_data/SORBI/SORBI-JGI1.4-sequence_feature-locus_tag-genfam.json",'r')
-SORBI_dic=json.loads(SORBI_file.read())
-SORBI_file.close()
-
-THECC_file=open("/bank/genfam/genome_data/THECC/THECC-COCOA1-sequence_feature-locus_tag-genfam.json",'r')
-THECC_dic=json.loads(THECC_file.read())
-THECC_file.close()
-
-
-VITVI_file=open("/bank/genfam/genome_data/VITVI/VITVI-GENOSCOPE1-sequence_feature-locus_tag-genfam.json",'r')
-VITVI_dic=json.loads(VITVI_file.read())
-VITVI_file.close()
+# gfpat_ARATH= "AT{1-9}G04860.1-PROTEIN"
+# gfpat_COFCA=
+# gfpat_BRADI=
+# gfpat_ELAGV=
+# gfpat_ELAGV_REF=
+# gfpat_EUCGR_REF=
+# gfpat_GLYMA=
+# gfpat_GOSRA=
+# gfpat_LOTJA=
+# gfpat_MAIZE=
+# gfpat_MALDO=
+# gfpat_MANES=
+# gfpat_MEDTR=
+# gfpat_MUSAC=
+# gfpat_ORYSI=
+# gfpat_ORYSJ=
+# gfpat_RICCO=
+# gfpat_PHODC=
+# gfpat_POPTR=
+# gfpat_SOLTU=
+# gfpat_SETIT=
+# gfpat_SOLLC=
+# gfpat_VITVI=
+# gfpat_SORBI=
+# gfpat_THECC=
+# 
+# 
+# # pour emélioration : mettre dico en mempoire vive, ou préprer des fichiers binaires des dico pour un acces plus rapide
+# 
+# rap_msu_file=open("/bank/genfam/RAP-MSU.txt",'r') #fichier d'équivalence RAP/MSU pour le riz
+# dic_rap_to_msu={}
+# dic_msu_to_rap={}
+# 
+# 
+# ARATH_file=open("/bank/genfam/genome_data/ARATH/ARATH-TAIR10-sequence_feature-locus_tag-genfam.json",'r')
+# ARATH_dic=json.loads(ARATH_file.read())
+# ARATH_file.close()
+# 
+# BRADI_file=open("/bank/genfam/genome_data/BRADI/BRADI-JGI1-sequence_feature-locus_tag-genfam.json",'r')
+# BRADI_dic=json.loads(BRADI_file.read())
+# BRADI_file.close()
+# 
+# COFCA_file=open("/bank/genfam/genome_data/COFCA/COFCA-GENOSCOPE1-sequence_feature-locus_tag-genfam.json",'r')
+# COFCA_dic=json.loads(COFCA_file.read())
+# COFCA_file.close()
+# 
+# ELAGV_file=open("/bank/genfam/genome_data/ELAGV/ELAGV-MPOB5-sequence_feature-locus_tag-genfam.json",'r')
+# ELAGV_dic=json.loads(ELAGV_file.read())
+# ELAGV_file.close()
+# 
+# ELAGV_REF_file=open("/bank/genfam/genome_data/ELAGV_REF/ELAGV-NCBI100-sequence_feature-locus_tag-genfam.json",'r')
+# ELAGV_REF_dic=json.loads(ELAGV_REF_file.read())
+# ELAGV_REF_file.close()
+# 
+# EUCGR_REF_file=open("/bank/genfam/genome_data/EUCGR_REF/EUCGR-NCBI100-sequence_feature-locus_tag-genfam.json",'r')
+# EUCGR_REF_dic=json.loads(EUCGR_REF_file.read())
+# EUCGR_REF_file.close()
+# 
+# GLYMA_file=open("/bank/genfam/genome_data/GLYMA/GLYMA-JGI1-sequence_feature-locus_tag-genfam.json",'r')
+# GLYMA_dic=json.loads(GLYMA_file.read())
+# GLYMA_file.close()
+# 
+# GOSRA_file=open("/bank/genfam/genome_data/GOSRA/GOSRA-JGI1-sequence_feature-locus_tag-genfam.json",'r')
+# GOSRA_dic=json.loads(GOSRA_file.read())
+# GOSRA_file.close()
+# 
+# GOSRA_file=open("/bank/genfam/genome_data/GOSRA/GOSRA-JGI1-sequence_feature-locus_tag-genfam.json",'r')
+# GOSRA_dic=json.loads(GOSRA_file.read())
+# GOSRA_file.close()
+# 
+# LOTJA_file=open("/bank/genfam/genome_data/LOTJA/LOTJA-Kazusa2.5-sequence_feature-locus_tag-genfam.json",'r')
+# LOTJA_dic=json.loads(LOTJA_file.read())
+# LOTJA_file.close()
+# 
+# MAIZE_file=open("/bank/genfam/genome_data/MAIZE/MAIZE-MGDB5b60-sequence_feature-locus_tag-genfam.json",'r')
+# MAIZE_dic=json.loads(MAIZE_file.read())
+# MAIZE_file.close()
+# 
+# MALDO_file=open("/bank/genfam/genome_data/MALDO/MALDO-JGI1-sequence_feature-locus_tag-genfam.json",'r')
+# MALDO_dic=json.loads(MALDO_file.read())
+# MALDO_file.close()
+# 
+# MANES_file=open("/bank/genfam/genome_data/MANES/MANES-JGI4.1-sequence_feature-locus_tag-genfam.json",'r')
+# MANES_dic=json.loads(MANES_file.read())
+# MANES_file.close()
+# 
+# MEDTR_file=open("/bank/genfam/genome_data/MEDTR/MEDTR-Mt3.5v5-sequence_feature-locus_tag-genfam.json",'r')
+# MEDTR_dic=json.loads(MEDTR_file.read())
+# MEDTR_file.close()
+# 
+# ORYSI_file=open("/bank/genfam/genome_data/ORYSI/ORYSI-BGI2-sequence_feature-locus_tag-genfam.json",'r')
+# ORYSI_dic=json.loads(ORYSI_file.read())
+# ORYSI_file.close()
+# 
+# ORYSJ_file=open("/bank/genfam/genome_data/ORYSJ/ORYSJ-MSU7-sequence_feature-locus_tag-genfam.json",'r')
+# ORYSJ_dic=json.loads(ORYSJ_file.read())
+# ORYSJ_file.close()
+# 
+# PHODC_file=open("/bank/genfam/genome_data/PHODC/PHODC-WCMCQ3-sequence_feature-locus_tag-genfam.json",'r')
+# PHODC_dic=json.loads(PHODC_file.read())
+# PHODC_file.close()
+# 
+# POPTR_file=open("/bank/genfam/genome_data/POPTR/POPTR-JGI2-sequence_feature-locus_tag-genfam.json",'r')
+# POPTR_dic=json.loads(POPTR_file.read())
+# POPTR_file.close()
+# 
+# RICCO_file=open("/bank/genfam/genome_data/RICCO/RICCO-JGI0.1-sequence_feature-locus_tag-genfam.json",'r')
+# RICCO_dic=json.loads(RICCO_file.read())
+# RICCO_file.close()
+# 
+# SETIT_file=open("/bank/genfam/genome_data/SETIT/SETIT-JGI1-sequence_feature-locus_tag-genfam.json",'r')
+# SETIT_dic=json.loads(SETIT_file.read())
+# SETIT_file.close()
+# 
+# SOLLC_file=open("/bank/genfam/genome_data/SOLLC/SOLLC-ITAG2.40-sequence_feature-locus_tag-genfam.json",'r')
+# SOLLC_dic=json.loads(SOLLC_file.read())
+# SOLLC_file.close()
+# 
+# SORBI_file=open("/bank/genfam/genome_data/SORBI/SORBI-JGI1.4-sequence_feature-locus_tag-genfam.json",'r')
+# SORBI_dic=json.loads(SORBI_file.read())
+# SORBI_file.close()
+# 
+# THECC_file=open("/bank/genfam/genome_data/THECC/THECC-COCOA1-sequence_feature-locus_tag-genfam.json",'r')
+# THECC_dic=json.loads(THECC_file.read())
+# THECC_file.close()
+# 
+# 
+# VITVI_file=open("/bank/genfam/genome_data/VITVI/VITVI-GENOSCOPE1-sequence_feature-locus_tag-genfam.json",'r')
+# VITVI_dic=json.loads(VITVI_file.read())
+# VITVI_file.close()
 
 fasta_file.close()
 
@@ -202,9 +202,13 @@ for line in fasta:
 		#test
 		if remove_tr=="yes" \
 		and re.search(r'(\.[2-9]_[A-Z]{5})', seqfasta, flags=0)==None \
-		and re.search(r'(\.[1-9]{2}_)', seqfasta, flags=0)==None \
-		and re.search(r'(_T0[2-9]_)', seqfasta, flags=0)==None \
-		and re.search(r'(_T[1-9]{2}_)', seqfasta, flags=0)==None \
+		and re.search(r'(\.[1-9]{2}_[A-Z]{5})', seqfasta, flags=0)==None \
+		and re.search(r'(_T0[2-9]_[A-Z]{5})', seqfasta, flags=0)==None \
+		and re.search(r'(_T[1-9]{2}_[A-Z]{5})', seqfasta, flags=0)==None \
+		and re.search(r'(\.[2-9]-PROTEIN_[A-Z]{5})', seqfasta, flags=0)==None \
+		and re.search(r'(\.[1-9]{2}-PROTEIN_[A-Z]{5})', seqfasta, flags=0)==None \
+		and re.search(r'(\.[2-9]-PEP_[A-Z]{5})', seqfasta, flags=0)==None \
+		and re.search(r'(\.[1-9]{2}-PEP_[A-Z]{5})', seqfasta, flags=0)==None \
 		and re.search(r'(_00[2-9]_MUSAC)', seqfasta, flags=0)==None \
 		and re.search(r'(_0[1-9]{2}_MUSAC)', seqfasta, flags=0)==None \
 		and re.search(r'(_P0[2-9]_MAIZE)', seqfasta, flags=0)==None \
@@ -219,216 +223,221 @@ for line in fasta:
 		line = line.replace("_SOLLY","_SOLLC")
 		line = line.replace("_PHODA","_PHODC")
 		line = line.replace('\"',"")
-		if re.search(pat_vitvibis, line, flags=0):
-			arathres=re.search(pat_vitvibis, line, flags=0)
-			name = arathres.group(0).strip()
-			newname=name+"_VITVI"
-			line = line.replace(name,newname)
-		if re.search(pat_vitvi, line, flags=0):
-			arathres=re.search(pat_vitvi, line, flags=0)
-			name = arathres.group(0).strip()
-			newname=name+"_VITVI"
-			line = line.replace(name,newname)
-		elif re.search(pat_thecc, line, flags=0):
-			arathres=re.search(pat_thecc, line, flags=0)
-			name = arathres.group(0).strip()
-			line = line.replace("t","g")
-			newname=name+"_THECC"
-			line = line.replace(name,newname)
-		elif re.search(pat_theccbis, line, flags=0):
-			arathres=re.search(pat_theccbis, line, flags=0)
-			name = arathres.group(0).strip()
-			newname=name+"_THECC"
-			line = line.replace(name,newname)
-		elif re.search(pat_orysj_MSU, line, flags=0): #si locus tag au format msu
-			arathres=re.search(pat_orysj_MSU, line, flags=0)
-			name = arathres.group(0).strip()
-			if re.search("LOC_", name, flags=0):
-				gene_name =name
-			else:
-				gene_name = "LOC_"+name
-			if re.search("\.[0-9]+", name, flags=0):
-				gene_name = gene_name
-			else:
-				gene_name = gene_name+".1"
-			newname= dic_msu_to_rap[gene_name[:-1]+"1"]
-			if newname!="None":
-				newname=newname+gene_name[-2:]
-			else:
-				newname = gene_name
-			if re.search("_ORYSJ", line, flags=0):
-				newname=newname
-			else :
-				newname=newname+"_ORYSJ"
-			line = line.replace(name,newname)
-		elif re.search(pat_orysj_RAP, line, flags=0): #si locus tag au format RAP
-			arathres=re.search(pat_orysj_RAP, line, flags=0)
-			name = arathres.group(0).strip()
-			if re.search("_ORYSJ", line, flags=0):
-				newname=name
-			else:
-				if name[-1:]=="a":
-					newname = name[0:-1]+".1"
-				elif name[-1:]=="b":
-					newname = name[0:-1]+".2"
-				else:
-					newname= name
-				newname=newname+"_ORYSJ"
-			line = line.replace(name,newname)
-		elif re.search(pat_PHODC, line, flags=0):
-			arathres=re.search(pat_PHODC, line, flags=0)
-			name = arathres.group(0).strip()
-			newname = name.replace("L","g")
-			newname=newname+"_PHODC"
-			line = line.replace(name,newname)
-		elif re.search(pat_MALDO, line, flags=0):
-			arathres=re.search(pat_MALDO, line, flags=0)
-			name = arathres.group(0).strip()
-			name = name.replace("C","P")
-			newname=name+"_MALDO"
-			line = line.replace(name,newname)
-		elif re.search(pat_cucsa, line, flags=0):
-			arathres=re.search(pat_cucsa, line, flags=0)
-			name = arathres.group(0).strip()
-			if re.search("_CUCSA", line, flags=0):
-				newname=name
-			else:
-				newname=name+"_CUCSA"
-			newname = newname.replace('CDS:','')
-			line = line.replace(name,newname)
-			line = line.replace(".1_","_")
-			# print line
-		elif re.search(pat_POPTR, line, flags=0):
-			arathres=re.search(pat_POPTR, line, flags=0)
-			name = arathres.group(0)
-			newname=name[:-1]+"_POPTR"
-			line = line.replace(name,newname)
-		elif re.search(pat_MUSBA, line, flags=0):
-			arathres=re.search(pat_MUSBA, line, flags=0)
-			name = arathres.group(0)
-			newname=name[:-1]+"_MUSBA"
-			newname = newname.replace('G','T')
-			newname = newname.replace('P','T')
-			line = line.replace(name,newname)
-		elif re.search(pat_CAJCA, line, flags=0):
-			arathres=re.search(pat_CAJCA, line, flags=0)
-			name = arathres.group(0)
-			newname=name[:-1]+"_CAJCA"
-			line = line.replace(name,newname)
-		elif re.search(pat_horvu, line, flags=0):
-			arathres=re.search(pat_horvu, line, flags=0)
-			name = arathres.group(0)
-			newname=name[:-1]+"_HORVU"
-			line = line.replace(name,newname)
-		elif re.search(pat_citsi, line, flags=0):
-			arathres=re.search(pat_citsi, line, flags=0)
-			name = arathres.group(0)
-			newname=name[:-1]+"_CITSI"
-			line = line.replace(name,newname)
-		elif re.search(pat_sorbi, line, flags=0):
-			arathres=re.search(pat_sorbi, line, flags=0)
-			name = arathres.group(0)
-			newname=name[:-1]+"_SORBI"
-			line = line.replace(name,newname)
-		elif re.search(pat_soltu, line, flags=0):
-			arathres=re.search(pat_soltu, line, flags=0)
-			name = arathres.group(0)
-			newname=name[:-1]+"_SOLTU"
-			newname = newname.replace('T','G')
-			newname = newname.replace('P','G')
-			line = line.replace(name,newname)
-		elif re.search(pat_sollc, line, flags=0):
-			arathres=re.search(pat_sollc, line, flags=0)
-			name = arathres.group(0)
-			newname=name[:-1]+"_SOLLC"
-			line = line.replace(name,newname)
-		elif re.search(pat_ricco, line, flags=0):
-			arathres=re.search(pat_ricco, line, flags=0)
-			name = arathres.group(0)
-			newname=name[:-1]+"_RICCO"
-			line = line.replace(name,newname)
-		elif re.search(pat_ARATH_transc, line, flags=0):
-			arathres=re.search(pat_ARATH_transc, line, flags=0)
-			name = arathres.group(0)
-			newname=name[:-1]+"_ARATH"
-			line = line.replace(name,newname)
-		elif re.search(pat_ARATH, line, flags=0):
-			arathres=re.search(pat_ARATH, line, flags=0)
-			name = arathres.group(0)[:-1]
-			newname=name+".1_ARATH"
-			line = line.replace(name,newname)
-		elif re.search(pat_gosra, line, flags=0):
-			arathres=re.search(pat_gosra, line, flags=0)
-			name = arathres.group(0)
-			newname=name[:-1]+"_GOSRA"
-			line = line.replace(name,newname)
-		elif re.search(pat_lotja, line, flags=0):
-			arathres=re.search(pat_gosra, line, flags=0)
-			name = arathres.group(0)
-			newname=name[:-1]+"_LOTJA"
-			line = line.replace(name,newname)
-		elif re.search(pat_musa, line, flags=0):
-			arathres=re.search(pat_musa, line, flags=0)
-			name = arathres.group(0)[:-1]
-			newname = name.replace('T','G')
-			newname = newname.replace('P','G')
-			newname=name+"_MUSAC"
-			line = line.replace(name,newname)
-		elif re.search(pat_medtr, line, flags=0):
-			arathres=re.search(pat_medtr, line, flags=0)
-			name = arathres.group(0)
-			newname=name[:-1]+".1_MEDTR"
-			line = line.replace(name,newname)
-		elif re.search(pat_medtr_transcr, line, flags=0):
-			arathres=re.search(pat_medtr_transcr, line, flags=0)
-			name = arathres.group(0)
-			if re.search("_MEDTR", line, flags=0):
-				newname=name
-			else:
-				newname=name+"_MEDTR"
-			line = line.replace(name,newname)
-		elif re.search(pat_manes, line, flags=0):
-			manesres=re.search(pat_manes, line, flags=0)
-			name = manesres.group(0)
-			newname=name[:-1]+"_MANES"
-			line = line.replace(name,newname)
-		elif re.search(pat_maize, line, flags=0):
-			bradires=re.search(pat_maize, line, flags=0)
-			name = bradires.group(0)[:-1]
-			newname=name.replace(".v6a","_MAIZE")
-			newname=newname.replace("P","G")
-			newname=newname.replace("T","G")
-			newname=name+"_MAIZE"
-			line = line.replace(name,newname)
-		elif re.search(pat_glyma, line, flags=0):
-			bradires=re.search(pat_glyma, line, flags=0)
-			name = bradires.group(0)
-			newname=name[:-1]+".1_GLYMA"
-			line = line.replace(name,newname)
-		elif re.search(pat_glyma_transc, line, flags=0):
-			bradires=re.search(pat_glyma_transc, line, flags=0)
-			name = bradires.group(0)
-			newname=name[:-1]+"_GLYMA"
-			line = line.replace(name,newname)
-		elif re.search(pat_bradi_transc, line, flags=0):
-			bradires=re.search(pat_bradi_transc, line, flags=0)
-			name = bradires.group(0)
-			newname=name[:-1]+"_BRADI"
-			line = line.replace(name,newname)
-		elif re.search(pat_bradi, line, flags=0):
-			bradires=re.search(pat_bradi, line, flags=0)
-			name = bradires.group(0)
-			newname=name[:-1]+".1_BRADI"
-			line = line.replace(name,newname)
+		
+# 		if re.search(pat_vitvibis, line, flags=0):
+# 			arathres=re.search(pat_vitvibis, line, flags=0)
+# 			name = arathres.group(0).strip()
+# 			newname=name+"_VITVI"
+# 			line = line.replace(name,newname)
+# 		if re.search(pat_vitvi, line, flags=0):
+# 			arathres=re.search(pat_vitvi, line, flags=0)
+# 			name = arathres.group(0).strip()
+# 			newname=name+"_VITVI"
+# 			line = line.replace(name,newname)
+# 		elif re.search(pat_thecc, line, flags=0):
+# 			arathres=re.search(pat_thecc, line, flags=0)
+# 			name = arathres.group(0).strip()
+# 			line = line.replace("t","g")
+# 			newname=name+"_THECC"
+# 			line = line.replace(name,newname)
+# 		elif re.search(pat_theccbis, line, flags=0):
+# 			arathres=re.search(pat_theccbis, line, flags=0)
+# 			name = arathres.group(0).strip()
+# 			newname=name+"_THECC"
+# 			line = line.replace(name,newname)
+# 		elif re.search(pat_orysj_MSU, line, flags=0): #si locus tag au format msu
+# 			arathres=re.search(pat_orysj_MSU, line, flags=0)
+# 			name = arathres.group(0).strip()
+# 			if re.search("LOC_", name, flags=0):
+# 				gene_name =name
+# 			else:
+# 				gene_name = "LOC_"+name
+# 			if re.search("\.[0-9]+", name, flags=0):
+# 				gene_name = gene_name
+# 			else:
+# 				gene_name = gene_name+".1"
+# 			newname= dic_msu_to_rap[gene_name[:-1]+"1"]
+# 			if newname!="None":
+# 				newname=newname+gene_name[-2:]
+# 			else:
+# 				newname = gene_name
+# 			if re.search("_ORYSJ", line, flags=0):
+# 				newname=newname
+# 			else :
+# 				newname=newname+"_ORYSJ"
+# 			line = line.replace(name,newname)
+# 		elif re.search(pat_orysj_RAP, line, flags=0): #si locus tag au format RAP
+# 			arathres=re.search(pat_orysj_RAP, line, flags=0)
+# 			name = arathres.group(0).strip()
+# 			if re.search("_ORYSJ", line, flags=0):
+# 				newname=name
+# 			else:
+# 				if name[-1:]=="a":
+# 					newname = name[0:-1]+".1"
+# 				elif name[-1:]=="b":
+# 					newname = name[0:-1]+".2"
+# 				else:
+# 					newname= name
+# 				newname=newname+"_ORYSJ"
+# 			line = line.replace(name,newname)
+# 		elif re.search(pat_PHODC, line, flags=0):
+# 			arathres=re.search(pat_PHODC, line, flags=0)
+# 			name = arathres.group(0).strip()
+# 			newname = name.replace("L","g")
+# 			newname=newname+"_PHODC"
+# 			line = line.replace(name,newname)
+# 		elif re.search(pat_MALDO, line, flags=0):
+# 			arathres=re.search(pat_MALDO, line, flags=0)
+# 			name = arathres.group(0).strip()
+# 			name = name.replace("C","P")
+# 			newname=name+"_MALDO"
+# 			line = line.replace(name,newname)
+# 		elif re.search(pat_cucsa, line, flags=0):
+# 			arathres=re.search(pat_cucsa, line, flags=0)
+# 			name = arathres.group(0).strip()
+# 			if re.search("_CUCSA", line, flags=0):
+# 				newname=name
+# 			else:
+# 				newname=name+"_CUCSA"
+# 			newname = newname.replace('CDS:','')
+# 			line = line.replace(name,newname)
+# 			line = line.replace(".1_","_")
+# 			# print line
+# 		elif re.search(pat_POPTR, line, flags=0):
+# 			arathres=re.search(pat_POPTR, line, flags=0)
+# 			name = arathres.group(0)
+# 			newname=name[:-1]+"_POPTR"
+# 			line = line.replace(name,newname)
+# 		elif re.search(pat_MUSBA, line, flags=0):
+# 			arathres=re.search(pat_MUSBA, line, flags=0)
+# 			name = arathres.group(0)
+# 			newname=name[:-1]+"_MUSBA"
+# 			newname = newname.replace('G','T')
+# 			newname = newname.replace('P','T')
+# 			line = line.replace(name,newname)
+# 		elif re.search(pat_CAJCA, line, flags=0):
+# 			arathres=re.search(pat_CAJCA, line, flags=0)
+# 			name = arathres.group(0)
+# 			newname=name[:-1]+"_CAJCA"
+# 			line = line.replace(name,newname)
+# 		elif re.search(pat_horvu, line, flags=0):
+# 			arathres=re.search(pat_horvu, line, flags=0)
+# 			name = arathres.group(0)
+# 			newname=name[:-1]+"_HORVU"
+# 			line = line.replace(name,newname)
+# 		elif re.search(pat_citsi, line, flags=0):
+# 			arathres=re.search(pat_citsi, line, flags=0)
+# 			name = arathres.group(0)
+# 			newname=name[:-1]+"_CITSI"
+# 			line = line.replace(name,newname)
+# 		elif re.search(pat_sorbi, line, flags=0):
+# 			arathres=re.search(pat_sorbi, line, flags=0)
+# 			name = arathres.group(0)
+# 			newname=name[:-1]+"_SORBI"
+# 			line = line.replace(name,newname)
+# 		elif re.search(pat_soltu, line, flags=0):
+# 			arathres=re.search(pat_soltu, line, flags=0)
+# 			name = arathres.group(0)
+# 			newname=name[:-1]+"_SOLTU"
+# 			newname = newname.replace('T','G')
+# 			newname = newname.replace('P','G')
+# 			line = line.replace(name,newname)
+# 		elif re.search(pat_sollc, line, flags=0):
+# 			arathres=re.search(pat_sollc, line, flags=0)
+# 			name = arathres.group(0)
+# 			newname=name[:-1]+"_SOLLC"
+# 			line = line.replace(name,newname)
+# 		elif re.search(pat_ricco, line, flags=0):
+# 			arathres=re.search(pat_ricco, line, flags=0)
+# 			name = arathres.group(0)
+# 			newname=name[:-1]+"_RICCO"
+# 			line = line.replace(name,newname)
+# 		elif re.search(pat_ARATH_transc, line, flags=0):
+# 			arathres=re.search(pat_ARATH_transc, line, flags=0)
+# 			name = arathres.group(0)
+# 			newname=name[:-1]+"_ARATH"
+# 			line = line.replace(name,newname)
+# 		elif re.search(pat_ARATH, line, flags=0):
+# 			arathres=re.search(pat_ARATH, line, flags=0)
+# 			name = arathres.group(0)[:-1]
+# 			newname=name+".1_ARATH"
+# 			line = line.replace(name,newname)
+# 		elif re.search(pat_gosra, line, flags=0):
+# 			arathres=re.search(pat_gosra, line, flags=0)
+# 			name = arathres.group(0)
+# 			newname=name[:-1]+"_GOSRA"
+# 			line = line.replace(name,newname)
+# 		elif re.search(pat_lotja, line, flags=0):
+# 			arathres=re.search(pat_gosra, line, flags=0)
+# 			name = arathres.group(0)
+# 			newname=name[:-1]+"_LOTJA"
+# 			line = line.replace(name,newname)
+# 		elif re.search(pat_musa, line, flags=0):
+# 			arathres=re.search(pat_musa, line, flags=0)
+# 			name = arathres.group(0)[:-1]
+# 			newname = name.replace('T','G')
+# 			newname = newname.replace('P','G')
+# 			newname=name+"_MUSAC"
+# 			line = line.replace(name,newname)
+# 		elif re.search(pat_medtr, line, flags=0):
+# 			arathres=re.search(pat_medtr, line, flags=0)
+# 			name = arathres.group(0)
+# 			newname=name[:-1]+".1_MEDTR"
+# 			line = line.replace(name,newname)
+# 		elif re.search(pat_medtr_transcr, line, flags=0):
+# 			arathres=re.search(pat_medtr_transcr, line, flags=0)
+# 			name = arathres.group(0)
+# 			if re.search("_MEDTR", line, flags=0):
+# 				newname=name
+# 			else:
+# 				newname=name+"_MEDTR"
+# 			line = line.replace(name,newname)
+# 		elif re.search(pat_manes, line, flags=0):
+# 			manesres=re.search(pat_manes, line, flags=0)
+# 			name = manesres.group(0)
+# 			newname=name[:-1]+"_MANES"
+# 			line = line.replace(name,newname)
+# 		elif re.search(pat_maize, line, flags=0):
+# 			bradires=re.search(pat_maize, line, flags=0)
+# 			name = bradires.group(0)[:-1]
+# 			newname=name.replace(".v6a","_MAIZE")
+# 			newname=newname.replace("P","G")
+# 			newname=newname.replace("T","G")
+# 			newname=name+"_MAIZE"
+# 			line = line.replace(name,newname)
+# 		elif re.search(pat_glyma, line, flags=0):
+# 			bradires=re.search(pat_glyma, line, flags=0)
+# 			name = bradires.group(0)
+# 			newname=name[:-1]+".1_GLYMA"
+# 			line = line.replace(name,newname)
+# 		elif re.search(pat_glyma_transc, line, flags=0):
+# 			bradires=re.search(pat_glyma_transc, line, flags=0)
+# 			name = bradires.group(0)
+# 			newname=name[:-1]+"_GLYMA"
+# 			line = line.replace(name,newname)
+# 		elif re.search(pat_bradi_transc, line, flags=0):
+# 			bradires=re.search(pat_bradi_transc, line, flags=0)
+# 			name = bradires.group(0)
+# 			newname=name[:-1]+"_BRADI"
+# 			line = line.replace(name,newname)
+# 		elif re.search(pat_bradi, line, flags=0):
+# 			bradires=re.search(pat_bradi, line, flags=0)
+# 			name = bradires.group(0)
+# 			newname=name[:-1]+".1_BRADI"
+# 			line = line.replace(name,newname)
 		seqfasta=line
 	else:
 		seqfasta=seqfasta+line
 
 if remove_tr=="yes" \
 and re.search(r'(\.[2-9]_[A-Z]{5})', seqfasta, flags=0)==None \
-and re.search(r'(\.[1-9]{2}_)', seqfasta, flags=0)==None \
-and re.search(r'(_T0[2-9]_)', seqfasta, flags=0)==None \
-and re.search(r'(_T[1-9]{2}_)', seqfasta, flags=0)==None \
+and re.search(r'(\.[1-9]{2}_[A-Z]{5})', seqfasta, flags=0)==None \
+and re.search(r'(_T0[2-9]_[A-Z]{5})', seqfasta, flags=0)==None \
+and re.search(r'(_T[1-9]{2}_[A-Z]{5})', seqfasta, flags=0)==None \
+and re.search(r'(\.[2-9]-PROTEIN_ARATH)', seqfasta, flags=0)==None \
+and re.search(r'(\.[1-9]{2}-PROTEIN_ARATH)', seqfasta, flags=0)==None \
+and re.search(r'(\.[2-9]-PEP_[A-Z]{5})', seqfasta, flags=0)==None \
+and re.search(r'(\.[1-9]{2}-PEP_[A-Z]{5})', seqfasta, flags=0)==None \
 and re.search(r'(_00[2-9]_MUSAC)', seqfasta, flags=0)==None \
 and re.search(r'(_0[1-9]{2}_MUSAC)', seqfasta, flags=0)==None \
 and re.search(r'(_P0[2-9]_MAIZE)', seqfasta, flags=0)==None \
