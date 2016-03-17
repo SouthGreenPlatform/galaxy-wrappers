@@ -1,0 +1,14 @@
+<tool id="getnames" name="Get alternative gene identifiers" version="1.0">
+	<description>From a fasta file, get a tabulated file with alternative identifiers and Uniprot annotations when available</description>
+	<command interpreter="python">getgenenames.py $input $output </command>
+	<inputs>
+		<param name="input" type="data" format="fasta" label="Fasta file"/>		
+	</inputs>
+	<outputs>
+		<data name="output" format="txt"/>
+	</outputs>
+
+	<help>
+		
+	</help>
+</tool>
