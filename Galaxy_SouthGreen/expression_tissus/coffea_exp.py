@@ -6,7 +6,7 @@ Output: tabular
 format convert: fasta to tabular
 """
 
-import csv, re, sys
+import csv, re, sys, os, json
 def stop_err( msg ):
     sys.stderr.write( msg )
     sys.exit()
@@ -14,16 +14,20 @@ def stop_err( msg ):
 def __main__():
     infile = sys.argv[1]
     outfile = sys.argv[2]
-    data_exp = " ~/galaxy/tool-data/SouthGreen/Coffee_genes_expression_all_organs_rpkm_hub.txt"
+    home= os.path.expanduser('~')
+    data_exp = home+"/galaxy/tool-data/SouthGreen/Coffee_genes_expression_all_organs_rpkm_hub.txt"
     fichier=open(infile,"r")
     destination = open(outfile,"w")
     data=open(data_exp,"r")
+    COFCA_file=open("/bank/genfam/genome_data/COFCA/COFCA-GENOSCOPE1-sequence_feature-locus_tag-genfam.json","r")
+    COFCA_dic=json.loads(COFCA_file.read())
+    COFCA_file.close()
     
     data_dict=csv.DictReader(data, delimiter='\t')    
     gen_dict={}
     
     for line in data_dict:
-        gen_dict[line["Gene"]] = line
+        gen_dict[line["Gene"].upper()] = line
         
     
     for k in gen_dict:
@@ -38,8 +42,11 @@ def __main__():
                 name=re.sub(r"_[A-Z]{5}","",line)
                 name=re.sub(r"^>","",name)
                 name=re.sub("\n","",name)
+                name=re.sub(r"C[PG]","CT",name)
                 print name
-                list_name.append(name)
+                transc_name=COFCA_dic["COFCA"][name]["mrna_name"]
+                transc_name=re.sub("_","",transc_name)
+                list_name.append(transc_name)
             
     organs=data_dict.fieldnames
     print(list_name[0:10])
@@ -47,7 +54,7 @@ def __main__():
     
     for gene in list_name :
         print gene
-        name=re.sub(r"[pg]","t",gene)
+        #name=re.sub(r"[pg]","t",gene)
         #name=re.sub(r"_","",name)
         #name=name+".1"
         try :
