@@ -42,11 +42,11 @@ def __main__():
                 name=re.sub(r"_[A-Z]{5}","",line)
                 name=re.sub(r"^>","",name)
                 name=re.sub("\n","",name)
-                name=re.sub(r"C[PG]","CT",name)
+                nametr=re.sub(r"C[PG]","CT",name)
                 print name
-                transc_name=COFCA_dic["COFCA"][name]["mrna_name"]
+                transc_name=COFCA_dic["COFCA"][nametr]["mrna_name"]
                 transc_name=re.sub("_","",transc_name)
-                list_name.append(transc_name)
+                list_name.append(name+";"+transc_name)
             
     organs=data_dict.fieldnames
     print(list_name[0:10])
@@ -54,16 +54,18 @@ def __main__():
     
     for gene in list_name :
         print gene
+        name= gene.split(";")[0]
+        mrna= gene.split(";")[1]
         #name=re.sub(r"[pg]","t",gene)
         #name=re.sub(r"_","",name)
         #name=name+".1"
         try :
-            ligne=[gene]
+            ligne=[name]
             for organe in organs[1:]:
-                ligne.append(gen_dict[name][organe])
+                ligne.append(gen_dict[mrna][organe])
             destination.write(",".join(ligne)+"\n")
         except:
-            ligne=[gene]
+            ligne=[name]
             for y in range(1,len(organs)):
                 ligne.append("UN")
             destination.write(",".join(ligne)+"\n")
