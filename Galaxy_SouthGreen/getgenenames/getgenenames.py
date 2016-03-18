@@ -159,24 +159,43 @@ for line in fasta:
 	    print locus_tag
 	    if "gene_name" in dic_of_dic[specode][specode][locus_tag].keys():
 	        gene_name=dic_of_dic[specode][specode][locus_tag]["gene_name"]
+	        if "gene_symbol" in dic_of_dic[specode][specode][gene_name].keys():
+		        gene_symbol=dic_of_dic[specode][specode][gene_name]["gene_symbol"]
+	        else : 
+		        gene_symbol=""
+	        if "uniprot_entry" in dic_of_dic[specode][specode][gene_name].keys():
+		        uniprot_entry=dic_of_dic[specode][specode][gene_name]["uniprot_entry"]
+	        else : 
+		        uniprot_entry=""
+	        if "uniprot_product" in dic_of_dic[specode][specode][gene_name].keys():
+		        uniprot_product=dic_of_dic[specode][specode][gene_name]["uniprot_product"]
+	        else : 
+		        uniprot_product=""
+	    elif "gene_id" in dic_of_dic[specode][specode][locus_tag].keys():
+	    	gene_id=dic_of_dic[specode][specode][locus_tag]["gene_id"]
+	        gene_name=dic_of_dic[specode][specode][gene_id]["gene_name"]
+	        if "gene_symbol" in dic_of_dic[specode][specode][gene_name].keys():
+		        gene_symbol=dic_of_dic[specode][specode][gene_name]["gene_symbol"]
+	        else : 
+		        gene_symbol=""
+	        if "uniprot_entry" in dic_of_dic[specode][specode][gene_name].keys():
+		        uniprot_entry=dic_of_dic[specode][specode][gene_name]["uniprot_entry"]
+	        else : 
+		        uniprot_entry=""
+	        if "uniprot_product" in dic_of_dic[specode][specode][gene_name].keys():
+		        uniprot_product=dic_of_dic[specode][specode][gene_name]["uniprot_product"]
+	        else : 
+		        uniprot_product=""
+	        print dic_of_dic[specode][specode][locus_tag]["gene_id"]
 	    else : 
 	        gene_name=""
+	        uniprot_product=""
+	        uniprot_entry=""
+	        gene_symbol=""
 	    if "polypeptide_name" in dic_of_dic[specode][specode][locus_tag].keys():
 	        prot_name=dic_of_dic[specode][specode][locus_tag]["polypeptide_name"]
 	    else : 
 	        prot_name=""
-	    if "gene_symbol" in dic_of_dic[specode][specode][gene_name].keys():
-	        gene_symbol=dic_of_dic[specode][specode][gene_name]["gene_symbol"]
-	    else : 
-	        gene_symbol=""
-	    if "uniprot_entry" in dic_of_dic[specode][specode][gene_name].keys():
-	        uniprot_entry=dic_of_dic[specode][specode][gene_name]["uniprot_entry"]
-	    else : 
-	        uniprot_entry=""
-	    if "uniprot_product" in dic_of_dic[specode][specode][gene_name].keys():
-	        uniprot_product=dic_of_dic[specode][specode][gene_name]["uniprot_product"]
-	    else : 
-	        uniprot_product=""
 	    output_file.write(prot_id+"\t"+prot_name+"\t"+gene_name+"\t"+gene_symbol+"\t"+uniprot_entry+"\t"+uniprot_product+"\n")
 	    
 fasta_file.close()
