@@ -197,7 +197,7 @@ fasta_file=open(fasta_path,'r')
 seqfasta=""
 for line in fasta:
 	if line[0]==">":
-		name = line[1:]
+		name = line[1:].upper()
 		# Si l'option de retrait des transcrits alternatifs est "yes" : on teste si la séquence fasta précédente est un transcrit alternatif, et dans ce cas on ne l'écrit pas dans le fichier de sortie
 		#test
 		if remove_tr=="yes" \
@@ -218,6 +218,7 @@ for line in fasta:
 			output_file.write(seqfasta)
 		elif remove_tr=="no":
 			output_file.write(seqfasta)
+		line = line.upper()
 		line = line.replace("_ZEAMA","_MAIZE")
 		line=line.replace('_ORYSA','_ORYSJ')
 		line = line.replace("_SOLLY","_SOLLC")
