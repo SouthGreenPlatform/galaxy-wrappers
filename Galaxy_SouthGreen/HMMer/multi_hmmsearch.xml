@@ -55,7 +55,7 @@
             <when value="base_list">
                 <repeat name="bases" title="Species" min="1" max="50"> 
                     <param name="database" type="select" label="Protein database">
-                        <options from_file="HMMdb_p_annot.loc">
+                        <options from_file="SouthGreen/HMMdb_p_annot.loc">
                             <column name="value" index="0"/>
                             <column name="name" index="1"/>
                             <column name="path" index="2"/>
