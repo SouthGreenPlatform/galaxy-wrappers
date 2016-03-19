@@ -40,14 +40,15 @@ fam_file_out.close()
 curdir=os.getcwd()
 random.seed()
 numb=str(random.randint(1,1000000))
-tmpfoldname=curdir+"/"+numb
+# tmpfoldname=curdir+"/"+numb
+tmpfoldname="/home/galaxydev/SouthGreen_tools/Galaxy_SouthGreen/IDEVEN/"+numb
 os.system("mkdir "+tmpfoldname)
 os.system("chmod 777 "+tmpfoldname)
 i=0
 
 directory=os.getcwd()
 print directory
-count=0
+count=1
 while i<len(speList) :
     j=i
     while j<len(speList) : 
@@ -61,6 +62,7 @@ while i<len(speList) :
         j=j+1
     i=i+1
 
+os.system("touch "+tmpfoldname+"/first_end.txt  ")
 try :
     test=os.popen("ls "+tmpfoldname+"/*end.txt| wc -l")
     res=int(test.read().strip())
