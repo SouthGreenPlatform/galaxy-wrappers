@@ -245,6 +245,8 @@ for line in fasta:
 		line = line.replace("_PHODA","_PHODC")
 		line = line.replace('\"',"")
 		spe_code=line.strip()[-5:]
+		if re.search(r'(REF_)', line, flags=0) :
+			spe_code = "REF_"+spe_code
 		print spe_code
 		locus_tag=line.strip()[1:-6]
 		if spe_code in dic_of_dic.keys() and locus_tag in dic_of_dic[spe_code][spe_code].keys() :
