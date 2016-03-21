@@ -39,36 +39,38 @@ def __main__():
         if(res!=None):
             line.strip()
             if("COFCA" in line):
-                name=re.sub(r"_[A-Z]{5}","",line)
-                name=re.sub(r"^>","",name)
+                name=re.sub(r"^>","",line)
                 name=re.sub("\n","",name)
+                origname=name
+                name=re.sub(r"_[A-Z]{5}","",name)
                 nametr=re.sub(r"C[PG]","CT",name)
                 print name
                 transc_name=COFCA_dic["COFCA"][nametr]["mrna_name"]
                 transc_name=re.sub("_","",transc_name)
-                list_name.append(name+";"+transc_name)
+                list_name.append(name+";"+transc_name+";"+origname)
             
     organs=data_dict.fieldnames
     print(list_name[0:10])
-    destination.write(",".join(organs)+"\n")
+    destination.write("\t".join(organs)+"\n")
     
     for gene in list_name :
         print gene
         name= gene.split(";")[0]
         mrna= gene.split(";")[1]
+        origname= gene.split(";")[2]
         #name=re.sub(r"[pg]","t",gene)
         #name=re.sub(r"_","",name)
         #name=name+".1"
         try :
-            ligne=[name]
+            ligne=[origname]
             for organe in organs[1:]:
                 ligne.append(gen_dict[mrna][organe])
-            destination.write(",".join(ligne)+"\n")
+            destination.write("\t".join(ligne)+"\n")
         except:
-            ligne=[name]
+            ligne=[origname]
             for y in range(1,len(organs)):
                 ligne.append("UN")
-            destination.write(",".join(ligne)+"\n")
+            destination.write("\t".join(ligne)+"\n")
     destination.close()
     fichier.close()
     data.close()
