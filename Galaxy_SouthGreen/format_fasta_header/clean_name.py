@@ -247,20 +247,25 @@ for line in fasta:
 		spe_code=line.strip()[-5:]
 		if re.search(r'(REF_)', line, flags=0) :
 			spe_code = "REF_"+spe_code
-		print spe_code
+# 		print spe_code
 		locus_tag=line.strip()[1:-6]
 		if spe_code in dic_of_dic.keys() and locus_tag in dic_of_dic[spe_code][spe_code].keys() :
 			if "polypeptide_id" in dic_of_dic[spe_code][spe_code][locus_tag].keys():
 				name = dic_of_dic[spe_code][spe_code][locus_tag]["polypeptide_id"]
 				line = line.replace(locus_tag,name)
 			elif "genfam_locus_tag" in dic_of_dic[spe_code][spe_code][locus_tag].keys():	
-				locus_tag = locus_tag+".1"
-				if locus_tag in dic_of_dic[spe_code][spe_code].keys() and "polypeptide_id" in dic_of_dic[spe_code][spe_code][locus_tag].keys():
-					name = dic_of_dic[spe_code][spe_code][locus_tag]["polypeptide_id"]
+				name = locus_tag+".1"
+				if name in dic_of_dic[spe_code][spe_code].keys() and "polypeptide_id" in dic_of_dic[spe_code][spe_code][locus_tag].keys():
+					name = dic_of_dic[spe_code][spe_code][name]["polypeptide_id"]
 					line = line.replace(locus_tag,name)
-			elif "polyfam_locus_tag" in dic_of_dic[spe_code][spe_code][locus_tag].keys():
-				name = dic_of_dic[spe_code][spe_code][locus_tag]["polyfam_locus_tag"][:-6]
-				line = line.replace(locus_tag,name)		
+				else:
+					name = dic_of_dic[spe_code][spe_code][locus_tag]["genfam_locus_tag"]
+					name=name[:-6].replace("_GF","_PF")
+					line = line.replace(locus_tag,name)
+					
+		# 	elif "genfam_locus_tag" in dic_of_dic[spe_code][spe_code][locus_tag].keys():
+# 				name = dic_of_dic[spe_code][spe_code][locus_tag]["genfam_locus_tag"][:-6]
+# 				line = line.replace(locus_tag,name)		
 				
 			
 # 		if re.search(pat_vitvibis, line, flags=0):
