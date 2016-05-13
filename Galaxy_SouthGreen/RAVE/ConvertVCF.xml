@@ -1,0 +1,60 @@
+<tool id="NGSTools_ConvertVCF" name="Convert VCF Files" version="2.1.5">
+<description> to other file formats</description>
+  <command>
+                source $__tool_directory__/module_snpeff.sh;
+java -Xmx8G -jar $__tool_directory__/NGSToolsApp_2.1.5.jar ConvertVCF -print$formats $input $formats >log 2>&amp;1
+  </command>
+  <inputs>
+    <param name="input" type="data" format="vcf" label="Input VCF File"/>
+    <param name="formats" type="select" label="Select file formats to convert genotype calls">
+      <option value="Structure">Structure</option> 
+      <option value="Hapmap">HapMap</option> 
+      <option value="Haploview">Haploview</option>  
+      <option value="Flapjack">Flapjack</option>
+      <option value="Darwin">DARwin</option> 
+    </param>
+
+  </inputs>
+  <outputs> 
+    <data format="snpmatrix" name="output_structure" label="VCF to Structure $input.display_name" from_work_dir="Structure_structure.in">
+      <filter>formats=="Structure"</filter>
+    </data>
+    <data format="txt" name="output_hapmap" label="VCF to HapMap $input.display_name" from_work_dir="Hapmap_hmp.txt"> 
+      <filter>formats=="Hapmap"</filter>
+    </data>
+    <data format="txt" name="output_haploview1" label="VCF to Haploview (.info) $input.display_name" from_work_dir="Haploview.info">
+      <filter>formats=="Haploview"</filter>
+    </data>
+    <data format="txt" name="output_haploview2" label="VCF to Haploview (.ped) $input.display_name" from_work_dir="Haploview.ped"> 
+      <filter>formats=="Haploview"</filter>
+    </data>
+    <data format="txt" name="output_flapjack1" label="VCF to Flapjack (.map) $input.display_name" from_work_dir="Flapjack_flapjack.map">
+      <filter>formats=="Flapjack"</filter>
+    </data>
+    <data format="txt" name="output_flapjack2" label="VCF to Flapjack (.gen) $input.display_name" from_work_dir="Flapjack_flapjack.gen"> 
+      <filter>formats=="Flapjack"</filter>
+    </data>
+    <data format="txt" name="output_darwin1" label="VCF to DARwin (.in) $input.display_name" from_work_dir="Darwin_Darwin.in">
+      <filter>formats=="Darwin"</filter>
+    </data>
+    <data format="tabular" name="output_darwin2" label="VCF to DARwin (.snp) $input.display_name" from_work_dir="Darwin_Darwin.snp">
+      <filter>formats=="Darwin"</filter>  
+    </data>
+  </outputs>
+  <help>
+
+**What it does**
+
+Export genotype calls from VCF format to other formats commonly used in downstream analysis.
+
+-----
+
+.. class:: infomark
+
+For details about this tool, please visit https://sourceforge.net/projects/ngsep/
+
+  </help>
+  <citations>
+    <citation type="doi">10.1093/nar/gkt1381</citation>
+  </citations>
+</tool>

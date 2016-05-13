@@ -1,0 +1,47 @@
+<tool id="vcf2fasta" name="vcf2fasta" version="1.0">
+	<description>- Extracts flanking sequence around a variant</description>
+  	<!-- Wrapper compatible with vcf2fasta --> 
+    <command>$__tool_directory__/vcf2fasta 
+		-f ${fasta_db.fields.path} 
+        #end if 
+		-l $length
+		$vcffile
+		> $fasta
+  	</command>
+
+  	<inputs>  
+        <param name="fasta_db" type="select" label="Select fasta" help="If your genome of interest is not listed, contact us">
+			<options from_file="SouthGreen/vcf2fasta.loc">
+				<column name="value" index="0"/>
+				<column name="name" index="1"/>
+				<column name="path" index="2"/>
+			</options>
+        </param> 
+		<param name="vcffile" format="vcf" type="data" label="VCF file" /> 
+		<param name="length" type="integer" value="50" label="The length of the flanking sequence on each side of the variant" help="-l length of the flanking sequence on each side of the variant (default 50bp)" />
+        
+  	</inputs>
+	<outputs>
+        <data format="fasta" name="fasta" label="Fasta file" /> 
+  	</outputs>
+  	<help>
+  
+  .. class:: infomark
+
+**Program encapsulated in Galaxy by South Green**
+
+.. class:: infomark 
+
+-----
+
+==========
+ Overview
+==========
+
+For each VCF record, extract the flanking sequences, and write them as FASTA
+records suitable for alignment.  This tool is intended for use in designing validation
+experiments.
+	
+	</help> 
+</tool>
+ 
