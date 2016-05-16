@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<tool_dependency>
+    <package name="admixture" version="1.23">
+        <repository changeset_revision="61e04b2aa621" name="package_admixture_1_23" owner="dereeper" toolshed="https://toolshed.g2.bx.psu.edu" />
+    </package>
+</tool_dependency>

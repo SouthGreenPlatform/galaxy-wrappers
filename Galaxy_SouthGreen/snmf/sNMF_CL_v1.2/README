@@ -1,0 +1,29 @@
+sNMF CL Mac and Linux version 1.2, 17/09/14
+by Eric Frichot (eric.frichot@imag.fr)
+
+*******************
+*   INSTALLATION   *
+*******************
+
+1. execute the install script (install.command) in the main
+directory. To execute it in a terminal shell, go to sNMF
+main directory and write "./install.command". If the script is 
+not executable, type "chmod +x install.command" and then 
+"./install.command".
+
+2. If no error, the executables are in the bin directory. 
+
+******************
+*  ORGANIZATION  *
+******************
+
+It is organized in 4 folders:
+- code
+- documentation
+- examples
+- bin
+
+PLEASE, read the documentation before using our software. It provides
+examples and information on the model and the software.
+
+PLEASE, if you find a bug, contact us. We will fix it as soon as possible.
