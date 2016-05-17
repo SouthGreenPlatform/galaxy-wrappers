@@ -26,7 +26,7 @@ os.system("mkdir "+tmpfoldname+"/outputs")
 # 	print path
 # 	i=i+1
 
-os.system("tar -xf "+hmmer_out+".tar.gz -C "+tmpfoldname+"/")
+os.system("tar -xf "+hmmer_out+" -C "+tmpfoldname+"/")
 
 base_file=open(tmpfoldname+'/bases.txt','r')
 
