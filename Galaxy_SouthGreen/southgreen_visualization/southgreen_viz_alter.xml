@@ -1,0 +1,112 @@
+<tool id="sgvizalter" name="SouthGreen visualization alternative (alpha)" version="1.0">
+	<description>Visualize your data</description>
+	<command interpreter="python">southgreen_viz_alter.py
+#if $tree_cond.tree_cond_option == "yes"
+ $tree_cond.tree
+#else
+ notree
+#end if
+#if $al_cond.al_cond_option == "yes"
+ $al_cond.align
+#else
+ noal
+#end if 
+#if $ideven_cond.ideven_cond_option == "yes"
+ $ideven_cond.ideven
+#else
+ noideven
+#end if 
+#if $exp_cond.exp_cond_option == "yes"
+ $exp_cond.expression
+#else
+ noexp
+#end if 
+ $output
+ </command>
+	<inputs>	 		
+			<conditional name="tree_cond">
+			<param type="select" name="tree_cond_option" label="Send a tree file">
+				<option value="yes">Yes</option>
+				<option value="no">No</option>
+			</param>   		
+			<when value="yes">
+		 	<param name="tree" type="data" label="Select the tree file"/>
+		 	</when>
+		 	<when value="no">        
+		 	</when>
+			</conditional>
+			
+			<conditional name="al_cond">
+			<param type="select" name="al_cond_option" label="Send an alignment file">
+				<option value="yes">Yes</option>
+				<option value="no">No</option>
+			</param>   		
+			<when value="yes">				
+		 	<param name="align" type="data" label="Select the alignement file"/>
+		 	</when>
+		 	<when value="no">        
+		 	</when>
+			</conditional>
+					 	
+			<conditional name="ideven_cond">
+			<param type="select" name="ideven_cond_option" label="Send an IDEVEN file">
+				<option value="yes">Yes</option>
+				<option value="no">No</option>
+			</param>   		
+			<when value="yes">		 	
+            <param name="ideven" type="data" label="Select an IDEVEN file"/>
+		 	</when>
+		 	<when value="no">        
+		 	</when>
+			</conditional>
+			            
+ 			<conditional name="exp_cond">
+			<param type="select" name="exp_cond_option" label="Send an expression file">
+				<option value="yes">Yes</option>
+				<option value="no">No</option>
+			</param>   		
+			<when value="yes">           
+            <param name="expression" type="data" label="Select an expression file"/>
+		 	</when>
+		 	<when value="no">        
+		 	</when>
+			</conditional>
+	</inputs>
+	<outputs>
+		<data name="output" format="genfam"/>
+	</outputs>
+	
+	<help>
+	
+.. class:: infomark
+
+**Program encapsulated in Galaxy and developed by Southgreen**
+
+.. class:: infomark
+
+**SouthGreen Viewers version 1.0, 2013**
+
+-----	
+
+==========
+ Authors:
+==========	
+
+**Dufayard JF, Lariviere D, Pointet S and Summo M**
+
+-----	
+
+===========
+ Overview:
+===========	
+
+Generate a link to display a Galaxy data into an external viewer. Test.
+
+-----
+
+.. class:: warningmark
+
+**No support website**
+		
+	</help>
+</tool>
