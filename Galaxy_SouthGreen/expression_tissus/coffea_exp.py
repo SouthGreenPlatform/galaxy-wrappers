@@ -22,17 +22,23 @@ def __main__():
     COFCA_file=open("/bank/genfam/genome_data/COFCA/COFCA-GENOSCOPE1-sequence_feature-locus_tag-genfam.json","r")
     COFCA_dic=json.loads(COFCA_file.read())
     COFCA_file.close()
-    
-    data_dict=csv.DictReader(data, delimiter='\t')    
+
+    data_dict=csv.DictReader(data, delimiter='\t')
     gen_dict={}
-    
+
     for line in data_dict:
         gen_dict[line["Gene"].upper()] = line
-        
-    
+
+
     for k in gen_dict:
         del gen_dict[k]["Gene"]
-    
+
+    COFCA_file=open("/bank/genfam/genome_data/COFCA/COFCA-GENOSCOPE1-sequence_feature-locus_tag-genfam.json",'r')
+    COFCA_dic=json.loads(COFCA_file.read())
+    COFCA_file.close()
+
+
+
     list_name=[]
     for line in fichier :
         res = re.search(r"^>", line)
@@ -42,19 +48,30 @@ def __main__():
                 name=re.sub(r"^>","",line)
                 name=re.sub("\n","",name)
                 origname=name
+                name=name.upper()
+                name=re.sub(r"_PF","_P",name)
+                name=re.sub(r"_[TG]","_P",name)
                 name=re.sub(r"_[A-Z]{5}","",name)
-                nametr=re.sub(r"C[PG]","CT",name)
-                print name
+                if name[0]=="C":
+                    name=name+".1"
+                # print name
+                # print COFCA_dic["COFCA"][name]
+                if "polypeptide_id" in COFCA_dic["COFCA"][name].keys():
+                    nametr= COFCA_dic["COFCA"][name]["polypeptide_id"]
+                else :
+                    nametr=name
+                nametr=re.sub(r"C[PG]","CT",nametr)
+                # print nametr
                 transc_name=COFCA_dic["COFCA"][nametr]["mrna_name"]
                 transc_name=re.sub("_","",transc_name)
                 list_name.append(name+";"+transc_name+";"+origname)
-            
+
     organs=data_dict.fieldnames
-    print(list_name[0:10])
+    # print(list_name[0:10])
     destination.write("\t".join(organs)+"\n")
-    
+
     for gene in list_name :
-        print gene
+        # print gene
         name= gene.split(";")[0]
         mrna= gene.split(";")[1]
         origname= gene.split(";")[2]
