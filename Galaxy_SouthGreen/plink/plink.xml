@@ -18,7 +18,7 @@
 
     <!-- [REQUIRED] The command to execute -->
     <command interpreter="bash">
-	./plink.sh $input $fileout $filelog $export $frequency $max_freq $allow_missing $nb_alleles_min $nb_alleles_max $type_p $bound_start $bound_end
+	./plink.sh $bed $fileout $filelog $export $frequency $max_freq $allow_missing $nb_alleles_min $nb_alleles_max $type_p $bound_start $bound_end $bim $fam
 	#if str( $samples ) == "":
 	'None'
 	#else
@@ -38,10 +38,15 @@
     <code file="find_indiv.py"/>
     <!-- [REQUIRED] Input files and tool parameters -->
     <inputs>
-	<param name="input" type="data" format="vcf" optional="false" label="VCF input" />
+	<!--<param name="input" type="data" format="vcf" optional="false" label="VCF input" />-->
+	<param name="bed" type="data" format="txt" optional="false" label="Plink binary file (.bed)" />
+	<param name="bim" type="data" format="txt" optional="false" label="Bim" />
+	<param name="fam" type="data" format="txt" optional="false" label="Fam" />
 	<param name="fileout_label" type="text" value="filtered" optional="false" label="Output file basename"/>
-	<param name="samples" type="select" label="Samples" multiple="true" dynamic_options="get_field_samples_options(input)" help="Samples to be analyzed." />
-        <param name="chromosomes" type="select" label="Chromosomes" multiple="true" dynamic_options="get_field_chrs_options(input)" help="Chromosomes to be analyzed." />
+	<!--<param name="samples" type="select" label="Samples" multiple="true" dynamic_options="get_field_samples_options(fam)" help="Samples to be analyzed." />-->
+	<param name="samples" type="text" label="Samples" multiple="true" help="Samples to be analyzed." />
+        <!--<param name="chromosomes" type="select" label="Chromosomes" multiple="true" dynamic_options="get_field_chrs_options(input)" help="Chromosomes to be analyzed." />-->
+	<param name="chromosomes" type="text" label="Chromosomes" multiple="true" help="Chromosomes to be analyzed." />
 	<param name="export" type="select" label="Output format" >
 	    <option value="VCF" selected="true">VCF</option>
 	    <option value="freq">freq</option>

@@ -4,8 +4,8 @@ import re
 
 def get_field_samples_options(dataset):
 	options = []
-	line=os.popen("grep '#CHROM' %s"%dataset.file_name).read()[:-1].split('\t')
-	index=line.index('FORMAT')
+	line=os.popen("grep 'KAUKKYISAW' %s"%dataset.file_name).read()[:-1].split('\t')
+	index=line.index('KAUKKYISAW_1')
 	for opt in line[index+1:] :
 		options.append((opt,opt, True))
 	return options

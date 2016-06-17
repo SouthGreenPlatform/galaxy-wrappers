@@ -16,14 +16,21 @@ nb_alleles_max=9
 type=${10}
 bound_start=${11}
 bound_end=${12}
+bim=${13}
+fam=${14}
+
+cp -rf $filein input$$.bed
+cp -rf $bim input$$.bim
+cp -rf $fam input$$.fam
 
 
-if [ "${13}" != "None" ]
-then samples="--samples ${13}"
+
+if [ "${15}" != "None" ]
+then samples="--samples ${15}"
 fi
 
-if [ "${14}" != "None" ]
-then chromosomes="--chromosomes ${14}"
+if [ "${16}" != "None" ]
+then chromosomes="--chromosomes ${16}"
 fi
 
 if [ "$bound_start" -gt "$bound_end" ]
@@ -35,7 +42,7 @@ then tmp=$nb_alleles_min ; nb_alleles_min=$nb_alleles_max ; nb_alleles_max=$tmp 
 fi
 
 
-perl $tool_path/Plink.pl --input $filein --out $fileout_label --export $export --frequency $frequency --max_freq $max_freq --allow_missing $allow_missing --nb_alleles $nb_alleles_min','$nb_alleles_max --type $type --bounds $bound_start','$bound_end $samples $chromosomes
+perl $tool_path/Plink.pl --input input$$ --out $fileout_label --export $export --frequency $frequency --max_freq $max_freq --allow_missing $allow_missing --nb_alleles $nb_alleles_min','$nb_alleles_max --type $type --bounds $bound_start','$bound_end $samples $chromosomes
 
 
 if [ "$export" = "VCF" ]

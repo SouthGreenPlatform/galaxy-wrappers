@@ -77,9 +77,6 @@ if ($samples && $samples =~/^([\w\,\-\.]+)\s*$/){
 elsif ($samples){
 	die "Error: Samples must be a comma separated list of string\n";
 }
-if ($chromosomes && !-e $chromosomes){
-	die "Error: Chromosomes file does not exist\n";
-}
 if ($bounds && $bounds =~/^([\d\,]+)\s*$/){
 	$bounds = $1;
 }
@@ -185,41 +182,12 @@ if (@dnasamples)
 }
 
 my $chrom_cmd = "";
-if ($chromosomes && -e $chromosomes)
+if ($chromosomes)
 {
-	my $header = `head -1 $chromosomes`;
-	my @chromosomes_list;
-	if ($header =~/#chrom/){
-		rename("$chromosomes","$out.chrom");
-	}
-	else{
-		open(my $S,">$out.chrom");
-		print $S "#chrom	chromStart	chromStart\n";
-		open(my $C,$chromosomes);
-		while(<$C>)
-		{
-			my $c = $_;
-			$c =~s/\n//g;
-			$c =~s/\r//g;
-
-			$c =~s/chr0//g;
-			push(@chromosomes_list,$c);
-			if (@boundaries)
-			{
-				print $S "$c\t$boundaries[0]\t$boundaries[1]\n";
-			}
-			else
-			{
-				print $S "$c\t1\t1000000000\n";
-			}
-		}
-		close($S);
-		close($C);
-	}
-	$chrom_cmd = "--chr ".join(",",@chromosomes_list);
+	$chrom_cmd = "--chr ".$chromosomes
 }
 
-my $export_cmd = "--recode vcf-fid";
+my $export_cmd = "--recode vcf-iid";
 if ($export eq "bcf"){
 	$export_cmd = "--recode bcf";
 }
