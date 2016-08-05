@@ -20,8 +20,7 @@ where <args> are:
     -f, --frequency      <Minimum MAF. Default: 0.001>
     -m, --max_freq       <Maximum MAF. Default: 0.5>
     -a, --allow_missing  <Allowed missing data proportion per site. Must be comprised between 0 and 1. Default: 1>
-    -n, --nb_alleles     <Accepted number of alleles (min,max). Default: 2,4>
-    -t, --type           <Type of polymorphisms to keep (ALL/SNP/INDEL). Default: ALL>
+    -t, --type           <Type of polymorphisms to keep (ALL/SNP). Default: ALL>
     -b, --bounds         <Lower bound and upper bound for a range of sites to be processed (start,end). Default: 1, 100000000>
     -r, --remove_filt    <Remove all sites with a FILTER flag other than PASS (true/false). Default: false>
     -d, --distance       <Thin sites so that no two sites are within the specified distance from one another. Default: 0>
@@ -45,7 +44,6 @@ my $remove_filt = "False";
 my $missing_data = 1;
 my $export = "VCF";
 my $type = "ALL";
-my $nb_alleles;
 my $bounds;
 my $samples;
 my $chromosomes;
@@ -61,7 +59,6 @@ GetOptions(
 	"allow_missing=s"=> \$missing_data,
 	"export=s"       => \$export,
 	"type=s"         => \$type,
-	"nb_alleles=s"   => \$nb_alleles,
 	"bounds=s"       => \$bounds,
 	"remove_filt=s"  => \$remove_filt,
 	"distance=s"         => \$thin
@@ -89,6 +86,9 @@ if ($frequency_min && $frequency_min > 0 && $frequency_min =~/^([\d\.]+)\s*$/){
 	$frequency_min = $1;
 	$minfreq_cmd = "--maf $frequency_min";
 }
+elsif ($frequency_min == 0){
+	$minfreq_cmd = "";
+}
 elsif ($frequency_min){
 	die "Error: frequency must be an integer\n";
 }
@@ -110,16 +110,10 @@ elsif($frequency_max){
 }
 if ($missing_data =~/^([\d\.]+)\s*$/){
 	$missing_data = $1;
-	$missing_data = 1 - $missing_data;	
+	#$missing_data = 1 - $missing_data;	
 }
 elsif ($missing_data){
 	die "Error: Missing data must be an integer\n";
-}
-if ($nb_alleles && $nb_alleles =~/^(\d+,\d+)\s*$/){
-	$nb_alleles = $1;
-}
-elsif($nb_alleles){
-	die "Error: Nb alleles must be an integer\n";
 }
 if ($export && $export =~/^([\w]+)\s*$/){
 	$export = $1;
@@ -139,11 +133,6 @@ my @dnasamples;
 if ($samples)
 {
 	@dnasamples = split(",",$samples);
-}
-my @nalleles;
-if ($nb_alleles)
-{
-	@nalleles = split(",",$nb_alleles);
 }
 my @boundaries;
 if ($bounds)
@@ -202,24 +191,15 @@ if ($export eq "bed"){
 } 
 
 
-my $nb_alleles_cmd = "--min-alleles 1 --max-alleles 4";
-if (@nalleles)
-{
-	$nb_alleles_cmd = "--min-alleles $nalleles[0] --max-alleles $nalleles[1]";
-}
 my $bounds_cmd = "";
-if (@boundaries && $chrom_cmd !~/,/)
+if (@boundaries && $chrom_cmd=~/\w/ && $chrom_cmd !~/,/)
 {
-        #$bounds_cmd = "--from-bp $boundaries[0] --to-bp $boundaries[1]";
+        $bounds_cmd = "--from-bp $boundaries[0] --to-bp $boundaries[1]";
 }
 
 
  
 my $type_cmd = "";
-if ($type eq "INDEL")
-{
-	$type_cmd = "--exclude-snp";
-}
 if ($type eq "SNP")
 {
 	$type_cmd = "--snps-only";
@@ -252,7 +232,7 @@ elsif (-e $bcf_input){
 }
 else
 {
-	system("$PLINK_EXE --vcf $input --out $out $type_cmd $export_cmd $chrom_cmd $indiv_cmd $minfreq_cmd $maxfreq_cmd -geno $missing_data $thin_cmd $bounds_cmd --allow-extra-chr 1>$out.3.plink.stdout 2>$out.3.plink.stderr");
+	system("$PLINK_EXE --vcf $input --out $out $type_cmd $export_cmd $chrom_cmd $indiv_cmd $minfreq_cmd $maxfreq_cmd --geno $missing_data $thin_cmd $bounds_cmd --allow-extra-chr 1>$out.3.plink.stdout 2>$out.3.plink.stderr");
 
 }
 

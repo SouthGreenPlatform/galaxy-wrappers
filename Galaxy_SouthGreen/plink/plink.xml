@@ -1,7 +1,7 @@
-<tool id="sniplay_plink" name="Plink" version="1.0">
+<tool id="sniplay_plink" name="plink" version="1.0">
     
     <!-- [REQUIRED] Tool description displayed after the tool name -->
-    <description> </description>
+    <description> - Filter large VCF file</description>
     
     <!-- [OPTIONAL] 3rd party tools, binaries, modules... required for the tool to work -->
     <requirements>
@@ -18,7 +18,7 @@
 
     <!-- [REQUIRED] The command to execute -->
     <command interpreter="bash">
-	./plink.sh $bed $fileout $filelog $export $frequency $max_freq $allow_missing $nb_alleles_min $nb_alleles_max $type_p $bound_start $bound_end $bim $fam
+	./plink.sh $vcf $fileout $filelog $frequency $max_freq $allow_missing $type_p $bound_start $bound_end
 	#if str( $samples ) == "":
 	'None'
 	#else
@@ -29,89 +29,33 @@
 	#else
 	$chromosomes
 	#end if
-	#if str( $export ) == "plink":
-	$fileout_map
-	#else
-	''
-	#end if
     </command>
     <code file="find_indiv.py"/>
     <!-- [REQUIRED] Input files and tool parameters -->
     <inputs>
-	<!--<param name="input" type="data" format="vcf" optional="false" label="VCF input" />-->
-	<param name="bed" type="data" format="txt" optional="false" label="Plink binary file (.bed)" />
-	<param name="bim" type="data" format="txt" optional="false" label="Bim" />
-	<param name="fam" type="data" format="txt" optional="false" label="Fam" />
-	<param name="fileout_label" type="text" value="filtered" optional="false" label="Output file basename"/>
-	<!--<param name="samples" type="select" label="Samples" multiple="true" dynamic_options="get_field_samples_options(fam)" help="Samples to be analyzed." />-->
-	<param name="samples" type="text" label="Samples" multiple="true" help="Samples to be analyzed." />
+	<param name="vcf" type="data" format="vcf" optional="false" label="VCF input" />
+
+	<param name="samples" type="select" label="Samples" multiple="true" dynamic_options="get_field_samples_options(vcf)" help="Samples to be analyzed." />
+	<!--<param name="samples" type="text" label="Samples" multiple="true" help="Samples to be analyzed." />-->
         <!--<param name="chromosomes" type="select" label="Chromosomes" multiple="true" dynamic_options="get_field_chrs_options(input)" help="Chromosomes to be analyzed." />-->
-	<param name="chromosomes" type="text" label="Chromosomes" multiple="true" help="Chromosomes to be analyzed." />
-	<param name="export" type="select" label="Output format" >
-	    <option value="VCF" selected="true">VCF</option>
-	    <option value="freq">freq</option>
-            <option value="plink">plink</option>
-        </param>
-	<param name="frequency" type="float" value="0.001" label="Minimum MAF." help="Minimum frequency." />
-	<param name="max_freq" type="float" value="0.5" label="Maximum MAF." help="Maximum frequency." />
+	<param name="frequency" type="float" value="0" label="Minimum MAF" help="Minimum Minor Allele Frequency (MAF)" />
+	<param name="max_freq" type="float" value="0.5" label="Maximum MAF" help="Maximum Minor Allele Frequency (MAF)" />
 	<param name="allow_missing" type="float" value="1" min="0" max="1" label="Missing data proportion" help="Allowed missing data proportion per site. Must be comprised between 0 and 1." />
-	<param name="nb_alleles_min" type="integer" value="2" label="Minimum number of alleles" help="Minimum accepted number of alleles." min="2" max="4" />
-	<param name="nb_alleles_max" type="integer" value="4" label="Maximum number of alleles" help="Maximum accepted number of alleles." min="2" max="4" />
         <param name="type_p" type="select" label="Polymorphisms" help="Type of polymorphisms to keep." >
             <option value="ALL" selected="true">All</option>
-            <option value="SNP">SNP</option>
-            <option value="INDEL">Indel</option>
+            <option value="SNP">SNPs only</option>
         </param>
+        <param name="chromosomes" type="text" label="Chromosomes" multiple="true" help="Chromosomes to be analyzed. (Comma-separated list of reference sequences, ex: Chr1,Chr2)" />
 	<param name="bound_start" type="integer" value="1" label="Lower bound" help="Lower bound for a range of sites to be processed." />
 	<param name="bound_end" type="integer" value="100000000" label="Upper bound" help="Upper bound for a range of sites to be processed." />
     </inputs>
     
     <!-- [REQUIRED] Output files -->
     <outputs>
-	<data name="fileout" format="vcf" label="${fileout_label}.#if str($export)=='plink' then 'ped' else '' # #if str($export)=='freq' then 'frq' else '' # #if str($export)=='VCF' then 'vcf' else '' #" >
-		<change_format>
-                	<when input="export" value="freq" format="tabular" />
-			<when input="export" value="plink" format="txt" />
-		</change_format>	
-	</data>
-	<data name="fileout_map" format="tabular" label="${fileout_label}.map">
-		<filter>(export == 'plink')</filter>
-	</data>
-	<data name="filelog" format="txt" label="${fileout_label}.log" />
+	<data name="fileout" format="vcf" label="Plink filtered VCF"/>
+	<data name="filelog" format="txt" label="Plink logfile" />
     </outputs>
     
-    
-    <!-- [OPTIONAL] Tests to be run manually by the Galaxy admin -->
-    <tests>
-        <!-- [HELP] Test files have to be in the ~/test-data directory -->
-        <test>
-         <param name="input" value="sample.vcf" />
-         <param name="chromosomes" value="chr1" />
-         <param name="export" value="VCF" />
-         <param name="frequency" value="0.001" />
-         <param name="max_freq" value="0.5" />
-         <param name="allow_missing" value="1" />
-         <param name="nb_alleles_min" value="2" />
-	<param name="nb_alleles_max" value="4" />
-         <param name="type_p" value="ALL" />
-         <param name="bound_start" value="1" />
-         <param name="bound_end" value="100000000" />
-         <output name="fileout" file="filter-result.vcf" />
-        </test>
-	<test>
-         <param name="input" value="sample.vcf" />
-         <param name="export" value="plink" />
-         <param name="type_p" value="SNP" />
-         <output name="fileout" file="filter-result.ped" />
-	  <output name="fileout_map" file="filter-result.map" />
-        </test>
-	<test>
-         <param name="input" value="sample.vcf" />
-         <param name="export" value="freq" />
-         <param name="type_p" value="ALL" />
-         <output name="fileout" file="filter-result.frq" />
-        </test>
-    </tests>
     
     <!-- [OPTIONAL] Help displayed in Galaxy -->
     <help>
@@ -126,160 +70,12 @@
 
 .. class:: infomark
 
-**Galaxy integration** Andres Gwendoline, Institut Français de Bioinformatique.
+**Galaxy integration** Dereeper Alexis (IRD), Andres Gwendoline (Institut Français de Bioinformatique).
 
 .. class:: infomark
 
 **Support** For any questions about Galaxy integration, please send an e-mail to support.abims@sb-roscoff.fr
 
----------------------------------------------------
-
-
-
-================
-VCF tools filter
-================
-
------------
-Description
------------
-
-  | Filter VCF file 
-  | For further informations on plink, please visite the plink2 website_.
-
-.. _website: https://www.cog-genomics.org/plink2
-
------------------
-Workflow position
------------------
-
-**Upstream tools**
-
-=========== ========================== =======
-Name            output file(s)         format 
-=========== ========================== =======
-=========== ========================== =======
-
-
-**Downstream tools**
-
-=========== ========================== =======
-Name            output file(s)         format
-=========== ========================== =======
-=========== ========================== =======
-
-
-----------
-Input file
-----------
-
-VCF file
-	VCF file with all SNPs
-
-----------
-Parameters
-----------
-
-Output file basename
-	Prefix for the output VCF file
-
-Samples
-        Samples to be analyzed. Comma separated list
-
-Chromosomes
-	Chromosomes to be analyzed. Comma separated list
-
-Output format
-	VCF/freq/plink
-
-Minimum MAF
-	Minimum frequency
-
-Maximum MAF
-	Maximum frequency
-
-Missing data proportion
-	Allowed missing data proportion per site. Must be comprised between 0 and 1.
-
-Number of alleles
-	Accepted number of alleles min and max.
-
-Polymorphisms
-	Type of polymorphisms to keep (ALL/SNP/INDEL).
-Bounds
-	Lower bound and upper bound for a range of sites to be processed.
-
-------------
-Output files
-------------
-
-VCF file
-	VCF file filtered 
-
-Log file
-
----------------------------------------------------
-
----------------
-Working example
----------------
-
-Input files
-===========
-
-VCF file
----------
-
-::
-
-	#fileformat=VCFv4.1
-	#FILTER=&lt;ID=LowQual,Description="Low quality">
-	#FORMAT=&lt;ID=AD,Number=.,Type=Integer,Description="Allelic depths for the ref and alt alleles in the order listed">
-	[...]
-	CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	CATB1
-	chr1	2209	.	G	T	213.84	.	AC=2;AF=1.00;AN=2;DP=7;Dels=0.00;FS=0.000;HaplotypeScore=0.0000;MLEAC=2;MLEAF=1.00;MQ=41.50;MQ0=0;QD=30.55;EFF=DOWNSTREAM(MODIFIER||||Cc01g00020|mRNA||GSCOCT00012438001|),UPSTREAM(MODIFIER||||Cc01g00010|mRNA||GSCOCT00012439001|)	GT:AD:DP:GQ:PL	1/1:0,7:7:18:242,18,0
-
-
-Parameters
-==========
-
-Output name -> filtered_chr1
-
-Chromosomes -> chr1
-
-Output format -> VCF
-
-Minimum MAF -> 0.001
-
-Maximum MAF -> 0.5
-
-Missing data proportion -> 1
-
-Number of alleles min -> 2
-
-Number of alleles max -> 4
-
-Polymorphisms -> All
-
-Lower bound -> 1
-
-Upper bound -> 100000000
-
-
-Output files
-============
-
-filtered_genelist_intron.vcf
-----------------------------
-
-::
-
-        #fileformat=VCFv4.1
-        #FILTER=&lt;ID=LowQual,Description="Low quality"&gt;
-        #FORMAT=&lt;ID=AD,Number=.,Type=Integer,Description="Allelic depths for the ref and alt alleles in the order listed">
-        [...]
-        CHROM   POS     ID      REF     ALT     QUAL    FILTER  INFO    FORMAT  CATB1
-	chr1	5059	.	C	G	146.84	.	AC=2;AF=1.00;AN=2;DP=8;Dels=0.00;FS=0.000;HaplotypeScore=0.0000;MLEAC=2;MLEAF=1.00;MQ=24.14;MQ0=1;QD=18.35;EFF=INTRON(MODIFIER||||Cc01g00020|mRNA||GSCOCT00012438001|),UPSTREAM(MODIFIER||||Cc01g00010|mRNA||GSCOCT00012439001|)	GT:AD:DP:GQ:PL	1/1:0,8:8:18:175,18,0
 
 
     </help>
