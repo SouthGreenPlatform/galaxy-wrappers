@@ -1,0 +1,21 @@
+#This is a sample file distributed with Galaxy that is used to define a
+#list of protein BLAST databases, using three columns tab separated
+#(longer whitespace are TAB characters):
+#
+#<unique_id>      <database_caption>     <base_name_path> 
+#
+nr	NCBI NR (non redundant)	/bank/biomaj/nr/current/flat/nr
+nr Virus	NBCI NR (Virus)	/bank/biomaj/nr_vir/current/blast/nr_vir 
+#TrEMBL	UniProt TrEMBL	/bank/uniprot/taxo-33090_review-no_201303.faa
+#SwissProt	UniProt SwissProt	/bank/uniprot/taxo33090_review_yes.faa
+TrEMBL	UniProt TrEMBL	/bank/uniprot/uniprot-trembl_taxonomy33090_20160713.faa
+SwissProt	UniProt SwissProt	/bank/uniprot/uniprot-swissprot_taxonomy33090_20160713.faa
+PDB	RCSB Protein Data Bank	/bank/pdb/pdb_seqres.faa
+ORYSJ	Rice MSU v7.0	/bank/oryza_sativa_japonica/MSU7_pep_20111031
+SORBI	Sorghum Phytozome79	/bank/sorghum_bicolor/Sbicolor_79_peptide.fa
+ARATH	Arabidopsis thaliana	/bank/arabidopsis_thaliana/TAIR10_pep_20110103_representative_gene_model
+MAIZE	Zea maize	/bank/zea_maize/ZmB73_5b_FGS_translations.fasta
+BRADI	Brachypodium distachyon	/bank/brachypodium_distachyon/Bdistachyon_192_peptide.fa
+THECC	Theobroma cacao	/bank/theobroma_cacao/TC_pep_tot.faa
+SOLLC	Solanum lycopersicum	/bank/solanum_lycopersicum/ITAG2.3_pep_2011-04-26.faa
+VIVTI	Vitis vinifera	/bank/vitis_vinifera/V1_prot.fa
