@@ -1,0 +1,12 @@
+<tables>
+    <!-- Locations of PLINK file -->
+    <table name="plink" comment_char="#">
+        <columns>value, dbkey, path</columns>
+        <file path="tool-data/plink.loc" />
+    </table>
+    <!-- Locations of subpopulation file -->
+    <table name="subpopulation" comment_char="#">
+        <columns>dbkey, path</columns>
+        <file path="tool-data/subpopulations.loc" />
+    </table>
+</tables>

@@ -1,6 +1,15 @@
 <tool id="rave" name="RAVE" version="1.0">
 	<description>- Rapid Allelic Variant Extractor</description>
+    <!-- Required for the tool to work -->
   	<!-- Wrapper compatible with Plink v1.90b3k --> 
+    <requirements>
+        <requirement type="binary">perl</requirement>
+        <requirement type="package" version="1.90">plink</requirement>
+    </requirements>
+	<stdio>
+        <!-- [HELP] If no exit code rule is defined, the tool will stop if anything is written to STDERR -->
+        <exit_code range="1:" level="fatal" />
+    </stdio> 
     <command  interpreter="perl">./rave.pl  
 		--tool_directory $__tool_directory__
         --bfile ${snpdb.fields.path}
@@ -26,14 +35,12 @@
 		--output_format $output_format  
 		--out $plink_output
   	</command>
-
   	<inputs> 
         <param name="snpdb" type="select" label="Select SNP DB" help="If your genome of interest is not listed, contact us">
-			<options from_file="SouthGreen/plink.loc">
-				<column name="value" index="0"/>
-				<column name="name" index="1"/>
-				<column name="path" index="2"/>
-			</options>
+			<options from_data_table="plink">
+				<filter type="sort_by" column="1"/>
+				<validator type="no_options" message="No indexes are available for the selected input dataset"/>
+			</options> 
         </param> 
 		<param name="maf" type="float" value="0.01" label="Minor allele frequencies" help="--maf filters out all variants with minor allele frequency below the provided threshold (default 0.01)" />
         <conditional name="filter_var">
@@ -44,10 +51,10 @@
             <when value="no"/>
             <when value="yes">
                 <param name="population_select" type="select" display="radio" label="Subpopulation"> 
-                    <options from_file="SouthGreen/subpopulations.loc">
-						<column name="value" index="0"/>
-						<column name="path" index="1"/>  
-                    </options>
+					<options from_data_table="subpopulation">
+						<filter type="sort_by" column="1"/>
+						<validator type="no_options" message="No indexes are available for the selected input dataset"/>
+					</options> 
                 </param>
 			</when>
         </conditional>
@@ -126,6 +133,14 @@ PLINK2
 Majority of information in this page is derived from an excellent PLINK_ manual written by  Shaun Purcell, Christopher Chang.
 
 .. _PLINK: https://www.cog-genomics.org/plink2
+
+.. class:: infomark
+
+**Galaxy integration** Droc Gaetan (CIRAD), Ruiz Manuel (CIRAD).
+
+.. class:: infomark
+
+**Support** For any questions about Galaxy integration, please send an e-mail to southgreen@cirad.fr
 
 
 -------
