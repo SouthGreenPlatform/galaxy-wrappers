@@ -114,14 +114,6 @@
 		<!--output.recode.strct_in-->
   	</outputs>
   	<help>
-  
-  .. class:: infomark
-
-**Program encapsulated in Galaxy by South Green**
-
-.. class:: infomark 
-
------
 
 ==========
  Overview
@@ -132,19 +124,20 @@
 PLINK2 
 Majority of information in this page is derived from an excellent PLINK_ manual written by  Shaun Purcell, Christopher Chang.
 
-.. _PLINK: https://www.cog-genomics.org/plink2
+  .. _PLINK: https://www.cog-genomics.org/plink2
 
-.. class:: infomark
+  .. class:: infomark
 
 **Galaxy integration** Droc Gaetan (CIRAD), Ruiz Manuel (CIRAD).
 
-.. class:: infomark
+  .. class:: infomark
 
 **Support** For any questions about Galaxy integration, please send an e-mail to southgreen@cirad.fr
 
+  .. class:: infomark
 
--------
-	
+**Program encapsulated in Galaxy by South Green**
+
 	</help>
     <citations>
 		<citation type="doi">10.1186/s13742-015-0047-8</citation>
