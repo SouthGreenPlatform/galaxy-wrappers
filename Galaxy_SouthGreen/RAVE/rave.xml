@@ -12,7 +12,7 @@
     </stdio> 
     <command  interpreter="perl">./rave.pl  
 		--tool_directory $__tool_directory__
-        --bfile ${snpdb.fields.path}
+        --bfile ${plinkdb.fields.path}
         #if $filter_var.subpopulation == 'yes':
 			--keep ${filter_var.population_select.fields.path}
         #end if
@@ -36,7 +36,7 @@
 		--out $plink_output
   	</command>
   	<inputs> 
-        <param name="snpdb" type="select" label="Select SNP DB" help="If your genome of interest is not listed, contact us">
+        <param name="plinkdb" type="select" label="Select plink DB" help="If your dataset of interest is not listed, contact us">
 			<options from_data_table="plink">
 				<filter type="sort_by" column="1"/>
 				<validator type="no_options" message="No indexes are available for the selected input dataset"/>
@@ -124,17 +124,27 @@
 PLINK2 
 Majority of information in this page is derived from an excellent PLINK_ manual written by  Shaun Purcell, Christopher Chang.
 
-  .. _PLINK: https://www.cog-genomics.org/plink2
+.. _PLINK: https://www.cog-genomics.org/plink2
+  
+**Input formats**
 
-  .. class:: infomark
+Plink binary file (bed/bim/fam)
+ 
+Example : Plink binary for High Density Rice Array (HDRA, 700k SNPs, McCouch SR et al. Nat Commun 7, 10532)
+
+See Plink genotype data bundle available at https://ricediversity.org/data/
+
+-----
+
+.. class:: infomark
 
 **Galaxy integration** Droc Gaetan (CIRAD), Ruiz Manuel (CIRAD).
 
-  .. class:: infomark
+.. class:: infomark
 
 **Support** For any questions about Galaxy integration, please send an e-mail to southgreen@cirad.fr
 
-  .. class:: infomark
+.. class:: infomark
 
 **Program encapsulated in Galaxy by South Green**
 
