@@ -12,9 +12,9 @@ my $help;
 my $tbi;
 my $bgzip; 
 my $output_tbi;
-my $html;
 my $host = "salanque.cirad.fr";
 my $user = "galaxy";
+my $json = "template.json";
 my $scp = Net::SCP->new($host);
 $scp->login($user);
 #my $ssh = Net::SSH::Perl->new($host);
@@ -23,8 +23,7 @@ GetOptions(
     'vcffile=s'       => \$vcffile, 
     'tool_directory=s'=> \$tool_directory, 
     'bgzip=s'         => \$bgzip,
-    'tbi=s'           => \$tbi,
-    'html=s'          => \$html,
+    'tbi=s'           => \$tbi, 
     'help|h|?'        => \$help
 ) ;
 # --threads $threads
@@ -36,31 +35,18 @@ else {
     $tabix_cmd = "source " . $tool_directory. "/module_vcf2jbrowse.sh; bgzip ". $vcffile ." ; tabix -p vcf ". $vcffile .".gz";
 }
 
-
+system("sed  s:FILE:tmp/galaxy$$.vcf.gz: > variants.json")
 system($tabix_cmd);
 my $file_gz = "galaxy$$.vcf.gz";
 my $file_tbi = "galaxy$$.vcf.gz.tbi";
 
-system("scp ". $vcffile.".gz.tbi ". $user ."@". $host.":/opt/projects/jbrowse.southgreen.fr/prod/jbrowse/oryza_sativa_japonica_v7/tmp/" .$file_tbi);
-print "scp ". $vcffile.".gz.tbi ". $user ."@". $host.":/opt/projects/jbrowse.southgreen.fr/prod/jbrowse/oryza_sativa_japonica_v7/tmp/" .$file_tbi ,"\n";
+system("scp ". $vcffile.".gz.tbi ". $user ."@". $host.":/opt/projects/jbrowse.southgreen.fr/prod/jbrowse/oryza_sativa_japonica_v7/tmp/" .$file_tbi); 
 system("scp ". $vcffile.".gz ". $user ."@". $host.":/opt/projects/jbrowse.southgreen.fr/prod/jbrowse/oryza_sativa_japonica_v7/tmp/". $file_gz);
- 
+system("scp variants.json ". $user ."@". $host.":/opt/projects/jbrowse.southgreen.fr/prod/jbrowse/oryza_sativa_japonica_v7/");
+
 system("mv ". $vcffile.".gz.tbi " .$tbi);
 system("mv ". $vcffile.".gz ". $bgzip);
 
-my $jbrowse = " <html>
-   <head>
-     <title>JBrowse Embedded</title>
-   </head>
-   <body>
-     <h1>Embedded Volvox JBrowse</h1>
-     <div>
-       <iframe src=\"http://jbrowse.southgreen.fr/?data=oryza_sativa_japonica_v7\" width=\"100%\" height=\"600\">
-       </iframe>
-     </div>
-   </body>
- </html>
-";
-open(HTML,">$html");
-print HTML $jbrowse;
-close HTML; 
+ 
+
+

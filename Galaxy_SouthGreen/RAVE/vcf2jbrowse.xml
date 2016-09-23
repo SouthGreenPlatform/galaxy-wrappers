@@ -6,15 +6,13 @@
 	--tool_directory $__tool_directory__ 
 	--vcf $vcffile 
 	--bgzip $output_bgzip
-	--tbi $output_tbi
-	--html $jbrowse
+	--tbi $output_tbi 
   	</command>
 
   	<inputs>  
 		<param name="vcffile" format="vcf" type="data" label="VCF file" /> 
 	</inputs>
-	<outputs> 
-        <data format="html" name="jbrowse" label="JBrowse"   /> 
+	<outputs>  
         <data format="txt" name="output_tbi" label="tbi file" from_work_dir="jbrowse.vcf.gz.tbi" /> 
         <data format="txt" name="output_bgzip" label="bgzip file" from_work_dir="jbrowse.vcf.gz" /> 
   	</outputs>
@@ -25,8 +23,7 @@
 **Program encapsulated in Galaxy by South Green**
 
 .. class:: infomark 
-
------
+ 
  
 	</help> 
 </tool>
