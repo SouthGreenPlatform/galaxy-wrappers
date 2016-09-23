@@ -1,0 +1,43 @@
+<tool id="vcf2jbrowse" name="vcf2jbrowse" version="1.0">
+	<description>- View VCF on Jbrowse</description>
+  	<!-- Wrapper compatible with vcf2fasta --> 
+    <command> 
+	$__tool_directory__/vcf2jbrowse.pl
+	--tool_directory $__tool_directory__ 
+	--vcf $vcffile 
+	--output $output
+	--bgzip $__app__.security.encode_id( '%s' % $output_bgzip.id )
+	--tbi $__app__.security.encode_id( '%s' % $output_tbi.id )
+	--output_bgzip $output_bgzip
+	--output_tbi $output_tbi
+  	</command>
+
+  	<inputs>  
+		<param name="vcffile" format="vcf" type="data" label="VCF file" /> 
+	</inputs>
+	<outputs>
+        <data format="html" name="output" label="HTML file" /> 
+        <data format="txt" name="output_tbi" label="tbi file" from_work_dir="jbrowse.vcf.gz.tbi" /> 
+        <data format="txt" name="output_bgzip" label="bgzip file" from_work_dir="jbrowse.vcf.gz" /> 
+  	</outputs>
+  	<help>
+  
+  .. class:: infomark
+
+**Program encapsulated in Galaxy by South Green**
+
+.. class:: infomark 
+
+-----
+
+==========
+ Overview
+==========
+
+For each VCF record, extract the flanking sequences, and write them as FASTA
+records suitable for alignment.  This tool is intended for use in designing validation
+experiments.
+	
+	</help> 
+</tool>
+ 
