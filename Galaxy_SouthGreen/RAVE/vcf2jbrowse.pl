@@ -35,7 +35,7 @@ else {
     $tabix_cmd = "source " . $tool_directory. "/module_vcf2jbrowse.sh; bgzip ". $vcffile ." ; tabix -p vcf ". $vcffile .".gz";
 }
 
-system("sed  s:FILE:tmp/galaxy$$.vcf.gz: > variants.json")
+system("sed  s:FILE:tmp/galaxy$$.vcf.gz: > variants.json");
 system($tabix_cmd);
 my $file_gz = "galaxy$$.vcf.gz";
 my $file_tbi = "galaxy$$.vcf.gz.tbi";
