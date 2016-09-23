@@ -62,5 +62,5 @@ my $jbrowse = " <html>
  </html>
 ";
 open(HTML,">$html");
-print HTML $html;
+print HTML $jbrowse;
 close HTML; 
