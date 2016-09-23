@@ -99,7 +99,12 @@ if ($locus ne "" && $locus ne "None") {
 }
 
 if ($output_format eq "vcf") {
-    $plink_cmd .= " --recode vcf-iid --out $out; mv $out.vcf $out";
+    if ($bfile =~ /HDRA/) {
+        $plink_cmd .= " --recode vcf-iid --out $out; sed -i 's/B\tA/G\tA/g' $out.vcf; sed -i 's/A\tB/A\tG/g' $out.vcf;sed -i 's/B\t\./G\t\./g' $out.vcf; sed -i 's/\.\tB/\.\tG/g' $out.vcf; mv $out.vcf $out";
+    }
+    else {
+        $plink_cmd .= " --recode vcf-iid --out $out; mv $out.vcf $out";
+    }
 }
 elsif ($output_format eq "bgz") {
     $plink_cmd .= " --recode vcf-iid bgz --out $out;mv $out.vcf.gz $out";   
