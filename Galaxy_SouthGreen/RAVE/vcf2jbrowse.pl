@@ -10,25 +10,19 @@ my $vcffile;
 my $tool_directory; 
 my $help; 
 my $tbi;
-my $bgzip;
-my $output;
-my $output_bgzip;
-my $output_tbi;
-my $organism;
+my $bgzip; 
+my $output_tbi; 
 my $host = "salanque.cirad.fr";
 my $user = "galaxy";
 my $scp = Net::SCP->new($host);
 $scp->login($user);
-my $ssh = Net::SSH::Perl->new($host);
-$ssh->login($user) or die;
+#my $ssh = Net::SSH::Perl->new($host);
+#$ssh->login($user) or die;
 GetOptions(
     'vcffile=s'       => \$vcffile, 
-    'tool_directory=s'=> \$tool_directory,
-    'organism=s'      => \$organism, 
+    'tool_directory=s'=> \$tool_directory, 
     'bgzip=s'         => \$bgzip,
-    'tbi=s'           => \$tbi, 
-    'output_bgzip=s'  => \$output_bgzip,
-    'output_tbi=s'    => \$output_tbi, 
+    'tbi=s'           => \$tbi,  
     'help|h|?'        => \$help
 ) ;
 # --threads $threads
@@ -42,14 +36,14 @@ else {
 
 
 system($tabix_cmd);
-my $file_gz = "/opt/projects/jbrowse.southgreen.fr/prod/jbrowse/oryza_sativa_japonica_v7/tmp/galaxy$$.vcf.gz";
-my $file_tbi = "/opt/projects/jbrowse.southgreen.fr/prod/jbrowse/oryza_sativa_japonica_v7/tmp/galaxy$$.vcf.gz.tbi";
+my $file_gz = "galaxy$$.vcf.gz";
+my $file_tbi = "galaxy$$.vcf.gz.tbi";
 
-
-$scp->scp($vcffile.".gz ", $file_gz);
-$scp->scp($vcffile.".gz.tbi ", $file_tbi);
-system("mv ". $vcffile.".gz.tbi " .$output_tbi);
-system("mv ". $vcffile.".gz ". $output_bgzip);
+system("scp ". $vcffile.".gz.tbi ". $user ."@". $host.":/opt/projects/jbrowse.southgreen.fr/prod/jbrowse/oryza_sativa_japonica_v7/tmp" .$file_tbi);
+system("scp ". $vcffile.".gz ". $user ."@". $host.":/opt/projects/jbrowse.southgreen.fr/prod/jbrowse/oryza_sativa_japonica_v7/tmp". $file_gz);
+ 
+system("mv ". $vcffile.".gz.tbi " .$tbi);
+system("mv ". $vcffile.".gz ". $bgzip);
 
 
 
