@@ -11,7 +11,8 @@ my $tool_directory;
 my $help; 
 my $tbi;
 my $bgzip; 
-my $output_tbi; 
+my $output_tbi;
+my $html;
 my $host = "salanque.cirad.fr";
 my $user = "galaxy";
 my $scp = Net::SCP->new($host);
@@ -22,7 +23,8 @@ GetOptions(
     'vcffile=s'       => \$vcffile, 
     'tool_directory=s'=> \$tool_directory, 
     'bgzip=s'         => \$bgzip,
-    'tbi=s'           => \$tbi,  
+    'tbi=s'           => \$tbi,
+    'html=s'          => \$html,
     'help|h|?'        => \$help
 ) ;
 # --threads $threads
@@ -46,8 +48,19 @@ system("scp ". $vcffile.".gz ". $user ."@". $host.":/opt/projects/jbrowse.southg
 system("mv ". $vcffile.".gz.tbi " .$tbi);
 system("mv ". $vcffile.".gz ". $bgzip);
 
-
-
-#my $cmd = "/share/apps/bin/fgenesh  /share/apps/share/fgenesh/$models -scip_prom -scip_term $name"; 
-#$ssh->cmd($cmd_clean);
-
+my $jbrowse = " <html>
+   <head>
+     <title>JBrowse Embedded</title>
+   </head>
+   <body>
+     <h1>Embedded Volvox JBrowse</h1>
+     <div>
+       <iframe src=\"http://jbrowse.southgreen.fr/index.html/?data=oryza_sativa_japonica_v7\" width=\"100%\" height=\"600\">
+       </iframe>
+     </div>
+   </body>
+ </html>
+";
+open(HTML,">$html");
+print HTML $html;
+close HTML; 
