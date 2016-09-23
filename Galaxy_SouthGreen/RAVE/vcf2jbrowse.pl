@@ -55,7 +55,7 @@ my $jbrowse = " <html>
    <body>
      <h1>Embedded Volvox JBrowse</h1>
      <div>
-       <iframe src=\"http://jbrowse.southgreen.fr/index.html/?data=oryza_sativa_japonica_v7\" width=\"100%\" height=\"600\">
+       <iframe src=\"http://jbrowse.southgreen.fr/?data=oryza_sativa_japonica_v7\" width=\"100%\" height=\"600\">
        </iframe>
      </div>
    </body>
