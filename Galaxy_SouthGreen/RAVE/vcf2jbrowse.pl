@@ -35,14 +35,14 @@ else {
     $tabix_cmd = "source " . $tool_directory. "/module_vcf2jbrowse.sh; bgzip ". $vcffile ." ; tabix -p vcf ". $vcffile .".gz";
 }
 
-system("sed  s:FILE:tmp/galaxy$$.vcf.gz: $json > variants.json");
+system("sed  s:FILE:tmp/galaxy$$.vcf.gz: ".$tool_directory."/template.json > ".$tool_directory."/variants.json");
 system($tabix_cmd);
 my $file_gz = "galaxy$$.vcf.gz";
 my $file_tbi = "galaxy$$.vcf.gz.tbi";
 
 system("scp ". $vcffile.".gz.tbi ". $user ."@". $host.":/opt/projects/jbrowse.southgreen.fr/prod/jbrowse/oryza_sativa_japonica_v7/tmp/" .$file_tbi); 
 system("scp ". $vcffile.".gz ". $user ."@". $host.":/opt/projects/jbrowse.southgreen.fr/prod/jbrowse/oryza_sativa_japonica_v7/tmp/". $file_gz);
-system("scp variants.json ". $user ."@". $host.":/opt/projects/jbrowse.southgreen.fr/prod/jbrowse/oryza_sativa_japonica_v7/");
+system("scp ".$tool_directory."/variants.json ". $user ."@". $host.":/opt/projects/jbrowse.southgreen.fr/prod/jbrowse/oryza_sativa_japonica_v7/");
 
 system("mv ". $vcffile.".gz.tbi " .$tbi);
 system("mv ". $vcffile.".gz ". $bgzip);
