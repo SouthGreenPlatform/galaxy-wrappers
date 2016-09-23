@@ -27,9 +27,9 @@ GetOptions(
     'recode=s'            => \$recode,
     'extract=s{1,}'       => \$extract,
     'keep=s{1,}'          => \$keep,
-    'variety_list=s'          => \$variety_list,
-    'location_list=s'          => \$location_list,
-    'locus_list=s'          => \$locus_list,
+    'variety_list=s'      => \$variety_list,
+    'location_list=s'     => \$location_list,
+    'locus_list=s'        => \$locus_list,
     'missing'             => \$missing,
     'locus=s'             => \$locus,
     'out=s'               => \$out,
@@ -48,7 +48,10 @@ if ($extract ne "" && $extract ne "None") {
 if ($variety_list ne "" && $variety_list ne "None") {
     my ($fh, $filename) = tempfile();
     my @variety = (split(/\_\_cn\_\_/,$variety_list));
-    print $fh join("\n",@variety),"\n";
+    foreach my $variety (@variety) {
+        print $fh join(" ",$variety,$variety) ,"\n";
+    }
+    #print $fh join("\n",@variety),"\n";
     $plink_cmd .= " --keep $filename";
 }
 if ($location_list ne ""  && $location_list ne "None") {
@@ -84,7 +87,6 @@ if ($locus ne "" && $locus ne "None") {
         chomp;
         next if $_ eq "";
         my $command = `grep $_ $locus_file`;
-        #print $command ,"\n";
         chomp($command); 
         $command =~s/\r//g;
         $command =~s/\n//g;
@@ -111,7 +113,5 @@ elsif ($output_format eq "fastphase") {
 elsif ($output_format eq "structure") {
     $plink_cmd .= " --recode structure --out $out;mv $out.recode.strct_in $out";  
 }
-
-#print $plink_cmd ,"\n";
 
 system($plink_cmd);

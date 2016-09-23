@@ -12,7 +12,7 @@
     </stdio> 
     <command  interpreter="perl">./rave.pl  
 		--tool_directory $__tool_directory__
-        --bfile ${plinkdb.fields.path}
+        --bfile ${snpdb.fields.path}
         #if $filter_var.subpopulation == 'yes':
 			--keep ${filter_var.population_select.fields.path}
         #end if
@@ -36,11 +36,12 @@
 		--out $plink_output
   	</command>
   	<inputs> 
-        <param name="plinkdb" type="select" label="Select plink DB" help="If your dataset of interest is not listed, contact us">
-			<options from_data_table="plink">
-				<filter type="sort_by" column="1"/>
-				<validator type="no_options" message="No indexes are available for the selected input dataset"/>
-			</options> 
+        <param name="snpdb" type="select" label="Select SNP DB" help="If your genome of interest is not listed, contact us">
+			<options from_file="SouthGreen/plink.loc">
+				<column name="value" index="0"/>
+				<column name="name" index="1"/>
+				<column name="path" index="2"/>
+			</options>
         </param> 
 		<param name="maf" type="float" value="0.01" label="Minor allele frequencies" help="--maf filters out all variants with minor allele frequency below the provided threshold (default 0.01)" />
         <conditional name="filter_var">
@@ -51,10 +52,10 @@
             <when value="no"/>
             <when value="yes">
                 <param name="population_select" type="select" display="radio" label="Subpopulation"> 
-					<options from_data_table="subpopulation">
-						<filter type="sort_by" column="1"/>
-						<validator type="no_options" message="No indexes are available for the selected input dataset"/>
-					</options> 
+                    <options from_file="SouthGreen/subpopulations.loc">
+						<column name="value" index="0"/>
+						<column name="path" index="1"/>  
+                    </options>
                 </param>
 			</when>
         </conditional>
@@ -64,10 +65,10 @@
                 <option value="list">Cut &amp; Paste your list</option>
             </param>
             <when value="file">
-				<param name="variety_file" format="txt" type="data" optional="true"  label="Variety list from file" help="One range per line (i.e : B001)"/>
+				<param name="variety_file" format="txt" type="data" optional="true"  label="Variety list from file" help="One range per line, whitespace-separated (i.e : B001 B001)"/>
             </when>
             <when value="list">
-				<param name="variety_list" type="text" area="True" size="5x15" label="Variety list from area" help="One range per line (i.e : B001)"/>
+				<param name="variety_list" type="text" area="True" size="5x15" label="Variety list from area" help="One range per line, whitespace-separated (i.e : B001 B001)"/>
 			</when>
         </conditional>
 		
@@ -114,6 +115,14 @@
 		<!--output.recode.strct_in-->
   	</outputs>
   	<help>
+  
+  .. class:: infomark
+
+**Program encapsulated in Galaxy by South Green**
+
+.. class:: infomark 
+
+-----
 
 ==========
  Overview
@@ -125,16 +134,6 @@ PLINK2
 Majority of information in this page is derived from an excellent PLINK_ manual written by  Shaun Purcell, Christopher Chang.
 
 .. _PLINK: https://www.cog-genomics.org/plink2
-  
-**Input formats**
-
-Plink binary file (bed/bim/fam)
- 
-Example : Plink binary for High Density Rice Array (HDRA, 700k SNPs, McCouch SR et al. Nat Commun 7, 10532)
-
-See Plink genotype data bundle available at https://ricediversity.org/data/
-
------
 
 .. class:: infomark
 
@@ -144,10 +143,9 @@ See Plink genotype data bundle available at https://ricediversity.org/data/
 
 **Support** For any questions about Galaxy integration, please send an e-mail to southgreen@cirad.fr
 
-.. class:: infomark
 
-**Program encapsulated in Galaxy by South Green**
-
+-------
+	
 	</help>
     <citations>
 		<citation type="doi">10.1186/s13742-015-0047-8</citation>
