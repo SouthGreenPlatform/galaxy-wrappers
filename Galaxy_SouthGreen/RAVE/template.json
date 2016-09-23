@@ -2,10 +2,10 @@
   "tracks": [
     { 
          "type": "MultiVariantViewer/View/Track/Grid",
-         "urlTemplate": FILE,
+         "urlTemplate": "FILE",
          "label":"Galaxy",
          "storeClass": "JBrowse/Store/SeqFeature/VCFTabix",
-         "key" : "SNP",
+         "key" : "Galaxy dataset",
          "showLabels": true,
          "showTooltips" : true,
          "style": {
@@ -22,8 +22,7 @@
             "category" : "7) Galaxy"
          },
          "sublabels": [ 
-      },
-        {
+          {
             "population": "temperate-japonica",
             "name": "86f75d2b.0",
             "color": "#26ABFF"
@@ -7859,4 +7858,6 @@
             "color": "#FF3A1C"
         },
       ],
+},
+],
 }
