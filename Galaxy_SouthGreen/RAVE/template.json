@@ -3,7 +3,7 @@
     { 
          "type": "MultiVariantViewer/View/Track/Grid",
          "urlTemplate": "FILE",
-         "label":"Galaxy",
+         "label":"FILE",
          "storeClass": "JBrowse/Store/SeqFeature/VCFTabix",
          "key" : "FILE",
          "showLabels": true,
