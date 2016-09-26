@@ -2,8 +2,7 @@
  
 use Getopt::Long;
 use lib;
-use Pod::Usage;
-use Net::SSH qw(ssh issh sshopen2 sshopen3);
+use Pod::Usage; 
 use Net::SCP;
 use File::Temp qw/ tempfile tempdir /;
  
@@ -17,12 +16,7 @@ my $host = "salanque.cirad.fr";
 my $user = "galaxydev";
 my $json = "template.json";
 my $scp = Net::SCP->new($host);
-$scp->login($user);
-ssh($user."@".$host ,"ls /opt");
-#my $ssh = Net::SSH::Perl->new($host);
-#$ssh->login($user,"superNOVA") or die;
-
-exit;
+$scp->login($user); 
 GetOptions(
     'vcffile=s'       => \$vcffile, 
     'tool_directory=s'=> \$tool_directory, 
