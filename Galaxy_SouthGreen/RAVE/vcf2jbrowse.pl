@@ -58,6 +58,6 @@ system("scp ".$tool_directory."/trackList.json ". $user ."@". $host.":/opt/proje
 system("bgzip -d ". $vcffile.".gz"); 
 
 open(HTML,">$html");
-print HTML "<html><body><div><a href='http://jbrowse.southgreen.fr/?data=oryza_sativa_japonica_v7&loc=chr01%3A10459..27768&tracks=DNA%2CMSUGeneModels%2CGalaxy&highlight=' target='_blank'>View on Jbrowse</a></div></body></html>";
+print HTML "<html><body><div><a href='http://jbrowse.southgreen.fr/?data=oryza_sativa_japonica_v7&loc=chr01%3A10459..27768&tracks=DNA%2CMSUGeneModels%2Cgalaxy$$&highlight=' target='_blank'>View on Jbrowse</a></div></body></html>";
 close HTML;
 
