@@ -5,7 +5,7 @@
          "urlTemplate": "FILE",
          "label":"Galaxy",
          "storeClass": "JBrowse/Store/SeqFeature/VCFTabix",
-         "key" : "Galaxy dataset",
+         "key" : "TITLE",
          "showLabels": true,
          "showTooltips" : true,
          "style": {

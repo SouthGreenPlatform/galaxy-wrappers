@@ -1,0 +1,44 @@
+=head2 Mon Sep 26 10:15:24 2016: C<Module> L<Net::SSH|Net::SSH>
+
+=over 4
+
+=item *
+
+C<installed into: ../lib//share/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.09>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Mon Sep 26 10:16:32 2016: C<Module> L<Net::SSH|Net::SSH>
+
+=over 4
+
+=item *
+
+C<installed into: ../lib//share/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.09>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+

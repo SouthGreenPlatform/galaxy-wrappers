@@ -1,8 +1,9 @@
 #!/usr/bin/perl
  
 use Getopt::Long;
+use lib;
 use Pod::Usage;
-use Net::SSH::Perl;
+use Net::SSH qw(ssh issh sshopen2 sshopen3);
 use Net::SCP;
 use File::Temp qw/ tempfile tempdir /;
  
@@ -13,12 +14,15 @@ my $tbi;
 my $bgzip; 
 my $output_tbi;
 my $host = "salanque.cirad.fr";
-my $user = "galaxy";
+my $user = "galaxydev";
 my $json = "template.json";
 my $scp = Net::SCP->new($host);
 $scp->login($user);
+ssh($user."@".$host ,"ls /opt");
 #my $ssh = Net::SSH::Perl->new($host);
-#$ssh->login($user) or die;
+#$ssh->login($user,"superNOVA") or die;
+
+exit;
 GetOptions(
     'vcffile=s'       => \$vcffile, 
     'tool_directory=s'=> \$tool_directory, 
@@ -26,6 +30,7 @@ GetOptions(
     'tbi=s'           => \$tbi, 
     'help|h|?'        => \$help
 ) ;
+exit;
 # --threads $threads
 my $tabix_cmd;
 if (-e $vcffile .".gz") {
@@ -34,8 +39,24 @@ if (-e $vcffile .".gz") {
 else {
     $tabix_cmd = "source " . $tool_directory. "/module_vcf2jbrowse.sh; bgzip ". $vcffile ." ; tabix -p vcf ". $vcffile .".gz";
 }
+system("scp ". $user ."@". $host.":/opt/projects/jbrowse.southgreen.fr/prod/jbrowse/oryza_sativa_japonica_v7/trackList.json trackList.json");
 
-system("sed  s:FILE:tmp/galaxy$$.vcf.gz: ".$tool_directory."/template.json > ".$tool_directory."/variants.json");
+my $json;
+{
+    local $/; #Enable 'slurp' mode
+    open my $fh, "<", "trackList.json";
+    $json = <$fh>;
+    close $fh;
+}
+my $data = decode_json($json);
+
+system("sed  s:FILE:tmp/galaxy$$.vcf.gz: ".$tool_directory."/template.json > ".$tool_directory."/galaxy$$.json");
+system("sed  s:TITLE:Galaxy$$ Dataset".$tool_directory."/galaxy$$.json > ".$tool_directory."/galaxy$$.json");
+
+push @{$data->{'include'}} , "galaxy$$.json";
+open my $fh, ">trackList.json";
+print $fh to_json($data,{ utf8 => 1, pretty => 1 });
+close $fh;
 system($tabix_cmd);
 my $file_gz = "galaxy$$.vcf.gz";
 my $file_tbi = "galaxy$$.vcf.gz.tbi";
@@ -43,6 +64,7 @@ my $file_tbi = "galaxy$$.vcf.gz.tbi";
 system("scp ". $vcffile.".gz.tbi ". $user ."@". $host.":/opt/projects/jbrowse.southgreen.fr/prod/jbrowse/oryza_sativa_japonica_v7/tmp/" .$file_tbi); 
 system("scp ". $vcffile.".gz ". $user ."@". $host.":/opt/projects/jbrowse.southgreen.fr/prod/jbrowse/oryza_sativa_japonica_v7/tmp/". $file_gz);
 system("scp ".$tool_directory."/variants.json ". $user ."@". $host.":/opt/projects/jbrowse.southgreen.fr/prod/jbrowse/oryza_sativa_japonica_v7/");
+system("scp ".$tool_directory."/trackList.json ". $user ."@". $host.":/opt/projects/jbrowse.southgreen.fr/prod/jbrowse/oryza_sativa_japonica_v7/");
 
 system("mv ". $vcffile.".gz.tbi " .$tbi);
 system("mv ". $vcffile.".gz ". $bgzip);
