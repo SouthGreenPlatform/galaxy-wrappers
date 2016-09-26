@@ -4,6 +4,10 @@ use Getopt::Long;
 use lib;
 use Pod::Usage; 
 use Net::SCP;
+use JSON;
+binmode STDOUT, ":utf8";
+use utf8;
+#  
 use File::Temp qw/ tempfile tempdir /;
  
 my $vcffile; 
@@ -23,9 +27,7 @@ GetOptions(
     'bgzip=s'         => \$bgzip,
     'tbi=s'           => \$tbi, 
     'help|h|?'        => \$help
-) ;
-exit;
-# --threads $threads
+) ; 
 my $tabix_cmd;
 if (-e $vcffile .".gz") {
     $tabix_cmd = "source " . $tool_directory. "/module_vcf2jbrowse.sh;   tabix -f -p vcf ". $vcffile .".gz";
