@@ -47,7 +47,7 @@ my $json;
 my $data = decode_json($json);
 
 system("sed  s:FILE:tmp/galaxy$$.vcf.gz: ".$tool_directory."/template.json > ".$tool_directory."/galaxy$$.json");
-system("sed  s:TITLE:Galaxy$$ Dataset".$tool_directory."/galaxy$$.json > ".$tool_directory."/galaxy$$.json");
+system("sed  s:TITLE:Galaxy$$ Dataset: ".$tool_directory."/galaxy$$.json > ".$tool_directory."/galaxy$$.json");
 
 push @{$data->{'include'}} , "galaxy$$.json";
 open my $fh, ">trackList.json";
@@ -59,7 +59,7 @@ my $file_tbi = "galaxy$$.vcf.gz.tbi";
 
 system("scp ". $vcffile.".gz.tbi ". $user ."@". $host.":/opt/projects/jbrowse.southgreen.fr/prod/jbrowse/oryza_sativa_japonica_v7/tmp/" .$file_tbi); 
 system("scp ". $vcffile.".gz ". $user ."@". $host.":/opt/projects/jbrowse.southgreen.fr/prod/jbrowse/oryza_sativa_japonica_v7/tmp/". $file_gz);
-system("scp ".$tool_directory."/variants.json ". $user ."@". $host.":/opt/projects/jbrowse.southgreen.fr/prod/jbrowse/oryza_sativa_japonica_v7/");
+system("scp ".$tool_directory."/galaxy$$.json ". $user ."@". $host.":/opt/projects/jbrowse.southgreen.fr/prod/jbrowse/oryza_sativa_japonica_v7/");
 system("scp ".$tool_directory."/trackList.json ". $user ."@". $host.":/opt/projects/jbrowse.southgreen.fr/prod/jbrowse/oryza_sativa_japonica_v7/");
 
 system("mv ". $vcffile.".gz.tbi " .$tbi);
