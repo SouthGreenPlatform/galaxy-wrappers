@@ -17,7 +17,7 @@ my $tbi;
 my $bgzip; 
 my $output_tbi;
 my $host = "salanque.cirad.fr";
-my $user = "galaxydev";
+my $user = "galaxy";
 my $json = "template.json";
 my $scp = Net::SCP->new($host);
 $scp->login($user); 
@@ -35,12 +35,12 @@ if (-e $vcffile .".gz") {
 else {
     $tabix_cmd = "source " . $tool_directory. "/module_vcf2jbrowse.sh; bgzip ". $vcffile ." ; tabix -p vcf ". $vcffile .".gz";
 }
-system("scp ". $user ."@". $host.":/opt/projects/jbrowse.southgreen.fr/prod/jbrowse/oryza_sativa_japonica_v7/trackList.json trackList.json");
+system("scp ". $user ."@". $host.":/opt/projects/jbrowse.southgreen.fr/prod/jbrowse/oryza_sativa_japonica_v7/trackList.json " . $tool_directory."/trackList.json");
 
 my $json;
 {
     local $/; #Enable 'slurp' mode
-    open my $fh, "<", "trackList.json";
+    open my $fh, "<", $tool_directory."/trackList.json";
     $json = <$fh>;
     close $fh;
 }
