@@ -24,19 +24,11 @@ my $scp = Net::SCP->new($host);
 $scp->login($user); 
 GetOptions(
     'vcffile=s'       => \$vcffile, 
-    'tool_directory=s'=> \$tool_directory, 
-    'bgzip=s'         => \$bgzip,
-    'tbi=s'           => \$tbi, 
+    'tool_directory=s'=> \$tool_directory,  
     'html=s'          => \$html, 
     'help|h|?'        => \$help
 ) ; 
-my $tabix_cmd;
-if (-e $vcffile .".gz") {
-    $tabix_cmd = "source " . $tool_directory. "/module_vcf2jbrowse.sh;   tabix -f -p vcf ". $vcffile .".gz";
-}
-else {
-    $tabix_cmd = "source " . $tool_directory. "/module_vcf2jbrowse.sh; bgzip ". $vcffile ." ; tabix -p vcf ". $vcffile .".gz";
-}
+my $tabix_cmd = "source " . $tool_directory. "/module_vcf2jbrowse.sh; bgzip ". $vcffile ." ; tabix -p vcf ". $vcffile .".gz";
 system("scp ". $user ."@". $host.":/opt/projects/jbrowse.southgreen.fr/prod/jbrowse/oryza_sativa_japonica_v7/trackList.json " . $tool_directory."/trackList.json");
 
 my $json;
@@ -63,8 +55,7 @@ system("scp ". $vcffile.".gz ". $user ."@". $host.":/opt/projects/jbrowse.southg
 system("scp ".$tool_directory."/galaxy$$.json ". $user ."@". $host.":/opt/projects/jbrowse.southgreen.fr/prod/jbrowse/oryza_sativa_japonica_v7/");
 system("scp ".$tool_directory."/trackList.json ". $user ."@". $host.":/opt/projects/jbrowse.southgreen.fr/prod/jbrowse/oryza_sativa_japonica_v7/");
 
-system("mv ". $vcffile.".gz.tbi " .$tbi);
-system("mv ". $vcffile.".gz ". $bgzip);
+system("bgzip -d ". $vcffile.".gz"); 
 
 open(HTML,">$html");
 print HTML "<html><body><div><a href='http://jbrowse.southgreen.fr/?data=oryza_sativa_japonica_v7&loc=chr01%3A10459..27768&tracks=DNA%2CMSUGeneModels%2CGalaxy&highlight=' target='_blank'>View on Jbrowse</a></div></body></html>";

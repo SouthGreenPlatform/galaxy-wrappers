@@ -4,9 +4,7 @@
     <command> 
 	$__tool_directory__/vcf2jbrowse.pl
 	--tool_directory $__tool_directory__ 
-	--vcf $vcffile 
-	--bgzip $output_bgzip
-	--tbi $output_tbi
+	--vcf $vcffile  
 	--html $html
   	</command>
 
@@ -14,9 +12,7 @@
 		<param name="vcffile" format="vcf" type="data" label="VCF file" /> 
 	</inputs>
 	<outputs>  
-        <data format="html" name="html" label="HTML file"  /> 
-        <data format="txt" name="output_tbi" label="tbi file" from_work_dir="jbrowse.vcf.gz.tbi" /> 
-        <data format="txt" name="output_bgzip" label="bgzip file" from_work_dir="jbrowse.vcf.gz" /> 
+        <data format="html" name="html" label="HTML file"  />  
   	</outputs>
   	<help>
   
