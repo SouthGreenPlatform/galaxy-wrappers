@@ -46,8 +46,7 @@ my $json;
 }
 my $data = decode_json($json);
 
-system("sed  s:FILE:tmp/galaxy$$.vcf.gz: ".$tool_directory."/template.json > ".$tool_directory."/galaxy$$.json");
-system("sed  s:TITLE:Galaxy$$ Dataset: ".$tool_directory."/galaxy$$.json > ".$tool_directory."/galaxy$$.json");
+system("sed  s:FILE:tmp/galaxy$$.vcf.gz:g ".$tool_directory."/template.json > ".$tool_directory."/galaxy$$.json"); 
 
 push @{$data->{'include'}} , "galaxy$$.json";
 open my $fh, ">trackList.json";
