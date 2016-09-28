@@ -12,16 +12,14 @@
 		<param name="vcffile" format="vcf" type="data" label="VCF file" /> 
 	</inputs>
 	<outputs>  
-        <data format="html" name="html" label="HTML file"  />  
+        <data format="html" name="html" label="View on Jbrowse"  />  
   	</outputs>
   	<help>
   
   .. class:: infomark
 
 **Program encapsulated in Galaxy by South Green**
-
-.. class:: infomark 
- 
+  
 	</help> 
 </tool>
  

@@ -66,6 +66,6 @@ system("scp ".$tool_directory."/trackList.json ". $user ."@". $host.":/opt/proje
 system("rm  ".$tool_directory."/trackList.json ".$tool_directory."/galaxy$$.json ".$file_vcf.".gz ".$file_vcf.".gz.tbi ");
 
 open(HTML,">$html");
-print HTML "<html><body><div><a href='http://jbrowse.southgreen.fr/?data=oryza_sativa_japonica_v7&".$location."&tracks=DNA%2CMSUGeneModels%2Ctmp%2fgalaxy$$.vcf.gz&highlight=' target='_blank'>View on Jbrowse</a></div></body></html>";
+print HTML "<html><body><div><a href='http://jbrowse.southgreen.fr/?data=oryza_sativa_japonica_v7&loc=".$location."&tracks=DNA%2CMSUGeneModels%2Ctmp%2fgalaxy$$.vcf.gz&highlight=' target='_blank'>View on Jbrowse</a></div></body></html>";
 close HTML;
 
