@@ -27,8 +27,10 @@ GetOptions(
     'tool_directory=s'=> \$tool_directory,  
     'html=s'          => \$html, 
     'help|h|?'        => \$help
-) ; 
-my $tabix_cmd = "source " . $tool_directory. "/module_vcf2jbrowse.sh; bgzip ". $vcffile ." ; tabix -p vcf ". $vcffile .".gz";
+) ;
+my $file_vcf = $tool_directory ."/galaxy$$.vcf";
+#my $tabix_cmd = "source " . $tool_directory. "/module_vcf2jbrowse.sh; bgzip ". $vcffile ."; tabix -p vcf ". $vcffile .".gz";
+my $tabix_cmd = "source " . $tool_directory. "/module_vcf2jbrowse.sh; cp ". $vcffile ." " . $file_vcf ."; bgzip ". $file_vcf ." ; tabix -p vcf ". $file_vcf .".gz";
 system("scp ". $user ."@". $host.":/opt/projects/jbrowse.southgreen.fr/prod/jbrowse/oryza_sativa_japonica_v7/trackList.json " . $tool_directory."/trackList.json");
 
 my $json;
@@ -50,12 +52,11 @@ system($tabix_cmd);
 my $file_gz = "galaxy$$.vcf.gz";
 my $file_tbi = "galaxy$$.vcf.gz.tbi";
 
-system("scp ". $vcffile.".gz.tbi ". $user ."@". $host.":/opt/projects/jbrowse.southgreen.fr/prod/jbrowse/oryza_sativa_japonica_v7/tmp/" .$file_tbi); 
-system("scp ". $vcffile.".gz ". $user ."@". $host.":/opt/projects/jbrowse.southgreen.fr/prod/jbrowse/oryza_sativa_japonica_v7/tmp/". $file_gz);
+system("scp ". $file_vcf.".gz.tbi ". $user ."@". $host.":/opt/projects/jbrowse.southgreen.fr/prod/jbrowse/oryza_sativa_japonica_v7/tmp/" .$file_tbi); 
+system("scp ". $file_vcf.".gz ". $user ."@". $host.":/opt/projects/jbrowse.southgreen.fr/prod/jbrowse/oryza_sativa_japonica_v7/tmp/". $file_gz);
 system("scp ".$tool_directory."/galaxy$$.json ". $user ."@". $host.":/opt/projects/jbrowse.southgreen.fr/prod/jbrowse/oryza_sativa_japonica_v7/");
 system("scp ".$tool_directory."/trackList.json ". $user ."@". $host.":/opt/projects/jbrowse.southgreen.fr/prod/jbrowse/oryza_sativa_japonica_v7/");
-
-system("bgzip -d ". $vcffile.".gz"); 
+ 
 
 open(HTML,">$html");
 print HTML "<html><body><div><a href='http://jbrowse.southgreen.fr/?data=oryza_sativa_japonica_v7&loc=chr03%3A16000000..16500000&tracks=DNA%2CMSUGeneModels%2Ctmp%2fgalaxy$$.vcf.gz&highlight=' target='_blank'>View on Jbrowse</a></div></body></html>";
