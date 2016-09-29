@@ -1,0 +1,51 @@
+<tool id="parental_SNP" name="parental SNP" version="1.0.0">
+    
+    <!-- [REQUIRED] Tool description displayed after the tool name -->
+    <description> - Detect parental SNP of hybrids</description>
+    
+    <!-- [OPTIONAL] 3rd party tools, binaries, modules... required for the tool to work -->
+    <requirements>
+        <requirement type="binary">perl</requirement>
+    </requirements>
+    
+    <!-- [STRONGLY RECOMMANDED] Exit code rules -->
+    <stdio>
+        <!-- [HELP] If no exit code rule is defined, the tool will stop if anything is written to STDERR -->
+        <exit_code range="1:" level="fatal" />
+    </stdio>
+    
+    <!-- [REQUIRED] The command to execute -->
+    <command interpreter="perl">
+	parental_SNP.sh $vcf $fileout $filelog $nameparent1 $nameparent2 $nb_indv_parent1 $nb_indv_parent2
+    </command>
+     
+    <!-- [REQUIRED] Input files and tool parameters -->
+    <inputs>
+	<param name="vcf" type="data" format="vcf" optional="false" label="VCF input" />
+	<param name="nameparent1" type="text" value="P1" label="Name of parent1" help="Name to be given to parent1" />
+	<param name="nameparent2" type="text" value="P2" label="Name of parent2" help="Name to be given to parent2" />
+
+	
+	<param name="nb_indv_parent1" type="integer" value="2" label="Number of individuals for parent1" />
+	<param name="nb_indv_parent2" type="integer" value="2" label="Number of individuals for parent2" />
+    </inputs>
+    
+    <!-- [REQUIRED] Output files -->
+    <outputs>
+    	<data name="fileout" format="tabular" label="SNP list"/>
+ 	<data name="filelog" format="txt" label="Logfile" />
+    </outputs>
+    
+    <!-- [OPTIONAL] Tests to be run manually by the Galaxy admin -->
+    <tests>
+        <!-- [HELP] Test files have to be in the ~/test-data directory -->
+        <test>
+        </test>
+    </tests>
+    
+    <!-- [OPTIONAL] Help displayed in Galaxy -->
+    <help>
+
+    </help>
+
+</tool>
