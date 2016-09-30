@@ -16,7 +16,7 @@
     
     <!-- [REQUIRED] The command to execute -->
     <command interpreter="perl">
-	parental_SNP.sh $vcf $fileout $filelog $nameparent1 $nameparent2 $nb_indv_parent1 $nb_indv_parent2
+	parental_SNP.sh $vcf $fileout $filelog $nameparent1 $nameparent2 $nb_indv_parent1 $nb_indv_parent2 $miss_parent1 $miss_parent2 $num_occ $min_depth
     </command>
      
     <!-- [REQUIRED] Input files and tool parameters -->
@@ -28,6 +28,12 @@
 	
 	<param name="nb_indv_parent1" type="integer" value="2" label="Number of individuals for parent1" />
 	<param name="nb_indv_parent2" type="integer" value="2" label="Number of individuals for parent2" />
+
+	<param name="miss_parent1" type="integer" value="1" label="Maximum number of missing data for parent1" />
+	<param name="miss_parent2" type="integer" value="1" label="Maximum number of missing data for parent2" />
+
+	<param name="num_occ" type="integer" value="1" label="Minimum number of occurences for a genotype to be taken into consideration (per parent)" />
+	<param name="min_depth" type="integer" value="10" label="Minimum depth of coverage for supporting a SNP (per sample)" />
     </inputs>
     
     <!-- [REQUIRED] Output files -->
@@ -45,6 +51,54 @@
     
     <!-- [OPTIONAL] Help displayed in Galaxy -->
     <help>
+.. class:: infomark
+
+**Authors**    Simon Foulquier (IRD)
+
+.. class:: infomark
+
+**Galaxy integration** Alexis Dereeper, IRD. Genome Harvest project.
+
+.. class:: infomark
+
+**Support** For any questions about Galaxy integration, please send an e-mail to alexis.dereeper@ird.fr
+
+---------------------------------------------------
+
+----------------
+Example of files
+----------------
+
+Input files
+===========
+
+VCF file
+---------
+
+::
+
+        #fileformat=VCFv4.1
+                #FILTER=&lt;ID=LowQual,Description="Low quality">
+                        #FORMAT=&lt;ID=AD,Number=.,Type=Integer,Description="Allelic depths for the ref and alt alleles in the order listed">
+                                [...]
+                                        CHROM   POS     ID      REF     ALT     QUAL    FILTER  INFO    FORMAT  CATB1
+                                                chr1    2209    .       G       T       213.84  .       AC=2;AF=1.00;AN=2;DP=7;Dels=0.00;FS=0.000;HaplotypeScore=0.0000;MLEAC=2;MLEAF=1.00;MQ=41.50;MQ0=0;QD=30.55;EFF=DOWNSTREAM(MODIFIER||||Cc01g0002
+                                                0|mRNA||GSCOCT00012438001|),UPSTREAM(MODIFIER||||Cc01g00010|mRNA||GSCOCT00012439001|)   GT:AD:DP:GQ:PL  1/1:0,7:7:18:242,18,0
+
+
+Output files
+============
+
+parental SNP list
+-----------------
+
+::
+
+   CDS   POS	EG allele1	EG allele2	EG allele3	EO allele1	EO allele2	EO allele3	frequence allele 1 EG	frequence allele 2 EG	frequence allele 3 EG	frequence allele 1 EO	frequence allele 2 EO	frequence allele 3 EO	
+   XM_010906231.1	1663	A	X	X	C	X	X	6/4 individus 	0/4 individus 	0/4 individus 	6/4 individus 	0/4 individus 	0/4 individus 	
+   XM_010906231.1	1808	C	X	X	T	X	X	6/4 individus 	0/4 individus 	0/4 individus 	6/4 individus 	0/4 individus 	0/4 individus 	
+   XM_010906231.1	1831	C	X	X	T	X	X	6/4 individus 	0/4 individus 	0/4 individus 	6/4 individus 	0/4 individus 	0/4 individus 	
+
 
     </help>
 
