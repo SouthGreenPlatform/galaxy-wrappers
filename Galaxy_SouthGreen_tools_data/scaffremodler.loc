@@ -1,0 +1,3 @@
+musa_v2_pseudochromosome	Musa genome (version2)	/NAS/Genomics/Musa/Musa_acuminata_2.0/musa_acuminata_v2_pseudochromosom
+sample_sv	Sample for SV detection	/bank/musa_acuminata/sample/Ref_for_SV_detection.fasta
+sample_improve	Sample for Genome Improvment	/bank/musa_acuminata/sample/scaffolds_to_correct.fasta
