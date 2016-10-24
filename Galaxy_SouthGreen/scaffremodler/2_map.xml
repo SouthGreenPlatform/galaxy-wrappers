@@ -48,13 +48,10 @@
             			<option value="history">Use a genome from the history and build index</option>
           			</param>
           			<when value="indexed">
-            			<param name="index" type="select" label="Select reference genome" help="If your genome of interest is not listed, contact the Galaxy team">
-							<options from_file="scaffremodler.loc">
-								<column name="value" index="0"/>
-								<column name="name" index="1"/>
-								<column name="path" index="2"/>
-							</options>
-            			</param>
+						<options from_data_table="scaffremodler">
+							<filter type="sort_by" column="1"/>
+							<validator type="no_options" message="No indexes are available for the selected input dataset"/>
+						</options> 
           			</when>
           			<when value="history">
             			<param name="own_file" type="data" format="fasta" metadata_name="dbkey" label="Select reference genome" />

@@ -104,8 +104,8 @@
 		<param name="OUT" type="text" label="Identifier for output" />
     </inputs>
     <outputs>
-        <data format="txt" name="config_file" label="$OUT conf" />
-        <data format="txt" name="chromosome_information" label="$OUT chromosome" />
+        <data format="data" name="config_file" label="$OUT conf" />
+        <data format="data" name="chromosome_information" label="$OUT chromosome" />
     </outputs>
     <help>
 		
