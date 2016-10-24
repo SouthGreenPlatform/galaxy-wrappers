@@ -32,8 +32,8 @@
 		--min_score $min_score
 		--ploid $ploid
 		--restimate $restimate
-		--output $output
-		--chr $chr
+		--output $config_file
+		--chr $chromosome_information
 		
     </command>
     <inputs>
@@ -51,12 +51,12 @@
             	<option value="history">Use a genome from the history and build index</option>
           	</param>
           	<when value="indexed">
-            	<param name="index" type="select" label="Select reference genome" help="If your genome of interest is not listed, contact the Galaxy team">
-					<options from_file="scaffremodler.loc">
-						<column name="value" index="0"/>
-						<column name="name" index="1"/>
-						<column name="path" index="2"/>
-					</options>
+            	<param name="index" type="select" label="Select reference genome" help="If your genome of interest is not listed, contact the South Green team">
+					
+					<options from_data_table="scaffremodler">
+						<filter type="sort_by" column="1"/>
+						<validator type="no_options" message="No indexes are available for the selected input dataset"/>
+					</options> 
             	</param>
           	</when>
           	<when value="history">
@@ -104,9 +104,17 @@
 		<param name="OUT" type="text" label="Identifier for output" />
     </inputs>
     <outputs>
-        <data format="txt" name="output" label="$OUT conf" />
-        <data format="txt" name="chr" label="$OUT chromosome" />
+        <data format="txt" name="config_file" label="$OUT conf" />
+        <data format="txt" name="chromosome_information" label="$OUT chromosome" />
     </outputs>
     <help>
-    </help>
+		
+  .. class:: infomark
+
+**Program encapsulated in Galaxy by South Green**
+    
+	</help>
+	<citations>
+        <citation type="doi">10.1186/s12864-016-2579-4</citation> 
+    </citations>
 </tool>  
