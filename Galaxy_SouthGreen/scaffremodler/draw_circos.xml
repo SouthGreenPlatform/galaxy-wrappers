@@ -2,7 +2,7 @@
     <description> : Draw circos figure</description>  
     <command>
 		source $__tool_directory__/include_scaffremodler.sh ;
-        $__tool_directory__/draw_circos.py
+        python $__tool_directory__/draw_circos.py
 		--config $config
 		--draw $draw
 		--cov $cov

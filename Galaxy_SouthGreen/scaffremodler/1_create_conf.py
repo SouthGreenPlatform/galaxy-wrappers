@@ -1,5 +1,4 @@
-#!/usr/local/bioinfo/python/2.7.9/bin/python
-#
+
 #
 #  Copyright 2014 CIRAD
 #
@@ -79,12 +78,12 @@ def __main__():
 	
 	
 	cree_chrom(options.ref, options.chr)
-	print options.ref
-	print options.chr
-	print options.q1
-	print options.q2
-	print options.chr
-	print options.output
+	# print options.ref
+	# print options.chr
+	# print options.q1
+	# print options.q2
+	# print options.chr
+	# print options.output
 
 	config = ConfigParser.RawConfigParser()
 	config.add_section('General')

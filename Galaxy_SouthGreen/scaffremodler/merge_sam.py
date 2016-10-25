@@ -54,6 +54,9 @@ def find_info(LINE, YT):
 
 
 def merge2sam(FILE1, FILE2, OUT, MIN, MAX, OR):
+	mapped_pair = 0
+	mapped_single = 0
+	unmapped = 0
 	file1 = open(FILE1)
 	file2 = open(FILE2)
 	boucle = 1
@@ -77,33 +80,27 @@ def merge2sam(FILE1, FILE2, OUT, MIN, MAX, OR):
 				sys.exit(mot)
 			else:
 				if data1[1] == '4' and data2[1] == '4': #reads unmapped
+					unmapped += 1
 					outfile.write(data1[0].replace('/1','').replace('/2','').replace('_1','').replace('_2','')+'\t77\t'+data1[2]+'\t'+data1[3]+'\t'+data1[4]+'\t'+data1[5]+'\t'+data1[6]+'\t'+data1[7]+'\t'+data1[8]+'\t'+data1[9]+'\t'+data1[10]+'\t'+'\t'.join(find_info(data1[11:],'YT:Z:UP'))+'\n')
 					outfile.write(data2[0].replace('/1','').replace('/2','').replace('_1','').replace('_2','')+'\t141\t'+data2[2]+'\t'+data2[3]+'\t'+data2[4]+'\t'+data2[5]+'\t'+data2[6]+'\t'+data2[7]+'\t'+data2[8]+'\t'+data2[9]+'\t'+data2[10]+'\t'+'\t'.join(find_info(data2[11:],'YT:Z:UP'))+'\n')
 				elif data1[1] == '0' and data2[1] == '4': #mate 1 mappant en F
+					mapped_single += 1
 					outfile.write(data1[0].replace('/1','').replace('/2','').replace('_1','').replace('_2','')+'\t73\t'+data1[2]+'\t'+data1[3]+'\t'+data1[4]+'\t'+data1[5]+'\t=\t'+data1[3]+'\t0\t'+data1[9]+'\t'+data1[10]+'\t'+'\t'.join(find_info(data1[11:],'YT:Z:UP'))+'\n')
 					outfile.write(data2[0].replace('/1','').replace('/2','').replace('_1','').replace('_2','')+'\t133\t'+data1[2]+'\t'+data1[3]+'\t'+data2[4]+'\t'+data2[5]+'\t=\t'+data1[3]+'\t0\t'+data2[9]+'\t'+data2[10]+'\t'+'\t'.join(find_info(data2[11:],'YT:Z:UP'))+'\n')
 				elif data1[1] == '16' and data2[1] == '4': #mate 1 mappant en R
+					mapped_single += 1
 					outfile.write(data1[0].replace('/1','').replace('/2','').replace('_1','').replace('_2','')+'\t89\t'+data1[2]+'\t'+data1[3]+'\t'+data1[4]+'\t'+data1[5]+'\t=\t'+data1[3]+'\t0\t'+data1[9]+'\t'+data1[10]+'\t'+'\t'.join(find_info(data1[11:],'YT:Z:UP'))+'\n')
 					outfile.write(data2[0].replace('/1','').replace('/2','').replace('_1','').replace('_2','')+'\t165\t'+data1[2]+'\t'+data1[3]+'\t'+data2[4]+'\t'+data2[5]+'\t=\t'+data1[3]+'\t0\t'+data2[9]+'\t'+data2[10]+'\t'+'\t'.join(find_info(data2[11:],'YT:Z:UP'))+'\n')
 				elif data1[1] == '4' and data2[1] == '0':#mate 2 mappant en F
+					mapped_single += 1
 					outfile.write(data2[0].replace('/1','').replace('/2','').replace('_1','').replace('_2','')+'\t137\t'+data2[2]+'\t'+data2[3]+'\t'+data2[4]+'\t'+data2[5]+'\t=\t'+data2[3]+'\t0\t'+data2[9]+'\t'+data2[10]+'\t'+'\t'.join(find_info(data2[11:],'YT:Z:UP'))+'\n')
 					outfile.write(data1[0].replace('/1','').replace('/2','').replace('_1','').replace('_2','')+'\t69\t'+data2[2]+'\t'+data2[3]+'\t'+data1[4]+'\t'+data1[5]+'\t=\t'+data2[3]+'\t0\t'+data1[9]+'\t'+data1[10]+'\t'+'\t'.join(find_info(data1[11:],'YT:Z:UP'))+'\n')
 				elif data1[1] == '4' and data2[1] == '16':#mate 2 mappant en R
+					mapped_single += 1
 					outfile.write(data2[0].replace('/1','').replace('/2','').replace('_1','').replace('_2','')+'\t153\t'+data2[2]+'\t'+data2[3]+'\t'+data2[4]+'\t'+data2[5]+'\t=\t'+data2[3]+'\t0\t'+data2[9]+'\t'+data2[10]+'\t'+'\t'.join(find_info(data2[11:],'YT:Z:UP'))+'\n')
 					outfile.write(data1[0].replace('/1','').replace('/2','').replace('_1','').replace('_2','')+'\t101\t'+data2[2]+'\t'+data2[3]+'\t'+data1[4]+'\t'+data1[5]+'\t=\t'+data2[3]+'\t0\t'+data1[9]+'\t'+data1[10]+'\t'+'\t'.join(find_info(data1[11:],'YT:Z:UP'))+'\n')
-				# elif data1[1] == '0' and data2[1] == '4': #mate 1 mappant en F
-					# outfile.write(data1[0].replace('/1','').replace('/2','')+'\t73\t'+data1[2]+'\t'+data1[3]+'\t'+data1[4]+'\t'+data1[5]+'\t*\t'+data1[7]+'\t0\t'+data1[9]+'\t'+data1[10]+'\t'+'\t'.join(find_info(data1[11:],'YT:Z:UP'))+'\n')
-					# outfile.write(data2[0].replace('/1','').replace('/2','')+'\t133\t'+data1[2]+'\t'+data1[3]+'\t'+data2[4]+'\t'+data2[5]+'\t*\t'+data1[7]+'\t0\t'+data2[9]+'\t'+data2[10]+'\t'+'\t'.join(find_info(data2[11:],'YT:Z:UP'))+'\n')
-				# elif data1[1] == '16' and data2[1] == '4': #mate 1 mappant en R
-					# outfile.write(data1[0].replace('/1','').replace('/2','')+'\t89\t'+data1[2]+'\t'+data1[3]+'\t'+data1[4]+'\t'+data1[5]+'\t*\t'+data1[7]+'\t0\t'+data1[9]+'\t'+data1[10]+'\t'+'\t'.join(find_info(data1[11:],'YT:Z:UP'))+'\n')
-					# outfile.write(data2[0].replace('/1','').replace('/2','')+'\t165\t'+data1[2]+'\t'+data1[3]+'\t'+data2[4]+'\t'+data2[5]+'\t*\t'+data1[7]+'\t0\t'+data2[9]+'\t'+data2[10]+'\t'+'\t'.join(find_info(data2[11:],'YT:Z:UP'))+'\n')
-				# elif data1[1] == '4' and data2[1] == '0':#mate 2 mappant en F
-					# outfile.write(data2[0].replace('/1','').replace('/2','')+'\t137\t'+data2[2]+'\t'+data2[3]+'\t'+data2[4]+'\t'+data2[5]+'\t*\t'+data2[7]+'\t0\t'+data2[9]+'\t'+data2[10]+'\t'+'\t'.join(find_info(data2[11:],'YT:Z:UP'))+'\n')
-					# outfile.write(data1[0].replace('/1','').replace('/2','')+'\t69\t'+data2[2]+'\t'+data2[3]+'\t'+data1[4]+'\t'+data1[5]+'\t*\t'+data2[7]+'\t0\t'+data1[9]+'\t'+data1[10]+'\t'+'\t'.join(find_info(data1[11:],'YT:Z:UP'))+'\n')
-				# elif data1[1] == '4' and data2[1] == '16':#mate 2 mappant en R
-					# outfile.write(data2[0].replace('/1','').replace('/2','')+'\t153\t'+data2[2]+'\t'+data2[3]+'\t'+data2[4]+'\t'+data2[5]+'\t*\t'+data2[7]+'\t0\t'+data2[9]+'\t'+data2[10]+'\t'+'\t'.join(find_info(data2[11:],'YT:Z:UP'))+'\n')
-					# outfile.write(data1[0].replace('/1','').replace('/2','')+'\t101\t'+data2[2]+'\t'+data2[3]+'\t'+data1[4]+'\t'+data1[5]+'\t*\t'+data2[7]+'\t0\t'+data1[9]+'\t'+data1[10]+'\t'+'\t'.join(find_info(data1[11:],'YT:Z:UP'))+'\n')
 				elif data1[1] == '0' and data2[1] == '0':#mate FF
+					mapped_pair += 1
 					if data1[2] != data2[2]:#sur des chromosomes differents
 						outfile.write(data1[0].replace('/1','').replace('/2','').replace('_1','').replace('_2','')+'\t65\t'+data1[2]+'\t'+data1[3]+'\t'+data1[4]+'\t'+data1[5]+'\t'+data2[2]+'\t'+data2[3]+'\t0\t'+data1[9]+'\t'+data1[10]+'\t'+'\t'.join(find_info(data1[11:],'YT:Z:DP'))+'\n')
 						outfile.write(data2[0].replace('/1','').replace('/2','').replace('_1','').replace('_2','')+'\t129\t'+data2[2]+'\t'+data2[3]+'\t'+data2[4]+'\t'+data2[5]+'\t'+data1[2]+'\t'+data1[3]+'\t0\t'+data2[9]+'\t'+data2[10]+'\t'+'\t'.join(find_info(data2[11:],'YT:Z:DP'))+'\n')
@@ -115,6 +112,7 @@ def merge2sam(FILE1, FILE2, OUT, MIN, MAX, OR):
 							outfile.write(data1[0].replace('/1','').replace('/2','').replace('_1','').replace('_2','')+'\t65\t'+data1[2]+'\t'+data1[3]+'\t'+data1[4]+'\t'+data1[5]+'\t=\t'+data2[3]+'\t-'+str((CIGAR(data1[5],int(data1[3]))-int(data2[3]))+1)+'\t'+data1[9]+'\t'+data1[10]+'\t'+'\t'.join(find_info(data1[11:],'YT:Z:DP'))+'\n')
 							outfile.write(data2[0].replace('/1','').replace('/2','').replace('_1','').replace('_2','')+'\t129\t'+data2[2]+'\t'+data2[3]+'\t'+data2[4]+'\t'+data2[5]+'\t=\t'+data1[3]+'\t'+str((CIGAR(data1[5],int(data1[3]))-int(data2[3]))+1)+'\t'+data2[9]+'\t'+data2[10]+'\t'+'\t'.join(find_info(data2[11:],'YT:Z:DP'))+'\n')
 				elif data1[1] == '16' and data2[1] == '16':#mate RR
+					mapped_pair += 1
 					if data1[2] != data2[2]:#sur des chromosomes differents
 						outfile.write(data1[0].replace('/1','').replace('/2','').replace('_1','').replace('_2','')+'\t113\t'+data1[2]+'\t'+data1[3]+'\t'+data1[4]+'\t'+data1[5]+'\t'+data2[2]+'\t'+data2[3]+'\t0\t'+data1[9]+'\t'+data1[10]+'\t'+'\t'.join(find_info(data1[11:],'YT:Z:DP'))+'\n')
 						outfile.write(data2[0].replace('/1','').replace('/2','').replace('_1','').replace('_2','')+'\t177\t'+data2[2]+'\t'+data2[3]+'\t'+data2[4]+'\t'+data2[5]+'\t'+data1[2]+'\t'+data1[3]+'\t0\t'+data2[9]+'\t'+data2[10]+'\t'+'\t'.join(find_info(data2[11:],'YT:Z:DP'))+'\n')
@@ -126,6 +124,7 @@ def merge2sam(FILE1, FILE2, OUT, MIN, MAX, OR):
 							outfile.write(data1[0].replace('/1','').replace('/2','').replace('_1','').replace('_2','')+'\t113\t'+data1[2]+'\t'+data1[3]+'\t'+data1[4]+'\t'+data1[5]+'\t=\t'+data2[3]+'\t-'+str((CIGAR(data1[5],int(data1[3]))-int(data2[3]))+1)+'\t'+data1[9]+'\t'+data1[10]+'\t'+'\t'.join(find_info(data1[11:],'YT:Z:DP'))+'\n')
 							outfile.write(data2[0].replace('/1','').replace('/2','').replace('_1','').replace('_2','')+'\t177\t'+data2[2]+'\t'+data2[3]+'\t'+data2[4]+'\t'+data2[5]+'\t=\t'+data1[3]+'\t'+str((CIGAR(data1[5],int(data1[3]))-int(data2[3]))+1)+'\t'+data2[9]+'\t'+data2[10]+'\t'+'\t'.join(find_info(data2[11:],'YT:Z:DP'))+'\n')
 				elif data1[1] == '16' and data2[1] == '0':#mate1 R, mate2 F
+					mapped_pair += 1
 					if data1[2] != data2[2]:#sur des chromosomes differents
 						outfile.write(data1[0].replace('/1','').replace('/2','').replace('_1','').replace('_2','')+'\t81\t'+data1[2]+'\t'+data1[3]+'\t'+data1[4]+'\t'+data1[5]+'\t'+data2[2]+'\t'+data2[3]+'\t0\t'+data1[9]+'\t'+data1[10]+'\t'+'\t'.join(find_info(data1[11:],'YT:Z:DP'))+'\n')
 						outfile.write(data2[0].replace('/1','').replace('/2','').replace('_1','').replace('_2','')+'\t161\t'+data2[2]+'\t'+data2[3]+'\t'+data2[4]+'\t'+data2[5]+'\t'+data1[2]+'\t'+data1[3]+'\t0\t'+data2[9]+'\t'+data2[10]+'\t'+'\t'.join(find_info(data2[11:],'YT:Z:DP'))+'\n')
@@ -154,6 +153,7 @@ def merge2sam(FILE1, FILE2, OUT, MIN, MAX, OR):
 					else:
 						sys.exit('bug')
 				elif data1[1] == '0' and data2[1] == '16':#mate1 F, mate2 R
+					mapped_pair += 1
 					if data1[2] != data2[2]:#sur des chromosomes differents
 						outfile.write(data1[0].replace('/1','').replace('/2','').replace('_1','').replace('_2','')+'\t97\t'+data1[2]+'\t'+data1[3]+'\t'+data1[4]+'\t'+data1[5]+'\t'+data2[2]+'\t'+data2[3]+'\t0\t'+data1[9]+'\t'+data1[10]+'\t'+'\t'.join(find_info(data1[11:],'YT:Z:DP'))+'\n')
 						outfile.write(data2[0].replace('/1','').replace('/2','').replace('_1','').replace('_2','')+'\t145\t'+data2[2]+'\t'+data2[3]+'\t'+data2[4]+'\t'+data2[5]+'\t'+data1[2]+'\t'+data1[3]+'\t0\t'+data2[9]+'\t'+data2[10]+'\t'+'\t'.join(find_info(data2[11:],'YT:Z:DP'))+'\n')
@@ -187,6 +187,10 @@ def merge2sam(FILE1, FILE2, OUT, MIN, MAX, OR):
 		line1 = file1.readline()
 		line2 = file2.readline()
 	outfile.close()
+	os.system('echo "Mapped pair: '+str(mapped_pair)+'"')
+	os.system('echo "Mapped single (mate1 or mate2): '+str(mapped_single)+'"')
+	os.system('echo "Unmapped (mate1 and mate2): '+str(unmapped)+'"')
+	
 
 
 def __main__():

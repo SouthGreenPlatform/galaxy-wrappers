@@ -1,5 +1,4 @@
-#!/usr/local/bioinfo/python/2.7.9/bin/python
-#
+
 #
 #  Copyright 2014 CIRAD
 #
@@ -1200,20 +1199,17 @@ def __main__():
 		raise ValueError(mot)
 
 	logNameFile = os.path.splitext(options.sam)[0]+'.log'
-	
 	logOutput = open(logNameFile, 'w')
-	
 	if os.path.getsize(options.sam) == 0:
 		outfile = open(options.out, 'w')
 		outfile.close()
 	else:
 		tmp_name = tempfile.NamedTemporaryFile().name
+		# tmp_name = 'toto'
 		tmp_cov = tmp_name+'.cov'
 		tmp_zone = tmp_name+'.zone'
 		tmp_mate_zone = tmp_name+'_mate.zone'
 		tmp_merge = tmp_name+'.merge'
-
-		logOutput = open(logNameFile, 'w')
 
 		logOutput.write("\nsam file :"+str(options.sam))
 
@@ -1359,8 +1355,10 @@ def __main__():
 			os.remove(tmp_merge)
 			# Add header to the score file
 			os.system("sed -i '1i#CHR-zone1\tSTART\tEND\tSIZE\tCOV\tCHR-zone2\tSTART\tEND\tSIZE\tCOV\tMISC\tREAD\tSCORE\tSTATUS' %s" % options.out)
-		os.remove(options.sam+'.bai')
+
 	logOutput.write("\ntotal time : "+str(datetime.datetime.now() - t_start))
 	logOutput.close()
+	# if os.path.exists(options.sam+".bai"):
+		# os.remove(options.sam+".bai")
 	os.remove(logNameFile)
 if __name__ == "__main__": __main__()

@@ -2,43 +2,26 @@
     <description> : Remove redundancy in mapped reads</description>
     <command>
 		source $__tool_directory__/include_scaffremodler.sh ;
-        $__tool_directory__/4_filter_sam.py
+        python $__tool_directory__/4_filter_sam.py
 		--sam $sam
-		#if $input.have_config == "yes"
-			--config $input.config
-        #end if       
-        #if $input.have_config == "no"
-			--type $input.type
-			--sort $input.sort
-        #end if
+		--config $config 
 		--out $out
     </command>
     <inputs>
-		<param name="sam" type="data" label="Sam/bam file" />
-        <conditional name="input">
-            <param name="have_config" type="select" label="Do you have a config file?">
-				<option value="yes">yes</option>
-				<option value="no">no</option>
-            </param>
-            <when value="yes">
-                <param name="config" type="data" label="conf file"/>
-            </when>
-            <when value="no">
-				<param name="type" type="select" label="Is it a sam or a bam?">
-					<option value="sam">sam</option>
-					<option value="bam">bam</option>
-				</param>
-				<param name="sort" type="select" label="Sorting order of the output file">
-					<option value="coordinate">coordinate</option>
-					<option value="queryname">queryname</option>
-				</param>
-            </when>
-        </conditional>
-		<param name="OUT" type="text" label="Identifier for output" />
+		<param name="sam" type="data" label="Filtered SAM file" /> 
+        <param name="config" type="data" label="Configuration file"/>  
     </inputs>
     <outputs>
-        <data format="bam" name="out" label="$OUT rmdup.bam" />
+        <data format="bam" name="out" label="4_filter_sam : Remove redundancy (BAM file)" />
     </outputs>
     <help>
-    </help>
-</tool>
+		
+  .. class:: infomark
+
+**Program encapsulated in Galaxy by South Green**
+    
+	</help>
+	<citations>
+        <citation type="doi">10.1186/s12864-016-2579-4</citation> 
+    </citations>
+</tool>  

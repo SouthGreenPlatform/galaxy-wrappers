@@ -2,7 +2,7 @@
 	<description> : Try to identify pattern of structural variation</description>
 	<command>
 		source $__tool_directory__/include_scaffremodler.sh ;
-        $__tool_directory__/8_ident_SV.py
+        python $__tool_directory__/8_ident_SV.py
 		--frf $frf
 		--ff $ff
 		--rr $rr
@@ -60,6 +60,14 @@
 	<outputs>
 		<data format="txt" name="out" label="$OUT SV_detected " />
 	</outputs>
-	<help>
+    <help>
+		
+  .. class:: infomark
+
+**Program encapsulated in Galaxy by South Green**
+    
 	</help>
-</tool>
+	<citations>
+        <citation type="doi">10.1186/s12864-016-2579-4</citation> 
+    </citations>
+</tool>  

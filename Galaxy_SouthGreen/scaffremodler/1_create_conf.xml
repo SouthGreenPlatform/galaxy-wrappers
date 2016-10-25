@@ -1,8 +1,8 @@
 <tool id="1_create_conf" name="1_create_conf" version="0.1"> 
-    <description> : Create configuration file and chromosome tab file for ApMap</description>  
+    <description> : Create configuration file and chromosome tab file for Scaffremodler</description>  
     <command>
 		source $__tool_directory__/include_scaffremodler.sh ;
-        $__tool_directory__/1_create_conf.py
+        python $__tool_directory__/1_create_conf.py
 		--tool $tool
         #if str($reference_genome.source) == "history":
             --ref $reference_genome.own_file  
@@ -31,7 +31,7 @@
 		--MiC $MiC
 		--min_score $min_score
 		--ploid $ploid
-		--restimate $restimate
+		--restimate $restimate 
 		--output $config_file
 		--chr $chromosome_information
 		
@@ -100,12 +100,11 @@
 		<param name="restimate" type="select" label="Re-estimate --mini and --maxi parameters">
 			<option selected="true" value="y">y</option>
 			<option value="n">n</option>
-		</param>
-		<param name="OUT" type="text" label="Identifier for output" />
+		</param>  
     </inputs>
     <outputs>
-        <data format="data" name="config_file" label="$OUT conf" />
-        <data format="data" name="chromosome_information" label="$OUT chromosome" />
+        <data format="txt" name="config_file" label="1_create_conf : Configuration file" />
+        <data format="data" name="chromosome_information" label="1_create_conf : Chromosome information" />
     </outputs>
     <help>
 		

@@ -1,5 +1,4 @@
-#!/usr/local/bioinfo/python/2.7.9/bin/python
-#
+
 #
 #  Copyright 2014 CIRAD
 #
@@ -92,7 +91,7 @@ def trielinebyline(SAM, MINI_DIS, MINI, MAXI, ORIENT, CHR, LISTE):
 		if data:
 			liste_chr.append(data[0])
 	file.close()
-	
+
 	############################################
 	#Creating the liste of discordant reads
 	############################################
@@ -113,7 +112,7 @@ def trielinebyline(SAM, MINI_DIS, MINI, MAXI, ORIENT, CHR, LISTE):
 		l2 = file.readline().split()
 	outfile.close()
 	file.close()
-	
+
 
 def trie_discord_rf(UN, DEUX, MINI_DIS, MINI, MAXI, LISTE_CHR):
 	ident1 = UN[0]
@@ -333,7 +332,7 @@ def calcul_prop(OUT, SAM, INSERT, INFO_CHR):
 		if data:
 			DIC_REF[data[0]] = int(data[1])
 	file.close()
-	
+
 	############################################
 	#Calculating
 	############################################
@@ -425,7 +424,7 @@ def prop_dis(N_DIS, DIS, OUT, INFO_CHR):
 		if data:
 			DIC_REF[data[0]] = int(data[1])
 	file.close()
-	
+
 	outfile = open(OUT,'w')
 	CHR = ''
 	for n in DIC_REF:
@@ -478,7 +477,7 @@ def calcul_discord_prop_and_parse(LOCA_PROGRAMS, CHR, SAM, LISTE_TYPE, OUT_INS, 
 			if absent:
 				outfile.write(line)
 	outfile.close()
-	
+
 	############################################
 	#Calculating discordant proportions
 	############################################
@@ -490,27 +489,27 @@ def calcul_discord_prop_and_parse(LOCA_PROGRAMS, CHR, SAM, LISTE_TYPE, OUT_INS, 
 	filter2 = '%s -jar %s FilterSamReads INPUT=%s OUTPUT=%s SORT_ORDER=coordinate QUIET=true FILTER=excludeReadList READ_LIST_FILE=%s WRITE_READS_FILES=false MAX_RECORDS_IN_RAM=5000000 VERBOSITY=WARNING VALIDATION_STRINGENCY=SILENT' % (LOCA_PROGRAMS.get('Programs','java'), LOCA_PROGRAMS.get('Programs','picard-tool'), SAM, read_non_discord, liste_discord)
 	run_job (filter1, 'Error in FilterSamReads.jar:')
 	run_job (filter2, 'Error in FilterSamReads.jar:')
-	
+
 	discord_count = (tempfile.NamedTemporaryFile().name)+'.count'
 	non_discord_count = (tempfile.NamedTemporaryFile().name)+'.count'
 	calcul_prop(discord_count, read_discord, 1000, CHR)
 	calcul_prop(non_discord_count, read_non_discord, 1000, CHR)
 	prop_dis(non_discord_count, discord_count, DISCORD_PROP, CHR)
-	
-	
+
+
 	# print liste_discord
 	# print discord_count
 	# print non_discord_count
 	os.remove(discord_count)
 	os.remove(non_discord_count)
 	os.remove(liste_discord)
-	
+
 	############################################
 	#Parsing bam file
 	############################################
-	
+
 	LISTE_EMPTY = []
-	
+
 	if OR == 'rf':
 		sam2bam = '%s view -bS %s > %s' % (LOCA_PROGRAMS.get('Programs','samtools'), read_non_discord ,OUT_RF)
 		liste_discord_orient = (tempfile.NamedTemporaryFile().name)+'orient.list'
@@ -524,9 +523,9 @@ def calcul_discord_prop_and_parse(LOCA_PROGRAMS, CHR, SAM, LISTE_TYPE, OUT_INS, 
 	else:
 		mot = 'Unrecognized --orient option : '+OR
 		sys.exit(mot)
-		
+
 	run_job (sam2bam, 'Error in samtools view:')
-	
+
 	if nb_dis > 0:
 		run_job (filter1, 'Error in FilterSamReads.jar:')
 	else:
@@ -538,107 +537,117 @@ def calcul_discord_prop_and_parse(LOCA_PROGRAMS, CHR, SAM, LISTE_TYPE, OUT_INS, 
 			outfile=open(OUT_RF,'w')
 			outfile.close()
 			LISTE_EMPTY.append(OUT_RF)
-	
+
 	liste_discord_ins = (tempfile.NamedTemporaryFile().name)+'ins.list'
 	nb_ins = grep(LISTE_FILTERED, liste_discord_ins, 'ins', 'keep', [5])
 	filter_ins = '%s -jar %s FilterSamReads INPUT=%s OUTPUT=%s SORT_ORDER=coordinate QUIET=true FILTER=includeReadList READ_LIST_FILE=%s WRITE_READS_FILES=false MAX_RECORDS_IN_RAM=5000000 VERBOSITY=WARNING VALIDATION_STRINGENCY=SILENT' % (LOCA_PROGRAMS.get('Programs','java'), LOCA_PROGRAMS.get('Programs','picard-tool'), SAM, OUT_INS, liste_discord_ins)
-	
+
 	liste_discord_del = (tempfile.NamedTemporaryFile().name)+'del.list'
 	nb_del = grep(LISTE_FILTERED, liste_discord_del, 'del', 'keep', [5])
 	filter_del = '%s -jar %s FilterSamReads INPUT=%s OUTPUT=%s SORT_ORDER=coordinate QUIET=true FILTER=includeReadList READ_LIST_FILE=%s WRITE_READS_FILES=false MAX_RECORDS_IN_RAM=5000000 VERBOSITY=WARNING VALIDATION_STRINGENCY=SILENT' % (LOCA_PROGRAMS.get('Programs','java'), LOCA_PROGRAMS.get('Programs','picard-tool'), SAM, OUT_DEL, liste_discord_del)
-	
+
 	liste_discord_ff = (tempfile.NamedTemporaryFile().name)+'ff.list'
 	nb_ff = grep(LISTE_FILTERED, liste_discord_ff, 'ff', 'keep', [5])
 	filter_ff = '%s -jar %s FilterSamReads INPUT=%s OUTPUT=%s SORT_ORDER=coordinate QUIET=true FILTER=includeReadList READ_LIST_FILE=%s WRITE_READS_FILES=false MAX_RECORDS_IN_RAM=5000000 VERBOSITY=WARNING VALIDATION_STRINGENCY=SILENT' % (LOCA_PROGRAMS.get('Programs','java'), LOCA_PROGRAMS.get('Programs','picard-tool'), SAM, OUT_FF, liste_discord_ff)
-	
+
 	liste_discord_rr = (tempfile.NamedTemporaryFile().name)+'rr.list'
 	nb_rr = grep(LISTE_FILTERED, liste_discord_rr, 'rr', 'keep', [5])
 	filter_rr = '%s -jar %s FilterSamReads INPUT=%s OUTPUT=%s SORT_ORDER=coordinate QUIET=true FILTER=includeReadList READ_LIST_FILE=%s WRITE_READS_FILES=false MAX_RECORDS_IN_RAM=5000000 VERBOSITY=WARNING VALIDATION_STRINGENCY=SILENT' % (LOCA_PROGRAMS.get('Programs','java'), LOCA_PROGRAMS.get('Programs','picard-tool'), SAM, OUT_RR, liste_discord_rr)
-	
+
 	liste_discord_chr_ff = (tempfile.NamedTemporaryFile().name)+'chr_ff.list'
 	nb_chr_ff = grep(LISTE_FILTERED, liste_discord_chr_ff, 'chr_ff', 'keep', [5])
 	filter_chr_ff = '%s -jar %s FilterSamReads INPUT=%s OUTPUT=%s SORT_ORDER=coordinate QUIET=true FILTER=includeReadList READ_LIST_FILE=%s WRITE_READS_FILES=false MAX_RECORDS_IN_RAM=5000000 VERBOSITY=WARNING VALIDATION_STRINGENCY=SILENT' % (LOCA_PROGRAMS.get('Programs','java'), LOCA_PROGRAMS.get('Programs','picard-tool'), SAM, OUT_CHR_FF, liste_discord_chr_ff)
-	
+
 	liste_discord_chr_rr = (tempfile.NamedTemporaryFile().name)+'chr_rr.list'
 	nb_chr_rr = grep(LISTE_FILTERED, liste_discord_chr_rr, 'chr_rr', 'keep', [5])
 	filter_chr_rr = '%s -jar %s FilterSamReads INPUT=%s OUTPUT=%s SORT_ORDER=coordinate QUIET=true FILTER=includeReadList READ_LIST_FILE=%s WRITE_READS_FILES=false MAX_RECORDS_IN_RAM=5000000 VERBOSITY=WARNING VALIDATION_STRINGENCY=SILENT' % (LOCA_PROGRAMS.get('Programs','java'), LOCA_PROGRAMS.get('Programs','picard-tool'), SAM, OUT_CHR_RR, liste_discord_chr_rr)
-	
+
 	liste_discord_chr_fr = (tempfile.NamedTemporaryFile().name)+'chr_fr.list'
 	nb_chr_fr = grep(LISTE_FILTERED, liste_discord_chr_fr, 'chr_fr', 'keep', [5])
 	filter_chr_fr = '%s -jar %s FilterSamReads INPUT=%s OUTPUT=%s SORT_ORDER=coordinate QUIET=true FILTER=includeReadList READ_LIST_FILE=%s WRITE_READS_FILES=false MAX_RECORDS_IN_RAM=5000000 VERBOSITY=WARNING VALIDATION_STRINGENCY=SILENT' % (LOCA_PROGRAMS.get('Programs','java'), LOCA_PROGRAMS.get('Programs','picard-tool'), SAM, OUT_CHR_FR, liste_discord_chr_fr)
-	
+
 	liste_discord_chr_rf = (tempfile.NamedTemporaryFile().name)+'chr_rf.list'
 	nb_chr_rf = grep(LISTE_FILTERED, liste_discord_chr_rf, 'chr_rf', 'keep', [5])
 	filter_chr_rf = '%s -jar %s FilterSamReads INPUT=%s OUTPUT=%s SORT_ORDER=coordinate QUIET=true FILTER=includeReadList READ_LIST_FILE=%s WRITE_READS_FILES=false MAX_RECORDS_IN_RAM=5000000 VERBOSITY=WARNING VALIDATION_STRINGENCY=SILENT' % (LOCA_PROGRAMS.get('Programs','java'), LOCA_PROGRAMS.get('Programs','picard-tool'), SAM, OUT_CHR_RF, liste_discord_chr_rf)
-	
+
 	liste_discord_discarded = (tempfile.NamedTemporaryFile().name)+'discarded.list'
 	nb_discarded = grep(LISTE_FILTERED, liste_discord_discarded, 'discard', 'keep', [5])
 	filter_discarded = '%s -jar %s FilterSamReads INPUT=%s OUTPUT=%s SORT_ORDER=coordinate QUIET=true FILTER=includeReadList READ_LIST_FILE=%s WRITE_READS_FILES=false MAX_RECORDS_IN_RAM=5000000 VERBOSITY=WARNING VALIDATION_STRINGENCY=SILENT' % (LOCA_PROGRAMS.get('Programs','java'), LOCA_PROGRAMS.get('Programs','picard-tool'), SAM, OUT_DISCARDED, liste_discord_discarded)
-	
+
 	if nb_ins > 0:
 		run_job (filter_ins, 'Error in FilterSamReads.jar:')
 	else:
 		outfile=open(OUT_INS,'w')
 		outfile.close()
 		LISTE_EMPTY.append(OUT_INS)
-		
+
 	if nb_del > 0:
 		run_job (filter_del, 'Error in FilterSamReads.jar:')
 	else:
 		outfile=open(OUT_DEL,'w')
 		outfile.close()
 		LISTE_EMPTY.append(OUT_DEL)
-		
+
 	if nb_ff > 0:
 		run_job (filter_ff, 'Error in FilterSamReads.jar:')
 	else:
 		outfile=open(OUT_FF,'w')
 		outfile.close()
 		LISTE_EMPTY.append(OUT_FF)
-		
+
 	if nb_rr > 0:
 		run_job (filter_rr, 'Error in FilterSamReads.jar:')
 	else:
 		outfile=open(OUT_RR,'w')
 		outfile.close()
 		LISTE_EMPTY.append(OUT_RR)
-		
+
 	if nb_chr_ff > 0:
 		run_job (filter_chr_ff, 'Error in FilterSamReads.jar:')
 	else:
 		outfile=open(OUT_CHR_FF,'w')
 		outfile.close()
 		LISTE_EMPTY.append(OUT_CHR_FF)
-		
+
 	if nb_chr_rr > 0:
 		run_job (filter_chr_rr, 'Error in FilterSamReads.jar:')
 	else:
 		outfile=open(OUT_CHR_RR,'w')
 		outfile.close()
 		LISTE_EMPTY.append(OUT_CHR_RR)
-		
+
 	if nb_chr_fr > 0:
 		run_job (filter_chr_fr, 'Error in FilterSamReads.jar:')
 	else:
 		outfile=open(OUT_CHR_FR,'w')
 		outfile.close()
 		LISTE_EMPTY.append(OUT_CHR_FR)
-		
+
 	if nb_chr_rf > 0:
 		run_job (filter_chr_rf, 'Error in FilterSamReads.jar:')
 	else:
 		outfile=open(OUT_CHR_RF,'w')
 		outfile.close()
 		LISTE_EMPTY.append(OUT_CHR_RF)
-		
+
 	if nb_discarded > 0:
 		run_job (filter_discarded, 'Error in FilterSamReads.jar:')
 	else:
 		outfile=open(OUT_DISCARDED,'w')
 		outfile.close()
 		LISTE_EMPTY.append(OUT_DISCARDED)
-	
-	
+
+	# print read_discord
+	# print read_non_discord
+	# print liste_discord_orient
+	# print liste_discord_ins
+	# print liste_discord_del
+	# print liste_discord_ff
+	# print liste_discord_rr
+	# print liste_discord_chr_ff
+	# print liste_discord_chr_rr
+	# print liste_discord_chr_fr
+	# print liste_discord_chr_rf
 	os.remove(read_discord)
 	os.remove(read_non_discord)
 	os.remove(liste_discord_orient)
@@ -651,16 +660,15 @@ def calcul_discord_prop_and_parse(LOCA_PROGRAMS, CHR, SAM, LISTE_TYPE, OUT_INS, 
 	os.remove(liste_discord_chr_fr)
 	os.remove(liste_discord_chr_rf)
 	os.remove(liste_discord_discarded)
-	os.remove(LISTE_FILTERED)
 	return LISTE_EMPTY
-	
-	
+
+
 
 def __main__():
 	#Parse Command Line
 	parser = optparse.OptionParser(usage="python %prog [options]\n\nProgram designed by Guillaume MARTIN : guillaume.martin@cirad.fr\n\nThis program take in input a sam/bam file,"
 	" calculate proportion of discordant reads on 1kb window size and parse the sam/bam file in several bam files corresponding to the different discordant types")
-	
+
 	# Wrapper options.
 	parser.add_option( '', '--sam', dest='sam', default='not_filled', help='Paired sam/bam file')
 	parser.add_option( '', '--chr', dest='chr', default='not_filled', help='The tabulated file containing in col 1 : chromosome name, col 2: chromosome length. A line for each chromosomes')
@@ -687,14 +695,14 @@ def __main__():
 	parser.add_option( '', '--exclude_chrom', dest='exclude_chrom', default='no_exclude', help='Exclude chromosomes from analysis. "no_exclude" or chromosomes names separated by "=", [default: %default]')
 	parser.add_option( '', '--config', dest='config', default=None)
 	(options, args) = parser.parse_args()
-	
-	
-	
+
+
+
 	pathname = os.path.dirname(sys.argv[0])
-	
+
 	loca_programs = ConfigParser.RawConfigParser()
 	loca_programs.read(pathname+'/loca_programs.conf')
-	
+
 	if options.config:
 		config = ConfigParser.RawConfigParser()
 		config.read(options.config)
@@ -774,5 +782,5 @@ def __main__():
 		calcul_discord_prop_and_parse(loca_programs, options.chr, options.sam, options.liste_type, options.out_ins, options.out_del, options.out_fr, options.out_rf, options.out_ff, options.out_rr, options.out_chr_fr, options.out_chr_rf, options.out_chr_ff, options.out_chr_rr, options.out_discarded, options.discord_prop, options.orient, options.exclude_chrom)
 		if options.rminput == 'y':
 			os.remove(options.sam)
-		
+	os.remove(options.liste_type+".filtered")
 if __name__ == "__main__": __main__()

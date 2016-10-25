@@ -2,7 +2,7 @@
     <description> : Split fasta sequence on X and rename sequence based on length</description>
     <command>
 		source $__tool_directory__/include_scaffremodler.sh ;
-        $__tool_directory__/SplitOnX.py
+        python $__tool_directory__/SplitOnX.py
 		--fasta $fasta
 		--out $out
 		
@@ -15,5 +15,13 @@
         <data format="fasta" name="out" label="$OUT split.fasta" />
     </outputs>
     <help>
-    </help>
+		
+  .. class:: infomark
+
+**Program encapsulated in Galaxy by South Green**
+    
+	</help>
+	<citations>
+        <citation type="doi">10.1186/s12864-016-2579-4</citation> 
+    </citations>
 </tool>  

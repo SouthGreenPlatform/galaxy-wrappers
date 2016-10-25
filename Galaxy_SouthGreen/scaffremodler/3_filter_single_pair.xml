@@ -2,37 +2,41 @@
     <description> : Filter paired read mapping uniquely that pass mapping quality threshold</description>
     <command>
 		source $__tool_directory__/include_scaffremodler.sh ;
-        $__tool_directory__/3_filter_single_pair.py
-		--sam $sam
-		#if $input.have_config == "yes"
-			--config $input.config
-        #end if       
-        #if $input.have_config == "no"
-			--asxs $input.asxs
-			--qual $input.qual
-        #end if
+        python $__tool_directory__/3_filter_single_pair.py
+		--sam $sam 
+		--config $config 
+		--asxs $asxs
+		--qual $qual 
 		--out $out
     </command>
     <inputs>
-		<param name="sam" type="data" label="Sam paired file" />
-        <conditional name="input">
-            <param name="have_config" type="select" label="Do you have a config file?">
-				<option value="yes">yes</option>
-				<option value="no">no</option>
-            </param>
-            <when value="yes">
-                <param name="config" type="data" label="conf file"/>
-            </when>
-            <when value="no">
-				<param name="asxs" type="integer" value="0" label="Minimal difference between the best and second hit accepted to consider the hit as single" />
-				<param name="qual" type="integer" value="0" label="Minimal mapping quality to keep the hit" />
-            </when>
-        </conditional>
-		<param name="OUT" type="text" label="Identifier for output" />
+		<param name="sam" type="data" label="SAM file (--sam)" />  
+		<param name="config" type="data" label="Configuration file"/> 
+		<param name="asxs" type="integer" value="0" label="Minimal difference between the best and second hit accepted to consider the hit as single (--asxs)" />
+		<param name="qual" type="integer" value="0" label="Minimal mapping quality to keep the hit (--qual)" />  
     </inputs>
     <outputs>
-        <data format="sam" name="out" label="$OUT fltr_map.sam" />
+        <data format="sam" name="out" label="3_filter_single_pair : Quality threshold (SAM file)" />
     </outputs>
     <help>
-    </help>
-</tool>
+		
+  .. class:: infomark
+
+**Program encapsulated in Galaxy by South Green**
+    
+This program filter paired reads in a sam file sorted by query name. The filtering can be either done on the mapping quality and/or based on a threshold between AS/XS flags.
+
+This program output a filtered sam file sorted by query name. Unmapped and single end mapped pairs are not removed during this step.
+
+**Options**::
+
+    --sam : SAM file (The file should be sorted on query name).	
+    --asxs : an integer corresponding to the minimal difference between the AS/XS flag value to keep a pair. A pair is kept if both mate pass threshold.
+    --qual : an integer corresponding to the minimal mapping quality. If both mate of a pair have a mapping quality superior or equal to the asxs parameter, the pair is kept.
+	
+
+	</help>
+	<citations>
+        <citation type="doi">10.1186/s12864-016-2579-4</citation> 
+    </citations>
+</tool>  
