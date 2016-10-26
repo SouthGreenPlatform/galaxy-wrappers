@@ -473,12 +473,12 @@ def calculCovFromMateZones(LOCA_PROGRAMS, bamAmont, bamAval, TYPE, CHR_Amont, ST
 	#create two sam files for each zones with only the common reads
 	recupHeader = '%s view -H %s -o %s' % (LOCA_PROGRAMS.get('Programs','samtools'), 'bam_amont_tmp', 'sam_amont_selected_tmp')
 	run_job_silent(getframeinfo(currentframe()), recupHeader, 'Error in recupHeader:\n')
-	extractReads = '%s -R %s %s >> %s' % (LOCA_PROGRAMS.get('Programs','bamgrepreads'), 'commonReadsInMateZones_tmp', 'bam_amont_tmp', 'sam_amont_selected_tmp')
+	extractReads = '/homedir/droc/work/misc/jvarkit/dist/samgrep -f %s %s >> %s' % ( 'commonReadsInMateZones_tmp', 'bam_amont_tmp', 'sam_amont_selected_tmp')
 	run_job_silent(getframeinfo(currentframe()), extractReads, 'Error in extractReads:\n')
 
 	recupHeader = '%s view -H %s -o %s' % (LOCA_PROGRAMS.get('Programs','samtools'), 'bam_aval_tmp', 'sam_aval_selected_tmp')
 	run_job_silent(getframeinfo(currentframe()), recupHeader, 'Error in recupHeader:\n')
-	extractReads = '%s -R %s %s >> %s' % (LOCA_PROGRAMS.get('Programs','bamgrepreads'), 'commonReadsInMateZones_tmp', 'bam_aval_tmp', 'sam_aval_selected_tmp')
+	extractReads = '/homedir/droc/work/misc/jvarkit/dist/samgrep -f %s %s >> %s' % ( 'commonReadsInMateZones_tmp', 'bam_aval_tmp', 'sam_aval_selected_tmp')
 	run_job_silent(getframeinfo(currentframe()), extractReads, 'Error in extractReads:\n')
 
 	# calcul of the coverage of this two sam file
@@ -583,7 +583,7 @@ def decoup_chr_bam(LOCA_PROGRAMS, BAM, CHR, OUT, TYPE, overlap):
 				if os.path.getsize(tempo2.name) != 0:
 					recupHeader = '%s view -H %s -o %s' % (LOCA_PROGRAMS.get('Programs','samtools'), BAM, OUT+'_'+data[0]+'_'+str(debut)+'-'+str(fin)+'.sam')
 					run_job_silent(getframeinfo(currentframe()), recupHeader, 'Error in recupHeader:\n')
-					extractReads = '%s -R %s %s >> %s' % (LOCA_PROGRAMS.get('Programs','bamgrepreads'), tempo2.name, BAM, OUT+'_'+data[0]+'_'+str(debut)+'-'+str(fin)+'.sam')
+					extractReads = '/homedir/droc/work/misc/jvarkit/dist/samgrep -R %s %s >> %s' % (  tempo2.name, BAM, OUT+'_'+data[0]+'_'+str(debut)+'-'+str(fin)+'.sam')
 					run_job_silent(getframeinfo(currentframe()), extractReads, 'Error in extractReads:\n')
 
 					# Convert the sam file to the bam format for Samtools and bamgrepreads
@@ -634,7 +634,7 @@ def create_sub_sam(outLog, LOCA_PROGRAMS, BAM, CHR, START, END, OUT):
 	if os.path.getsize(tempo2.name) != 0:
 		recupHeader = '%s view -H %s -o %s' % (LOCA_PROGRAMS.get('Programs','samtools'), BAM, OUT)
 		run_job_silent(getframeinfo(currentframe()), recupHeader, 'Error in recupHeader:\n')
-		extractReads = '%s -R %s %s >> %s' % (LOCA_PROGRAMS.get('Programs','bamgrepreads'), tempo2.name, BAM, OUT)
+		extractReads = '/homedir/droc/work/misc/jvarkit/dist/samgrep -R %s %s >> %s' % (  tempo2.name, BAM, OUT)
 		run_job_silent(getframeinfo(currentframe()), extractReads, 'Error in extractReads:\n')
 	else:
 		logOutput = open(outLog, 'a')
@@ -779,7 +779,7 @@ def recalc_border(LOCA_PROGRAMS, LISTE, SAM, ZCOV, MAXCOV, MINCOV):
 	run_job_silent(getframeinfo(currentframe()), recupHeader, 'Error in (recalc_border) recupHeader :\n')
 
 	#concatenate the alignments specified to the header
-	extractReads = '%s -R %s %s >> %s' % (LOCA_PROGRAMS.get('Programs','bamgrepreads'), LISTE, SAM+'_bam', SAM+'_sub.sam')
+	extractReads = '/homedir/droc/work/misc/jvarkit/dist/samgrep -f %s %s >> %s' % (  LISTE, SAM+'_bam', SAM+'_sub.sam')
 	run_job_silent(getframeinfo(currentframe()), extractReads, 'Error in extractReads:\n')
 
 	#Verify if the sam file contains alignments

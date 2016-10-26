@@ -2,7 +2,7 @@
     <description> : Join scaffolds unsing a tabulated file</description>  
     <command>
 		source $__tool_directory__/include_scaffremodler.sh ;
-        $__tool_directory__/contig_scaff.py
+        python $__tool_directory__/contig_scaff.py
 		--table $table
 		--fasta $fasta
 		--out $out
@@ -19,5 +19,13 @@
         <data format="txt" name="out_verif" label="$OUT contig.txt" />
     </outputs>
     <help>
-    </help>
+		
+  .. class:: infomark
+
+**Program encapsulated in Galaxy by South Green**
+    
+	</help>
+	<citations>
+        <citation type="doi">10.1186/s12864-016-2579-4</citation> 
+    </citations>
 </tool>  

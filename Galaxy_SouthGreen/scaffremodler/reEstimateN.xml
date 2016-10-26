@@ -2,7 +2,7 @@
     <description> : Re-estimate N in multifasta (N restimated are converted to S)</description>  
     <command>
 		source $__tool_directory__/include_scaffremodler.sh ;
-        $__tool_directory__/reEstimateN.py
+        python $__tool_directory__/reEstimateN.py
 		--config $config
 		--exclude $exclude
 		--min_read $min_read
@@ -19,5 +19,13 @@
         <data format="fasta" name="out" label="$OUT N_estimated" />
     </outputs>
     <help>
-    </help>
+		
+  .. class:: infomark
+
+**Program encapsulated in Galaxy by South Green**
+    
+	</help>
+	<citations>
+        <citation type="doi">10.1186/s12864-016-2579-4</citation> 
+    </citations>
 </tool>  

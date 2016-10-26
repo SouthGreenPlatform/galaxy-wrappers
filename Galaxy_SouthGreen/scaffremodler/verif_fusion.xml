@@ -2,7 +2,7 @@
     <description> : Generate circos to verifies sequence fusions and junctions</description>  
     <command>
 		source $__tool_directory__/include_scaffremodler.sh ;
-        $__tool_directory__/verif_fusion.py
+        python $__tool_directory__/verif_fusion.py
 		--config $config
 		--list $list
 		--bound $bound
@@ -19,5 +19,13 @@
         <data format="tar" name="out_tar" label="$OUT verif.tar" />
     </outputs>
     <help>
-    </help>
+		
+  .. class:: infomark
+
+**Program encapsulated in Galaxy by South Green**
+    
+	</help>
+	<citations>
+        <citation type="doi">10.1186/s12864-016-2579-4</citation> 
+    </citations>
 </tool>  

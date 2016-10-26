@@ -2,7 +2,7 @@
     <description> : Create a file grouping scaffold name that should be joined together</description>  
     <command>
 		source $__tool_directory__/include_scaffremodler.sh ;
-        $__tool_directory__/group4contig.py
+        python $__tool_directory__/group4contig.py
 		--table $table
 		--out $out
 		
@@ -15,5 +15,13 @@
         <data format="txt" name="out" label="$OUT grouped.txt" />
     </outputs>
     <help>
-    </help>
-</tool>
+		
+  .. class:: infomark
+
+**Program encapsulated in Galaxy by South Green**
+    
+	</help>
+	<citations>
+        <citation type="doi">10.1186/s12864-016-2579-4</citation> 
+    </citations>
+</tool>  
