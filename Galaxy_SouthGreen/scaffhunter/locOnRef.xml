@@ -2,8 +2,12 @@
     <description> : Locate markers having uniq position on a reference </description>  
     <command>
 		source $__tool_directory__/include_scaffhunter.sh ;
-        $__tool_directory__/locOnRef.py  
-		--ref $ref
+        python $__tool_directory__/locOnRef.py  
+        #if str($reference_genome.source) == "history":
+            --ref $reference_genome.own_file  
+        #else:
+            --ref $reference_genome.index.fields.path
+        #end if 
 		--fasta $fasta
 		--margin $margin
 		--blast $blast
@@ -13,7 +17,24 @@
 		--out $out
     </command>
     <inputs>  
-    	<param name="ref" type="data" format="txt" label="Fasta reference file" />
+        <conditional name="reference_genome">
+        	<param name="source" type="select" label="Will you select a reference genome from your history or use a built-in index?" help="Built-ins were indexed using default options. See `Indexes` section of help below">
+            	<option value="indexed">Use a built-in genome index</option>
+            	<option value="history">Use a genome from the history and build index</option>
+          	</param>
+          	<when value="indexed">
+            	<param name="index" type="select" label="Select reference genome" help="If your genome of interest is not listed, contact the South Green team">
+					
+					<options from_data_table="scaffhunter">
+						<filter type="sort_by" column="1"/>
+						<validator type="no_options" message="No indexes are available for the selected input dataset"/>
+					</options> 
+            	</param>
+          	</when>
+          	<when value="history">
+            	<param name="own_file" type="data" format="fasta" metadata_name="dbkey" label="Select reference genome" />
+          	</when>
+        </conditional>		  
     	<param name="fasta" type="data" format="txt" label="Fasta markers file" />
 		<param name="margin" type="integer" value="500" label="Margin in which hit are considered identical (number of bases) when comparing the different tools" />
 		<param name="blast" type="select" label="Use blast" >
@@ -36,55 +57,15 @@
     </inputs>
     <outputs>
         <data format="txt" name="out" label="$OUT markOnRef" />
-    </outputs>
+    </outputs> 
     <help>
-    </help>
-</tool>
-
-
-<!--
-COMMAND
-
-        #set index_path = ''
-        #if str($reference_genome.source) == "history":
-            bowtie2-build "$reference_genome.own_file" genome &amp;&amp;
-            ln -s "$reference_genome.own_file" genome.fa &amp;&amp;
-            #set index_path = 'genome'
-        #else:
-            #set index_path = $reference_genome.index.fields.path
-        #end if
-
-
-INPUT
-   <conditional name="reference_genome">
-                <param name="source" type="select" label="Will you select a reference genome from your history or use a built-in index?" hel
-p="Built-ins were indexed using default options. See `Indexes` section of help below">
-                <option value="indexed">Use a built-in genome index</option>
-                <option value="history">Use a genome from the history and build index</option>
-                </param>
-                <when value="indexed">
-                <param name="index" type="select" label="Select reference genome" help="If your genome of interest is not listed, contact th
-e Galaxy team">
-                                        <options from_file="gbs.loc">
-                                                <column name="value" index="0"/>
-                                                <column name="name" index="1"/>
-                                                <column name="path" index="2"/>
-                                        </options>
-                </param>
-                </when>
-                <when value="history">
-                <param name="own_file" type="data" format="fasta" metadata_name="dbkey" label="Select reference genome" />
-                </when>
-        </conditional>
-
-more galaxy/tool-data/gbs.loc
-OS_genome       Genome Oryza sativa ssp. japonica       /bank/oryza_sativa_japonica/MSU7_pseudochromosome_gbs
-AT_genome       Genome Arabidopsis thaliana     /bank/arabidopsis_thaliana/TAIR9_pseudochromosome_gbs
-SB_genome       Genome Sorghum bicolor (v2.1)   /bank/sorghum_bicolor/JGI_2.1_pseudochromosome_gbs
-CC_genome       Genome Coffea canephora /bank/coffea_canefora/pseudomolecules.fa
-Tassel_test     Zea maize (Tassel test) /bank/zea_maize/ZmB73_RefGen_v2_chr9_10_1st20MB.fasta
-VV_genome       Genome Vitis vinifera (12xV2)   /NAS/davem_data/daav/external_public/VitisOmics/results/urgi/VITVI_PN40024_12x_v2_chroms_URG
-I_for_Tassel.fa
-
 		
--->
+  .. class:: infomark
+
+**Program encapsulated in Galaxy by South Green**
+    
+	</help>
+	<citations>
+        <citation type="doi">10.1186/s12864-016-2579-4</citation> 
+    </citations>
+</tool>  
