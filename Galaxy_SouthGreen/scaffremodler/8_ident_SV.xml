@@ -6,8 +6,8 @@
 		--frf $frf
 		--ff $ff
 		--rr $rr
-		--ins $ins
-		--delet $delet
+		--ins $insertion
+		--delet $deletion
 		--chr_rr $chr_rr
 		--chr_fr $chr_fr
 		--chr_rf $chr_rf
@@ -23,11 +23,11 @@
 			--exp_cov $input.exp_cov
 			--ploid $input.ploid
         #end if
-		--out $out
+		--out $sv_detected
 	</command>
 	<inputs>
-		<param name="ins" type="data" label="Discordant ins_score file"/>
-		<param name="delet" type="data" label="Discordant del_score file"/>
+		<param name="insertion" type="data" label="Discordant ins_score file"/>
+		<param name="deletion" type="data" label="Discordant del_score file"/>
 		<param name="frf" type="data" label="Discordant fr_score or rf_score file depending on expected orientation"/>
 		<param name="ff" type="data" label="Discordant ff_score file"/>
 		<param name="rr" type="data" label="Discordant rr_score file"/>
@@ -55,10 +55,10 @@
 				<param name="ploid" type="float" value="0.33" label="Multiplicator for coverage variation detection in SV identification (ex : If homozygous duplication expected in diploid: expected = coverage + coverage*1, if heterozygous duplication expected in diploid => expected = coverage + coverage*0.5). Choose a value lower than the expected one" />
 			</when>
 		</conditional>
-		<param name="OUT" type="text" label="Identifier for output" />
+		<param name="prefix" type="text" label="Identifier for output" />
 	</inputs>
 	<outputs>
-		<data format="txt" name="out" label="$OUT SV_detected " />
+		<data format="txt" name="sv_detected" label="${tool.name} : $prefix SV_detected " />
 	</outputs>
     <help>
 		

@@ -9,10 +9,10 @@
     </command>
     <inputs>
 		<param name="fasta" type="data" label="The fasta file" />
-		<param name="OUT" type="text" label="Identifier for output" />
+		<param name="prefix" type="text" label="Identifier for output" />
     </inputs>
     <outputs>
-        <data format="fasta" name="out" label="$OUT split.fasta" />
+        <data format="fasta" name="out" label="${tool.name} : $prefix split fasta" />
     </outputs>
     <help>
 		

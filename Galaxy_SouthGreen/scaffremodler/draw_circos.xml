@@ -28,7 +28,7 @@
 		--read_chr_fr $read_chr_fr
 		--read_chr_ff $read_chr_ff
 		--text $text
-		--out $out
+		--out $circos_file
 		
     </command>
     <inputs>
@@ -151,10 +151,10 @@
 			<option value="n">n</option>
 		</param>
 		
-		<param name="OUT" type="text" label="Identifier for output" />
+		<param name="prefix" type="text" label="Identifier for output" value="circos" />
     </inputs>
     <outputs>
-        <data name="out" format="png" label="$OUT .png" />
+        <data name="circos_file" format="png" label="${tool.name} : $prefix .png" />
     </outputs>
     <help>
     </help>

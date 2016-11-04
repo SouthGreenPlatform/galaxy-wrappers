@@ -6,8 +6,7 @@
 		--config $config
 		--list $list
 		--bound $bound
-		--out_tar $out_tar
-		--output_path SampleDataset
+		--out_tar $circos_tar 
 		
     </command>
     <inputs>
@@ -18,10 +17,7 @@
 		<param name="OUT" type="text" label="Identifier for output" />
     </inputs>
     <outputs>
-        <data format="tar" name="out_tar" label="$OUT verif.tar" />
-        <collection type="list" label="$job_name" name="output1">
-            <discover_datasets pattern="__designation__" format="png" directory="SampleDataset" />
-        </collection>
+        <data format="tar" name="circos_tar" label="${tool.name} : Circos to verifies sequence fusions and junctions (tar file)" /> 
     </outputs>
     <help>
 		

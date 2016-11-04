@@ -3,20 +3,20 @@
     <command>
 		source $__tool_directory__/include_scaffremodler.sh ;
         python $__tool_directory__/3_filter_single_pair.py
-		--sam $sam 
-		--config $config 
+		--sam $sam_file
+		--config $config_file 
 		--asxs $asxs
 		--qual $qual 
-		--out $out
+		--out $quality_threshold
     </command>
     <inputs>
-		<param name="sam" type="data" label="SAM file (--sam)" />  
-		<param name="config" type="data" label="Configuration file"/> 
+		<param name="sam_file" type="data" label="SAM file (--sam)" />  
+		<param name="config_file" type="data" label="Configuration file"/> 
 		<param name="asxs" type="integer" value="0" label="Minimal difference between the best and second hit accepted to consider the hit as single (--asxs)" />
 		<param name="qual" type="integer" value="0" label="Minimal mapping quality to keep the hit (--qual)" />  
     </inputs>
     <outputs>
-        <data format="sam" name="out" label="3_filter_single_pair : Quality threshold (SAM file)" />
+        <data format="sam" name="quality_threshold" label="${tool.name} : Quality threshold (SAM file)" />
     </outputs>
     <help>
 		

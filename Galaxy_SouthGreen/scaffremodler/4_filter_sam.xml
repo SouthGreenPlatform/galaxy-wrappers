@@ -3,16 +3,16 @@
     <command>
 		source $__tool_directory__/include_scaffremodler.sh ;
         python $__tool_directory__/4_filter_sam.py
-		--sam $sam
-		--config $config 
-		--out $out
+		--sam $sam_file
+		--config $config_file
+		--out $bam_remove_redundancy
     </command>
     <inputs>
-		<param name="sam" type="data" label="Filtered SAM file" /> 
-        <param name="config" type="data" label="Configuration file"/>  
+		<param name="sam_file" type="data" label="Filtered SAM file" /> 
+        <param name="config_file" type="data" label="Configuration file"/>  
     </inputs>
     <outputs>
-        <data format="bam" name="out" label="4_filter_sam : Remove redundancy (BAM file)" />
+        <data format="bam" name="bam_remove_redundancy" label="${tool.name} : Remove redundancy (BAM file)" />
     </outputs>
     <help>
 		

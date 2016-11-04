@@ -5,18 +5,18 @@
         python $__tool_directory__/fusion_scaff.py
 		--table $table
 		--fasta $fasta
-		--out $out
-		--out_verif $out_verif
+		--out $fusion_fasta
+		--out_verif $fusion_tabulated
 		
     </command>
     <inputs>
 		<param name="table" type="data" label="The table file of scaffold to merge" />
 		<param name="fasta" type="data" label="The multi-fasta scaffold file" />
-		<param name="OUT" type="text" label="Identifier for output" />
+		<param name="prefix" type="text" label="Identifier for output" />
     </inputs>
     <outputs>
-        <data format="fasta" name="out" label="$OUT fusion.fasta" />
-        <data format="txt" name="out_verif" label="$OUT fusion.txt" />
+        <data format="fasta" name="fusion_fasta" label="${tool.name} : $prefix fusion (fasta)" />
+        <data format="txt" name="fusion_tabulated" label="${tool.name} : $prefix fusion (tabulated)" />
     </outputs>
     <help>
 		

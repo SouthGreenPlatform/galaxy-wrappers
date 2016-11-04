@@ -5,18 +5,18 @@
         python $__tool_directory__/contig_scaff.py
 		--table $table
 		--fasta $fasta
-		--out $out
-		--out_verif $out_verif
+		--out $fasta_file
+		--out_verif $tabulated_file
 		
     </command>
     <inputs>
 		<param name="table" type="data" label="The table file of scaffold to join" />
 		<param name="fasta" type="data" label="The multi-fasta scaffold file" />
-		<param name="OUT" type="text" label="Identifier for output" />
+		<param name="prefix" type="text" label="Identifier for output" />
     </inputs>
     <outputs>
-        <data format="fasta" name="out" label="$OUT contig.fasta" />
-        <data format="txt" name="out_verif" label="$OUT contig.txt" />
+        <data format="fasta" name="fasta_file" label="${tool.name} : $prefix fasta" />
+        <data format="txt" name="tabulated_file" label="${tool.name} : $prefix tabulated" />
     </outputs>
     <help>
 		

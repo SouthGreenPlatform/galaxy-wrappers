@@ -63,9 +63,10 @@
 		#if $have_agp.have_agp_opt == "yes"
 			--agp $have_agp.agp
 		#end if
-		--out_kar $out_kar
+		--output $circos_configuration
+		--out_kar $out_karyotype
 		--out_N $out_N
-		--out_cov $out_cov
+		--out_cov $out_coverage
 		--out_frf $out_frf
 		--out_ff $out_ff
 		--out_rr $out_rr
@@ -86,7 +87,6 @@
 		--Rout_chr_ff $Rout_chr_ff
 		--Rout_chr_fr $Rout_chr_fr
 		--out_scaff $out_scaff
-		--output $output
 		
     </command>
     <inputs>
@@ -234,33 +234,33 @@
 				<param name="agp" type="data" label="An agp file locating scaffold" />
 			</when>
 		</conditional>
-		<param name="OUT" type="text" label="Identifier for output" />
+		<param name="prefix" type="text" label="Identifier for output" value="Circos" />
     </inputs>
     <outputs>
-        <data format="txt" name="output" label="$OUT circos_conf" />
-        <data format="txt" name="out_kar" label="$OUT circos_KAR" />
-        <data format="txt" name="out_N" label="$OUT circos_locN" />
-        <data format="txt" name="out_cov" label="$OUT circos_cov" />
-        <data format="txt" name="out_frf" label="$OUT circos_frf" />
-        <data format="txt" name="out_ff" label="$OUT circos_ff" />
-        <data format="txt" name="out_rr" label="$OUT circos_rr" />
-        <data format="txt" name="out_ins" label="$OUT circos_ins" />
-        <data format="txt" name="out_delet" label="$OUT circos_delet" />
-        <data format="txt" name="out_chr_rr" label="$OUT circos_chr_rr" />
-        <data format="txt" name="out_chr_rf" label="$OUT circos_chr_rf" />
-        <data format="txt" name="out_chr_ff" label="$OUT circos_chr_ff" />
-        <data format="txt" name="out_chr_fr" label="$OUT circos_chr_fr" />
-        <data format="txt" name="Rout_rf" label="$OUT circosR_rf" />
-        <data format="txt" name="Rout_fr" label="$OUT circosR_fr" />
-        <data format="txt" name="Rout_ff" label="$OUT circosR_ff" />
-        <data format="txt" name="Rout_rr" label="$OUT circosR_rr" />
-        <data format="txt" name="Rout_ins" label="$OUT circosR_ins" />
-        <data format="txt" name="Rout_delet" label="$OUT circosR_delet" />
-        <data format="txt" name="Rout_chr_rr" label="$OUT circosR_chr_rr" />
-        <data format="txt" name="Rout_chr_rf" label="$OUT circosR_chr_rf" />
-        <data format="txt" name="Rout_chr_ff" label="$OUT circosR_chr_ff" />
-        <data format="txt" name="Rout_chr_fr" label="$OUT circosR_chr_fr" />
-        <data format="txt" name="out_scaff" label="$OUT circos_scaff" />
+        <data format="txt" name="circos_configuration" label="${tool.name} : $prefix configuration" />
+        <data format="txt" name="out_karyotype" label="${tool.name} : $prefix Karyotype" />
+        <data format="txt" name="out_N" label="${tool.name} : $prefix location N" />
+        <data format="txt" name="out_coverage" label="${tool.name} : $prefix coverage" />
+        <data format="txt" name="out_frf" label="${tool.name} : $prefix circos_frf" />
+        <data format="txt" name="out_ff" label="${tool.name} : $prefix ff" />
+        <data format="txt" name="out_rr" label="${tool.name} : $prefix rr" />
+        <data format="txt" name="out_ins" label="${tool.name} : $prefix insertion" />
+        <data format="txt" name="out_delet" label="${tool.name} : $prefix deletion" />
+        <data format="txt" name="out_chr_rr" label="${tool.name} : $prefix chr_rr" />
+        <data format="txt" name="out_chr_rf" label="${tool.name} : $prefix chr_rf" />
+        <data format="txt" name="out_chr_ff" label="${tool.name} : $prefix chr_ff" />
+        <data format="txt" name="out_chr_fr" label="${tool.name} : $prefix chr_fr" />
+        <data format="txt" name="Rout_rf" label="${tool.name} : $prefix R_rf" />
+        <data format="txt" name="Rout_fr" label="${tool.name} : $prefix R_fr" />
+        <data format="txt" name="Rout_ff" label="${tool.name} : $prefix R_ff" />
+        <data format="txt" name="Rout_rr" label="${tool.name} : $prefix circosR_rr" />
+        <data format="txt" name="Rout_ins" label="${tool.name} : $prefix  R_insertion" />
+        <data format="txt" name="Rout_delet" label="${tool.name} : $prefix R_deletion" />
+        <data format="txt" name="Rout_chr_rr" label="${tool.name} : $prefix R_chr_rr" />
+        <data format="txt" name="Rout_chr_rf" label="${tool.name} : $prefix R_chr_rf" />
+        <data format="txt" name="Rout_chr_ff" label="${tool.name} : $prefix R_chr_ff" />
+        <data format="txt" name="Rout_chr_fr" label="${tool.name} : $prefix R_chr_fr" />
+        <data format="txt" name="out_scaff" label="${tool.name} : $prefix scaffold" />
     </outputs>
     <help>
 		

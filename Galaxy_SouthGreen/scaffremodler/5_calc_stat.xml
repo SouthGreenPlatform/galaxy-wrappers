@@ -3,20 +3,20 @@
     <command>
 		source $__tool_directory__/include_scaffremodler.sh ;
         python $__tool_directory__/5_calc_stat.py
-		--sam $sam
-		--config $config
-		--out $out
-		--stat $stat
-		--outconf $outconf
+		--sam $sam_file
+		--config $config_file
+		--out $coverage
+		--stat $statistic
+		--outconf $new_config_file
     </command>
     <inputs>
-		<param name="sam" type="data" label="Sam/bam file" />
-		<param name="config" type="data" label="Configuration file"/> 
+		<param name="sam_file" type="data" label="Sam/bam file" />
+		<param name="config_file" type="data" label="Configuration file"/> 
     </inputs>
     <outputs>
-        <data format="txt" name="out" label="5_calc_stat : Coverage" />
-        <data format="txt" name="stat" label="5_calc_stat : Statistic" />
-        <data format="txt" name="outconf" label="5_calc_stat : Configuration" />
+        <data format="txt" name="coverage" label="${tool.name} : Coverage" />
+        <data format="txt" name="statistic" label="${tool.name} : Statistic" />
+        <data format="txt" name="new_config_file" label="${tool.name} : New Configuration" />
     </outputs>
     <help>
 		

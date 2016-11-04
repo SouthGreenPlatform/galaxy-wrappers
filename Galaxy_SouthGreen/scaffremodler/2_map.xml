@@ -8,7 +8,7 @@
 		<param name="config" type="data" label="Configuration file"/> 
     </inputs>
     <outputs>
-        <data format="sam" name="alignment" label="${tool.name} : $OUT Mapping (SAM file)" />
+        <data format="sam" name="alignment" label="${tool.name} : Mapping (SAM file)" />
     </outputs>
     <help>
 		

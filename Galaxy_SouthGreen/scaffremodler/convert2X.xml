@@ -9,7 +9,7 @@
         #else:
             --fasta $reference_genome.index.fields.path
         #end if   
-		--out $out
+		--out $converted_fasta
 		
     </command>
     <inputs>
@@ -32,10 +32,10 @@
             	<param name="own_file" type="data" format="fasta" metadata_name="dbkey" label="Select reference genome" />
           	</when>
         </conditional>
-		<param name="OUT" type="text" label="Identifier for output" />
+		<param name="prefix" type="text" label="Identifier for output" />
     </inputs>
     <outputs>
-        <data format="fasta" name="out" label="$OUT X_convert.fasta" />
+        <data format="fasta" name="converted_fasta" label="${tool.name} : $prefix X_convert.fasta" />
     </outputs>
     <help>
 		

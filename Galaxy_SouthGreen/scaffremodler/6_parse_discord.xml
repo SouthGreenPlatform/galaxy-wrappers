@@ -3,9 +3,9 @@
     <command>
 		source $__tool_directory__/include_scaffremodler.sh ;
         python $__tool_directory__/6_parse_discord.py
-		--config $config 
-		--out_ins $out_ins
-		--out_del $out_del
+		--config $config_file 
+		--out_ins $out_insertion
+		--out_del $out_deletion
 		--out_fr $out_fr
 		--out_rf $out_rf
 		--out_ff $out_ff
@@ -15,26 +15,26 @@
 		--out_chr_ff $out_chr_ff
 		--out_chr_rr $out_chr_rr
 		--out_discarded $out_discarded
-		--discord_prop $discord_prop
-		--liste_type $liste_type
+		--discord_prop $discordant_proportion
+		--liste_type $list_type
     </command>
     <inputs> 
-		<param name="config" type="data" label="Configuration file"/>  
+		<param name="config_file" type="data" label="Configuration file"/>  
     </inputs>
     <outputs>
-        <data format="bam" name="out_ins" label="6_parse_discord : Insertion" />
-        <data format="bam" name="out_del" label="6_parse_discord : Deletion" />
-        <data format="bam" name="out_fr" label="6_parse_discord : Forward-Reverse" />
-        <data format="bam" name="out_rf" label="6_parse_discord : Reverse-Forward" />
-        <data format="bam" name="out_ff" label="6_parse_discord : Forward-Forward" />
-        <data format="bam" name="out_rr" label="6_parse_discord : Reverse-Reverse" />
-        <data format="bam" name="out_chr_fr" label="6_parse_discord : Chromosome-FR" />
-        <data format="bam" name="out_chr_rf" label="6_parse_discord : Chromosome-RF" />
-        <data format="bam" name="out_chr_ff" label="6_parse_discord : Chromosome-FF" />
-        <data format="bam" name="out_chr_rr" label="6_parse_discord : Chromosome-RR" />
-        <data format="bam" name="out_discarded" label="discarded.bam" />
-        <data format="txt" name="discord_prop" label="6_parse_discord : Discordant read proportion" />
-        <data format="txt" name="liste_type" label="6_parse_discord: List" />
+        <data format="bam" name="out_insertion" label="${tool.name} : Insertion" />
+        <data format="bam" name="out_deletion" label="${tool.name} : Deletion" />
+        <data format="bam" name="out_fr" label="${tool.name} : Forward-Reverse" />
+        <data format="bam" name="out_rf" label="${tool.name} : Reverse-Forward" />
+        <data format="bam" name="out_ff" label="${tool.name} : Forward-Forward" />
+        <data format="bam" name="out_rr" label="${tool.name} : Reverse-Reverse" />
+        <data format="bam" name="out_chr_fr" label="${tool.name} : Chromosome-FR" />
+        <data format="bam" name="out_chr_rf" label="${tool.name} : Chromosome-RF" />
+        <data format="bam" name="out_chr_ff" label="${tool.name} : Chromosome-FF" />
+        <data format="bam" name="out_chr_rr" label="${tool.name} : Chromosome-RR" />
+        <data format="bam" name="out_discarded" label="${tool.name} : Read discarded" />
+        <data format="txt" name="discordant_proportion" label="${tool.name} : Discordant read proportion" />
+        <data format="txt" name="list_type" label="${tool.name} : List" />
     </outputs>
     <help>
 		

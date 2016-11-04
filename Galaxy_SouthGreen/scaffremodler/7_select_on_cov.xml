@@ -3,17 +3,17 @@
     <command>
 		source $__tool_directory__/include_scaffremodler.sh ;
         python $__tool_directory__/7_select_on_cov.py
-		--sam $sam 
-		--config $config
+		--sam $sam_file
+		--config $config_file
 		--out $out
     </command>
     <inputs>
-		<param name="sam" type="data" label="Sam/bam discordant file" /> 
-        <param name="config" type="data" label="conf file"/>
-		<param name="OUT" type="text" label="Identifier for output" />
+		<param name="sam_file" type="data" label="Sam/bam discordant file" /> 
+        <param name="config_file" type="data" label="conf file"/>
+		<param name="prefix" type="text" label="Identifier for output" />
     </inputs>
     <outputs>
-        <data format="txt" name="out" label="7_select_on_cov : $OUT score" />
+        <data format="txt" name="out" label="${tool.name} : $prefix score" />
     </outputs>
     <help>
 		

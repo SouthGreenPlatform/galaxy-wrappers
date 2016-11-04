@@ -4,15 +4,15 @@
 		source $__tool_directory__/include_scaffremodler.sh ;
         python $__tool_directory__/group4contig.py
 		--table $table
-		--out $out
+		--out $grouped_scaffold
 		
     </command>
     <inputs>
 		<param name="table" type="data" label="The table file of scaffold to join" />
-		<param name="OUT" type="text" label="Identifier for output" />
+		<param name="prefix" type="text" label="Identifier for output" />
     </inputs>
     <outputs>
-        <data format="txt" name="out" label="$OUT grouped.txt" />
+        <data format="txt" name="grouped_scaffold" label="${tool.name} : $prefix grouped scaffold" />
     </outputs>
     <help>
 		
