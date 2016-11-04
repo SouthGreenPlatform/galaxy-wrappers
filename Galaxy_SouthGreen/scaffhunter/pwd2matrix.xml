@@ -3,16 +3,24 @@
     <command>
 		source $__tool_directory__/include_scaffhunter.sh ;
         $__tool_directory__/pwd2matrix.py  
-		--pwd $pwd
-		--out $out
+		--pwd $pairwise
+		--out $matrix
     </command>
     <inputs>  
-    	<param name="pwd" type="data" format="txt" label="Pairwise file" />
-		<param name="OUT" type="text" label="Prefix of output file" />
+    	<param name="pairwise" type="data" format="tabular" label="Pairwise file" />
+		<param name="prefix" type="text" label="Prefix of output file" value="output" />
     </inputs>
     <outputs>
-        <data format="txt" name="out" label="$OUT matrix" />
+        <data format="tabular" name="matrix" label="${tool.name} : $prefix matrix" />
     </outputs>
     <help>
-    </help>
-</tool>
+		
+  .. class:: infomark
+
+**Program encapsulated in Galaxy by South Green**
+    
+	</help>
+	<citations>
+        <citation type="doi">10.1186/s12864-016-2579-4</citation> 
+    </citations>
+</tool>  

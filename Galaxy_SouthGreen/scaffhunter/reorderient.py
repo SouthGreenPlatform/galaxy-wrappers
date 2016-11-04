@@ -1,4 +1,4 @@
-#!/usr/local/bioinfo/python/2.7.9/bin/python
+
 #
 #  Copyright 2014 CIRAD
 #
@@ -19,6 +19,7 @@
 #  MA 02110-1301, USA.
 #
 #
+
 
 import optparse, os, shutil, subprocess, sys, tempfile, fileinput, ConfigParser, operator, time, random
 

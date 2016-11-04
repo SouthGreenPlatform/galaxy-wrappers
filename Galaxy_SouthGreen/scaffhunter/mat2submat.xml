@@ -5,16 +5,24 @@
         $__tool_directory__/mat2submat.py  
 		--mark $mark
 		--mat $mat
-		--out $out
+		--out $sub_matrix
     </command>
     <inputs>
-    	<param name="mat" type="data" format="txt" label="The data matrix" />
-    	<param name="mark" type="data" format="txt" label="A tabulated file containing in col 1 markers ids that will be contained in the sub-matrix" />
-		<param name="OUT" type="text" label="Prefix of output files" />
+    	<param name="mat" type="data" format="tabular" label="The data matrix with pair-wise statistics between markers" />
+    	<param name="mark" type="data" format="tabular" label="A tabulated file containing in col 1 markers ids that will be contained in the sub-matrix" />
+		<param name="prefix" type="text" label="Prefix of output files"   />
     </inputs>
     <outputs>
-        <data format="txt" name="out" label="$OUT sub-matrix" />
+        <data format="tabular" name="sub_matrix" label="${tool.name} : $prefix sub-matrix" />
     </outputs>
     <help>
-    </help>
-</tool>
+		
+  .. class:: infomark
+
+**Program encapsulated in Galaxy by South Green**
+    
+	</help>
+	<citations>
+        <citation type="doi">10.1186/s12864-016-2579-4</citation> 
+    </citations>
+</tool>  

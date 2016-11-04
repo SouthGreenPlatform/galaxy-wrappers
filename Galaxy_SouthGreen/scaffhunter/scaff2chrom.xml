@@ -5,23 +5,31 @@
         $__tool_directory__/scaff2chrom.py  
 		--table $table
 		--seq $seq
-		--out $out
-		--agp $agp
+		--out $fasta_file
+		--agp $agp_file
 		--unknown $unknown
     </command>
     <inputs>
 		<param name="seq" type="data" format="fasta" label="Scaffold fasta file" />
-    	<param name="table" type="data" format="txt" label="Table file containing in column 1: chromosome name, column 2: scaffold name, column 3: expected orientation (FWD or REV)" />
-		<param name="OUT" type="text" label="Prefix of output files" />
+    	<param name="table" type="data" format="tabular" label="Table file containing in column 1: chromosome name, column 2: scaffold name, column 3: expected orientation (FWD or REV)" />
+		<param name="prefix" type="text" label="Prefix of output files" />
 		<param name="unknown" type="select" label="Create unknown chromosome with remaining sequences" >
 			<option value="yes">yes</option>
 			<option value="no">no</option>
 		</param>
     </inputs>
     <outputs>
-        <data format="fasta" name="out" label="$OUT fasta" />
-        <data format="txt" name="agp" label="$OUT agp" />
+        <data format="fasta" name="fasta_file" label="${tool.name} : $prefix fasta" />
+        <data format="txt" name="agp_file" label="${tool.name} : $prefix agp" />
     </outputs>
     <help>
-    </help>
-</tool>
+		
+  .. class:: infomark
+
+**Program encapsulated in Galaxy by South Green**
+    
+	</help>
+	<citations>
+        <citation type="doi">10.1186/s12864-016-2579-4</citation> 
+    </citations>
+</tool>  

@@ -1,4 +1,4 @@
-#!/usr/local/bioinfo/python/2.7.9/bin/python
+
 #
 #  Copyright 2014 CIRAD
 #
@@ -89,9 +89,9 @@ def __main__():
 	
 	proc = int(options.thread)
 	
-	# print ('ScriptPath', ScriptPath)
-	# print ("output", options.out)
-	# print ("input", options.ref)
+	#print ('ScriptPath', ScriptPath)
+	#print ("output", options.out)
+	#print ("input", options.ref)
 	
 	#Verifying redundancy
 	dico = set()
@@ -112,7 +112,7 @@ def __main__():
 	liste_job = []
 	if options.index == 'y':
 		if options.blast == 'y':
-			liste_job.append('%s -i %s -p F -o T' % (loca_programs.get('Programs','formatdb'), options.ref))
+			liste_job.append('%s -in %s -dbtype nucl' % (loca_programs.get('Programs','formatdb'), options.ref))
 		if options.bwa_mem == 'y':
 			liste_job.append('%s index -a bwtsw %s 2>/dev/null' % (loca_programs.get('Programs','bwa'), options.ref))
 		if  options.bow == 'y' or options.bow_loc == 'yes':
@@ -134,15 +134,12 @@ def __main__():
 			for process in liste_process:
 				process.join()
 			liste_process = []
-		
-		if options.blast == 'y':
-			os.system('rm formatdb.log')
 	
 	#Mapping
 	liste_job = []
 	if options.blast == 'y':
 		outblast = options.out+'_blast'
-		liste_job.append('%s -p blastn -i %s -d %s -o %s -e 1e-10 -F F' % (loca_programs.get('Programs','blastall'), options.fasta, options.ref, outblast))
+		liste_job.append('%s -query %s -db %s -out %s -evalue 1e-10 -dust no' % (loca_programs.get('Programs','blastall'), options.fasta, options.ref, outblast))
 	if options.bwa_mem == 'y':
 		outbwa = options.out+'_bwa'
 		liste_job.append('%s mem -M %s %s > %s' % (loca_programs.get('Programs','bwa'), options.ref, options.fasta, outbwa))
@@ -280,6 +277,7 @@ def __main__():
 	dico_group = {}
 	for n in dico:
 		if len(dico[n]) == 1:
+			# outfile.write(n+'\t'+'\t'.join(list(dico[n])[0].split('%'))+'\n')
 			chr =list(dico[n])[0].split('%')[0]
 			pos = int(list(dico[n])[0].split('%')[1])
 			if chr in dico_group:
@@ -303,6 +301,7 @@ def __main__():
 					if chr != chr_ref or pos < pos_deb or pos > pos_fin:
 						proches = 0
 			if proches == 1:
+				# outfile.write(n+'\t'+chr_ref+'\t'+str(pos_ref)+'\n')
 				if chr_ref in dico_group:
 					dico_group[chr_ref].append([n,pos_ref])
 				else:

@@ -6,21 +6,29 @@
 		--mat $mat
 		--order $order
 		--type $type
-		--png $png
+		--png $dotplot
     </command>
     <inputs>  
-    	<param name="mat" type="data" format="txt" label="The data matrix" />
-    	<param name="order" type="data" format="txt" label="A table file containing in col 1 : marker name, col 2 : marker group" />
+    	<param name="mat" type="data" format="tabular" label="The data matrix" />
+    	<param name="order" type="data" format="tabular" label="A table file containing in col 1 : marker name, col 2 : marker group" />
 		<param name="type" type="select" label="The type of statistics in the matrix" >
 			<option value="LOD">LOD</option>
 			<option value="REC">REC</option>
 			<option value="COR">COR</option>
 		</param>
-		<param name="OUT" type="text" label="Prefix of output files" />
+		<param name="prefix" type="text" label="Prefix of output files" value="dotplot" />
     </inputs>
     <outputs>
-        <data format="png" name="png" label="$OUT .png" />
+        <data format="png" name="dotplot" label="${tool.name} : $prefix .png" />
     </outputs>
     <help>
-    </help>
-</tool>
+		
+  .. class:: infomark
+
+**Program encapsulated in Galaxy by South Green**
+    
+	</help>
+	<citations>
+        <citation type="doi">10.1186/s12864-016-2579-4</citation> 
+    </citations>
+</tool>  

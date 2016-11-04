@@ -2,18 +2,26 @@
     <description> : Convert JoinMap pair-wise file to a tabulated matrix</description>  
     <command>
         $__tool_directory__/JMpwd2matrix.py  
-		--pwd $pwd
-		--lod $lod
-		--rec $rec
+		--pwd $joinmap
+		--lod $lod_matrix
+		--rec $rec_matrix
     </command>
     <inputs>  
-    	<param name="pwd" type="data" format="txt" label="Pairwise file" />
-		<param name="OUT" type="text" label="Prefix of output files" />
+    	<param name="joinmap" type="data" format="tabular" label="Pairwise file" />
+		<param name="prefix" type="text" label="Prefix of output files" value="JoinMap" />
     </inputs>
     <outputs>
-        <data format="txt" name="lod" label="$OUT LOD matrix" />
-        <data format="txt" name="rec" label="$OUT REC matrix" />
+        <data format="tabular" name="lod_matrix" label="${tool.name} : $prefix LOD matrix" />
+        <data format="tabular" name="rec_matrix" label="${tool.name} : $prefix REC matrix" />
     </outputs>
     <help>
-    </help>
-</tool>
+		
+  .. class:: infomark
+
+**Program encapsulated in Galaxy by South Green**
+    
+	</help>
+	<citations>
+        <citation type="doi">10.1186/s12864-016-2579-4</citation> 
+    </citations>
+</tool>  

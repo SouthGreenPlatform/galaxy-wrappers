@@ -14,7 +14,9 @@
 		--bwa_mem $bwa_mem
 		--bow $bow
 		--bow_loc $bow_loc
-		--out $out
+		--index $index 
+		--rmindex $rmindex
+		--out $alignment
     </command>
     <inputs>  
         <conditional name="reference_genome">
@@ -34,7 +36,15 @@
           	<when value="history">
             	<param name="own_file" type="data" format="fasta" metadata_name="dbkey" label="Select reference genome" />
           	</when>
-        </conditional>		  
+        </conditional>	
+		<param name="index" type="select" label="Create index if reference not indexed">
+			<option selected="true" value="y">y</option>
+			<option value="n">n</option>
+		</param> 
+		<param name="rmindex" type="select" label="Remove index">
+			<option selected="true" value="y">y</option>
+			<option value="n">n</option>
+		</param>
     	<param name="fasta" type="data" format="txt" label="Fasta markers file" />
 		<param name="margin" type="integer" value="500" label="Margin in which hit are considered identical (number of bases) when comparing the different tools" />
 		<param name="blast" type="select" label="Use blast" >
@@ -53,10 +63,10 @@
 			<option value="y">y</option>
 			<option value="n">n</option>
 		</param>
-		<param name="OUT" type="text" label="Prefix of output files" />
+		<param name="prefix" type="text" label="Prefix of output files" value="alignment" />
     </inputs>
     <outputs>
-        <data format="txt" name="out" label="$OUT markOnRef" />
+        <data format="tabular" name="alignment" label="${tool.name} : $prefix marker" />
     </outputs> 
     <help>
 		
