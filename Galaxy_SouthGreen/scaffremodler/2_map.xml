@@ -2,13 +2,13 @@
     <description> : Map read onto a reference fasta file</description>
     <command>
 		source $__tool_directory__/include_scaffremodler.sh ;
-        python $__tool_directory__/2_map.py --config $config --out $out  
+        python $__tool_directory__/2_map.py --config $config --out $alignment  
     </command>
     <inputs>
 		<param name="config" type="data" label="Configuration file"/> 
     </inputs>
     <outputs>
-        <data format="sam" name="out" label="2_map : Mapping (SAM file)" />
+        <data format="sam" name="alignment" label="${tool.name} : $OUT Mapping (SAM file)" />
     </outputs>
     <help>
 		

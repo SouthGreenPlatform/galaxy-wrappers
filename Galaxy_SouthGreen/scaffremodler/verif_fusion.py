@@ -80,8 +80,7 @@ def __main__():
 	parser.add_option( '', '--thread', dest='thread', default='1', help='Thread number used for circos drawing (integer), [default: %default]')
 	parser.add_option( '', '--out_tar', dest='out_tar', default='verif.tar', help='The archive output file containing all circos generated')
 	(options, args) = parser.parse_args()
-	
-	
+
 	pathname = os.path.dirname(sys.argv[0])
 	
 	loca_programs = ConfigParser.RawConfigParser()

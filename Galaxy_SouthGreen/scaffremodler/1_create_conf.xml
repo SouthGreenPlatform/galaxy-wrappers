@@ -103,8 +103,8 @@
 		</param>  
     </inputs>
     <outputs>
-        <data format="txt" name="config_file" label="1_create_conf : Configuration file" />
-        <data format="data" name="chromosome_information" label="1_create_conf : Chromosome information" />
+        <data format="txt" name="config_file" label="${tool.name} : Configuration file" />
+        <data format="data" name="chromosome_information" label="${tool.name} : Chromosome information" />
     </outputs>
     <help>
 		
