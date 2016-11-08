@@ -5,8 +5,8 @@
         python $__tool_directory__/look4fusion.py
 		--config $config
 		--bound $bound
-		--out $out
-		--out_tar $tar_file
+		--out $possible_junction_and_fusions
+		--out_tar $circos_tar_file
 		
     </command>
     <inputs>
@@ -14,8 +14,8 @@
 		<param name="bound" type="integer" value="10000" label="Scaffold boundary searched" /> 
     </inputs>
     <outputs>
-        <data format="txt" name="out" label="${tool.name} : Possible junctions and fusions" />
-        <data format="tar" name="tar_file" label="${tool.name} : Circos representation (.tar file)" />
+        <data format="txt" name="possible_junction_and_fusions" label="${tool.name} : Possible junctions and fusions" />
+        <data format="tar" name="circos_tar_file" label="${tool.name} : Circos representation (.tar file)" />
     </outputs>
     <help>
 		
