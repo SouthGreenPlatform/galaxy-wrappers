@@ -1,5 +1,8 @@
 <tool id="matrix2ortho" name="matrix2ortho" version="0.1"> 
     <description> : Convert matrix to a dot-plot figure</description>  
+    <stdio>
+        <exit_code range="1:" />
+    </stdio>
     <command>
 		source $__tool_directory__/include_scaffhunter.sh ;
         $__tool_directory__/matrix2ortho.py  
@@ -12,7 +15,7 @@
     	<param name="mat" type="data" format="tabular" label="The data matrix" />
     	<param name="order" type="data" format="tabular" label="A table file containing in col 1 : marker name, col 2 : marker group" />
 		<param name="type" type="select" label="The type of statistics in the matrix" >
-			<option value="LOD">LOD</option>
+			<option value="LOD" selected="true">LOD</option>
 			<option value="REC">REC</option>
 			<option value="COR">COR</option>
 		</param>
@@ -21,12 +24,39 @@
     <outputs>
         <data format="png" name="dotplot" label="${tool.name} : $prefix .png" />
     </outputs>
+    <tests>
+        <test>
+            <param name="mat" value="lod_matrix.txt"/> 
+            <param name="order" value="optimal_marker_order.txt" /> 
+            <output name="png" file="matrix2ortho.png" compare="sim_size"/>  
+        </test>
+    </tests> 
     <help>
-		
-  .. class:: infomark
+    
+**Overview**
+
+This program takes a matrix containing pairwise statistics between markers and a file containing markers order and plot pairwise marker statistics in a dot-plot like picture.
+
+Example : 
+
+.. image:: http://orygenesdb.cirad.fr/images/linkage_markers.png
+    :height: 400
+    :width: 600
+
+-----
+
+.. class:: infomark
+
+**Galaxy integration** Martin Guillaume (CIRAD), Droc Gaetan (CIRAD).
+
+.. class:: infomark
+
+**Support** For any questions about Galaxy integration, please send an e-mail to galaxy-dev-southgreen@cirad.fr
+
+.. class:: infomark
 
 **Program encapsulated in Galaxy by South Green**
-    
+
 	</help>
 	<citations>
         <citation type="doi">10.1186/s12864-016-2579-4</citation> 

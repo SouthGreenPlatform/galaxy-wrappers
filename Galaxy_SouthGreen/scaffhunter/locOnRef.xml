@@ -1,5 +1,13 @@
 <tool id="locOnRef" name="locOnRef" version="0.1"> 
-    <description> : Locate markers having uniq position on a reference </description>  
+    <description> : Locate markers having uniq position on a reference </description> 
+	<requirements>
+        <requirement type="binary">blastn</requirement>
+        <requirement type="binary">bwa</requirement> 
+        <requirement type="binary">bowtie2</requirement>
+    </requirements> 
+    <stdio>
+        <exit_code range="1:" />
+    </stdio>
     <command>
 		source $__tool_directory__/include_scaffhunter.sh ;
         python $__tool_directory__/locOnRef.py  
@@ -34,7 +42,7 @@
             	</param>
           	</when>
           	<when value="history">
-            	<param name="own_file" type="data" format="fasta" metadata_name="dbkey" label="Select reference genome" />
+            	<param name="own_file" type="data" format="fasta" label="Select reference genome" />
           	</when>
         </conditional>	
 		<param name="index" type="select" label="Create index if reference not indexed">
@@ -48,29 +56,60 @@
     	<param name="fasta" type="data" format="txt" label="Fasta markers file" />
 		<param name="margin" type="integer" value="500" label="Margin in which hit are considered identical (number of bases) when comparing the different tools" />
 		<param name="blast" type="select" label="Use blast" >
-			<option value="y">y</option>
+			<option value="y" selected="true">y</option>
 			<option value="n">n</option>
 		</param>
 		<param name="bwa_mem" type="select" label="Use bwa_mem" >
-			<option value="y">y</option>
+			<option value="y" selected="true">y</option>
 			<option value="n">n</option>
 		</param>
 		<param name="bow" type="select" label="Use bowtie2" >
-			<option value="y">y</option>
+			<option value="y" selected="true">y</option>
 			<option value="n">n</option>
 		</param>
 		<param name="bow_loc" type="select" label="Use bowtie2 local mod" >
-			<option value="y">y</option>
+			<option value="y" selected="true">y</option>
 			<option value="n">n</option>
 		</param>
 		<param name="prefix" type="text" label="Prefix of output files" value="alignment" />
     </inputs>
     <outputs>
         <data format="tabular" name="alignment" label="${tool.name} : $prefix marker" />
-    </outputs> 
+    </outputs>
+    <tests>
+        <test>
+            <param name="fasta" value="markers.fasta"/>
+            <param name="source" value="history" />
+            <param name="own_file" ftype="fasta" value="scaffolds.fasta" />
+            <output name="alignment" file="alignment_scaffold.txt"/> 
+        </test>
+    </tests> 
     <help>
-		
-  .. class:: infomark
+
+**Overview**
+
+This programs locates fasta sequences onto a reference sequence.
+
+This program can use bowtie2 (local and end to end modes) with --very-sensitive mode, bwa mem and blast.
+Only unique hits are conserved for each tools used. Only identical hits between all tools used are conserved.
+Identical hits between tools are identified if all hits from different tools co-locate in the same region in a region of 2 fold --margin option.
+Otherwise, they are discarded. If a tool, does not report a hit for a sequence (due to multi hit or no hit), this tools is not used for this sequence.
+
+If blast is selected, this program perform for each sequence a blast (e-value = 1e-10, -F F). 
+Blast output is used to reconstruct the alignment from different HSP and calculate an identity of the hit (This step is performed by blat_results_analyzer_v3.pl, script written by Philippe FRANCOIS and modified by Guillaume MARTIN).
+For each identity percentage threshold (98%, 95%, 90%, 80 and 80% identity) valid hits are counted and hit is reported only if it is unique for at least one of these identity thresholds.
+
+-----
+
+.. class:: infomark
+
+**Galaxy integration** Martin Guillaume (CIRAD), Droc Gaetan (CIRAD).
+
+.. class:: infomark
+
+**Support** For any questions about Galaxy integration, please send an e-mail to galaxy-dev-southgreen@cirad.fr
+
+.. class:: infomark
 
 **Program encapsulated in Galaxy by South Green**
     

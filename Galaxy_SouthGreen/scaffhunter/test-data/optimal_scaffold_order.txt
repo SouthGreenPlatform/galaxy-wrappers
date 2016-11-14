@@ -1,0 +1,8 @@
+scaff8	REV	Ord
+scaff3	FWD	Ord
+scaff2	REV	Ord
+scaff4	REV	Ord
+scaff7	FWD	Ord
+scaff5	FWD	Ord
+scaff1	REV	Ord
+scaff6	FWD	Ord

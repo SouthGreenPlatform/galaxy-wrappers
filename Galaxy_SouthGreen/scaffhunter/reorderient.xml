@@ -1,5 +1,8 @@
 <tool id="reorderient" name="reorderient" version="0.1"> 
     <description> : Perform local rearrangment between scaffold ordered based on the UPGMA</description>  
+    <stdio>
+        <exit_code range="1:" />
+    </stdio>
     <command>
 		source $__tool_directory__/include_scaffhunter.sh ;
         python $__tool_directory__/reorderient.py  
@@ -26,12 +29,42 @@
         <data format="tabular" name="optimal_scaffold_order" label="${tool.name} : $prefix scaffold order" />
         <data format="tabular" name="optimal_marker_order" label="${tool.name} : $prefix marker order" />
     </outputs>
+    <tests>
+        <test>
+            <param name="mat" value="lod_matrix.txt"/>
+            <param name="scaff" value="scaffold_order.txt" /> 
+            <param name="mark" value="marker_order.txt" /> 
+            <output name="optimal_scaffold_order" file="optimal_scaffold_order.txt"/> 
+            <output name="optimal_marker_order" file="optimal_marker_order.txt"/> 
+        </test>
+    </tests> 
     <help>
-		
-  .. class:: infomark
+    
+**Overview**
+
+This program take as input a matrix containing marker linkage or divergence information and the two output files of UPGMA and try to optimize the scaffold order and orientation.
+
+The optimization is performed by calculating a score for the scaffold order, trying rearrangements (scaffold or scaffold group permutations and/or inversion) followed by score re-calculation.
+
+If the new score is better than the previous, the new order is conserved; else, the previous order is conserved.
+
+The program stops when more than a defined number of consecutive rearrangement (Number of rearrangment) do not improve the ordering.
+
+
+-----
+
+.. class:: infomark
+
+**Galaxy integration** Martin Guillaume (CIRAD), Droc Gaetan (CIRAD).
+
+.. class:: infomark
+
+**Support** For any questions about Galaxy integration, please send an e-mail to galaxy-dev-southgreen@cirad.fr
+
+.. class:: infomark
 
 **Program encapsulated in Galaxy by South Green**
-    
+
 	</help>
 	<citations>
         <citation type="doi">10.1186/s12864-016-2579-4</citation> 

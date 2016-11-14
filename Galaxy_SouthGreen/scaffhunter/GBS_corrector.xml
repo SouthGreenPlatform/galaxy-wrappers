@@ -1,5 +1,8 @@
 <tool id="GBS_corrector" name="GBS_corrector" version="0.1"> 
-    <description> : Correct GBS markers based on their order along scaffold or chromosome or other</description>  
+    <description> : Correct GBS markers based on their order along scaffold or chromosome or other</description>   
+    <stdio>
+        <exit_code range="1:" />
+    </stdio>
     <command>
 		source $__tool_directory__/include_scaffhunter.sh ;
         $__tool_directory__/GBS_corrector.py  
@@ -7,22 +10,76 @@
 		--order $order
 		--fen $fen
 		--suspect $suspect
-		--nr $nr
-		--cor $cor
-		--Nosu $Nosu
+		--nr $corrected_non_redundant
+		--cor $corrected
+		--Nosu $no_suspect
     </command>
     <inputs>  
     	<param name="table" type="data" format="txt" label="A table file containing phased data. col 1 : markers name, col 2, 3, 4 necessary but not used by the program, col 5 to end : individual genotypes. First line contain header. Rendundant names (markers and individuals) are not allowed" />
     	<param name="order" type="data" format="txt" label="A table file with markers names in column 1 and scaffold they match with in column2. Markers should be ordered first on scaffold and second on markers position on scaffold" />
-		<param name="fen" type="text" label="Minimal marker number in a scaffold followed by half window size. Both values should be separated by '='. If different classes, couple can be repeated and separated by '='" />
-		<param name="suspect" type="integer" value="0" label="The minimal number of corrections in a marker to consider this marker as supect" />
-		<param name="OUT" type="text" label="Prefix of output files" />
+		<param name="fen" value="10=3" type="text" label="Minimal marker number in a scaffold followed by half window size. Both values should be separated by '='. If different classes, couple can be repeated and separated by '=' (--fen)" />
+		<param name="suspect" type="integer" value="20" label="The minimal number of corrections in a marker to consider this marker as supect (--suspect)" />
+		<param name="prefix" type="text" label="Prefix of output files" />
     </inputs>
     <outputs>
-        <data format="txt" name="nr" label="$OUT corrected_non_redundant" />
-        <data format="txt" name="cor" label="$OUT corrected" />
-        <data format="txt" name="Nosu" label="$OUT no_suspect" />
-    </outputs>
+        <data format="txt" name="corrected_non_redundant" label="${tool.name} : $prefix corrected_non_redundant" />
+        <data format="txt" name="corrected" label="${tool.name} : $prefix corrected" />
+        <data format="txt" name="no_suspect" label="${tool.name} : $prefix no_suspect" />
+    </outputs>    <tests>
+        <test>
+            <param name="table" value="marker_data.txt"/>
+            <param name="order" value="alignment_scaffold.txt" /> 
+            <param name="fen" value="10=3" /> 
+            <param name="suspect" value="20" /> 
+            <output name="corrected_non_redundant" file="corrected_non_redundant.txt"/> 
+            <output name="corrected" file="corrected.txt"/> 
+            <output name="no_suspect" file="no_suspect.txt"/> 
+        </test>
+    </tests> 
     <help>
-    </help>
+    
+**Overview**
+
+This program identifies markers genotyping errors recorded in a table file based on their order (obtained from genetic map or reference sequence) provided in a table file.
+
+This program is based on the principle that no more than one recombination event can occur in a window of x around the observed marker (x is passed in --fen argument).
+
+If more than one recombination event is observed, a genotyping error is identified.
+
+This program output three files:
+
+* A file containing corrected markers (--nosu argument)
+
+* A file containing corrected markers where redundancy is removed (--nr argument)
+
+* A file where markers with more than X errors are identified are removed. (--Nosu argument)
+
+This program works on phased markers of same type. It is based on the principle that no more than one recombination can be observed in a window around each markers.
+
+
+For example, the value 10=3 passed in --fen argument indicates that only markers located on scaffolds containing 10 or more markers will be corrected/genotyping error will be identified. An error will be identified if more than 1 recombination event is observed in a window size of [-3 ; +3] markers around the observed markers.
+
+The 20 value passed in --suspect arguments indicate all markers having at least 20 errors detected are discarded from the output file.
+
+This file contained filtered markers but the genotyping errors in this file have not been corrected.
+
+
+-----
+
+.. class:: infomark
+
+**Galaxy integration** Martin Guillaume (CIRAD), Droc Gaetan (CIRAD).
+
+.. class:: infomark
+
+**Support** For any questions about Galaxy integration, please send an e-mail to galaxy-dev-southgreen@cirad.fr
+
+.. class:: infomark
+
+**Program encapsulated in Galaxy by South Green**
+
+	</help>
+	<citations>
+        <citation type="doi">10.1186/s12864-016-2579-4</citation> 
+    </citations>
 </tool>

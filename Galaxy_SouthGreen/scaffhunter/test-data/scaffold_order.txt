@@ -1,0 +1,8 @@
+scaff8	REV
+scaff3	FWD
+scaff2	REV
+scaff4	REV
+scaff7	FWD
+scaff5	FWD
+scaff1	REV
+scaff6	FWD

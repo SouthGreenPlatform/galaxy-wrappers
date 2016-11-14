@@ -1,5 +1,8 @@
 <tool id="UPGMA" name="UPGMA" version="0.1"> 
     <description> : Order scaffold based on pseudo UPGMA method</description>  
+    <stdio>
+        <exit_code range="1:" />
+    </stdio>
     <command>
 		source $__tool_directory__/include_scaffhunter.sh ;
         python $__tool_directory__/UPGMA.py  
@@ -12,9 +15,9 @@
     <inputs>  
     	<param name="mat" type="data" format="tabular" label="The data matrix with pair-wise statistics between markers" />
     	<param name="scaff" type="data" format="tabular" label="A tabulated file containing in col 1 : markers name, col2 : scaffold name (the file should be ordered by scaffold and marker order on scaffold)" />
-		<param name="type" type="select" label="The type of data. IDENT for identity statistics (ex LOD), DIF for difference statistics (ex REC)" >
-			<option value="IDENT">IDENT</option>
-			<option value="DIF">DIF</option>
+		<param name="type" type="select" label="Data type" >
+			<option value="IDENT" selected="true">linkage information (LOD score)</option>
+			<option value="DIF">divergence information (recombination rate)</option>
 		</param>
 		<param name="prefix" type="text" label="Prefix of output files" value="upgma" />
     </inputs>
@@ -22,9 +25,49 @@
         <data format="tabular" name="scaffold_order" label="${tool.name} : $prefix scaffold order" />
 		<data format="tabular" name="marker_order" label="${tool.name} : $prefix marker order" />
     </outputs>
+    <tests>
+        <test>
+            <param name="mat" value="lod_matrix.txt"/>
+            <param name="scaff" value="alignment_scaffold.txt" /> 
+            <output name="scaffold_order" file="scaffold_order.txt"/> 
+            <output name="marker_order" file="marker_order.txt"/> 
+        </test>
+    </tests> 
     <help>
-		
-  .. class:: infomark
+
+**Overview**
+
+This program takes in input a matrix containing maker linkage or divergence and a tabulated file locating these markers on scaffolds (or sequence) and try to group and order them based on an UPGMA like approach.
+
+This program work as followed:
+
+* an mean linkage/divergence is calculated between scaffolds
+
+* scaffolds are then grouped using an UPGMA like approach
+
+* scaffolds are orientated and positioned (at the beginning or the end of a precedent group) trying to optimize a score calculated for each position and orientation.
+
+In case of marker linkage information (LOD score) in the matrix, the score is calculated as followed:
+
+.. image:: http://orygenesdb.cirad.fr/images/lod_score.png 
+
+In case of marker divergence information (recombination rate) in the matrix the score is calculated as followed:
+
+.. image:: http://orygenesdb.cirad.fr/images/recombinaison_rate.png 
+
+with n the number of markers in the LG to order, xi and xj are the position of markers i and j in the tested order, and LODij the LOD score between markers i and j. To optimize computation time and as order is not tested within scaffolds, i and j are markers from different scaffolds.
+
+-----
+
+.. class:: infomark
+
+**Galaxy integration** Martin Guillaume (CIRAD), Droc Gaetan (CIRAD).
+
+.. class:: infomark
+
+**Support** For any questions about Galaxy integration, please send an e-mail to galaxy-dev-southgreen@cirad.fr
+
+.. class:: infomark
 
 **Program encapsulated in Galaxy by South Green**
     
