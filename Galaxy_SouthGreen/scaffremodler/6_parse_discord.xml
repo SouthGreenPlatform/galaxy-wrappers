@@ -1,8 +1,8 @@
 <tool id="6_parse_discord" name="6_parse_discord" version="0.1">
     <description> : Parse mapped reads based on their discordance type</description>
 	<requirements>
-		<requirement type="package" version="1.126.0">picard</requirement>
-		<requirement type="package">samtools</requirement>
+		<requirement type="package" version="1.136">picard</requirement>
+		<requirement type="package" version="1.2">samtools</requirement>
 	</requirements>
     <stdio>
         <exit_code range="1:" />

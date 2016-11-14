@@ -1,0 +1,13 @@
+Chromosome : chr01 :
+	Mean coverage             : 5.182446471
+	Median coverage           : 5.0
+	Confidence interval (90%) : [2.0,10.0]
+Chromosome : chr02 :
+	Mean coverage             : 4.71688554442
+	Median coverage           : 5.0
+	Confidence interval (90%) : [1.0,9.0]
+*****Average*****
+	Mean coverage   : 4.95715832207
+	Median coverage : 5.0
+Insert size as been re-estimated to :5199.0
+Standard deviation of insert size as been re-estimated to :500.302399378

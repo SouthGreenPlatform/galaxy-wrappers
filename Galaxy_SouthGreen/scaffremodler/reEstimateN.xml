@@ -1,5 +1,8 @@
 <tool id="reEstimateN" name="reEstimateN" version="0.1"> 
-    <description> : Re-estimate N in multifasta (N restimated are converted to S)</description>  
+    <description> : Re-estimate N in multifasta (N restimated are converted to S)</description>  >
+	<requirements>
+		<requirement type="package" version="1.2">samtools</requirement>
+	</requirements>
     <command>
 		source $__tool_directory__/include_scaffremodler.sh ;
         python $__tool_directory__/reEstimateN.py

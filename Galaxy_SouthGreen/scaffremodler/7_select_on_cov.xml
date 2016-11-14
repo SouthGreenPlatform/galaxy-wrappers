@@ -1,7 +1,7 @@
 <tool id="7_select_on_cov" name="7_select_on_cov" version="0.1">
-    <description> : Identify discordant zones</description>
-	<requirements> 
-		<requirement type="package">samtools</requirement>
+    <description> : Identify discordant zones</description>>
+	<requirements>
+		<requirement type="package" version="1.2">samtools</requirement>
 	</requirements>
     <stdio>
         <exit_code range="1:" />

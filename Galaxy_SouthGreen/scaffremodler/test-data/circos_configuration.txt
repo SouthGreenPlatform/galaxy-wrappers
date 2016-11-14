@@ -1,0 +1,65 @@
+[General]
+chr = /work/GALAXY/galaxy/database/files/040/dataset_40792.dat
+out_kar = /work/GALAXY/galaxy/database/files/040/dataset_40823.dat
+out_n = /work/GALAXY/galaxy/database/files/040/dataset_40824.dat
+orient = rf
+cov = yes
+frf = yes
+ff = yes
+rr = yes
+ins = yes
+delet = yes
+chr_rr = yes
+chr_rf = yes
+chr_fr = yes
+chr_ff = yes
+read_rf = yes
+read_fr = yes
+read_ff = yes
+read_rr = yes
+read_ins = yes
+read_del = yes
+read_chr_rr = yes
+read_chr_rf = yes
+read_chr_fr = yes
+read_chr_ff = yes
+prop = yes
+scaff_tile = no
+
+[Coverage]
+cov = /work/GALAXY/galaxy/database/files/040/dataset_40825.dat
+median_cov = 4.817
+mean_cov = -0.189583910387
+
+[Discord_link]
+frf = /work/GALAXY/galaxy/database/files/040/dataset_40826.dat
+ff = /work/GALAXY/galaxy/database/files/040/dataset_40827.dat
+rr = /work/GALAXY/galaxy/database/files/040/dataset_40828.dat
+ins = /work/GALAXY/galaxy/database/files/040/dataset_40829.dat
+delet = /work/GALAXY/galaxy/database/files/040/dataset_40830.dat
+chr_rr = /work/GALAXY/galaxy/database/files/040/dataset_40831.dat
+chr_rf = /work/GALAXY/galaxy/database/files/040/dataset_40832.dat
+chr_fr = /work/GALAXY/galaxy/database/files/040/dataset_40834.dat
+chr_ff = /work/GALAXY/galaxy/database/files/040/dataset_40833.dat
+
+[Discord_zone]
+chr_rr = /work/GALAXY/galaxy/database/files/040/dataset_40820.dat
+chr_rf = /work/GALAXY/galaxy/database/files/040/dataset_40817.dat
+chr_fr = /work/GALAXY/galaxy/database/files/040/dataset_40819.dat
+chr_ff = /work/GALAXY/galaxy/database/files/040/dataset_40818.dat
+
+[Read_link]
+rf = /work/GALAXY/galaxy/database/files/040/dataset_40835.dat
+fr = /work/GALAXY/galaxy/database/files/040/dataset_40836.dat
+ff = /work/GALAXY/galaxy/database/files/040/dataset_40837.dat
+rr = /work/GALAXY/galaxy/database/files/040/dataset_40838.dat
+ins = /work/GALAXY/galaxy/database/files/040/dataset_40839.dat
+del = /work/GALAXY/galaxy/database/files/040/dataset_40840.dat
+chr_rr = /work/GALAXY/galaxy/database/files/040/dataset_40841.dat
+chr_rf = /work/GALAXY/galaxy/database/files/040/dataset_40842.dat
+chr_fr = /work/GALAXY/galaxy/database/files/040/dataset_40844.dat
+chr_ff = /work/GALAXY/galaxy/database/files/040/dataset_40843.dat
+
+[Proportion]
+prop = /work/GALAXY/galaxy/database/files/040/dataset_40810.dat
+

@@ -1,0 +1,4 @@
+inversion	region:	chr02	9991	100013
+reciprocal_translocation	region1:	chr01	2201114	2300010	region2_inv:	chr02	1601985	1746995
+deletion	region:	chr01	700014	800017
+duplication	region_inv:	chr01	249988	353015	target:	chr02	700006	700051

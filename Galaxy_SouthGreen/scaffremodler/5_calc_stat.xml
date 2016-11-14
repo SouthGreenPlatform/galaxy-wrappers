@@ -1,7 +1,7 @@
 <tool id="5_calc_stat" name="5_calc_stat" version="0.1">
     <description> : Calculate statistics on insert size, and coverage</description>
-	<requirements> 
-		<requirement type="package">samtools</requirement>
+	<requirements>
+		<requirement type="package" version="1.2">samtools</requirement>
 	</requirements>
     <stdio>
         <exit_code range="1:" />

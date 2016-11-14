@@ -1,0 +1,67 @@
+[General]
+ref = /home/galaxydev/galaxy/tools/SouthGreen/scaffremodler/test-data/Ref_for_SV_detection.fasta
+chr = /home/galaxydev/galaxy/tools/SouthGreen/scaffremodler/test-data/chromosome_information.txt
+mini = 2500
+maxi = 7500
+thread = 1
+tool = bowtie2_single
+q1 = /home/galaxydev/galaxy/tools/SouthGreen/scaffremodler/test-data/reads_mate1_SV.fq
+q2 = /home/galaxydev/galaxy/tools/SouthGreen/scaffremodler/test-data/reads_mate2_SV.fq
+qual = 33
+orient = rf
+index = n
+rmindex = n
+sd_multiplicator = 3.0
+restimate = y
+mini_dis = 10000
+mult_max_cov = 10.0
+mult_min_cov = 0.25
+min_zone = 500
+min_gap = 300
+max_dist_merge = 1000.0
+yis = 0.0
+mis = 0.5
+yic = 0.0
+mic = 0.25
+min_score = 70
+ploid = 0.66
+fai_file = /home/galaxydev/galaxy/tools/SouthGreen/scaffremodler/test-data/Ref_for_SV_detection.fasta.fai
+exclude_chrom = no_exclude
+
+[Mapping]
+out = /home/galaxydev/galaxy/tools/SouthGreen/scaffremodler/test-data/alignment.sam
+
+[Single_filter]
+rminput = n
+filter_multi = y
+asxs = 1
+qual = not_filled
+out = /home/galaxydev/galaxy/tools/SouthGreen/scaffremodler/test-data/quality_threshold.sam
+type = sam
+
+[Remove_dup]
+rminput = n
+sort = coordinate
+out = /home/galaxydev/galaxy/tools/SouthGreen/scaffremodler/test-data/bam_remove_redundancy.bam
+type = bam
+
+[Calc_coverage]
+out = /home/galaxydev/galaxy/tools/SouthGreen/scaffremodler/test-data/coverage.txt
+median_insert = 5199
+mean_insert = 5200.10472232
+standard_deviation_insert = 501.815580589
+mean_coverage = 4.85657925724
+median_coverage = 5.0
+mini = 3693.55325823
+maxi = 6704.44674177
+
+[Trie_discord]
+rminput = n 
+type = bam
+
+[Score_discord]
+mis = 2599.5
+mic = 1.25
+
+[Ident_discord] 
+

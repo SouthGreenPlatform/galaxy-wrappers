@@ -1,6 +1,9 @@
 <tool id="draw_circos" name="draw_circos" version="0.1"> 
     <description> : Draw circos figure</description>  
-    <stdio>
+	<requirements>
+		<requirement type="binary">circos</requirement>
+	</requirements>
+	<stdio>
         <exit_code range="1:" />
     </stdio>
     <command>

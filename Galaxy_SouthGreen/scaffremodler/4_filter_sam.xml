@@ -1,8 +1,7 @@
 <tool id="4_filter_sam" name="4_filter_sam" version="0.1">
     <description> : Remove redundancy in mapped reads</description>
 	<requirements>
-		<requirement type="package" version="1.126.0">picard</requirement>
-		<requirement type="package">samtools</requirement>
+		<requirement type="package" version="1.2">samtools</requirement>
 	</requirements>
     <stdio>
         <exit_code range="1:" />

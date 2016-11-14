@@ -1,0 +1,7 @@
+scaffold3	1	996558	FWD	scaffold1	999999	999999	FWD	REV	contig
+scaffold4	1	992957	FWD	scaffold2	1	1	FWD	FWD	contig
+scaffold4	1	992957	FWD	scaffold3	1	1	FWD	REV	contig
+scaffold5	1	914761	FWD	scaffold2	999377	999377	FWD	FWD	contig
+scaffold6	1	20001	FWD	scaffold2	299998	319379	FWD	FWD	prob_fusion
+scaffold7	1	19999	FWD	scaffold3	480000	496560	FWD	REV	fusion
+scaffold8	1	13848	FWD	scaffold4	499999	511143	FWD	FWD	prob_fusion
