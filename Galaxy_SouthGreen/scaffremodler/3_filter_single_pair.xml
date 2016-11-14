@@ -1,5 +1,8 @@
 <tool id="3_filter_single_pair" name="3_filter_single_pair" version="0.1">
     <description> : Filter paired read mapping uniquely that pass mapping quality threshold</description>
+    <stdio>
+        <exit_code range="1:" />
+    </stdio>
     <command>
 		source $__tool_directory__/include_scaffremodler.sh ;
         python $__tool_directory__/3_filter_single_pair.py
@@ -10,33 +13,55 @@
 		--out $quality_threshold
     </command>
     <inputs>
-		<param name="sam_file" type="data" label="SAM file (--sam)" />  
-		<param name="config_file" type="data" label="Configuration file"/> 
+		<param name="sam_file" type="data" format="sam" label="SAM file (--sam)" />  
+		<param name="config_file" type="data" format="text" label="Configuration file"/> 
 		<param name="asxs" type="integer" value="0" label="Minimal difference between the best and second hit accepted to consider the hit as single (--asxs)" />
 		<param name="qual" type="integer" value="0" label="Minimal mapping quality to keep the hit (--qual)" />  
     </inputs>
     <outputs>
         <data format="sam" name="quality_threshold" label="${tool.name} : Quality threshold (SAM file)" />
     </outputs>
+    <tests>
+        <test>
+            <param name="sam_file" value="alignment.sam" /> 
+            <param name="config_file" value="config_file.txt" /> 
+            <param name="asxs" value="0" /> 
+            <param name="qual" value="0" /> 
+            <output name="quality_threshold" file="quality_threshold.sam"  compare="sim_size"/> 
+        </test>
+    </tests>
     <help>
-		
-  .. class:: infomark
-
-**Program encapsulated in Galaxy by South Green**
     
+**Overview**
+
 This program filter paired reads in a sam file sorted by query name. The filtering can be either done on the mapping quality and/or based on a threshold between AS/XS flags.
 
 This program output a filtered sam file sorted by query name. Unmapped and single end mapped pairs are not removed during this step.
 
-**Options**::
+**Filtering option**
 
-    --sam : SAM file (The file should be sorted on query name).	
-    --asxs : an integer corresponding to the minimal difference between the AS/XS flag value to keep a pair. A pair is kept if both mate pass threshold.
-    --qual : an integer corresponding to the minimal mapping quality. If both mate of a pair have a mapping quality superior or equal to the asxs parameter, the pair is kept.
-	
+* --asxs : an integer corresponding to the minimal difference between the AS/XS flag value to keep a pair. A pair is kept if both mate pass threshold.
+
+* --qual : an integer corresponding to the minimal mapping quality. If both mate of a pair have a mapping quality superior or equal to the asxs parameter, the pair is kept.
+
+* --rminput : This options decide if input should be deleted after treatment (y : remove input / n : don’t remove input (default : n)
+
+-----
+
+.. class:: infomark
+
+**Galaxy integration** Martin Guillaume (CIRAD), Droc Gaetan (CIRAD).
+
+.. class:: infomark
+
+**Support** For any questions about Galaxy integration, please send an e-mail to galaxy-dev-southgreen@cirad.fr
+
+.. class:: infomark
+
+**Program encapsulated in Galaxy by South Green**
 
 	</help>
 	<citations>
         <citation type="doi">10.1186/s12864-016-2579-4</citation> 
     </citations>
-</tool>  
+</tool> 

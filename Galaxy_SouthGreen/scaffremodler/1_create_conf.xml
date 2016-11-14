@@ -1,5 +1,8 @@
 <tool id="1_create_conf" name="1_create_conf" version="0.1"> 
     <description> : Create configuration file and chromosome tab file for Scaffremodler</description>  
+    <stdio>
+        <exit_code range="1:" />
+    </stdio>
     <command>
 		source $__tool_directory__/include_scaffremodler.sh ;
         python $__tool_directory__/1_create_conf.py
@@ -7,7 +10,7 @@
         #if str($reference_genome.source) == "history":
             --ref $reference_genome.own_file  
         #else:
-            --ref $reference_genome.index.fields.path
+            --ref $reference_genome.genome.fields.path
         #end if 
 		--q1 $q1
 		--q2 $q2
@@ -51,7 +54,7 @@
             	<option value="history">Use a genome from the history and build index</option>
           	</param>
           	<when value="indexed">
-            	<param name="index" type="select" label="Select reference genome" help="If your genome of interest is not listed, contact the South Green team">
+            	<param name="genome" type="select" label="Select reference genome" help="If your genome of interest is not listed, contact the South Green team">
 					
 					<options from_data_table="scaffremodler">
 						<filter type="sort_by" column="1"/>
@@ -60,11 +63,11 @@
             	</param>
           	</when>
           	<when value="history">
-            	<param name="own_file" type="data" format="fasta" metadata_name="dbkey" label="Select reference genome" />
+            	<param name="own_file" type="data" format="fasta"  label="Select reference genome" />
           	</when>
         </conditional>		 
-		<param name="q1" type="data" label="Mate1 fastq file" />
-		<param name="q2" type="data" label="Mate2 fastq file" />
+		<param name="q1" type="data" format="fastq,fastqsanger" label="Mate1 fastq file" />
+		<param name="q2" type="data" format="fastq,fastqsanger" label="Mate2 fastq file" />
 		<param name="orient" type="select" label="The upstream/downstream mate orientation for valid paired-end alignment against the forward reference strand">
 			<option value="rf">RF</option>
 			<option value="fr">FR</option>
@@ -106,14 +109,41 @@
         <data format="txt" name="config_file" label="${tool.name} : Configuration file" />
         <data format="data" name="chromosome_information" label="${tool.name} : Chromosome information" />
     </outputs>
+    <tests>
+        <test>
+            <param name="q1" value="reads_mate1_SV.fq"/>
+            <param name="q2" value="reads_mate2_SV.fq"/>
+			<param name="orient" value="rf"/>
+			<param name="index" value="y"/>
+			<param name="rmindex" value="y"/>
+            <param name="source" value="history" />
+            <param name="own_file" value="Ref_for_SV_detection.fasta" />
+            <output name="config_file" file="config_file.txt" compare="sim_size"/>  
+            <output name="chromosome_information" file="chromosome_information.txt"/> 
+        </test>
+    </tests>
     <help>
-		
-  .. class:: infomark
+    
+**Overview**
+
+This program generate a configuration file that will be used by all other programs that begin with a number.
+
+-----
+
+.. class:: infomark
+
+**Galaxy integration** Martin Guillaume (CIRAD), Droc Gaetan (CIRAD).
+
+.. class:: infomark
+
+**Support** For any questions about Galaxy integration, please send an e-mail to galaxy-dev-southgreen@cirad.fr
+
+.. class:: infomark
 
 **Program encapsulated in Galaxy by South Green**
-    
+
 	</help>
 	<citations>
         <citation type="doi">10.1186/s12864-016-2579-4</citation> 
     </citations>
-</tool>  
+</tool> 

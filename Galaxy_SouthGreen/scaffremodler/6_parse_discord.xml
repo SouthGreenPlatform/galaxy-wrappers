@@ -1,5 +1,12 @@
 <tool id="6_parse_discord" name="6_parse_discord" version="0.1">
     <description> : Parse mapped reads based on their discordance type</description>
+	<requirements>
+		<requirement type="package" version="1.126.0">picard</requirement>
+		<requirement type="package">samtools</requirement>
+	</requirements>
+    <stdio>
+        <exit_code range="1:" />
+    </stdio>
     <command>
 		source $__tool_directory__/include_scaffremodler.sh ;
         python $__tool_directory__/6_parse_discord.py
@@ -19,7 +26,7 @@
 		--liste_type $list_type
     </command>
     <inputs> 
-		<param name="config_file" type="data" label="Configuration file"/>  
+		<param name="config_file" type="data" format="txt" label="Configuration file"/>  
     </inputs>
     <outputs>
         <data format="bam" name="out_insertion" label="${tool.name} : Insertion" />
@@ -36,14 +43,69 @@
         <data format="txt" name="discordant_proportion" label="${tool.name} : Discordant read proportion" />
         <data format="txt" name="list_type" label="${tool.name} : List" />
     </outputs>
+    <tests>
+        <test> 
+            <param name="config_file" value="new_config_file.txt" />  
+            <output name="list_type" file="list_type.txt" compare="sim_size"/> 
+            <output name="discordant_proportion" file="discordant_proportion.txt" compare="sim_size"/> 
+            <output name="out_discarded" file="out_discarded.bam" compare="sim_size"/> 
+            <output name="out_chr_rr" file="out_chr_rr.bam" compare="sim_size"/> 
+            <output name="out_chr_ff" file="out_chr_ff.bam" compare="sim_size"/> 
+            <output name="out_chr_rf" file="out_chr_rf.bam" compare="sim_size"/> 
+            <output name="out_chr_fr" file="out_chr_fr.bam" compare="sim_size"/> 
+            <output name="out_rr" file="out_rr.bam" compare="sim_size"/> 
+            <output name="out_ff" file="out_ff.bam" compare="sim_size"/> 
+            <output name="out_rf" file="out_rf.bam" compare="sim_size"/> 
+            <output name="out_fr" file="out_fr.bam" compare="sim_size"/> 
+            <output name="out_insertion" file="out_insertion.bam" compare="sim_size"/> 
+            <output name="out_deletion" file="out_deletion.bam" compare="sim_size"/>
+	    </test>
+    </tests>
     <help>
-		
-  .. class:: infomark
+
+**Overview**
+
+This program takes in input a sam/bam file, identify discordant read pairs, calculate proportion of discordant reads on 1kb window size and parse the sam/bam file in 11 sub bam files corresponding to the different discordant types of mapped pairs :
+
+* correct orientation and insert size : reverse-forward or forward-reverse, depending on correct orientation (out_rf or out_fr options respectively)
+
+* correct orientation but insert size inferior than expected (deletion type, out_del option)
+
+* correct orientation but insert size inferior than expected (insertion type, out_ins option)
+
+* uncorrect orientation : reverse-forward or forward-reverse depending on correct orientation (out_rf or out_fr option respectively)
+
+* reverse-reverse mapped pairs on the same chromosome (out_rr option)
+
+* forward-forward mapped pairs on the same chromosome (out_ff options)
+
+* reverse-forward mapped pairs on distinct chromosomes (out_chr_rf option)
+
+* forward-reverse mapped pairs on distinct chromosomes (out_chr_fr option)
+
+* reverse-reverse mapped pairs on distinct chromosomes (out_chr_rr option)
+
+* forward-forward mapped pairs on distinct chromosomes (out_chr_ff option)
+
+* an additional bam file containing discarded reads. These discarded read pairs are incorrectly mapped reads that have an insert size lower than the minimal insert size passed in mini_dis options.
+
+
+-----
+
+.. class:: infomark
+
+**Galaxy integration** Martin Guillaume (CIRAD), Droc Gaetan (CIRAD).
+
+.. class:: infomark
+
+**Support** For any questions about Galaxy integration, please send an e-mail to galaxy-dev-southgreen@cirad.fr
+
+.. class:: infomark
 
 **Program encapsulated in Galaxy by South Green**
-    
+
 	</help>
 	<citations>
         <citation type="doi">10.1186/s12864-016-2579-4</citation> 
     </citations>
-</tool>  
+</tool> 

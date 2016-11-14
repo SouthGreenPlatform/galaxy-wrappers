@@ -1,5 +1,11 @@
 <tool id="5_calc_stat" name="5_calc_stat" version="0.1">
     <description> : Calculate statistics on insert size, and coverage</description>
+	<requirements> 
+		<requirement type="package">samtools</requirement>
+	</requirements>
+    <stdio>
+        <exit_code range="1:" />
+    </stdio>
     <command>
 		source $__tool_directory__/include_scaffremodler.sh ;
         python $__tool_directory__/5_calc_stat.py
@@ -10,22 +16,47 @@
 		--outconf $new_config_file
     </command>
     <inputs>
-		<param name="sam_file" type="data" label="Sam/bam file" />
-		<param name="config_file" type="data" label="Configuration file"/> 
+		<param name="sam_file" type="data" format="bam,sam" label="Sam/bam file" />
+		<param name="config_file" type="data" format="txt" label="Configuration file"/> 
     </inputs>
     <outputs>
         <data format="txt" name="coverage" label="${tool.name} : Coverage" />
         <data format="txt" name="statistic" label="${tool.name} : Statistic" />
         <data format="txt" name="new_config_file" label="${tool.name} : New Configuration" />
     </outputs>
+    <tests>
+        <test>
+            <param name="sam_file" value="bam_remove_redundancy.bam" /> 
+            <param name="config_file" value="config_file.txt" />  
+            <output name="coverage" file="coverage.txt"/> 
+            <output name="statistic" file="statistic.txt"/> 
+            <output name="new_config_file" file="new_config_file.txt" compare="sim_size"/> 
+        </test>
+    </tests>
     <help>
-		
-  .. class:: infomark
+    
+**Overview**
+
+This program calculate coverage for each covered sites of the reference sequences, estimate mean, median and 90 confidence interval coverage for the covered sites (uncovered sites are not taken in account).
+
+This program also re-estimate insert size by calculating median insert size of correctly mapped reads. It also calculates insert size standard deviation.
+
+-----
+
+.. class:: infomark
+
+**Galaxy integration** Martin Guillaume (CIRAD), Droc Gaetan (CIRAD).
+
+.. class:: infomark
+
+**Support** For any questions about Galaxy integration, please send an e-mail to galaxy-dev-southgreen@cirad.fr
+
+.. class:: infomark
 
 **Program encapsulated in Galaxy by South Green**
-    
+
 	</help>
 	<citations>
         <citation type="doi">10.1186/s12864-016-2579-4</citation> 
     </citations>
-</tool>  
+</tool> 

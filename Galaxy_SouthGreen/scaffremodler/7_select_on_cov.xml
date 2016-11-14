@@ -1,5 +1,11 @@
 <tool id="7_select_on_cov" name="7_select_on_cov" version="0.1">
     <description> : Identify discordant zones</description>
+	<requirements> 
+		<requirement type="package">samtools</requirement>
+	</requirements>
+    <stdio>
+        <exit_code range="1:" />
+    </stdio>
     <command>
 		source $__tool_directory__/include_scaffremodler.sh ;
         python $__tool_directory__/7_select_on_cov.py
@@ -8,21 +14,80 @@
 		--out $out
     </command>
     <inputs>
-		<param name="sam_file" type="data" label="Sam/bam discordant file" /> 
-        <param name="config_file" type="data" label="conf file"/>
+		<param name="sam_file" type="data" format="bam,sam" label="Sam/bam discordant file" /> 
+        <param name="config_file" type="data" format="txt" label="conf file"/>
 		<param name="prefix" type="text" label="Identifier for output" />
     </inputs>
     <outputs>
         <data format="txt" name="out" label="${tool.name} : $prefix score" />
     </outputs>
+    <tests>
+        <test>
+            <param name="sam_file" value="out_fr.bam" /> 
+            <param name="config_file" value="new_config_file.txt" />  
+            <output name="out" file="discordant_zone_FR.txt"/>  
+        </test>
+        <test>
+            <param name="sam_file" value="out_insertion.bam" /> 
+            <param name="config_file" value="new_config_file.txt" />  
+            <output name="out" file="discordant_zone_insertion.txt"/>  
+        </test>
+        <test>
+            <param name="sam_file" value="out_deletion.bam" /> 
+            <param name="config_file" value="new_config_file.txt" />  
+            <output name="out" file="discordant_zone_deletion.txt"/>  
+        </test>
+        <test>
+            <param name="sam_file" value="out_ff.bam" /> 
+            <param name="config_file" value="new_config_file.txt" />  
+            <output name="out" file="discordant_zone_FF.txt"/>  
+        </test>
+        <test>
+            <param name="sam_file" value="out_chr_rf.bam" /> 
+            <param name="config_file" value="new_config_file.txt" />  
+            <output name="out" file="discordant_zone_chr_RF.txt"/>  
+        </test>
+        <test>
+            <param name="sam_file" value="out_chr_ff.bam" /> 
+            <param name="config_file" value="new_config_file.txt" />  
+            <output name="out" file="discordant_zone_chr_FF.txt"/>  
+        </test>
+        <test>
+            <param name="sam_file" value="out_chr_fr.bam" /> 
+            <param name="config_file" value="new_config_file.txt" />  
+            <output name="out" file="discordant_zone_chr_FR.txt"/>  
+        </test>
+        <test>
+            <param name="sam_file" value="out_chr_rr.bam" /> 
+            <param name="config_file" value="new_config_file.txt" />  
+            <output name="out" file="discordant_zone_chr_RR.txt"/>  
+        </test>
+        <test>
+            <param name="sam_file" value="out_rr.bam" /> 
+            <param name="config_file" value="new_config_file.txt" />  
+            <output name="out" file="discordant_zone_RR.txt"/>  
+        </test>
+    </tests>
     <help>
-		
-  .. class:: infomark
+    
+**Overview**
+
+-----
+
+.. class:: infomark
+
+**Galaxy integration** Martin Guillaume (CIRAD), Droc Gaetan (CIRAD).
+
+.. class:: infomark
+
+**Support** For any questions about Galaxy integration, please send an e-mail to galaxy-dev-southgreen@cirad.fr
+
+.. class:: infomark
 
 **Program encapsulated in Galaxy by South Green**
-    
+
 	</help>
 	<citations>
         <citation type="doi">10.1186/s12864-016-2579-4</citation> 
     </citations>
-</tool>  
+</tool> 

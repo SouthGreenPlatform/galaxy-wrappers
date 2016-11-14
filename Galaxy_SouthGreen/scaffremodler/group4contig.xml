@@ -1,5 +1,8 @@
 <tool id="group4contig" name="group4contig" version="0.1"> 
-    <description> : Create a file grouping scaffold name that should be joined together</description>  
+    <description> : Create a file grouping scaffold name that should be joined together</description> 
+    <stdio>
+        <exit_code range="1:" />
+    </stdio> 
     <command>
 		source $__tool_directory__/include_scaffremodler.sh ;
         python $__tool_directory__/group4contig.py
@@ -15,13 +18,25 @@
         <data format="txt" name="grouped_scaffold" label="${tool.name} : $prefix grouped scaffold" />
     </outputs>
     <help>
-		
-  .. class:: infomark
+    
+**Overview**
+
+-----
+
+.. class:: infomark
+
+**Galaxy integration** Martin Guillaume (CIRAD), Droc Gaetan (CIRAD).
+
+.. class:: infomark
+
+**Support** For any questions about Galaxy integration, please send an e-mail to galaxy-dev-southgreen@cirad.fr
+
+.. class:: infomark
 
 **Program encapsulated in Galaxy by South Green**
-    
+
 	</help>
 	<citations>
         <citation type="doi">10.1186/s12864-016-2579-4</citation> 
     </citations>
-</tool>  
+</tool> 

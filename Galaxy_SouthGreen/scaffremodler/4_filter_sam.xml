@@ -1,5 +1,12 @@
 <tool id="4_filter_sam" name="4_filter_sam" version="0.1">
     <description> : Remove redundancy in mapped reads</description>
+	<requirements>
+		<requirement type="package" version="1.126.0">picard</requirement>
+		<requirement type="package">samtools</requirement>
+	</requirements>
+    <stdio>
+        <exit_code range="1:" />
+    </stdio>
     <command>
 		source $__tool_directory__/include_scaffremodler.sh ;
         python $__tool_directory__/4_filter_sam.py
@@ -8,20 +15,41 @@
 		--out $bam_remove_redundancy
     </command>
     <inputs>
-		<param name="sam_file" type="data" label="Filtered SAM file" /> 
-        <param name="config_file" type="data" label="Configuration file"/>  
+		<param name="sam_file" type="data" format="fastq" label="Filtered SAM file" /> 
+        <param name="config_file" type="data" format="txt" label="Configuration file"/>  
     </inputs>
     <outputs>
         <data format="bam" name="bam_remove_redundancy" label="${tool.name} : Remove redundancy (BAM file)" />
     </outputs>
+    <tests>
+        <test>
+            <param name="sam_file" value="quality_threshold.sam" /> 
+            <param name="config_file" value="config_file.txt" />  
+            <output name="bam_remove_redundancy" file="bam_remove_redundancy.bam"  compare="sim_size"/> 
+        </test>
+    </tests>
     <help>
-		
-  .. class:: infomark
+    
+**Overview**
+
+This program removes unmapped and single mapped paired reads in a sam/bam file.
+
+-----
+
+.. class:: infomark
+
+**Galaxy integration** Martin Guillaume (CIRAD), Droc Gaetan (CIRAD).
+
+.. class:: infomark
+
+**Support** For any questions about Galaxy integration, please send an e-mail to galaxy-dev-southgreen@cirad.fr
+
+.. class:: infomark
 
 **Program encapsulated in Galaxy by South Green**
-    
+
 	</help>
 	<citations>
         <citation type="doi">10.1186/s12864-016-2579-4</citation> 
     </citations>
-</tool>  
+</tool> 
