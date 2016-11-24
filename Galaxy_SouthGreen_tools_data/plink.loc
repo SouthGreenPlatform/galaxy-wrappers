@@ -1,4 +1,6 @@
 Rice3K_SNP	Rice3K (SNPs Dataset)	/work/NGSwaiting4newNAS/rice/29Mi/NB_final_snp
 Rice3K_INDEL	Rice3K (Indel Dataset)	/work/NGSwaiting4newNAS/rice/29Mi/Nipponbare_indel
+Rice3K_Core_v7	Rice3K (Core v7)	/work/NGSwaiting4newNAS/rice/29Mi/core_v0.7
+Rice3K_3K_4.8_SNP_v0.7	Rice3K (3K_4.8_SNP_v0.7)	/work/NGSwaiting4newNAS/rice/29Mi/3K_4.8_SNP_v0.7
 Rice_IRIGIN	IRIGIN	/work/NGSwaiting4newNAS/rice/29Mi/IRIGIN
 Rice_HDRA	High Density Rice Array (700k SNPs)	/work/NGSwaiting4newNAS/rice/29Mi/HDRA-G6-4-RDP1-RDP2-NIAS
