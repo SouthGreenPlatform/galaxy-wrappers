@@ -28,6 +28,20 @@ GetOptions(
 die $usage
   if ( !$infile || !$outfile);
 
+my %coordinates;
+if (-e $snpfile){
+	open(S,$snpfile);
+	while(<S>){
+		my $line = $_;
+		$line =~s/\n//g;
+		$line =~s/\r//g;
+		my ($snp,$chrom,$pos) = split("\t",$line);
+		$coordinates{$snp}{"chr"} = $chrom;
+		$coordinates{$snp}{"pos"} = $pos;
+	}
+	close(S);
+}
+
 
 my %sequences;
 if (-e $reference){
@@ -68,10 +82,16 @@ while(<H>)
 	$individuals{$ind} = 1;
 	my $pos = "";
 	my $chr = 1;
+	if ($coordinates{$snp}{"chr"}){
+		$chr = $coordinates{$snp}{"chr"};
+		$pos = $coordinates{$snp}{"pos"};
+	}
 	$alleles =~s/://g;
 	$hash{$snp}{$ind} = $alleles;
 	$hash2{$snp}{"ref_allele"} = $ref_allele;
 	$hash2{$snp}{"alt_allele"} = $alt_allele;
+	$hash2{$snp}{"chrom"} = $chr;
+	$hash2{$snp}{"pos"} = $pos;
 }
 close(H);
 
@@ -85,6 +105,10 @@ foreach my $snp(keys(%hash)){
         my $chr = 1;
 	my $ref_allele = $hash2{$snp}{"ref_allele"};
 	my $alt_allele = $hash2{$snp}{"alt_allele"};
+	if ($hash2{$snp}{"chrom"}){
+		$chr = $hash2{$snp}{"chrom"};
+		$pos = $hash2{$snp}{"pos"};
+	}
 	my $alleles = $ref_allele."/".$alt_allele;
 	$alleles =~s/0/A/g;
         $alleles =~s/1/C/g;

@@ -1,9 +1,10 @@
 <tool id="Fluidigm2VCF" name="Fluidigm2VCF" version="1.0">
 	<description>converts Fluidigm genotyping file into VCF</description>
-	<command interpreter="bash">./Fluidigm2VCF.sh $input $output
+	<command interpreter="bash">./Fluidigm2VCF.sh $input $output $snpfile
     </command>
 	<inputs>
 		<param format="txt" name="input" type="data" label="Fluidigm CSV file" help="Fluidigm genotyping CSV file"/>
+		<param format="txt" name="snpfile" type="data" label="SNP position file" help="Tabular file: SNPname,chromosome,position"/>
 	</inputs>
 	<outputs>
 		<data format="txt" name="output" label="VCF output"/>
