@@ -1,0 +1,49 @@
+<tool id="circosjs" name="CircosJS" version="0.0.1">
+    <description>
+     Scie Circulaire
+ </description>   
+ <requirements>
+ </requirements>
+ <stdio>
+    <exit_code range="1:" />
+</stdio>
+
+
+<command>
+    <![CDATA[
+     perl $__tool_directory__/circosjs.pl --output $output --chromosome $chromosomefile
+
+    #for $a in $tracks
+    --tracks ${a.data}
+    --select ${a.select}
+    #end for
+    ]]>
+</command>
+
+<inputs>
+    <param type="data" name="chromosomefile" help="" value=" " label="Values for Chromosome Length" />
+    <repeat name="tracks" title="track" help="Track goes here">
+        <param type="select" name="select" help="select" value=" " label="Select">
+          <option value="Highlight">Highlight</option>
+          <option value="Line">Line</option> 
+          <option value="Scatter">Scatter</option>
+          <option value="Chords">Chords</option>
+          <option value="Heatmap">Heatmap</option>
+          <option value="Histogram">Histogram</option>
+          <option value="Stack">Stack</option>
+          <option value="Text">Text</option>
+      </param>
+      <param type="data" name="data" help="" value="" label="Track" />
+  </repeat>
+</inputs>
+
+<outputs>
+	<data format="html" name="output" />
+</outputs>
+<help>
+    <![CDATA[
+
+    ]]>
+
+</help>
+</tool>
