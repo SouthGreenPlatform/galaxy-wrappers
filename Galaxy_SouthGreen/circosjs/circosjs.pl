@@ -32,7 +32,7 @@ if ($dir =~/galaxy_dev/){
 
 my $chromosomelength="$base_url/static/style/ideogram/".$part[$#part];
 my $iframe = qq~
-<form target="myIframe" action="http://salanque.cirad.fr/visu_genomeharvest/circosJS/demo/index.php" method="post" enctype="multipart/form-data">
+<form target="myIframe" action="http://cassava-genome.southgreen.fr/visu_genomeharvest/circosJS/demo/index.php" method="post" enctype="multipart/form-data">
 <input type="hidden" name="chromosome" value="$chromosomelength" />
 ~;
 foreach my $i (0 .. $#tracks){
