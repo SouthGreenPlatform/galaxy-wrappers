@@ -1,0 +1,28 @@
+<tool id="ideogram" name="Ideogram" version="0.0.1">
+    <description>
+	Chromosome Painting 
+    </description>   
+    <requirements>
+    </requirements>
+    <stdio>
+        <exit_code range="1:" />
+    </stdio>
+    <command><![CDATA[
+       $__tool_directory__/ideogram.sh $chromosomelength $annotations $ploidy $output
+    ]]></command>
+    <inputs>
+	<param type="data" name="chromosomelength" help="chr length" value=" " label="Values for Chromosome Length" />
+	<param type="data" name="annotations" help="chr haplotype start end #color" value=" " label="Ancestral Blocks" />
+	<param type="select" name="ploidy" help="ploidy" value=" " label="Ploidy">
+		<option value="2">2</option> 
+        	<option value="3">3</option>
+        	<option value="4">4</option>
+	</param>
+    </inputs>
+    <outputs>
+	<data format="html" name="output" />
+    </outputs>
+    <help><![CDATA[
+        
+    ]]></help>
+</tool>
