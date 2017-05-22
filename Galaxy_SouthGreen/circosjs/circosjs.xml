@@ -28,7 +28,7 @@
           <option value="Line">Line</option> 
           <option value="Scatter">Scatter</option>
           <option value="Chords">Chords</option>
-          <option value="Heatmap">Heatmap</option>
+          <option value="HeatMap">HeatMap</option>
           <option value="Histogram">Histogram</option>
           <option value="Stack">Stack</option>
           <option value="Text">Text</option>
