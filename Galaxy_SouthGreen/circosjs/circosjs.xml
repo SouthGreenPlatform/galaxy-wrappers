@@ -15,6 +15,7 @@
 
     #for $a in $tracks
     --tracks ${a.data}
+    --name ${a.name}
     --select ${a.select}
     #end for
     ]]>
@@ -23,7 +24,8 @@
 <inputs>
     <param type="data" name="chromosomefile" help="" value=" " label="Values for Chromosome Length" optional="true"/>
     <repeat name="tracks" title="track" help="Track goes here">
-        <param type="select" name="select" help="select" value=" " label="Select">
+        <param type="text" name="name" value="" label="Track name"/>
+        <param type="select" name="select" value=" " label="Track type">
           <option value="Highlight">Highlight</option>
           <option value="Line">Line</option> 
           <option value="Scatter">Scatter</option>
@@ -33,7 +35,7 @@
           <option value="Stack">Stack</option>
           <option value="Text">Text</option>
       </param>
-      <param type="data" name="data" help="" value="" label="Track" />
+      <param type="data" name="data" value="" label="Track data" />
   </repeat>
 </inputs>
 

@@ -9,10 +9,12 @@ my $chromosome; #Partie qui récupère les variables
 my $output;
 my @tracks;
 my @select;
+my @name;
 
 GetOptions ("chromosome=s" => \$chromosome,    #récupère le fichier de chromosomes
               "tracks=s"   => \@tracks,        #Récupère le tableau de fichier
               "select=s"  => \@select,		   #Récupère le tableau de Select
+              "name=s"    => \@name,
               "output=s" => \$output)          #Sortie du fichier
 or die("Error in command line arguments\n");
 
@@ -80,6 +82,7 @@ foreach my $i (0 .. $#tracks){
 	system($sed_cmd);
 	$iframe .= qq~
 	<input type="hidden" name="select[]" id="annot" value="$select[$i]" />
+        <input type="hidden" name="name[]" id="annot" value="$name[$i]" />
 	<input type="hidden" name="data[]" id="annot" value="$track_file" />~;
 }
 $iframe .= qq~
