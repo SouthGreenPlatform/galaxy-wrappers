@@ -1,0 +1,35 @@
+graph G {
+overlap="scale";
+outputMode="nodesfirst";
+haplo1 [shape="circle",style="filled", color="green" , imagescale="both", width=0.4, height=0.4,fixedsize=true];
+haplo2 [shape="circle",style="filled", color="green" , imagescale="both", width=0.4, height=0.4,fixedsize=true];
+haplo3 [shape="circle",style="filled", color="green" , imagescale="both", width=0.4, height=0.4,fixedsize=true];
+haplo4 [shape="circle",style="filled", color="green" , imagescale="both", width=0.8, height=0.8,fixedsize=true];
+haplo5 [shape="circle",style="filled", color="green" , imagescale="both", width=0.4, height=0.4,fixedsize=true];
+haplo6 [shape="circle",style="filled", color="green" , imagescale="both", width=2.8000000000000003, height=2.8000000000000003,fixedsize=true];
+haplo7 [shape="circle",style="filled", color="green" , imagescale="both", width=1.2000000000000002, height=1.2000000000000002,fixedsize=true];
+haplo8 [shape="circle",style="filled", color="green" , imagescale="both", width=0.4, height=0.4,fixedsize=true];
+haplo9 [shape="circle",style="filled", color="green" , imagescale="both", width=0.4, height=0.4,fixedsize=true];
+haplo10 [shape="circle",style="filled", color="green" , imagescale="both", width=0.4, height=0.4,fixedsize=true];
+haplo11 [shape="circle",style="filled", color="green" , imagescale="both", width=0.4, height=0.4,fixedsize=true];
+haplo12 [shape="circle",style="filled", color="green" , imagescale="both", width=5.0, height=5.0,fixedsize=true];
+haplo13 [shape="circle",style="filled", color="green" , imagescale="both", width=1.2000000000000002, height=1.2000000000000002,fixedsize=true];
+haplo14 [shape="circle",style="filled", color="green" , imagescale="both", width=0.4, height=0.4,fixedsize=true];
+haplo2 -- haplo8 [len=0.2];
+haplo3 -- haplo14 [len=0.2];
+haplo1 -- haplo10 [len=0.2];
+haplo2 -- haplo12 [len=0.2];
+haplo6 -- haplo11 [len=0.2];
+haplo1 -- haplo6 [len=0.2];
+haplo4 -- haplo5 [len=0.2];
+haplo2 -- haplo6 [len=0.2];
+haplo4 -- haplo6 [len=0.2];
+haplo3 -- haplo9 [len=0.2];
+haplo12 -- haplo13 [len=0.2];
+haplo3 -- haplo10 [len=0.4];
+haplo7 -- haplo12 [len=0.4];
+haplo2 -- haplo5 [len=0.2];
+haplo8 -- haplo11 [len=0.2];
+haplo2 -- haplo10 [len=0.2];
+haplo1 -- haplo14 [len=0.4];
+}
