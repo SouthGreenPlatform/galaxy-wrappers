@@ -195,8 +195,7 @@ if ($dir =~/galaxy_dev/){
 #system("cp -rf $out_html $htmlout");
 open(HTML,">$htmlout");
 my $iframe = qq~
-<a href="$base_url/static/style/cytoscape/$session.cytoscape.htm" target=_blank>Access to the Cytoscape visualisation of haplotype networ
-k</a>
+<a href="$base_url/static/style/cytoscape/$session.cytoscape.htm" target=_blank>Access to the Cytoscape visualisation of haplotype network</a>
 ~;
 print HTML $iframe;
 close(HTML);
