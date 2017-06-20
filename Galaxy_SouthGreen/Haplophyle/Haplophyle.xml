@@ -17,7 +17,7 @@
 
     <!-- [REQUIRED] The command to execute -->
     <command interpreter="perl">
-	Haplophyle.sh $input $fileout $filelog 
+	Haplophyle.sh $input $fileout $dotfile $cytoscape_html $filelog 
     </command>
     <!-- [REQUIRED] Input files and tool parameters -->
     <inputs>
@@ -27,6 +27,8 @@
     <!-- [REQUIRED] Output files -->
     <outputs>
 	<data name="fileout" format="txt" label="Haplotype Network" />
+	<data name="dotfile" format="txt" label="Dot file" />
+	<data name="cytoscape_html" format="html" label="Cytoscape network" />
 	<data name="filelog" format="txt" label="Logfile" />
     </outputs>
     
