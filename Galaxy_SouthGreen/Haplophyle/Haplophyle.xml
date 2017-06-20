@@ -17,11 +17,13 @@
 
     <!-- [REQUIRED] The command to execute -->
     <command interpreter="perl">
-	Haplophyle.sh $input $fileout $dotfile $cytoscape_html $filelog 
+	Haplophyle.sh $input $input2 $groups $fileout $dotfile $cytoscape_html $filelog 
     </command>
     <!-- [REQUIRED] Input files and tool parameters -->
     <inputs>
-	<param name="input" type="data" format="txt" optional="false" label="Haplotype sequences" />
+	<param name="input" type="data" format="fasta" optional="false" label="Haplotype sequences in Fasta" />
+	<param name="input2" type="data" format="txt" optional="false" label="Haplotype sequences and their individuals" />
+	<param name="groups" type="data" format="txt" optional="false" label="Groups" />
     </inputs>
     
     <!-- [REQUIRED] Output files -->
