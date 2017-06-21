@@ -114,16 +114,7 @@ if ($groupfile && $statfile){
 	close(S);	
 }
 
-
 my $nb_groups = scalar keys(%groups);
-foreach my $haplo(keys(%hash)){
-	foreach my $group(keys(%groups)){
-		my $size_group = $haplosize{$haplo};
-		my $n = $hash{$haplo}{$group};
-		print "$haplo $group $n / $size_group \n";
-	}
-}
-
 my @colors = ("#ed292a","#ed292a","#82ABA0","#2255a6","#6ebe43","#e76599","#662e91","#c180ff","#ea8b2f","#fff100","#666666","#01ffff","#bfbfbf","#2ac966","#666666");
 my $pie_block = "";
 my %correspondence_groups;
@@ -138,7 +129,6 @@ my $session = int(rand(100000));
 my $home = `echo \$HOME`;
 $home=~s/\n//g;$home=~s/\n//g;$home=~s/\r//g;
 my $out_html = "$home/galaxy/static/style/blue/cytoscape/$session.cytoscape.htm";
-print $out_html;
 open(HTML_CYTOSCAPE,">$out_html");
                         my $html = qq~<!DOCTYPE html>
 <html><head>
@@ -200,7 +190,6 @@ my $done = 0;
 	                                                $ratio = ($hash{$node}{$group}/$haplosize{$node}) * 10;
 						}
                                                 $html .= ", group$i: $ratio";
-						print ", group$i: $ratio";
                                         }
                                         $html.= " } },\n";
                                 }
