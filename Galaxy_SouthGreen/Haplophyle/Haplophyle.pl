@@ -187,7 +187,7 @@ my $done = 0;
                 while(<OUTFILE>){
                         if (/(^\w+)\s\[.*width=([\d\.]+),/){
                                 my $node = $1;
-                                my $size = $2 * 2;
+                                my $size = $2;
                                	my $ref_hash = $hash{$node};
                                 if ($ref_hash){
                                         my %hash2 = %$ref_hash;
@@ -239,6 +239,11 @@ layout: {
 <div id="cy">
 </div>
 ~;
+for (my $i = 1; $i <= $nb_groups; $i++){
+	my $group = $correspondence_groups{$i};
+        my $col = $colors[$i];
+        $html .= "<font color='$col'>$group</font><br>";
+}
 print HTML_CYTOSCAPE $html;
 close(HTML_CYTOSCAPE);
 
