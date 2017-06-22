@@ -34,7 +34,7 @@ my $file_vcf = $tool_directory ."/galaxy$$.vcf";
 
 
 my $tabix_cmd = "source " . $tool_directory. "/module_vcf2jbrowse.sh; cp ". $vcffile ." " . $file_vcf ."; bgzip ". $file_vcf ." ; tabix -p vcf ". $file_vcf .".gz";
-system("scp ". $user ."@". $host.":/opt/projects/jbrowse.southgreen.fr/prod/jbrowse/oryza_sativa_japonica_v7/trackList.json " . $tool_directory."/trackList.json");
+system("scp ". $user ."@". $host.":/opt/projects/jbrowse.southgreen.fr/prod/databases/oryza_sativa_japonica_v7/trackList.json " . $tool_directory."/trackList.json");
 my $output = `grep -v "#" $vcffile | sed -n '1p' | cut -f 1,2 `;
 chomp($output);
 my ($chr,$start) = (split(/\t/,$output))[0,1];
@@ -59,10 +59,10 @@ system($tabix_cmd);
 my $file_gz = "galaxy$$.vcf.gz";
 my $file_tbi = "galaxy$$.vcf.gz.tbi";
 
-system("scp ". $file_vcf.".gz.tbi ". $user ."@". $host.":/opt/projects/jbrowse.southgreen.fr/prod/jbrowse/oryza_sativa_japonica_v7/tmp/" .$file_tbi); 
-system("scp ". $file_vcf.".gz ". $user ."@". $host.":/opt/projects/jbrowse.southgreen.fr/prod/jbrowse/oryza_sativa_japonica_v7/tmp/". $file_gz);
-system("scp ".$tool_directory."/galaxy$$.json ". $user ."@". $host.":/opt/projects/jbrowse.southgreen.fr/prod/jbrowse/oryza_sativa_japonica_v7/");
-system("scp ".$tool_directory."/trackList.json ". $user ."@". $host.":/opt/projects/jbrowse.southgreen.fr/prod/jbrowse/oryza_sativa_japonica_v7/");
+system("scp ". $file_vcf.".gz.tbi ". $user ."@". $host.":/opt/projects/jbrowse.southgreen.fr/prod/databases/oryza_sativa_japonica_v7/tmp/" .$file_tbi); 
+system("scp ". $file_vcf.".gz ". $user ."@". $host.":/opt/projects/jbrowse.southgreen.fr/prod/databases/oryza_sativa_japonica_v7/tmp/". $file_gz);
+system("scp ".$tool_directory."/galaxy$$.json ". $user ."@". $host.":/opt/projects/jbrowse.southgreen.fr/prod/databases/oryza_sativa_japonica_v7/trackList.json");
+system("scp ".$tool_directory."/trackList.json ". $user ."@". $host.":/opt/projects/jbrowse.southgreen.fr/prod/databases/oryza_sativa_japonica_v7/trackList.json");
 system("rm  ".$tool_directory."/trackList.json ".$tool_directory."/galaxy$$.json ".$file_vcf.".gz ".$file_vcf.".gz.tbi ");
 
 open(HTML,">$html");
