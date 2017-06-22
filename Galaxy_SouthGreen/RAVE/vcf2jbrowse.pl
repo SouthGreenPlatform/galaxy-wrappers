@@ -61,7 +61,7 @@ my $file_tbi = "galaxy$$.vcf.gz.tbi";
 
 system("scp ". $file_vcf.".gz.tbi ". $user ."@". $host.":/opt/projects/jbrowse.southgreen.fr/prod/databases/oryza_sativa_japonica_v7/tmp/" .$file_tbi); 
 system("scp ". $file_vcf.".gz ". $user ."@". $host.":/opt/projects/jbrowse.southgreen.fr/prod/databases/oryza_sativa_japonica_v7/tmp/". $file_gz);
-system("scp ".$tool_directory."/galaxy$$.json ". $user ."@". $host.":/opt/projects/jbrowse.southgreen.fr/prod/databases/oryza_sativa_japonica_v7/trackList.json");
+system("scp ".$tool_directory."/galaxy$$.json ". $user ."@". $host.":/opt/projects/jbrowse.southgreen.fr/prod/databases/oryza_sativa_japonica_v7/");
 system("scp ".$tool_directory."/trackList.json ". $user ."@". $host.":/opt/projects/jbrowse.southgreen.fr/prod/databases/oryza_sativa_japonica_v7/trackList.json");
 system("rm  ".$tool_directory."/trackList.json ".$tool_directory."/galaxy$$.json ".$file_vcf.".gz ".$file_vcf.".gz.tbi ");
 
