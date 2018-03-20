@@ -1,0 +1,29 @@
+<tool name="Kallisto2EdgeR" id="kallisto2edger" version="1.0">
+  <description>converts multiple abundance datasets from kallisto into edgeR input</description>
+  
+  <command interpreter="bash">
+    ./kallisto2edger.sh $inputFile1 $inputFile2 $outFile $name1 $name2 $logfile
+  </command>
+  <inputs>
+    <param name="name1" type="text" label="Name for condition1" value="cond1"/>
+    <param format="tabular" name="inputFile1" type="data" multiple="True" label="Condition1: Select abundance outputs from Kallisto"/>
+    <param name="name2" type="text" label="Name for condition2" value="cond2"/>
+    <param format="tabular" name="inputFile2" type="data" multiple="True" label="Condition2: Select abundance outputs from Kallisto"/>    
+  </inputs> 
+  
+  <outputs>
+    <data format="tabular" name="outFile" label="EdgeR input (generated from kallisto outputs)"/>
+    <data format="txt" name="logfile" label="Logfile"/>
+  </outputs>
+  
+  <help>
+
+**Purpose**
+
+Converts multiple abundance datasets from kallisto into one single edgeR input.
+
+
+  </help>
+</tool>
+
+
