@@ -35,7 +35,7 @@
     <inputs>
 	<param name="vcf" type="data" format="vcf" optional="false" label="VCF input" />
 
-	<param name="samples" type="select" label="Samples" multiple="true" dynamic_options="get_field_samples_options(vcf)" help="Samples to be analyzed." />
+	<param name="samples" type="select" label="Samples" multiple="true" dynamic_options="get_field_samples_options(vcf)" help="Samples to be analyzed" />
 	<!--<param name="samples" type="text" label="Samples" multiple="true" help="Samples to be analyzed." />-->
         <!--<param name="chromosomes" type="select" label="Chromosomes" multiple="true" dynamic_options="get_field_chrs_options(input)" help="Chromosomes to be analyzed." />-->
 	<param name="frequency" type="float" value="0" label="Minimum MAF" help="Minimum Minor Allele Frequency (MAF)" />

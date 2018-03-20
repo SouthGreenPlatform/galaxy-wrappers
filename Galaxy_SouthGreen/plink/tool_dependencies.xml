@@ -1,6 +1,0 @@
-<?xml version="1.0"?>
-<tool_dependency>
-    <package name="plink" version="1.90">
-        <repository name="package_plink_1_90" owner="dereeper" toolshed="https://toolshed.g2.bx.psu.edu" />
-    </package>
-</tool_dependency>

@@ -16,6 +16,7 @@ bound_end=${9}
 
 cp -rf $filein input$$.vcf
 
+
 if [ "${10}" != "None" ]
 then samples="--samples ${10}"
 fi
