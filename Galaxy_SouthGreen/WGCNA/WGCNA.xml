@@ -1,0 +1,56 @@
+<tool id="WGCNA" name="WGCNA" version="0.1.0">
+<description>- weighted correlation network analysis</description>
+    <command><![CDATA[
+Rscript '${__tool_directory__}/wgcna.R' -c $counts -t $traits -m $modules -p $probes -v $visant -a $mes -i $pdf
+
+	]]></command>
+    <inputs>
+        <param name="counts" type="data" format="txt" label="Counts file"/>
+        <param name="traits" type="data" format="txt" label="Traits file"/>
+    </inputs>
+    <outputs>
+        <data name="pdf" format="pdf" label="Graphics"/>
+        <data name="modules" format="txt" label="Module colors"/>
+        <data name="probes" format="txt" label="Genes"/>
+        <data name="mes" format="txt" label="MEs"/>
+        <data name="visant" format="txt" label="Network"/>
+    </outputs>
+    <help>
+
+==========
+ Overview
+ ==========
+
+**WGCNA Overview**
+
+WGCNA
+The WGCNA R software package is a comprehensive collection of R functions for performing various aspects of weighted correlation network analysis. Please visit the WGCNA_ web page for more information.
+
+.. _WGCNA: https://labs.genetics.ucla.edu/horvath/CoexpressionNetwork/Rpackages/WGCNA/
+
+**Input formats**
+
+Count file (tabular)
+
+-----
+
+.. class:: infomark
+
+**Galaxy integration** Alexis Dereeper (IRD).
+
+.. class:: infomark
+
+**Support** For any questions about Galaxy integration, please send an e-mail to galaxy-dev-southgreen@cirad.fr
+
+.. class:: infomark
+
+**Program encapsulated in Galaxy by South Green**
+
+        </help>
+<citations>
+	<citation type="doi">10.1186/1471-2105-9-559</citation>
+</citations>
+
+</tool>
+
+
