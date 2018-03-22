@@ -1,8 +1,7 @@
 <tool id="WGCNA" name="WGCNA" version="0.1.0">
 <description>- weighted correlation network analysis</description>
     <command><![CDATA[
-Rscript '${__tool_directory__}/wgcna.R' -c $counts -t $traits -m $modules -p $probes -v $visant -a $mes -i $pdf
-
+Rscript '${__tool_directory__}/wgcna.R' -c $counts -t $traits -m $modules -p $probes -v $visant -a $mes -i $pdf >>$log 2>&1
 	]]></command>
     <inputs>
         <param name="counts" type="data" format="txt" label="Counts file"/>
