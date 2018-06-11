@@ -1,0 +1,169 @@
+<tool id="gbs" name="gbnomique" version="0.1.0">
+    <requirements>
+    </requirements>
+    <stdio>
+        <exit_code range="1:" />
+    </stdio>
+    <command><![CDATA[
+	source $__tool_directory__/module.sh;
+        perl $__tool_directory__/gbnomique.pl 
+		-t $matrice
+		-v $vcf
+		-c $color
+		-p $ploidy
+		-l $lod
+		-w $window
+		-s $thres
+		#if str($focus.focus) == "One":
+			-i $focus.hybrid
+		#else if str($focus.focus) == "Several":
+			-f $focus.Focus_file
+		#end if
+                -k $windowSize;
+                cp -rf "ancestorFreq" $ancestorFreq;
+		#if str($focus.focus) == "One":
+			cp -rf "ideogram_hybrid" $ideogram;
+			cp -rf "len_ideogram_hybrid" $len_ideogram;
+		#else:
+			cp -rf "ideogram_allInd" $ideogram_allInd;
+                        cp -rf "len_allInd_Ideogram" $len_allInd_ideogram;
+			cp -rf "circos" $circos;
+			cp -rf "len_allInd_Circos" $len_allInd_Circos;			
+		#end if
+    ]]></command>
+    <inputs>
+	<param type="data" name="matrice" format="tabular" label="matrice table -t"/>
+	<param type="data" name="vcf" format="vcf" label="vcf of hybrid population -v"/>
+	<param type="select" name="ploidy" label="ploidy -p">
+		<option value="2">2</option>
+                <option value="3">3</option>
+		<option value="4">4</option>
+	</param>
+	<param type="data" name="color" format="txt" label="color file -c"/>
+	<param type="integer" name="window" label ="number of markers by windows -w" value="10"/>
+	<param type="text" name="lod" label ="LOD value -l" value="3"/>	
+	<param type="text" name="thres" label ="threshold for the calcul of LOD score -s" value="0.99"/>
+	<param type="integer" name="windowSize" label ="Windows size (in k-bases) -k" value="100"/>
+	<conditional name="focus">
+		<param name = "focus" type="select" label="Which hybrids do you want to work on?">
+			<option value="One">One hybrid</option>
+			<option	value="Several">Several hybrids</option>
+			<option value="All">All hybrids</option>
+		</param>
+		<when value="One">
+			<param type="text" name="hybrid" label="One hybrid to focus on -i"/>
+		</when>
+		<when value="Several">	
+			<param type="data" name="Focus_file" format="tabular" label="focus file (several hybrids) -f"/>
+    		</when>
+	</conditional>
+    </inputs>
+    <outputs>
+        <data format="tabular" name="ideogram" label="Ideogram painting">
+                <filter>focus['focus'] == 'One'</filter>
+        </data>
+        <data format="tabular" name="len_ideogram" label="Chromosomes length for ideogram">
+                <filter>focus['focus'] == 'One'</filter>
+        </data>
+	<data format="tabular" name="ideogram_allInd" label="Ideogram painting">
+                <filter>focus['focus'] != 'One'</filter>
+        </data>
+        <data format="tabular" name="len_allInd_ideogram" label="Chromosomes length for ideogram">
+                <filter>focus['focus'] != 'One'</filter>
+        </data>
+        <data format="tabular" name="circos" label="circos painting">
+                <filter>focus['focus'] != 'One'</filter>
+        </data>
+        <data format="tabular" name="len_allInd_Circos" label="Chromosomes length for circos">
+                <filter>focus['focus'] != 'One'</filter>
+        </data>
+        <data format="tabular" name="ancestorFreq" label="Ancestors frequency along the chromosomes"/>
+    </outputs>
+	
+    <help><![CDATA[
+
+=====        
+Usage
+=====
+
+	perl gbnomique.pl [-t matrix file] [-v vcf file] [-c color file] [-p ploidy] [-w number of markers by window] [-l LOD value] [-s threshold for LOD] [-k window size in K-bases] [-i particular hybrid to focus on] [-f focus file with several hybrids to focus on]
+======
+Inputs
+======
+
+	-t | --input : reference matrice. 
+
+The first column names schould be : 
+
+| ancestor | chromosome | position | allele |
+ 
+- ancestor = Ancestor names
+- chromosome = Chromosome numbers
+- position = Position of the DSNP marker
+- allele = Base of the ancestral allele
+
+
+	-v | --vcf : vcf of the hybrid population
+
+	-c | --color : color file
+
+Color file where the user can choose one color for each ancestor for the painting.
+Indeterminations (NA) will always be grey.
+If you use the ideogram output of all the hybrids, the bands between chromosoms will always be black.
+
+
+	-p | --ploidy : ploidy of the hybrid population (2, 3 or 4).
+
+	-w | --window : number of markers by window (default = 10)
+
+	-l | --lod : lod value to conclude for one hypothesis or an other (default = 3)
+
+	-s | --threshold : threshold for the calcul of LOD score (default = 0.99)
+
+	-k | --cut : number of K bases for one window (default = 100)
+
+	-i | --ind : particular hybrid you want to focus on (optional). If -f not indicated. 
+
+	-f | --focus : file containing several hybrids to focus on (more than one). If -i not indicated (optional). If -i and -f are blank, focus on all hybrids.
+
+	-h | --help : display an help
+
+======
+Ouputs
+======
+
+- If -i is filled: 
+	
+	1- *ideogram_hybridname* : the painting data. An Ideogram output compatible with ideogram.js : http://genomeharvest.southgreen.fr/visu/ideogram/newindex.php
+	
+	2- *len_ideogram_hybridname* : the chromosomes data. An Ideogram output compatible with ideogram.js
+	
+	3- *ancestorFreq* : frequency of ancestors alleles along chromosome for the particular hybrid focused.
+
+
+- If -f is filled: 
+
+	1- *ideogram_allInd* : the painting data. An output compatible with ideogram.js. Instead of a normal ideogram, chromosomes are replaces by hybrids. Each chromosomes is put side to side to represent the whole genome.  : <http://genomeharvest.southgreen.fr/visu/ideogram/newindex.php>
+	
+	2- *len_allInd_ideogram* : the chromosomes data. Length of the representation of genomes of each hybrids. An output compatible with ideogram.js
+	
+	3- *ancestorFreq* : frequency of ancestors alleles along chromosome for all the hybrids of the focus_file.
+	
+	4- *circos* : the painting data. An output compatible with circos.js http://genomeharvest.southgreen.fr/visu/circosJS/demo/index.php
+
+	5- *len_allInd_Circos* : the chromosomes data. An output compatible with circos.js
+
+
+- If none is filled : 
+
+	1- *ideogram_allInd* : the painting data. An Ideogram output compatible with ideogram.js. Instead of a normal ideogram, chromosomes are replaces by hybrids. Each chromosomes is put side to side to represent the whole genome : <http://genomeharvest.southgreen.fr/visu/ideogram/newindex.php>. 
+	
+	2- *len_allInd_ideogram* : the chromosomes data. Length of the representation of genomes of each hybrids. An Ideogram output compatible with ideogram.js
+	
+	3- *ancestorFreq* : frequency of ancestors alleles along chromosome for all hybrids.
+
+	4- *circos* : the painting data. An output compatible with circos.js http://genomeharvest.southgreen.fr/visu/circosJS/demo/index.php
+
+	5- *len_allInd_Circos* : the chromosomes data. An output compatible with circos.js
+  ]]></help>
+</tool>

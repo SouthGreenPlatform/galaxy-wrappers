@@ -1,0 +1,70 @@
+<tool id="markersDetector" name="Markers Detector" version="0.1.0">
+    <requirements>
+    </requirements>
+    <stdio>
+        <exit_code range="1:" />
+    </stdio>
+    <command><![CDATA[
+	source $__tool_directory__/module.sh;
+        perl $__tool_directory__/MarkersDetector.pl 
+		-t $matrice
+		-m $missing
+		-g 0.8;
+	cp -rf "Diagnosis_matrix" $output;
+    ]]></command>
+    <inputs>
+	<param type="data" name="matrice" format="tabular" label="matrice table --input"/>
+	<param type="text" name="missing" label ="Missing data threshold" value="0.3"/>
+	<param type="text" name="gst" label ="GST threshold" value="0.9"/>
+    </inputs>
+    <outputs>
+	<data name="output" format="tabular" label="Ancestral markers matrix"/>
+    </outputs>
+    <help><![CDATA[
+
+=====
+Usage
+=====
+
+This script is used to define a matrix of ancestry informative markers from an other matrix containing GST (inter-population differentiation parameter) information.
+
+	**perl MarkersDetector.pl [-t matrix file] [-g threshold for gst] [-m threshold for missing data]**
+
+======
+Inputs
+======
+
+	-t | --input : reference matrice with GST and alternative allele frequence (F) informations.
+
+
+The first column names schould be : | #CHROM | POS | REF | ALT | %Nref | GST1 | GST2 | GST3 | F1 | F2 | F3 |
+
+- #CHROM = chromosome name
+- POS = position of DSNP
+- REF = Base of the reference allele of this DSNP
+- ALT = Base of the alternative allele of this DSNP
+- %Nref = Percentage of maximal missing data for this DSNP
+- GST = Allele frequency for each ancestor (With 1,2,3 the ancestors names)
+- F = Alternative allele frequency for each ancestor (With 1,2,3 the ancestors names)
+
+
+	-g | --gst : maximum value of the GST of a DSNP to be a marker (default = 0.9). 
+
+	-m | --missing : maximum value of missing data frequence for a DSNP to be a marker (default = 0.3) 
+
+======
+Ouputs
+======
+
+A matrix containing all the ancestry informative markers for every ancestors.
+
+| ancestor | chromosome | position | allele |
+ 
+- ancestor = Ancestor names
+- chromosome = Chromosome numbers
+- position = Position of the DSNP marker
+- allele = Base of the ancestral allele
+
+
+    ]]></help>
+</tool>
