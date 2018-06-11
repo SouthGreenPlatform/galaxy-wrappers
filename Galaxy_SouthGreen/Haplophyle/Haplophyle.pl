@@ -5,11 +5,16 @@ use Switch;
 use Getopt::Long;
 use Bio::SeqIO;
 
-my $HAPLOPHYLE_EXE = "java -Xmx2048m -jar /home/galaxydev/galaxy/tools/SouthGreen/Haplophyle/NetworkCreator_fat.jar";
 my $NEATO_EXE = "neato";
 my $CONVERT_EXE = "convert";
-#my $RSCRIPT_EXE = "/usr/local/bioinfo/R/default/bin/Rscript";
 my $RSCRIPT_EXE = "Rscript";
+use Cwd;
+my $dir = getcwd;
+my $base_url = "http://galaxy.southgreen.fr/galaxy/";
+if ($dir =~/galaxy_dev/){
+        $base_url = "http://cc2-web1.cirad.fr/galaxydev/";
+}
+
 
 my $usage = qq~Usage:$0 <args> [<opts>]
 where <args> are:
@@ -20,10 +25,11 @@ where <args> are:
 <opts> are:
     -g, --groups        <groupfile>
     -s, --stats         <statfile>
+    -t, --tool_path     <tool_path>
 ~;
 $usage .= "\n";
 
-my ($infile,$output,$outfile,$htmlout,$groupfile,$statfile);
+my ($infile,$output,$outfile,$htmlout,$groupfile,$statfile,$tool_path);
 
 
 GetOptions(
@@ -32,7 +38,8 @@ GetOptions(
 	"dot=s"      => \$outfile,
 	"html=s"     => \$htmlout,
 	"groups=s"   => \$groupfile,
-	"stats=s"    => \$statfile
+	"stats=s"    => \$statfile,
+	"tool_path=s"=> \$tool_path
 );
 
 
@@ -40,6 +47,10 @@ die $usage
   if ( !$infile);
 
 
+my $HAPLOPHYLE_EXE = "java -Xmx2048m -jar NetworkCreator_fat.jar";
+if ($tool_path){
+	$HAPLOPHYLE_EXE = "java -Xmx2048m -jar $tool_path/NetworkCreator_fat.jar";
+}
   
 	
 my $out_png = "network.png";
@@ -238,12 +249,6 @@ print HTML_CYTOSCAPE $html;
 close(HTML_CYTOSCAPE);
 
 
-use Cwd;
-my $dir = getcwd;
-my $base_url = "http://galaxy.southgreen.fr/galaxy/";
-if ($dir =~/galaxy_dev/){
-        $base_url = "http://cc2-web1.cirad.fr/galaxydev/";
-}
 #system("cp -rf $out_html $htmlout");
 open(HTML,">$htmlout");
 my $iframe = qq~
