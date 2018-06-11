@@ -5,9 +5,6 @@ use Switch;
 use Getopt::Long;
 use Bio::SeqIO;
 
-my $NEATO_EXE = "neato";
-my $CONVERT_EXE = "convert";
-my $RSCRIPT_EXE = "Rscript";
 use Cwd;
 my $dir = getcwd;
 
