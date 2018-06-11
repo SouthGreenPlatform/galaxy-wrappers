@@ -10,10 +10,6 @@ my $CONVERT_EXE = "convert";
 my $RSCRIPT_EXE = "Rscript";
 use Cwd;
 my $dir = getcwd;
-my $base_url = "http://galaxy.southgreen.fr/galaxy/";
-if ($dir =~/galaxy_dev/){
-        $base_url = "http://cc2-web1.cirad.fr/galaxydev/";
-}
 
 
 my $usage = qq~Usage:$0 <args> [<opts>]
@@ -137,20 +133,16 @@ foreach my $group(keys(%groups)){
 	$pie_block .= "'pie-$i-background-color': '$colors[$i]',\n";
 	$pie_block .= "'pie-$i-background-size': 'mapData(group$i, 0, 10, 0, 100)',\n";
 }
-my $session = int(rand(100000));
-my $home = `echo \$HOME`;
-$home=~s/\n//g;$home=~s/\n//g;$home=~s/\r//g;
-my $out_html = "$home/galaxy/static/style/blue/cytoscape/$session.cytoscape.htm";
-open(HTML_CYTOSCAPE,">$out_html");
+open(HTML_CYTOSCAPE,">$htmlout");
                         my $html = qq~<!DOCTYPE html>
 <html><head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-<link href="Pie_style/style.css" rel="stylesheet">
+<link href="http://sniplay.southgreen.fr/cytoscape/Pie_style/style.css" rel="stylesheet">
 <meta charset="utf-8">
 <meta name="viewport" content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, minimal-ui">
 <title>Pie style</title>
-<script src="Pie_style/jquery.js"></script>
-<script src="Pie_style/cytoscape.js"></script>
+<script src="http://sniplay.southgreen.fr/cytoscape/Pie_style/jquery.js"></script>
+<script src="http://sniplay.southgreen.fr/cytoscape/Pie_style/cytoscape.js"></script>
 <script type="text/javascript">
 \$(function(){ // on dom ready
 
@@ -248,11 +240,3 @@ for (my $i = 1; $i <= $nb_groups; $i++){
 print HTML_CYTOSCAPE $html;
 close(HTML_CYTOSCAPE);
 
-
-#system("cp -rf $out_html $htmlout");
-open(HTML,">$htmlout");
-my $iframe = qq~
-<a href="$base_url/static/style/cytoscape/$session.cytoscape.htm" target=_blank>Access to the Cytoscape visualisation of haplotype network</a>
-~;
-print HTML $iframe;
-close(HTML);
