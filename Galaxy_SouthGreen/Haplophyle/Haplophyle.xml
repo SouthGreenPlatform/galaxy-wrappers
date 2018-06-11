@@ -17,13 +17,13 @@
 
     <!-- [REQUIRED] The command to execute -->
     <command interpreter="perl">
-	Haplophyle.sh $input $input2 $groups $fileout $dotfile $cytoscape_html $filelog 
+	Haplophyle.sh $input $input2 $fileout $dotfile $cytoscape_html $filelog $groups 
     </command>
     <!-- [REQUIRED] Input files and tool parameters -->
     <inputs>
 	<param name="input" type="data" format="fasta" optional="false" label="Haplotype sequences in Fasta" />
 	<param name="input2" type="data" format="txt" optional="false" label="Haplotype sequences and their individuals" />
-	<param name="groups" type="data" format="txt" optional="false" label="Groups" />
+	<param name="groups" type="data" format="txt" optional="true" label="Groups"/>
     </inputs>
     
     <!-- [REQUIRED] Output files -->
@@ -70,9 +70,10 @@ Description
 Input file
 ----------
 
-Haplotype file
+Haplotype fasta file
 	Haplotype fasta file with haplotype sequences and proportion
-
+Haplotype sequences and their individuals
+	Haplotype sequences and list of individuals holding the haplotype
 
 ------------
 Output files
@@ -93,7 +94,7 @@ Input files
 ===========
 
 Haplotype fasta file
----------
+----------------------------
 
 ::
 
@@ -125,6 +126,21 @@ Haplotype fasta file
 	CAAGGTCCACT
 	>haplo14|1
 	AGGAGCCCATT
+
+
+Haplotype sequences and their individuals
+----------------------------------------------
+
+::
+
+        haplo4:2:RS10_1,RS10_2,
+        GAGTGGGTTGCTTCCTTGCGTAGCCATCCGCCAACGACTGT
+        haplo5:2:RC3_1,RC3_2,
+        AGGTATACTGCCTGCTCGCGTAGTCAGCCGCCGACGGCTGG
+        haplo6:2:RS8_1,RS8_2,
+        GAGTGGGTTGCTTCCTTGCGTAGCCATCCACCAACGACTGT
+        haplo7:2:sativa_1,sativa_2,
+        GAGTGGGCTGCTTCCTCGCGTAGTCAGCCGCCGACAGCTGG
 
 
 
