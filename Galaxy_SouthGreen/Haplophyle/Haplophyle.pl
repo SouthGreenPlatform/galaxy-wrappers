@@ -5,10 +5,11 @@ use Switch;
 use Getopt::Long;
 use Bio::SeqIO;
 
-my $HAPLOPHYLE_EXE = "java -Xmx2048m -jar /usr/local/bioinfo/sniplay/Haplophyle/NetworkCreator_fat.jar";
+my $HAPLOPHYLE_EXE = "java -Xmx2048m -jar /home/galaxydev/galaxy/tools/SouthGreen/Haplophyle/NetworkCreator_fat.jar";
 my $NEATO_EXE = "neato";
 my $CONVERT_EXE = "convert";
-my $RSCRIPT_EXE = "/usr/local/bioinfo/R/default/bin/Rscript";
+#my $RSCRIPT_EXE = "/usr/local/bioinfo/R/default/bin/Rscript";
+my $RSCRIPT_EXE = "Rscript";
 
 my $usage = qq~Usage:$0 <args> [<opts>]
 where <args> are:
