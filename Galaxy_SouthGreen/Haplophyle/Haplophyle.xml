@@ -23,7 +23,7 @@
     <inputs>
 	<param name="input" type="data" format="fasta" optional="false" label="Haplotype sequences in Fasta" />
 	<param name="input2" type="data" format="txt" optional="false" label="Haplotype sequences and their individuals" />
-	<param name="groups" type="data" format="txt" optional="true" label="Groups"/>
+	<param name="groups" type="data" format="txt" optional="true" label="Groups (optional)" help="Semicolon separated file (ind;group)"/>
     </inputs>
     
     <!-- [REQUIRED] Output files -->
