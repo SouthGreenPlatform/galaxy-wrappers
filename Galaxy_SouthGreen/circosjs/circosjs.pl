@@ -67,6 +67,8 @@ else{
 
 #Création de la partie script hml qui va être envoyée a Galaxy pour l'interprétation
 my $iframe = qq~
+
+#<form target="myIframe" action="http://dev.visusnp.southgreen.fr/circosJS/demo/index.php" method="post" enctype="multipart/form-data">
 <form target="myIframe" action="http://genomeharvest.southgreen.fr/visu/circosJS/demo/index.php" method="post" enctype="multipart/form-data">
 <input type="hidden" name="chromosome" value="$chromosomelength" />
 ~;

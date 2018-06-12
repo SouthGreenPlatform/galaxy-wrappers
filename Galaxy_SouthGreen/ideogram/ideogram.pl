@@ -29,7 +29,7 @@ print O $q->start_html(''); # start the HTML
 
 my $iframe = qq~
 
-                <form target="myIframe" action="http://cassava-genome.southgreen.fr/visu_genomeharvest/ideogram/newindex.php" method="post">
+                <form target="myIframe" action="http://genomeharvest.southgreen.fr/visu/ideogram/newindex.php" method="post">
                                 <input type="hidden" name="data" id="data" value="$chromosomelength" />
 				<input type="hidden" name="annot" id="annot" value="$annotation" />
 				<input type="hidden" name="select" id="selectorpost" value="$ploidy" />
