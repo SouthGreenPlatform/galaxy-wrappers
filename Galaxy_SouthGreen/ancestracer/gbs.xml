@@ -1,4 +1,4 @@
-<tool id="gbs" name="gbnomique" version="0.1.0">
+<tool id="gbs" name="ancestracer" version="0.1.0">
     <requirements>
     </requirements>
     <stdio>
