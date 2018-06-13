@@ -32,7 +32,7 @@
 		#end if
     ]]></command>
     <inputs>
-	<param type="data" name="matrice" format="tabular" label="matrice table -t"/>
+	<param type="data" name="matrice" format="tabular" label="matrix table -t"/>
 	<param type="data" name="vcf" format="vcf" label="vcf of hybrid population -v"/>
 	<param type="select" name="ploidy" label="ploidy -p">
 		<option value="2">2</option>
@@ -82,88 +82,237 @@
 	
     <help><![CDATA[
 
-=====        
-Usage
-=====
+.. class:: infomark
 
-	perl gbnomique.pl [-t matrix file] [-v vcf file] [-c color file] [-p ploidy] [-w number of markers by window] [-l LOD value] [-s threshold for LOD] [-k window size in K-bases] [-i particular hybrid to focus on] [-f focus file with several hybrids to focus on]
-======
+**Authors**     Patrick Ollitrault, Aurore Comte
+
+.. class:: infomark
+
+**Galaxy integration** Aurore Comte
+
+.. class:: infomark
+
+**Support** For any questions about Galaxy integration, please send an e-mail to aurore.comte@ird.fr
+
+---------------------------------------------------
+
+=============
+TraceAncestor
+=============
+
+-----------
+Description
+-----------
+
+------
 Inputs
-======
+------
 
-	-t | --input : reference matrice. 
+matrix table:
+	Matrix with ancestry informative markers. (Output from the tool Markers Detector). The first column names schould be : 
 
-The first column names schould be : 
-
-| ancestor | chromosome | position | allele |
+ ancestor   chromosome   position   allele
  
 - ancestor = Ancestor names
 - chromosome = Chromosome numbers
 - position = Position of the DSNP marker
 - allele = Base of the ancestral allele
 
+vcf of the hybrid population:
+	vcf with allele specific depth information. Individu names should not have space in their names.
 
-	-v | --vcf : vcf of the hybrid population
+color file:
+	Color file where the user can choose one color for each ancestor for the painting.
+	Indeterminations (NA) will always be grey.
+	If you use the ideogram output of all the hybrids, the bands between chromosoms will always be black.
 
-	-c | --color : color file
+ploidy: 
+	ploidy of the hybrid population (2, 3 or 4).
 
-Color file where the user can choose one color for each ancestor for the painting.
-Indeterminations (NA) will always be grey.
-If you use the ideogram output of all the hybrids, the bands between chromosoms will always be black.
+number of markers by windows: 
+	number of markers by window (default = 10).
+
+LOD value : 
+	lod value to conclude for one hypothesis or an other (default = 3)
+
+threshold of the calcul of LOD score: 
+	threshold for the calcul of LOD score. Acceptable sequencage error rate (default = 0.99)
+
+Window size (in k-bases): 
+	number of K bases for one window (default = 100)
+
+One hybrid to focus on: 
+	particular hybrid you want to focus on (optional). If -f not indicated. 
+
+focus file (several hybrids): 
+	file containing several hybrids to focus on (more than one). If -i not indicated (optional). If -i and -f are blank, focus on all hybrids.
 
 
-	-p | --ploidy : ploidy of the hybrid population (2, 3 or 4).
-
-	-w | --window : number of markers by window (default = 10)
-
-	-l | --lod : lod value to conclude for one hypothesis or an other (default = 3)
-
-	-s | --threshold : threshold for the calcul of LOD score (default = 0.99)
-
-	-k | --cut : number of K bases for one window (default = 100)
-
-	-i | --ind : particular hybrid you want to focus on (optional). If -f not indicated. 
-
-	-f | --focus : file containing several hybrids to focus on (more than one). If -i not indicated (optional). If -i and -f are blank, focus on all hybrids.
-
-	-h | --help : display an help
-
-======
+------
 Ouputs
-======
+------
 
-- If -i is filled: 
-	
-	1- *ideogram_hybridname* : the painting data. An Ideogram output compatible with ideogram.js : http://genomeharvest.southgreen.fr/visu/ideogram/newindex.php
-	
-	2- *len_ideogram_hybridname* : the chromosomes data. An Ideogram output compatible with ideogram.js
-	
-	3- *ancestorFreq* : frequency of ancestors alleles along chromosome for the particular hybrid focused.
+Ancestors frequency along the chromosomes:
+	frequency of ancestors alleles along chromosome for every hybrid focused
 
-
-- If -f is filled: 
-
-	1- *ideogram_allInd* : the painting data. An output compatible with ideogram.js. Instead of a normal ideogram, chromosomes are replaces by hybrids. Each chromosomes is put side to side to represent the whole genome.  : <http://genomeharvest.southgreen.fr/visu/ideogram/newindex.php>
-	
-	2- *len_allInd_ideogram* : the chromosomes data. Length of the representation of genomes of each hybrids. An output compatible with ideogram.js
-	
-	3- *ancestorFreq* : frequency of ancestors alleles along chromosome for all the hybrids of the focus_file.
-	
-	4- *circos* : the painting data. An output compatible with circos.js http://genomeharvest.southgreen.fr/visu/circosJS/demo/index.php
-
-	5- *len_allInd_Circos* : the chromosomes data. An output compatible with circos.js
+Ideogram painting:
+	An Ideogram output compatible with the tool ideogram. http://genomeharvest.southgreen.fr/visu/ideogram/newindex.php
+	If the focus is made on only one hybrid -> One ideogram bar = one chromosome.
+	If the focus is made on several hybrids -> One ideogram bar = one genome (chromosome jointed)
 
 
-- If none is filled : 
+Chromosomes length for ideogram:
+	An Ideogram output compatible with the tool ideogram.      
+	If the focus is made on only one hybrid -> Chromosome length.
+        If the focus is	made on	several	hybrids	-> Sum of chromosomes length.
 
-	1- *ideogram_allInd* : the painting data. An Ideogram output compatible with ideogram.js. Instead of a normal ideogram, chromosomes are replaces by hybrids. Each chromosomes is put side to side to represent the whole genome : <http://genomeharvest.southgreen.fr/visu/ideogram/newindex.php>. 
-	
-	2- *len_allInd_ideogram* : the chromosomes data. Length of the representation of genomes of each hybrids. An Ideogram output compatible with ideogram.js
-	
-	3- *ancestorFreq* : frequency of ancestors alleles along chromosome for all hybrids.
+Circos painting:
+	Only for a focus on several hybrid.
+	An output compatible whith the tool circos. http://genomeharvest.southgreen.fr/visu/circosJS/demo/index.php
 
-	4- *circos* : the painting data. An output compatible with circos.js http://genomeharvest.southgreen.fr/visu/circosJS/demo/index.php
+Chromosomes length for circos:
+	 An output compatible whith the tool circos. Length of chromosomes.
 
-	5- *len_allInd_Circos* : the chromosomes data. An output compatible with circos.js
+
+---------------------------------------------------
+
+---------------
+Working example
+---------------
+
+Input files
+===========
+
+matrix table
+----------------------------
+
+::
+
+	ancestor	chromosome	position	allele
+	C	1	108741	A
+	C	1	111092	T
+	C	1	111095	C
+	C	1	112523	A
+
+
+color file
+----------------------------
+
+::
+
+	C #677E52
+	M #B9121B
+	P #046380
+	mic #8CC6D7
+
+
+focus file
+----------------------------
+
+::
+
+	CIb061
+	CIb062
+	CIb063
+	CIb064
+	CIb065
+	CIb066
+	CIb067
+	CIb068
+	CIb069
+	CIb070
+
+
+Output files
+===============
+
+Ideogram painting
+------------------------
+
+::
+
+	1 0 1 1700000 #677E52
+	1 0 1700001 2200000 #B9B9B9
+	1 0 2200001 2700000 #677E52
+	1 0 2700001 3000000 #B9B9B9
+	1 0 3000001 3300000 #B9121B
+	1 0 3300001 3600000 #B9B9B9
+	1 0 3600001 7400000 #677E52
+
+
+Chromosomes length for ideogram (only for all or several individuals -> ideogram = hybrid)
+------------------------------------------------------------------------------------------
+
+::
+
+	CIb061 305908623 012
+	CIb062 305908623 012
+	CIb063 305908623 012
+	CIb064 305908623 012
+	CIb065 305908623 012
+	CIb066 305908623 012
+	CIb067 305908623 012
+	CIb068 305908623 012
+	CIb069 305908623 012
+	CIb070 305908623 012
+
+
+Chromosomes length for ideogram	(only for one individual -> ideogram = chromosome)
+------------------------------------------------------------------------------------------
+
+::
+
+	1 28919326 012
+	2 36354460 012
+	3 51009332 012
+	4 25548966 012
+	5 43244541 012
+	6 25519306 012
+	7 21076284 012
+	8 24991924 012
+	9 31244483 012
+
+
+circos painting (only for all or several individuals)
+------------------------------------------------------
+
+::
+
+	1 1 1700000 #677E52 CIb061
+	1 1700001 2200000 #B9B9B9 CIb061
+	1 2200001 2700000 #677E52 CIb061
+	1 2700001 3000000 #B9B9B9 CIb061
+	1 3000001 3300000 #B9121B CIb061
+
+
+chromosomes length for circos (only for all or several individuals)
+--------------------------------------------------------------------
+
+::
+
+	1 28919326
+	2 36354460
+	3 51009332
+	4 25548966
+	5 43244541
+	6 25519306
+	7 21076284
+	8 24991924
+	9 31244483
+
+
+Ancestors frequency along the chromosomes
+-------------------------------------------
+
+::
+
+	Hybrid	Ancestry	Chromosom	Position_Start	Position_End	Frequence
+	CIb061	C	1	1	405824	0.435294117647059
+	CIb061	C	1	405825	542346	0.303630363036304
+	CIb061	C	1	542347	698397	0.27
+	CIb061	C	1	698398	932983	0.373716632443532
+	CIb061	C	1	932984	1676271	0.287671232876712
+	CIb061	C	1	1676272	2097171	0.437710437710438
+
   ]]></help>
 </tool>

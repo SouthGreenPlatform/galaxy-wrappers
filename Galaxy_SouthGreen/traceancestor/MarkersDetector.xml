@@ -13,7 +13,7 @@
 	cp -rf "Diagnosis_matrix" $output;
     ]]></command>
     <inputs>
-	<param type="data" name="matrice" format="tabular" label="matrice table --input"/>
+	<param type="data" name="matrice" format="tabular" label="matrix table"/>
 	<param type="text" name="missing" label ="Missing data threshold" value="0.3"/>
 	<param type="text" name="gst" label ="GST threshold" value="0.9"/>
     </inputs>
@@ -22,22 +22,39 @@
     </outputs>
     <help><![CDATA[
 
-=====
-Usage
-=====
+.. class:: infomark
+
+**Authors**     Patrick Ollitrault, Aurore Comte
+
+.. class:: infomark
+
+**Galaxy integration** Aurore Comte
+
+.. class:: infomark
+
+**Support** For any questions about Galaxy integration, please send an e-mail to aurore.comte@ird.fr
+
+---------------------------------------------------
+
+===============
+Marker Detector
+===============
+
+-----------
+Description
+-----------
 
 This script is used to define a matrix of ancestry informative markers from an other matrix containing GST (inter-population differentiation parameter) information.
 
-	**perl MarkersDetector.pl [-t matrix file] [-g threshold for gst] [-m threshold for missing data]**
-
-======
+------
 Inputs
-======
-
-	-t | --input : reference matrice with GST and alternative allele frequence (F) informations.
-
-
-The first column names schould be : | #CHROM | POS | REF | ALT | %Nref | GST1 | GST2 | GST3 | F1 | F2 | F3 |
+------
+	
+matrix table :
+	Reference matrice with GST and alternative allele frequence (F) informations.
+	The first column names schould be :
+ 
+ #CHROM  POS  REF  ALT  %Nref  GST1  GST2  GST3  F1  F2  F3 
 
 - #CHROM = chromosome name
 - POS = position of DSNP
@@ -47,24 +64,57 @@ The first column names schould be : | #CHROM | POS | REF | ALT | %Nref | GST1 | 
 - GST = Allele frequency for each ancestor (With 1,2,3 the ancestors names)
 - F = Alternative allele frequency for each ancestor (With 1,2,3 the ancestors names)
 
+GST threshold : 
+	maximum value of the GST of a DSNP to be a marker (default = 0.9). 
 
-	-g | --gst : maximum value of the GST of a DSNP to be a marker (default = 0.9). 
+Missing data threshold :
+	maximum value of missing data frequence for a DSNP to be a marker (default = 0.3) 
 
-	-m | --missing : maximum value of missing data frequence for a DSNP to be a marker (default = 0.3) 
-
-======
+------
 Ouputs
-======
+------
 
 A matrix containing all the ancestry informative markers for every ancestors.
 
-| ancestor | chromosome | position | allele |
+ ancestor  chromosome  position  allele 
  
 - ancestor = Ancestor names
 - chromosome = Chromosome numbers
 - position = Position of the DSNP marker
 - allele = Base of the ancestral allele
 
+---------------------------------------------------
+
+---------------
+Working example
+---------------
+
+Input files
+===========
+
+matrice table 
+----------------------------
+
+::
+
+	#CHROM	POS	REF	ALT	%Nref	GSTM	GSTP	GSTC	GSTmic	FM	FP	FC	Fmic
+	1	85524	A	G	0.3103448276	0.2	0.2	0.2	1	0	0	0	1
+	1	108710	A	T	0.6206896552	0.2	1	0.2	0.2	0	1	0	0
+	1	108741	T	A	0.2413793103	0.2	0.2	1	0.2	0	0	1	0
+
+Output files
+============
+
+Ancestral markers matrix
+----------------------------
+
+::
+
+	ancestor	chromosome	position	allele
+	C	1	108741	A
+	C	1	111092	T
+	C	1	111095	C
+	C	1	112523	A
 
     ]]></help>
 </tool>
