@@ -1,4 +1,4 @@
-<tool id="markersDetector" name="Markers Detector" version="0.1.0">
+<tool id="markersDetector" name="TraceAncestor prefilter" version="0.1.0">
     <requirements>
     </requirements>
     <stdio>
