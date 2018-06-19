@@ -1,4 +1,4 @@
-<tool id="gbs" name="Traceancestor" version="0.1.0">
+<tool id="gbs" name="TraceAncestor" version="0.1.0">
     <requirements>
     </requirements>
     <stdio>
@@ -6,7 +6,7 @@
     </stdio>
     <command><![CDATA[
 	source $__tool_directory__/module.sh;
-        perl $__tool_directory__/gbnomique.pl 
+        perl $__tool_directory__/traceancestor.pl 
 		-t $matrice
 		-v $vcf
 		-c $color

@@ -6,7 +6,7 @@
     </stdio>
     <command><![CDATA[
 	source $__tool_directory__/module.sh;
-        perl $__tool_directory__/MarkersDetector.pl 
+        perl $__tool_directory__/TAprefilter.pl 
 		-t $matrice
 		-m $missing
 		-g 0.8;
