@@ -1,0 +1,21 @@
+<tool id="vcf2geno" name="vcf2geno" version="0.1.0">
+    <requirements>
+    </requirements>
+    <stdio>
+        <exit_code range="1:" />
+    </stdio>
+    <command><![CDATA[
+        source $__tool_directory__/module.sh;
+	vcf2geno $vcf;
+	cp -rf *.geno $output;
+    ]]></command>
+    <inputs>
+	<param name="vcf" type="data" format="vcf" label = "vcf to convert"/>
+    </inputs>
+    <outputs>
+	<data name="geno" format="geno" label="geno file from vcf"/>
+    </outputs>
+    <help><![CDATA[
+        TODO: Fill in help.
+    ]]></help>
+</tool>

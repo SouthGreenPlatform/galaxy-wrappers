@@ -1,0 +1,35 @@
+<tool id="KDE1" name="KDE1" version="0.1.0">
+    <requirements>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+	source $__tool_directory__/module.sh;
+	python $__tool_directory__/Galaxy_KDE_classifier/Kernel_mPLib3D_FM36_Galaxy.py
+		--CHR $CHR
+		--geno $geno
+		--fam $fam
+		--bim $bim
+		--ref $ref
+		--admx $admx
+		--proc 1;
+	cp -rf "Blocks_profiles" $BlocksProfiles;
+	cp -rf "Blocks_Request" $BlocksRequest;
+    ]]></command>
+    <inputs>
+        <param name="CHR" type="integer" label="Chromosome number. --CHR" value="1"/>
+        <param name="geno" type="data" format="geno" label="Chromosome file to work on --geno"/>
+        <param name="fam" type="data" format="fam"  label="accession name file. Same order as in geno. --fam"/>
+        <param name="bim" type="data" format="bim" label="snp information bim format. --bim"/>
+        <param name="ref" type="data" format="data" label="reference accessions indexes in geno file. --ref"/>
+        <param name="admx" type="data" format="data" label="admixed accession indexes in geno file. --admx"/>
+    </inputs>
+    <outputs>
+	<data name="BlocksProfiles" format="tabular" label="Blocks_profiles"/>
+        <data name="BlocksRequest" format="tabular" label="Blocks_request"/>
+    </outputs>
+    <help><![CDATA[
+
+    ]]></help>
+</tool>
+
+
+

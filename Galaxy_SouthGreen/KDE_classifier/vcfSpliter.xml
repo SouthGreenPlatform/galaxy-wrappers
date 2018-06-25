@@ -1,0 +1,44 @@
+<tool id="vcfSpliter" name="vcfSpliter" version="0.1.0">
+    <requirements>
+    </requirements>
+    <stdio>
+        <exit_code range="1:" />
+    </stdio>
+    <command><![CDATA[
+        perl $__tool_directory__/vcfSpliter.pl -i $input
+    ]]></command>
+    <inputs>
+	<param name="input" type="data" format="vcf" label="vcf input file"/>
+    </inputs> 
+    <outputs>
+        <collection type="list" name="chromosomesVCF" label="collection of vcf by chromosome">
+                <discover_datasets pattern="(?P&lt;designation&gt;.+)\.vcf" ext="vcf"/>
+        </collection>
+    </outputs>
+    <help><![CDATA[
+
+===============
+vcfSpliter
+===============
+
+-----------
+Description
+-----------
+
+This script splits a vcf in several vcf of one chromosome.
+
+------
+Inputs
+------
+
+vcf input file :
+	This script splits a vcf in several vcf of one chromosome.
+	
+--------
+Outputs
+--------
+
+A collection of vcf. One by chromosome of the input vcf.
+
+    ]]></help>
+</tool>

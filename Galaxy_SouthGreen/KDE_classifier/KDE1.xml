@@ -1,0 +1,180 @@
+<tool id="KDE1" name="KDE" version="0.1.0">
+<!--<parallelism method="multi" split_size="10" split_mode="number_of_parts" merge_outputs="BlocksRequest, BlocksProfiles" split_inputs="geno"></parallelism>-->
+    <requirements>
+    </requirements>
+    <command><![CDATA[
+	source $__tool_directory__/module.sh;
+	#if str($type.typeSelector) == "vcf":
+		sed 'y/_/$/' $type.inputVCF > vcfrecoded; 	
+		vcf2geno vcfrecoded Geno;
+        	plink --make-bed --vcf vcfrecoded;
+		sed 'y/$/_/' plink.fam > plink2.fam;
+	#end if
+        /usr/local/bioinfo/python/2.7.9_build2/bin/python $__tool_directory__/Galaxy_KDE_Aurore/Galaxy_KDE_classifier/Kernel_mPLib3D_FM36_Galaxy.py
+               #if str($type.typeSelector) == "geno/fam/bim":
+			--geno $type.inputGeno
+               		--fam $type.inputfam
+               		--bim $type.inputbim
+		        #if $type.CHR:
+                        	--CHR $type.CHR
+                        #end if
+		#else:
+			--geno Geno
+                	--fam plink2.fam
+                	--bim plink.bim
+               		#if $type.CHR:
+                        	--CHR $type.CHR
+                	#end if
+		#end if
+		#if str($stats)=="yes":
+			--MSprint
+		#end if
+                --ref $ref
+                --admx $admx
+		--proc "\${GALAXY_SLOTS:-8}"
+                --bin $bin
+                -w $w
+                --threshold $threshold
+                --het $het
+                --clustmethod $clustmethod
+                --overlap $overlap
+                --dr $dr.dr
+                #if str($dr.dr) == "PCA":
+                        --ncomp $dr.ncomp
+                #end if
+                --outmethod $outmethod;
+        cp -rf Blocks_Request* $BlocksRequest;
+	#if str($stats)=="yes":
+		cp -rf Blocks_profiles* $BlocksProfiles;
+	#end if
+	#if str($type.typeSelector) == "vcf":
+		cp -rf plink.bim $bim;
+		cp -rf plink2.fam $fam;
+	#end if
+	]]></command>
+    <inputs>
+	<conditional name="type">
+		<param name="typeSelector" type="select" label="choose your input format">
+			<option value="vcf">vcf</option>
+			<option value="geno/fam/bim">geno/fam/bim</option>
+		</param>
+		<when value= "geno/fam/bim">
+			<param name="inputGeno" type="data" format="geno" label="geno input file"/>
+			<param name="inputfam" type="data" format="fam" label="fam input file" help="accession name file (same order as in geno)"/>
+			<param name="inputbim" type="data" format="bim" label="bim input file" help="snp information"/>
+			<param name="CHR" type="integer" label="chromosome number --CHR" optional="TRUE"/>
+		</when>
+		<when value="vcf">
+			<param name="inputVCF" type="data" format="vcf" label="vcf input file"/>
+			<param name="CHR" type="integer" label="chromosome name --CHR (if there is several chromosomes in the vcf file)" optional="TRUE"/>
+		</when>
+	</conditional>
+        <param name="ref" type="data" format="data" label="reference accessions indexes in geno file. --ref"/>
+        <param name="admx" type="data" format="data" label="admixed accession indexes in geno file. --admx"/>	
+	<param name="bin" type="integer" label="smoothing parameter [savgol filter] --bin" value="5"/>
+	<param name="w" type="integer" label="window size -w" value="200"/>
+        <param name="threshold" type="text" label="Intermediate classification threshold --threshold" value="1.6"/>
+	<param name="clustmethod" type="select" label="Clustering method to extract reference specific clusters --clustmethod">
+		<option value="MeanShift">MeanShift</option>
+		<option	value="DBscan">DBscan</option>
+		<option value="HDBscan">HDBscan</option>
+	</param>	
+	<param name="het" type="text" label="heterozygosity filter --het" value="5e-2"/>
+        <conditional name="dr">	
+		<param name="dr" type="select" label="Dimensionality reduction. --dr">
+                        <option value="PCA">PCA</option>
+                	<option value="NMF">NMF</option>
+       		</param>
+		<when value="PCA">
+        		<param name="ncomp" type="integer" label="Number of components kept in case of PCA reduction --ncomp" value="4"/>
+		</when>
+	        <when value="NMF">
+                </when>
+	</conditional>
+	<param name="outmethod" type="select" label="Outlier filter method. option --outmethod">
+                <option value="None">None</option>
+                <option value="DBSCAN">DBSCAN</option>
+                <option value="NMF">NMF</option>
+                <option value="Perc">Perc</option>
+                <option value="Z">Z</option>
+                <option value="Isolation_forest">Isolation_forest</option>
+        </param>
+	<param name="overlap" type="integer" label="Overlap between windows, in snp --overlap" value="100"/>
+	<param name="stats" type="select" label="Prints cluster Stats. --MSprint">
+                <option value="no">no</option>
+                <option value="yes">yes</option>
+        </param>
+    </inputs>
+    <outputs>
+	<data name="fam" format="fam" label="fam from input vcf">
+                <filter>type['typeSelector'] == "vcf"</filter>
+        </data>
+	<data name="bim" format="bim" label="bim from input vcf">
+                <filter>type['typeSelector'] == "vcf"</filter>
+        </data>
+	<data name="BlocksProfiles" format="tabular" label="Blocks_profiles">
+		<filter>stats == 'yes'</filter>
+	</data>
+        <data name="BlocksRequest" format="tabular" label="Blocks_request"/>	
+    </outputs>
+    <help><![CDATA[
+
+.. class:: infomark
+
+**Author**     Joao Santos
+
+.. class:: infomark
+
+**Galaxy integration** Aurore Comte
+
+.. class:: infomark
+
+**Support** For any questions about Galaxy integration, please send an e-mail to aurore.comte@ird.fr
+
+---------------------------------------------------
+
+==========================
+Kernel Density Estimation
+==========================
+
+-----------
+Description
+-----------
+
+Local haplotype classification and data exploration. 
+This software was built with the purpose of comparing local genetic distributions of diverging biological populations. 
+The comparison of distributions is accompanied by a set of visualisation tools we deemed useful for inference of evolutionary relationships.
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+The initial analysis is conducted following a machine learning approach of dimensionality reduction and kernel density estimation. 
+The latter was selected for the frequent lack of local priors, and the often convoluted history of modern domesticated populations (insert reference). 
+The use of Kernel Density Estimation for the identification both of local mislabelling (genetic exchanges between reference populations) and the presence of outlier material among hybrids (possible introgressions from differentiated sources). 
+
+
+Follow this series of series of jupyternotebooks_ for a step-by-step explanation on how KDE can be used for these purposes.
+
+.. _jupyternotebooks: https://github.com/Joaos3092/Genetic-data-analysis
+
+
+This analysis is conducted on the basis of a crawling window of fixed size of genetic markers. 
+Window size, dimensionality reduction, the number of axis to retain in feature space and the level of heterozygosity allowed for are customizable. 
+If PCA is chosen for dimensionality reduction, the user can chose to print the variance of each axis along the crawl (--VARprint, boolean).
+
+Parallel to the estimation of local supervised distributions, an unsupervised clustering using the MeanShift algorithm (Comaniciu & Meer, 2002) is performed. 
+KD estimates of each cluster identified are stored. These are necessary for downstream analysis but are not automatically printed.
+
+While the software could in theory handle more than three reference populations, we advise this number to be limited to three. 
+This is because, for plotting as well as targeted cluster analysis, we allowed for intermediate classes among the references provided. 
+At K=3, this results in 8 classes in total (3 pure classes, 3 two-way intermediates and 1 three way intermediate). At K == 4, this would imply 6 two way intermediate classes. 
+Unless reference populations are strongly structure, the resulting plots can become messy.
+
+
+    ]]></help>
+<citations>
+</citations>
+
+</tool>
+
+
+

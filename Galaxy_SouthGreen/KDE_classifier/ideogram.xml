@@ -1,0 +1,120 @@
+<tool id="Ideogram" name="Ideogram" version="0.1.0">
+    <requirements>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+	source $__tool_directory__/module.sh;
+	/usr/local/bioinfo/python/2.7.9_build2/bin/python $__tool_directory__/Galaxy_KDE_Aurore/Galaxy_KDE_classifier/Ideogram_plots_Galaxy.py
+		#if str($collection.books_type) == "dataset":
+			$collection.books
+		#else:
+			#set $booklist = str("")
+			#for $b in $collection.books:
+				#set $booklist += str($b) + ' '
+			#end for
+			$booklist
+		#end if  
+		#if $focus:
+			--focus $focus
+		#end if
+		#if $CHR:
+                	--CHR $CHR
+		#end if
+		#if $chromosome.start:
+			--start $chromosome.start
+		#end if
+		#if $chromosome.end:
+			--end $chromosome.end
+		#end if
+		#if str($smooth.coarse)=="yes":
+			--bin $smooth.bin
+			--sg_order $smooth.sg_order
+		#else:
+			--coarse
+		#end if
+                --outlier $outlier
+		--chrom_height $chrom_height
+		--chrom_gap $chrom_gap
+		--height $height
+		--width $width
+		--threshold $threshold
+		--xticks $xticks;
+	cp -rf Ideo_* $output;
+    ]]></command>
+    <inputs>
+	<conditional name="collection">
+		<param name="books_type" type="select" label="One or several file to read">
+			<option value="dataset">Individual File</option>
+			<option value="collection">Collection</option>
+		</param>
+		<when value="dataset">
+			<param name = "books" type="data" label = "reference file to read"/>
+		</when>
+		<when value="collection">
+                        <param name = "books" type="data_collection" label= "reference file to read"/>
+                </when>
+	</conditional>	
+        <param name="focus" type="data" label="IDs of accessions to plot --focus" optional="true"/>
+       	<param name="CHR" type="integer" label="chromosome to draw ideogram of. --CHR" optional="true"/>
+	<section name="chromosome" title="chromosome markers (if --CHR is filled)" expanded="false">
+		<param name="start" type="text" label="where to begin, in markers. --start"/>
+		<param name="end" type="text" label="where to end, in markers. --end"/>
+	</section>
+	<conditional name="smooth">
+		<param name="coarse" type="select" label="smoothing">
+			<option value="no">no</option>
+			<option value="yes">yes</option>
+		</param>
+		<when value="yes">
+        		<param name="bin" type="integer" label="smoothing parameter, must be uneven [savgol filter] --bin" value="5"/>
+			<param name="sg_order" type="integer" label="staviksy golay filter order --sg_order" value="3"/>
+		</when>
+	</conditional>
+	<param name="outlier" type="text" label="outlier threshold --outlier" value="1e-3"/>
+        <param name="threshold" type="text" label="Intermediate classification threshold --threshold" value="1.6"/>
+        <param name="chrom_height" type="text" label="height of ideograms --chrom_height" value="1"/>
+	<param name="chrom_gap" type="text" label="gap between ideograms --chrom_gap" value="0"/>
+	<param name="height" type="text" label="figure height in inches --height" value="10"/>
+	<param name="width" type="text" label="figure width in inches --width" value="20"/>
+	<param name="xticks" type="integer" label="xticks on final ideogram --xticks" value="100000"/>
+    </inputs>
+    <outputs>
+        <data name="output" format="png" label="Ideo"/>
+    </outputs>
+    <help><![CDATA[
+
+.. class:: infomark
+
+**Author**     Joao Santos
+
+.. class:: infomark
+
+**Galaxy integration** Aurore Comte
+
+.. class:: infomark
+
+**Support** For any questions about Galaxy integration, please send an e-mail to aurore.comte@ird.fr
+
+---------------------------------------------------
+
+==========================
+Ideogram plotting
+==========================
+
+-----------
+Description
+-----------
+
+The first layer of analysis following the genome crawl should be the visualization of local statistics pertaining to the distributions of the reference populations provided. 
+This step also constitutes an exploration of variation in our data set. 
+The purpose of this exploration is to visualize possible exchanges of genetic material among reference material, the local composition of unlabelled accessions included in the analysis, and to investigate the presence of differentiated material.
+
+For this purpose, the construction of the chromosome painting along pure and intermediate classes allows for user defined thresholds of comparison and an outlier threshold.
+
+A savitsky golay filter is automatically applied if the flag '--coarse' is not passed. We recommend the use of this flag.
+
+
+    ]]></help>
+</tool>
+
+
+
