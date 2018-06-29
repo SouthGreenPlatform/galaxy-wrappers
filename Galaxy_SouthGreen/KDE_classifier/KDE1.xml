@@ -69,9 +69,8 @@
 	</conditional>
         <param name="ref" type="data" format="data" label="reference accessions indexes in geno file. --ref"/>
         <param name="admx" type="data" format="data" label="admixed accession indexes in geno file. --admx"/>	
-	<param name="bin" type="integer" label="smoothing parameter [savgol filter] --bin" value="5"/>
 	<param name="w" type="integer" label="window size -w" value="200"/>
-        <param name="threshold" type="text" label="Intermediate classification threshold --threshold" value="1.6"/>
+        <param name="overlap" type="integer" label="Overlap between windows, in snp --overlap" value="100"/>
 	<param name="clustmethod" type="select" label="Clustering method to extract reference specific clusters --clustmethod">
 		<option value="MeanShift">MeanShift</option>
 		<option	value="DBscan">DBscan</option>
@@ -97,7 +96,6 @@
                 <option value="Z">Z</option>
                 <option value="Isolation_forest">Isolation_forest</option>
         </param>
-	<param name="overlap" type="integer" label="Overlap between windows, in snp --overlap" value="100"/>
 	<param name="stats" type="select" label="Prints cluster Stats. --MSprint">
                 <option value="no">no</option>
                 <option value="yes">yes</option>
