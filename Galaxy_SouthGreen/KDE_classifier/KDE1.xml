@@ -32,9 +32,7 @@
                 --ref $ref
                 --admx $admx
 		--proc "\${GALAXY_SLOTS:-8}"
-                --bin $bin
                 -w $w
-                --threshold $threshold
                 --het $het
                 --clustmethod $clustmethod
                 --overlap $overlap
