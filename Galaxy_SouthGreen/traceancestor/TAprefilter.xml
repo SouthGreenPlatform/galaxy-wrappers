@@ -61,7 +61,7 @@ matrix table :
 - REF = Base of the reference allele of this DSNP
 - ALT = Base of the alternative allele of this DSNP
 - %Nref = Percentage of maximal missing data for this DSNP
-- GST = Allele frequency for each ancestor (With 1,2,3 the ancestors names)
+- GST = Coefficient de différentiation génétique entre population (With 1,2,3 the ancestors names)
 - F = Alternative allele frequency for each ancestor (With 1,2,3 the ancestors names)
 
 GST threshold : 

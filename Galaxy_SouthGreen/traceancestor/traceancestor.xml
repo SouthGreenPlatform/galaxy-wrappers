@@ -54,7 +54,7 @@
 			<param type="text" name="hybrid" label="One hybrid to focus on -i"/>
 		</when>
 		<when value="Several">	
-			<param type="data" name="Focus_file" format="tabular" label="focus file (several hybrids) -f"/>
+			<param type="data" name="Focus_file" label="focus file (several hybrids) -f"/>
     		</when>
 	</conditional>
     </inputs>
