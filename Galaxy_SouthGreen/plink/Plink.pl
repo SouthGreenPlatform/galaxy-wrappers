@@ -16,10 +16,12 @@ where <args> are:
 
     -s, --samples        <Samples to be analyzed. Comma separated list>
     -c, --chromosomes    <List of chromosomes to be analyzed.>
+    -g, --double-id    <Family and individual id separator>
     -e, --export         <Output format (VCF/freq/plink. Default: VCF>
     -f, --frequency      <Minimum MAF. Default: 0.001>
     -m, --max_freq       <Maximum MAF. Default: 0.5>
     -a, --allow_missing  <Allowed missing data proportion per site. Must be comprised between 0 and 1. Default: 1>
+    -h, --allow_missing_ind  <Allowed missing data proportion per individual. Must be comprised between 0 and 1. Default: 1>    
     -t, --type           <Type of polymorphisms to keep (ALL/SNP). Default: ALL>
     -b, --bounds         <Lower bound and upper bound for a range of sites to be processed (start,end). Default: 1, 100000000>
     -r, --remove_filt    <Remove all sites with a FILTER flag other than PASS (true/false). Default: false>
@@ -42,11 +44,13 @@ my $filter_snp_type = "all";
 my $remove_filt = "False";
 
 my $missing_data = 1;
+my $missing_data_ind = 1;
 my $export = "VCF";
 my $type = "ALL";
 my $bounds;
 my $samples;
 my $chromosomes;
+my $double_id;
 my $thin;
 
 GetOptions(
@@ -54,9 +58,11 @@ GetOptions(
 	"out=s"          => \$out,
 	"samples=s"      => \$samples,
 	"chromosomes=s"  => \$chromosomes,
+	"double-id=s"  => \$double_id,
 	"frequency=s"    => \$frequency_min,
 	"max_freq=s"     => \$frequency_max,
 	"allow_missing=s"=> \$missing_data,
+	"allow_missing_ind=s"=> \$missing_data_ind,	
 	"export=s"       => \$export,
 	"type=s"         => \$type,
 	"bounds=s"       => \$bounds,
@@ -113,7 +119,13 @@ if ($missing_data =~/^([\d\.]+)\s*$/){
 	#$missing_data = 1 - $missing_data;	
 }
 elsif ($missing_data){
-	die "Error: Missing data must be an integer\n";
+	die "Error: Missing data per SNP must be a float\n";
+}
+if ($missing_data_ind =~/^([\d\.]+)\s*$/){
+	$missing_data_ind = $1;	
+}
+elsif ($missing_data_ind){
+	die "Error: Missing data per individual must be a float\n";
 }
 if ($export && $export =~/^([\w]+)\s*$/){
 	$export = $1;
@@ -175,7 +187,11 @@ if ($chromosomes)
 {
 	$chrom_cmd = "--chr ".$chromosomes
 }
-
+my $double_id_cmd = "";
+if ($double_id)
+{
+	$double_id_cmd = "--double-id";
+}
 my $export_cmd = "--recode vcf-iid";
 if ($export eq "bcf"){
 	$export_cmd = "--recode bcf";
@@ -223,16 +239,21 @@ my $bed_input = $input;
 $bed_input =~s/\.bed//g;
 
 if (-e "$bed_input.bed"){
-        system("$PLINK_EXE --bfile $bed_input --out $out $type_cmd $export_cmd $chrom_cmd $indiv_cmd $minfreq_cmd $maxfreq_cmd --geno $missing_data $thin_cmd $bounds_cmd --allow-extra-chr 1>$out.plink.stdout 2>$out.plink.stderr");
+        system("$PLINK_EXE --bfile $bed_input --out $out $double_id_cmd $type_cmd $export_cmd $chrom_cmd $indiv_cmd $minfreq_cmd $maxfreq_cmd --geno $missing_data --mind $missing_data_ind $thin_cmd $bounds_cmd --allow-extra-chr 1>$out.plink.stdout 2>$out.plink.stderr");
 	# for first 1000 SNPs
-	system("$PLINK_EXE --bfile $bed_input --out $out.recode $type_cmd --recode vcf-fid $chrom_cmd $indiv_cmd $minfreq_cmd $maxfreq_cmd --geno $missing_data $thin_cmd $bounds_cmd --allow-extra-chr --thin-count 800 1>$out.2.plink.stdout 2>$out.2.plink.stderr");
+	system("$PLINK_EXE --bfile $bed_input --out $out.recode $double_id_cmd $type_cmd --recode vcf-fid $chrom_cmd $indiv_cmd $minfreq_cmd $maxfreq_cmd --geno $missing_data --mind $missing_data_ind $thin_cmd $bounds_cmd --allow-extra-chr --thin-count 800 1>$out.2.plink.stdout 2>$out.2.plink.stderr");
 }
 elsif (-e $bcf_input){
-	system("$PLINK_EXE --bcf $bcf_input --out $out $type_cmd $export_cmd $chrom_cmd $indiv_cmd $minfreq_cmd $maxfreq_cmd --geno $missing_data $thin_cmd $bounds_cmd --allow-extra-chr 1>$out.plink.stdout 2>$out.plink.stderr");
+	system("$PLINK_EXE --bcf $bcf_input --out $out $double_id_cmd $type_cmd $export_cmd $chrom_cmd $indiv_cmd $minfreq_cmd $maxfreq_cmd --geno $missing_data --mind $missing_data_ind $thin_cmd $bounds_cmd --allow-extra-chr 1>$out.plink.stdout 2>$out.plink.stderr");
 }
 else
 {
-	system("$PLINK_EXE --vcf $input --out $out $type_cmd $export_cmd $chrom_cmd $indiv_cmd $minfreq_cmd $maxfreq_cmd --geno $missing_data $thin_cmd $bounds_cmd --allow-extra-chr 1>$out.3.plink.stdout 2>$out.3.plink.stderr");
+	#system("$PLINK_EXE --vcf $input --out $out $type_cmd $export_cmd $chrom_cmd $indiv_cmd $minfreq_cmd $maxfreq_cmd --geno $missing_data $thin_cmd $bounds_cmd --allow-extra-chr 1>$out.3.plink.stdout 2>$out.3.plink.stderr");
+	#system("$PLINK_EXE --vcf $input --out $out --id-delim - $type_cmd $export_cmd $chrom_cmd $indiv_cmd $minfreq_cmd $maxfreq_cmd --geno $missing_data $thin_cmd $bounds_cmd --allow-extra-chr 1>$out.3.plink.stdout 2>$out.3.plink.stderr");
+	#system("$PLINK_EXE --vcf $input --out $out --double-id $type_cmd $export_cmd $chrom_cmd $indiv_cmd $minfreq_cmd $maxfreq_cmd --geno $missing_data $thin_cmd $bounds_cmd --allow-extra-chr 1>$out.3.plink.stdout 2>$out.3.plink.stderr");
+	#system("$PLINK_EXE --vcf $input --out $out $double_id_cmd $type_cmd $export_cmd $chrom_cmd $indiv_cmd $minfreq_cmd $maxfreq_cmd --geno $missing_data $thin_cmd $bounds_cmd --allow-extra-chr 1>$out.3.plink.stdout 2>$out.3.plink.stderr");
+	system("$PLINK_EXE --vcf $input --out $out $double_id_cmd $type_cmd $export_cmd $chrom_cmd $indiv_cmd $minfreq_cmd $maxfreq_cmd --geno $missing_data --mind $missing_data_ind $thin_cmd $bounds_cmd --allow-extra-chr 1>$out.3.plink.stdout 2>$out.3.plink.stderr");
+	#print "$PLINK_EXE --vcf $input --out $out $double_id_cmd $type_cmd $export_cmd $chrom_cmd $indiv_cmd $minfreq_cmd $maxfreq_cmd --geno $missing_data --mind $missing_data_ind $thin_cmd $bounds_cmd --allow-extra-chr 1>$out.3.plink.stdout 2>$out.3.plink.stderr\n";
 
 }
 

@@ -18,7 +18,7 @@
 
     <!-- [REQUIRED] The command to execute -->
     <command interpreter="bash">
-	./plink.sh $vcf $fileout $filelog $frequency $max_freq $allow_missing $type_p $bound_start $bound_end
+	./plink.sh $vcf $fileout $filelog $frequency $max_freq $allow_missing $allow_missing_ind $type_p $bound_start $bound_end $double_id
 	#if str( $samples ) == "":
 	'None'
 	#else
@@ -34,13 +34,14 @@
     <!-- [REQUIRED] Input files and tool parameters -->
     <inputs>
 	<param name="vcf" type="data" format="vcf" optional="false" label="VCF input" />
-
+	<param name="double_id" type="boolean" truevalue="1" falsevalue="0" checked="false" label="Double ID" help="Click yes if you have underscore in your individual identifiers that you do not to be splitted" />
 	<param name="samples" type="select" label="Samples" multiple="true" dynamic_options="get_field_samples_options(vcf)" help="Samples to be analyzed" />
 	<!--<param name="samples" type="text" label="Samples" multiple="true" help="Samples to be analyzed." />-->
         <!--<param name="chromosomes" type="select" label="Chromosomes" multiple="true" dynamic_options="get_field_chrs_options(input)" help="Chromosomes to be analyzed." />-->
 	<param name="frequency" type="float" value="0" label="Minimum MAF" help="Minimum Minor Allele Frequency (MAF)" />
 	<param name="max_freq" type="float" value="0.5" label="Maximum MAF" help="Maximum Minor Allele Frequency (MAF)" />
-	<param name="allow_missing" type="float" value="1" min="0" max="1" label="Missing data proportion" help="Allowed missing data proportion per site. Must be comprised between 0 and 1." />
+	<param name="allow_missing" type="float" value="1" min="0" max="1" label="Missing data proportion per SNP" help="Allowed missing data proportion per site. Exclude variants with missing call frequencies greater than a threshold (default 1). Must be comprised between 0 and 1." />
+	<param name="allow_missing_ind" type="float" value="1" min="0" max="1" label="Missing data proportion per Ind" help="Exclude samples with missing call frequencies greater than a threshold (default 1). Must be comprised between 0 and 1." />
         <param name="type_p" type="select" label="Polymorphisms" help="Type of polymorphisms to keep." >
             <option value="ALL" selected="true">All</option>
             <option value="SNP">SNPs only</option>
@@ -70,7 +71,7 @@
 
 .. class:: infomark
 
-**Galaxy integration** Dereeper Alexis (IRD), Andres Gwendoline (Institut Français de Bioinformatique).
+**Galaxy integration** Dereeper Alexis (IRD), Andres Gwendoline (Institut Français de Bioinformatique), Bocs Stephanie (Cirad).
 
 .. class:: infomark
 
