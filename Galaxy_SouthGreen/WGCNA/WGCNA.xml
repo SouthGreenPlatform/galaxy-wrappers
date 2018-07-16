@@ -1,18 +1,20 @@
 <tool id="WGCNA" name="WGCNA" version="0.1.0">
 <description>- weighted correlation network analysis</description>
-    <command><![CDATA[
-Rscript '${__tool_directory__}/wgcna.R' -c $counts -t $traits -m $modules -p $probes -v $visant -a $mes -i $pdf >>$log 2>&1
-	]]></command>
+    <command interpreter="perl">
+WGCNA.sh $counts $modules $pdf $minsize $threshold $log
+	</command>
     <inputs>
-        <param name="counts" type="data" format="txt" label="Counts file"/>
-        <param name="traits" type="data" format="txt" label="Traits file"/>
+        <param name="counts" type="data" format="txt" label="Count matrix file (as required by EdgeR)"/>
+        <param type="text" name="minsize" label="Minimal size of modules" value="30"/>
+        <param type="text" name="threshold" label="Threshold for topological overlap for connecting genes in the network" value="0.1"/>
     </inputs>
     <outputs>
-        <data name="pdf" format="pdf" label="Graphics"/>
+        <data name="pdf" format="pdf" label="Plots"/>
         <data name="modules" format="txt" label="Module colors"/>
-        <data name="probes" format="txt" label="Genes"/>
-        <data name="mes" format="txt" label="MEs"/>
-        <data name="visant" format="txt" label="Network"/>
+        <collection name="collecNetworks" type="list" label="Networks">
+		<discover_datasets pattern="(?P&lt;designation&gt;.+visant\.txt)"/>
+	</collection>
+	<data name="log" format="txt" label="Logfile"/>
     </outputs>
     <help>
 
