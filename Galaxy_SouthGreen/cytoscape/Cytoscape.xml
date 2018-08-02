@@ -1,0 +1,57 @@
+<tool id="Cytoscape" name="Cytoscape" version="1.0.0">
+    
+    <!-- [REQUIRED] Tool description displayed after the tool name -->
+    <description> for visualizing interaction networks</description>
+    
+    <!-- [OPTIONAL] 3rd party tools, binaries, modules... required for the tool to work -->
+    <requirements>
+        <requirement type="binary">perl</requirement>
+    </requirements>
+    
+
+    <!-- [STRONGLY RECOMMANDED] Exit code rules -->
+    <stdio>
+        <!-- [HELP] If no exit code rule is defined, the tool will stop if anything is written to STDERR -->
+        <exit_code range="1:" level="fatal" />
+    </stdio>    
+
+    <!-- [REQUIRED] The command to execute -->
+    <command interpreter="perl">
+	Cytoscape.sh $input $cytoscape_html $filelog 
+    </command>
+    <!-- [REQUIRED] Input files and tool parameters -->
+    <inputs>
+	<param name="input" type="data" format="json" optional="false" label="Cytoscape JSON file" />
+    </inputs>
+    
+    <!-- [REQUIRED] Output files -->
+    <outputs>
+	<data name="cytoscape_html" format="html" label="Cytoscape network" />
+	<data name="filelog" format="txt" label="Logfile" />
+    </outputs>
+    
+    <!-- [OPTIONAL] Help displayed in Galaxy -->
+    <help>
+
+.. class:: infomark
+
+**Authors**     Max Franz : Cytoscape.js_
+
+.. _Cytoscape.js: http://js.cytoscape.org/
+
+.. class:: infomark
+
+**Galaxy integration** Alexis Dereeper, IRD.
+
+.. class:: infomark
+
+**Support** For any questions about Galaxy integration, please send an e-mail to alexis.dereeper@ird.fr
+
+---------------------------------------------------
+
+
+
+
+    </help>
+
+</tool>
