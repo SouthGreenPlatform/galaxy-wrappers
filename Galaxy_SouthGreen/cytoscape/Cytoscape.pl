@@ -36,6 +36,7 @@ while(<I>){
 	$datain.=$line;
 }
 close(I);
+chomp($datain);chomp($datain);
 # remove brackets at the beginning and end of JSON
 my $new_datain = substr($datain,1,length($datain)-2);
 $datain = $new_datain;
