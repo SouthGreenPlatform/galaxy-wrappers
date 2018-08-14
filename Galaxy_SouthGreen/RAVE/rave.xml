@@ -4,7 +4,8 @@
   	<!-- Wrapper compatible with Plink v1.90b3k --> 
     <requirements>
         <requirement type="binary">perl</requirement>
-        <requirement type="package" version="1.90">plink</requirement>
+        <!--<requirement type="package" version="1.90">plink</requirement>-->
+        <requirement type="package" version="1.90b4">plink</requirement>
     </requirements>
 	<stdio>
         <!-- [HELP] If no exit code rule is defined, the tool will stop if anything is written to STDERR -->
@@ -50,7 +51,7 @@
             </param>
             <when value="no"/>
             <when value="yes">
-                <param name="population_select" type="select" display="radio" label="Subpopulation"> 
+                <param name="population_select" label="Subpopulation" type="select" multiple="true"> 
 					<options from_data_table="subpopulation">
 						<filter type="sort_by" column="1"/>
 						<validator type="no_options" message="No indexes are available for the selected input dataset"/>
@@ -64,10 +65,10 @@
                 <option value="list">Cut &amp; Paste your list</option>
             </param>
             <when value="file">
-				<param name="variety_file" format="txt" type="data" optional="true"  label="Variety list from file" help="One range per line (i.e : B001)"/>
+				<param name="variety_file" format="txt" type="data" optional="true"  label="Variety list from file" help="One variety per line. It accepts both variety names and IRIS unique ID (i.e : B001, SUWEON 311 or IRIS_313-10035)"/>
             </when>
             <when value="list">
-				<param name="variety_list" type="text" area="True" size="5x15" label="Variety list from area" help="One range per line (i.e : B001)"/>
+				<param name="variety_list" type="text" area="True" size="5x15" label="Variety list from area" help="One variety per line. It accepts both variety names and IRIS unique ID (i.e : B001, SUWEON 311 or IRIS_313-10035)"/>
 			</when>
         </conditional>
 		
