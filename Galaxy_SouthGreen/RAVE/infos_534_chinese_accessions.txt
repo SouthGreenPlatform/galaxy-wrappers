@@ -1,0 +1,535 @@
+DNA UNIQUE ID	DNA Othername source
+B001	Heibiao
+B002	Sansuijin
+B003	Zaoshengbai ?
+B004	Qiuguangtengxi 104
+B005	Wanshi
+B006	Yikong
+B007	Tianhandao
+B008	Baxiang
+B009	Vietnam Zaodao
+B010	Malaihong
+B011	
+B012	
+B013	Sri Lanka 1
+B014	Wuziluosi 215
+B015	Kahamu
+B016	Aomierte 168
+B017	Aerjituo
+B018	American Huangkedao
+B019	Buleida A-75
+B020	Jineiyadao
+B021	
+B023	Gaoliqiu
+B024	Xianluosichi
+B025	
+B026	
+B027	
+B028	
+B029	
+B030	
+B031	
+B032	
+B033	
+B034	Albania Rice
+B035	American Rice
+B036	
+B037	
+B038	
+B039	
+B040	
+B043	
+B044	Santiannuo
+B045	Gongchengxiang
+B046	Qiutianxiaoting
+B047	Zhenfu 8
+B048	
+B049	Zacaodao 13
+B051	
+B052	
+B053	
+B054	
+B055	
+B056	Tieganwu
+B057	Xiushui 115
+B058	Erjiunan 1
+B059	Nanjing 11
+B060	Aijiaonante
+B061	Guangluai 4
+B062	Nantehao
+B063	Guizhao 2
+B064	Xiangzaoxian 7
+B065	Huangsiguizhan
+B066	Guangkexiangnuo
+B067	Funingzipigengzi
+B068	Gaoyangdiandao dahongmang
+B069	Dandongludao
+B070	Laoguangtou 83
+B071	Muxiqiu
+B072	Qiuqianbai
+B073	Jinxibai2
+B074	Taishannuo
+B075	Jinbaoyin
+B076	Minbeiwanxian
+B077	Yizhixiang
+B079	Esiniu
+B081	Heidu 4
+B082	Qiyuexian
+B083	Dongtingwanxian
+B084	Bawangbian 1
+B085	Xugunuo
+B086	Muguanuo
+B087	Zhongnong 4
+B088	San**Qishiluo
+B089	Qitoubaigu3
+B090	Zimi
+B091	Xiaohonggu
+B092	Gongju 73
+B093	Qitougu
+B094	Zinuo
+B095	Mowangguneiza
+B096	Jinzhinuo4
+B097	Jiienuo
+B100	Hongkezhenuo
+B101	Yangkenuo
+B102	Maguzi
+B103	Laohongdao
+B104	Jiabala
+B105	Baoxuan 21
+B106	Wenxiangnuo
+B107	Dawannuo
+B108	Xianggu
+B109	Lengshuigu 2
+B110	Huangpinuo
+B111	Zimangfeie
+B112	Liusha 1
+B113	Chenwan 3
+B114	Chengduai 3
+B115	Aimakang
+B116	Shufeng 101
+B117	Lixingeng
+B118	Ergangai
+B119	Guangluai 15-1
+B120	Hongwan 1
+B121	Luke 3
+B122	Liaogeng 287
+B123	Zaoshuxiangheimi
+B124	Geng 87-304
+B125	Xiangwanxian 3
+B126	Zaoxian 240
+B127	Dangyu 5
+B128	Sibeitizhao 6
+B129	Hongainuo
+B130	Wanlixian
+B131	Aizizhan
+B132	Xiaobaimi
+B133	Yanshuichi
+B134	Xishi 15
+B135	Honggenghangu3
+B136	Yuyannuo
+B137	
+B138	Gu 154
+B139	
+B140	Pei C122
+B141	Geng 7623
+B142	Ninghui 21
+B143	
+B144	Huhui 628
+B145	Teqingxuanhui
+B146	
+B147	Baikehanhe
+B148	Lengshuinuo
+B149	Haoxiang
+B150	
+B151	Jinnante 43B
+B152	Zaoshunonghu 6
+B153	Qingsiai 16B
+B154	Liming B
+B155	Baoxie-7B
+B156	G Zhenshan 97B
+B157	
+B158	Taizhong 65/taizhongHR539
+B159	Taizhongzailai 1/taizhong65
+B160	Shuiyuan 300Li
+B161	Yelicanghua
+B162	Baigedao
+B163	Liushizao
+B164	Qingke
+B165	Haohuangla
+B166	Jianghuadao
+B167	Qingjinzaosheng
+B168	Zhuyuan
+B169	Ailuyu
+B170	Hongse 90
+B171	Linguo
+B173	
+B176	
+B179	Keluoduo B
+B180	
+B181	
+B182	Chimao
+B183	Qingnuo Kyohatamochi
+B184	
+B185	
+B187	
+B188	
+B189	
+B190	
+B191	
+B192	
+B193	
+B194	
+B195	
+B196	Taidongludao
+B197	Taizhongxianxuan 2
+B198	Jiefangxian
+B199	Hongmisandan
+B200	Jinyou 1
+B201	Chengnongshuijing
+B202	Baoxie 123B
+B203	Biwusheng
+B204	Longhuamaohu
+B205	Cunsanli
+B207	Aihechi
+B208	Lucaihao
+B210	Nanxiongzaoyouzhan
+B212	Chikenuo
+B213	Liuyenian
+B214	Xuanenchangtanqingzhan
+B215	Hongqi 5
+B216	Hanmadao4
+B217	Honggu
+B218	Wuzidui
+B219	Haolai
+B221	Fanhaopi
+B222	Beizinuo
+B223	Cungunuo
+B224	Younian
+B225	Guantuibaihe 1
+B226	Heimangdao
+B227	Menjiagao 1
+B228	Haobayong 1
+B229	Menjiading 2
+B230	Banjiemang2
+B232	Xiangaizao 10hao
+B233	Xiangwanxian 1
+B234	Aituogu 151
+B235	Zhonghua 8
+B236	Jindao 1
+B238	Momi
+B239	Zhendao 232
+B240	Zhengdao 5
+B241	Lamujia
+B242	Gui 630
+B243	Huhui 91269
+B244	Xiangdao
+B245	Shanjiugu
+B246	Laozaogu
+B247	Jinnante B
+B248	Zhuzhen B
+B249	Chaoyangyihao B
+B250	Annongwangeng B
+B252	Xiangai B
+B253	Jiangnongzao 1 B
+B254	Jinghu3 B
+B255	Dianrui 409B
+B258	Xingguo
+B259	Leihuozhan
+B260	Mamagu
+B261	Meihuanuo
+B263	Weiguo
+B264	Sanbaili
+B265	Wukezhan
+B266	Haomake (K)
+B267	
+B268	Nangaogu
+B269	Yuefu
+CX10	Gang 46B
+CX100	
+CX101	
+CX102	
+CX103	
+CX104	
+CX106	
+CX107	
+CX108	
+CX109	
+CX11	Gumei 2
+CX110	
+CX111	
+CX112	
+CX113	
+CX114	Guang Lu Ai 4
+CX115	
+CX116	Wudadaozhong
+CX117	
+CX118	Yetuozai
+CX119	
+CX12	Huagengxian 74
+CX120	
+CX121	
+CX122	
+CX123	Yu Qiu Gu
+CX124	
+CX125	
+CX126	
+CX128	
+CX129	
+CX13	
+CX130	
+CX131	
+CX132	
+CX133	Zhengshan97
+CX134	
+CX138	
+CX139	
+CX14	Chennong 265
+CX140	
+CX141	
+CX142	
+CX143	
+CX144	
+CX145	Minghui 63
+CX146	
+CX147	
+CX148	
+CX149	
+CX15	
+CX150	
+CX151	
+CX152	
+CX153	
+CX154	
+CX155	
+CX156	
+CX157	
+CX158	
+CX16	
+CX160	
+CX161	
+CX162	
+CX165	Wuyugeng 3
+CX17	Yuexiangzhan
+CX18	Zaoxian 14
+CX182	
+CX19	Zhong 413
+CX2	
+CX20	Zihui 100
+CX205	
+CX206	
+CX207	Gaozi
+CX21	
+CX210	
+CX211	
+CX212	Nongken 58
+CX213	Chennong 89366
+CX214	Brazil Nuodao
+CX218	
+CX219	
+CX22	
+CX220	
+CX221	Zhongyouzao 81
+CX225	
+CX226	
+CX227	
+CX228	
+CX23	
+CX230	
+CX231	
+CX232	
+CX233	
+CX234	
+CX235	
+CX236	
+CX237	
+CX238	
+CX24	
+CX240	
+CX241	
+CX242	
+CX243	
+CX247	
+CX248	
+CX249	
+CX25	
+CX250	
+CX251	Xudao 4
+CX26	
+CX262	
+CX263	
+CX265	
+CX266	
+CX267	
+CX268	
+CX269	
+CX27	
+CX270	TAICHUNGNATIVE1
+CX273	
+CX274	
+CX275	
+CX276	
+CX277	
+CX278	
+CX28	
+CX280	
+CX281	
+CX282	Lijiangxintuanheigu
+CX284	Han 502
+CX285	Nonglinnuo
+CX286	
+CX287	
+CX288	
+CX29	
+CX290	Duo 57
+CX291	
+CX296	
+CX3	
+CX30	
+CX303	
+CX304	Luyin 46
+CX305	
+CX306	Mongolia Rice
+CX307	
+CX31	
+CX313	
+CX314	
+CX315	Zidao
+CX316	
+CX317	
+CX318	Heiheaihui
+CX319	Mengguandamagu
+CX32	
+CX328	Baoxuan 21
+CX329	Jinchuanyihao
+CX33	
+CX330	Yueguang
+CX34	
+CX340	Hua 564
+CX341	Hua 565
+CX342	Wanxian 763
+CX343	Wanxian 77
+CX344	Hexi 41
+CX345	Yungeng 23
+CX346	
+CX347	
+CX348	Zhonghua 1
+CX349	
+CX35	
+CX350	Wuyugeng 20
+CX351	
+CX352	
+CX353	
+CX354	
+CX355	Yunlu 102
+CX356	Yandao 8
+CX357	
+CX358	
+CX359	Yunlu 103
+CX360	
+CX361	
+CX362	
+CX363	
+CX364	
+CX365	Compact Plant Type Material
+CX366	Ganwanxian 37 (926)
+CX367	Haogelao
+CX368	
+CX369	
+CX37	
+CX370	Chenghui 727
+CX371	
+CX372	
+CX373	
+CX374	
+CX375	
+CX376	
+CX377	
+CX378	Huhan 15
+CX379	
+CX380	Yandao 9
+CX381	
+CX382	
+CX383	Hongza
+CX384	Fengza
+CX385	
+CX386	
+CX387	
+CX388	
+CX389	Jinyuan 85
+CX390	Yuelianggu
+CX391	
+CX392	
+CX393	Huangsizhan
+CX394	Molizhanxuan
+CX395	
+CX396	Guandong 194 (Soft Rice)
+CX397	Nangeng 46 (Soft Rice)
+CX399	
+CX4	
+CX400	
+CX401	
+CX402	
+CX403	
+CX42	
+CX43	
+CX431	Duoxi 1
+CX44	
+CX45	
+CX46	
+CX47	Diangeng
+CX48	
+CX49	
+CX5	
+CX50	
+CX51	
+CX52	Diandun 502
+CX53	Jiangxisimiao
+CX534	Tongnian 1
+CX54	Linyitangdao
+CX542	
+CX548	Zhongjian 100
+CX55	Pengshantieganzhan
+CX56	Yunguang 8
+CX57	Zhongchao 123
+CX58	
+CX59	
+CX6	
+CX60	
+CX61	
+CX63	
+CX64	
+CX65	
+CX66	
+CX67	
+CX68	
+CX69	
+CX70	
+CX71	
+CX72	
+CX73	
+CX74	
+CX75	
+CX76	
+CX77	
+CX78	
+CX79	
+CX8	Chenghui 448
+CX80	
+CX82	
+CX83	
+CX84	
+CX85	
+CX86	
+CX87	
+CX88	Huanyangnian
+CX89	
+CX9	Fengaizhan
+CX90	
+CX91	
+CX92	
+CX93	
+CX94	
+CX96	
+CX97	
+CX98	
+CX99	
