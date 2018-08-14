@@ -20,6 +20,8 @@ my $variety_list;
 my $location_list;
 my $locus_list;
 
+my $PLINK_EXE = "plink";
+
 GetOptions(
     'bfile=s'             => \$bfile,
     'maf=f'               => \$maf,
@@ -40,15 +42,51 @@ GetOptions(
 # --threads $threads
 my $plink_cmd = "source $tool_directory/module_plink.sh;plink --bfile $bfile --maf $maf --silent";
 if ($keep ne "" && $keep ne "None") {
-    $plink_cmd .= " --keep $keep";
+    if ($keep =~/,/){
+        my ($fh, $filename) = tempfile();
+        my @files_loc = split(",",$keep);
+        foreach my $f(@files_loc){
+             `cat $f >>$filename`;
+        }
+        $plink_cmd .= " --keep $filename";
+    }
+    else{
+        $plink_cmd .= " --keep $keep";
+    }
 }
 if ($extract ne "" && $extract ne "None") {
     $plink_cmd .= " --extract range $extract";
 }
 if ($variety_list ne "" && $variety_list ne "None") {
+
+    my %corr;
+    open(F,"$tool_directory/infos_2466accessions.txt");
+    while(<F>){
+        my @infos = split(/\t/,$_);
+        my $variety_name= $infos[3];
+        if ($variety_name =~/(.*)::/){$variety_name = $1;}
+        my $iris_code = $infos[9];
+        $corr{$variety_name} = $iris_code;
+    }
+    close(F);
+    open(C,"$tool_directory/infos_534_chinese_accessions.txt");
+    while(<C>){
+        $line = $_;$line =~s/\n//g;$line =~s/\r//g;
+        my @infos = split(/\t/,$line);
+        my $variety_name= $infos[1];
+        my $iris_code = $infos[0];
+	if ($variety_name){
+            $corr{$variety_name} = $iris_code;
+        }
+    }
+    close(C);
+
     my ($fh, $filename) = tempfile();
     my @variety = (split(/\_\_cn\_\_/,$variety_list));
     foreach my $variety (@variety) {
+        if ($corr{$variety}){$variety = $corr{$variety};}
+        $variety=~s/IRIS-/IRIS_/g;
+        $variety=~s/IRIS /IRIS_/g;
         print $fh join(" ",$variety,$variety) ,"\n";
     }
     #print $fh join("\n",@variety),"\n";
