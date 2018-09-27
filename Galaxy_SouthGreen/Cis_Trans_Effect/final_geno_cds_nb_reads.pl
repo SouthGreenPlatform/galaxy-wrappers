@@ -14,7 +14,7 @@ use strict;
 use warnings;
  
 use Data::Dumper;
-use Text::Table;
+#use Text::Table;
 use feature qw{ say };
 use Getopt::Long; 
 

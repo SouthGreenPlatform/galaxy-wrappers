@@ -36,7 +36,6 @@ if (scalar @ARGV < 6)
 	-g le nombre minimal d'occurrences pour qu'un genotype soit pris en consideration (par parent) (par default 1)\n\n
 	-p la profondeur de couverture minimale (par individu) soutenant un SNP (par default 10)\n\n
 	-q la qualite min du Phred-scale quality score(40 correspond a une probabilite de 1/100000 de se tromper de genotype a un locus donne (40 par default)\n\n
-	-mp le nombre de fois ou un read donnant un SNP peut se mapper a une autre position (0 par default)\n\n
 	**************************************************************************************** \n\n";
 	exit;
 }
@@ -46,7 +45,6 @@ my $max_missing_value2= 1;
 my $min_same_genotype_value = 1;
 my $min_depth_ind_value = 10;
 my $qual_min = 40;
-my $seuil_mq0 = 0;
 
 # Gestion des options placées lors lancement du script
 GetOptions("i|input=s"=>\$vcf_in,
@@ -60,8 +58,7 @@ GetOptions("i|input=s"=>\$vcf_in,
 			"g|occurence_genotype=s"=>\$min_same_genotype_value,#default value : 1
 			"p|profondeur_min=s"=>\$min_depth_ind_value,#default value : 10
 			"q|phredlike_quality_score_min=s"=>\$qual_min, #default value : 40
-			"mp|score_mq0=s"=>\$seuil_mq0
-);#default value : 0
+);
 
 #mise en place des valeurs par default si les option ne sont pas tapé par l'utilisateur
 if ($max_missing_value1) {
@@ -79,24 +76,23 @@ if ($min_depth_ind_value) {
 if ($qual_min) {
     say $qual_min;
 }
-if ($seuil_mq0) {
-    say $seuil_mq0;
-}
 
 print "le nombre maximal de valeurs manquantes pour le parent ".$nom_parent1." : ".$max_missing_value1."\n";
 print "le nombre maximal de valeurs manquantes pour le parent ".$nom_parent2." : ".$max_missing_value2."\n";
 print "le nombre minimal d'occurrences pour qu'un genotype soit pris en consideration   : ".$min_same_genotype_value."\n";
 print "la profondeur de couverture minimale (par individu) soutenant un SNP   : ".$min_depth_ind_value."\n";
 print "la qualite min du Phred-scale quality score   : ".$qual_min."\n";
-print "le nombre de fois ou un read donnant un SNP peut se mapper a une autre position   : ".$seuil_mq0."\n";
 open(HOMEOLIST,">$list") or die("Fail to open $list : $!");
 
+open(TRACE,">trace") or die("Fail to open trace");
 open(VCFIN,"<$vcf_in") or die("Fail to open $vcf_in : $!");
 
+my%traceancestor1;
+my%traceancestor2;
 my $indivu_total = $nb_parent1 + $nb_parent2;
 
-print HOMEOLIST "CDS\tPOS\t$nom_parent1 allele1\t$nom_parent1 allele2\t$nom_parent1 allele3\t$nom_parent2 allele1\t$nom_parent2 allele2\t$nom_parent2 allele3\tfrequence allele 1 $nom_parent1\tfrequence allele 2 $nom_parent1\tfrequence allele 3 $nom_parent1\tfrequence allele 1 $nom_parent2\tfrequence allele 2 $nom_parent2\tfrequence allele 3 $nom_parent2\n";
-
+print HOMEOLIST "CDS\tPOS\t$nom_parent1 allele1\t$nom_parent1 allele2\t$nom_parent1 allele3\t$nom_parent2 allele1\t$nom_parent2 allele2\t$nom_parent2 allele3\n";
+print TRACE "ancestor\tchromosome\tposition\tallele\n";
 
 my $cmpt_parent1 = 8 + $nb_parent1;  ##### compteur pour les colonnes correspondant au parent 1 ###### 
 my $cmpt_parent2 = 1 + $cmpt_parent1;  ##### compteur pour les colonnes correspondant au parent 2 ###### 
@@ -111,25 +107,18 @@ while(my $vcf_line = <VCFIN>)
 	if (scalar(@infos_line) != (9 + $indivu_total))
 	{
 		print scalar(@infos_line). " " . (9 + $indivu_total);
-		die "\n \n \n Le nombre d'individus ne correspond pas au individus  !!!!!! \n \n \n";
+		die "\n \n \n La somme des individus ne correspond pas au nombre individus total dans le vcf !!!!!! \n \n \n";
 	}
 	my @parent1_genotypes = @infos_line[9..$cmpt_parent1];
 	my @parent2_genotypes = @infos_line[$cmpt_parent2..$#infos_line];
 	my @parent_genotypes = (\@parent1_genotypes, \@parent2_genotypes);
 		
-	my $individus_pris_en_cmpt =0;
+	my $individus_pris_en_cmpt = 0;
 	my $cds = $infos_line[0];
-    my $pos = $infos_line[1];
-    my $qual = $infos_line[5];
+        my $pos = $infos_line[1];
+        my $qual = $infos_line[5];
 	
 	next if ($qual < $qual_min);
-	
-	my @INFO_details = split(m/;/,$infos_line[7]);
-	my @MQ0_details = split(m/=/,$INFO_details[11]);
-	my $mq0 = $MQ0_details[1];
-	
-		
-    next if ($seuil_mq0 < $mq0);
 	
 	#print "ICI1 : $vcf_line\n$cds $pos et qualite : $qual\n";
 	
@@ -316,13 +305,25 @@ while(my $vcf_line = <VCFIN>)
 
 	print HOMEOLIST $cds . "\t" . $pos . "\t"  
 	.$parent1_attributed_nucleotide[0] . "\t" . $parent1_attributed_nucleotide[1] . "\t" . $parent1_attributed_nucleotide[2] . "\t" 
-	.$parent2_attributed_nucleotide[0] . "\t" . $parent2_attributed_nucleotide[1] . "\t" . $parent2_attributed_nucleotide[2] . "\t"
-	.$array_allele_freq_indivi_p1[0]."\/" . $nb_indiv1 ." individus ". "\t"
-	.$array_allele_freq_indivi_p1[1]."\/" . $nb_indiv1 ." individus ". "\t"
-	.$array_allele_freq_indivi_p1[2]."\/" . $nb_indiv1 ." individus ". "\t"
-	.$array_allele_freq_indivi_p2[0]."\/" . $nb_indiv2 ." individus ". "\t"
-	.$array_allele_freq_indivi_p2[1]."\/" . $nb_indiv2 ." individus ". "\t"
-	.$array_allele_freq_indivi_p2[2]."\/" . $nb_indiv2 ." individus ". "\t". "\n"; 
+	.$parent2_attributed_nucleotide[0] . "\t" . $parent2_attributed_nucleotide[1] . "\t" . $parent2_attributed_nucleotide[2] . "\n";
+
+	$traceancestor1{$nom_parent1}{$cds}{$pos} = $parent1_attributed_nucleotide[0];
+	$traceancestor2{$nom_parent2}{$cds}{$pos} = $parent2_attributed_nucleotide[0];
+}
+
+foreach my$parent(sort keys %traceancestor1){
+	foreach my$cds(sort keys %{$traceancestor1{$parent}}){
+		foreach my$pos(sort keys %{$traceancestor1{$parent}{$cds}}){
+			print TRACE "$parent\t$cds\t$pos\t$traceancestor1{$parent}{$cds}{$pos}\n";
+		}
+	}
+}
+foreach my$parent(sort keys %traceancestor2){
+	foreach my$cds(sort keys %{$traceancestor2{$parent}}){
+		foreach my$pos(sort keys %{$traceancestor2{$parent}{$cds}}){
+			print TRACE "$parent\t$cds\t$pos\t$traceancestor2{$parent}{$cds}{$pos}\n";
+		}
+	}
 }
 
 close(VCFIN);

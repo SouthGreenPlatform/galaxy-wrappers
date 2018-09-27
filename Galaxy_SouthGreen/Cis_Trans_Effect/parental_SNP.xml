@@ -1,45 +1,52 @@
 <tool id="parental_SNP" name="parental SNP" version="1.0.0">
-    
     <!-- [REQUIRED] Tool description displayed after the tool name -->
     <description> - Detect parental SNP of hybrids</description>
-    
     <!-- [OPTIONAL] 3rd party tools, binaries, modules... required for the tool to work -->
     <requirements>
         <requirement type="binary">perl</requirement>
     </requirements>
-    
     <!-- [STRONGLY RECOMMANDED] Exit code rules -->
     <stdio>
         <!-- [HELP] If no exit code rule is defined, the tool will stop if anything is written to STDERR -->
-        <exit_code range="1:" level="fatal" />
+        <exit_code range="1:"/>
     </stdio>
-    
     <!-- [REQUIRED] The command to execute -->
-    <command interpreter="perl">
-	parental_SNP.sh $vcf $fileout $filelog $nameparent1 $nameparent2 $nb_indv_parent1 $nb_indv_parent2 $miss_parent1 $miss_parent2 $num_occ $min_depth
-    </command>
+    <command><![CDATA[
+	source $__tool_directory__/module.sh;
+	perl $__tool_directory__/parental_SNP.pl
+	-i $vcf
+	-o output
+	-s1 $nameparent1
+	-s2 $nameparent2
+	-n1 $nb_indv_parent1
+	-n2 $nb_indv_parent2
+	-m1 $miss_parent1
+	-m2 $miss_parent2
+	-g $num_occ
+	-p $min_depth
+	-q $min_score
+	> $filelog;
+	cp -rf output $fileout;
+    ]]></command>
      
     <!-- [REQUIRED] Input files and tool parameters -->
     <inputs>
-	<param name="vcf" type="data" format="vcf" optional="false" label="VCF input" />
-	<param name="nameparent1" type="text" value="P1" label="Name of parent1" help="Name to be given to parent1" />
-	<param name="nameparent2" type="text" value="P2" label="Name of parent2" help="Name to be given to parent2" />
-
-	
-	<param name="nb_indv_parent1" type="integer" value="2" label="Number of individuals for parent1" />
-	<param name="nb_indv_parent2" type="integer" value="2" label="Number of individuals for parent2" />
-
-	<param name="miss_parent1" type="integer" value="1" label="Maximum number of missing data for parent1" />
-	<param name="miss_parent2" type="integer" value="1" label="Maximum number of missing data for parent2" />
-
-	<param name="num_occ" type="integer" value="1" label="Minimum number of occurences for a genotype to be taken into consideration (per parent)" />
-	<param name="min_depth" type="integer" value="10" label="Minimum depth of coverage for supporting a SNP (per sample)" />
+		<param name="vcf" type="data" format="vcf" optional="false" label="VCF input" />
+		<param name="nameparent1" type="text" value="P1" label="Name of parent1" help="Name to be given to parent1" />
+		<param name="nameparent2" type="text" value="P2" label="Name of parent2" help="Name to be given to parent2" />
+		<param name="nb_indv_parent1" type="integer" value="2" label="Number of individuals for parent1" />
+		<param name="nb_indv_parent2" type="integer" value="2" label="Number of individuals for parent2" />
+		<param name="miss_parent1" type="integer" value="1" label="Maximum number of missing data for parent1" />
+		<param name="miss_parent2" type="integer" value="1" label="Maximum number of missing data for parent2" />
+		<param name="num_occ" type="integer" value="1" label="Minimum number of occurences for a genotype to be taken into consideration (per parent)" />
+		<param name="min_score" type="integer" value="40" label="Phred scale quality score" />
+		<param name="min_depth" type="integer" value="10" label="Minimum depth of coverage for supporting a SNP (per sample)" />
     </inputs>
     
     <!-- [REQUIRED] Output files -->
     <outputs>
     	<data name="fileout" format="tabular" label="SNP list"/>
- 	<data name="filelog" format="txt" label="Logfile" />
+ 	   <data name="filelog" format="txt" label="Logfile" />
     </outputs>
     
     <!-- [OPTIONAL] Tests to be run manually by the Galaxy admin -->
@@ -50,7 +57,7 @@
     </tests>
     
     <!-- [OPTIONAL] Help displayed in Galaxy -->
-    <help>
+    <help><![CDATA[
 .. class:: infomark
 
 **Authors**    Simon Foulquier (IRD)
@@ -77,13 +84,7 @@ VCF file
 
 ::
 
-        #fileformat=VCFv4.1
-                #FILTER=&lt;ID=LowQual,Description="Low quality">
-                        #FORMAT=&lt;ID=AD,Number=.,Type=Integer,Description="Allelic depths for the ref and alt alleles in the order listed">
-                                [...]
-                                        CHROM   POS     ID      REF     ALT     QUAL    FILTER  INFO    FORMAT  CATB1
-                                                chr1    2209    .       G       T       213.84  .       AC=2;AF=1.00;AN=2;DP=7;Dels=0.00;FS=0.000;HaplotypeScore=0.0000;MLEAC=2;MLEAF=1.00;MQ=41.50;MQ0=0;QD=30.55;EFF=DOWNSTREAM(MODIFIER||||Cc01g0002
-                                                0|mRNA||GSCOCT00012438001|),UPSTREAM(MODIFIER||||Cc01g00010|mRNA||GSCOCT00012439001|)   GT:AD:DP:GQ:PL  1/1:0,7:7:18:242,18,0
+        #CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	EG_100	EG_120	EG_140	EG_160	EO_124	EO_133	EO_143	EO_152
 
 
 Output files
@@ -94,12 +95,12 @@ parental SNP list
 
 ::
 
-   CDS   POS	EG allele1	EG allele2	EG allele3	EO allele1	EO allele2	EO allele3	frequence allele 1 EG	frequence allele 2 EG	frequence allele 3 EG	frequence allele 1 EO	frequence allele 2 EO	frequence allele 3 EO	
-   XM_010906231.1	1663	A	X	X	C	X	X	6/4 individus 	0/4 individus 	0/4 individus 	6/4 individus 	0/4 individus 	0/4 individus 	
-   XM_010906231.1	1808	C	X	X	T	X	X	6/4 individus 	0/4 individus 	0/4 individus 	6/4 individus 	0/4 individus 	0/4 individus 	
-   XM_010906231.1	1831	C	X	X	T	X	X	6/4 individus 	0/4 individus 	0/4 individus 	6/4 individus 	0/4 individus 	0/4 individus 	
+   CDS   POS	EG allele1	EG allele2	EG allele3	EO allele1	EO allele2	EO allele3
+   XM_010906231.1	1663	A	X	X	C	X	X
+   XM_010906231.1	1808	C	X	X	T	X	X 	
+   XM_010906231.1	1831	C	X	X	T	X	X	
 
 
-    </help>
+    ]]></help>
 
 </tool>
