@@ -1,0 +1,119 @@
+<tool id="TransPo-RG" name="TransPo-RG" version="0.1.0">
+    <description><![CDATA[
+        Transfer of Position to Resequenced Genome
+    ]]></description>
+    <requirements>
+    </requirements>
+    <stdio>
+        <exit_code range="1:" />
+    </stdio>
+    <command><![CDATA[
+    	module load bioinfo/bwa/0.7.15;
+    	module load bioinfo/bedtools/2.24.0;
+        #if str($type.type) == "gff":
+            module unload system/python/2.7.9;
+            module load system/python/3.4.3;
+        #else:
+            source $__tool_directory__/venv/bin/activate;
+        #end if
+        python $__tool_directory__/transpo-rg.py
+        -f1 $f1
+        -f2 $f2
+        -ti $type.ti
+        #if str($type.type) == "gff":
+            #if $type.t:
+                -t $type.t
+            #end if
+            #if str($type.c) == "yes":
+                -c
+            #end if
+        #end if
+        -i
+        -l
+        -b $b
+        #if $mb:
+            -mb $mb
+        #end if
+        -o output
+        > $stdout;
+        cp -rf *statsLoss $outC;
+        #if str($type.type) == "bed" :
+        	cp -rf output.bed $outFile;
+        #else if str($type.type) == "vcf" :
+        	cp -rf output.vcf $outFile;
+        #else if str($type.type) == "gff":
+        	cp -rf output.gff3 $outFile;
+            #if str($type.c) == "yes":
+                cp -rf filtered_output.gff3 $outFilt;
+            #end if
+        #end if
+    ]]></command>
+    <inputs>
+        <param name="f1" type="data" format="fasta" label="Fasta file F1" />
+        <param name="f2" type="data" format="fasta" label="Fasta file F2" />
+        <conditional name="type">
+            <param name="type" type="select" label="Tab Input type --type">
+                    <option value="bed">BED</option>
+                    <option value="vcf">VCF</option>
+                    <option value="gff">GFF</option>
+            </param>
+            <when value="bed">
+                <param name="ti" type="data" format="bed" label="Coordinate file" />
+            </when>
+            <when value="vcf">
+                <param name="ti" type="data" format="vcf" label="Coordinate file" />
+            </when>
+            <when value="gff">
+                <param name="ti" type="data" format="gff" label="Coordinate file" />
+                <param name="t" type="select" label="Specifiy the type to extract from a GFF" multiple="true" optional="true">
+                    <option value="cds">cds</option>
+                    <option value="gene">gene</option>
+                    <option value="mrna">mrna</option>
+                </param>
+                <param name="c" type="select" label="Enable control of number and postions of CDS inside mRNA (or gene). It check is CDS number 1 in his gene is still at number 1 after transfer.">
+                    <option value="no">no</option>
+                    <option value="yes">yes</option>
+                </param>
+            </when>
+        </conditional>
+        <param name="b" type="integer" label="Size of flank region to extract from each side of the annotation" value ="50"/>
+        <param name="mb" type="integer" label="Number of mismatches allowed" value ="" optional="true"/>
+    </inputs>
+    <outputs>
+        <data format="tabular" name="outFile" label="${tool.name}" />
+        <data format="tabular" name="stdout" label="stdout" />
+        <data format="tabular" name="outC" label="statsLoss"/>
+        <data format="tabular" name="outFilt" label="Filtered_${tool.name}">
+            <filter>type['type'] == 'gff' and type['c'] == 'yes'</filter>
+        </data>  
+    </outputs>
+    <help><![CDATA[
+       
+.. class:: infomark
+
+**Author**     Clement Bellot
+
+.. class:: infomark
+
+**Galaxy integration** Clement Bellot, Aurore Comte
+
+.. class:: infomark
+
+**Support** For any questions about Galaxy integration, please send an e-mail to aurore.comte@ird.fr
+
+---------------------------------------------------
+
+=============
+TransPo-RG
+=============
+
+-----------
+Description
+-----------
+
+TransPo-RG, Transfer of Position to Resequenced Genome (or TPRG), is a python script for transfering position of annotation from one genome assembly to a another (e.g. newer version for a reference genome). It extract sequences with flanking nucleotide (50bp in each side by default) and map them on the target genome. Then we generate the output file in the same format of the entry file with only changing positions. 
+
+It needs three files in entry : two genome file in FASTA format and one tabbed file containing position of annotation. The tabbed file can be VCF, GFF3 or BED. The output will be the same format than the input tab file.
+
+    ]]></help>
+</tool>

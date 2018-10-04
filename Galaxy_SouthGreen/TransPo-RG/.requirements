@@ -1,0 +1,5 @@
+biopython==1.71
+numpy==1.14.3
+pybedtools==0.7.10
+pysam==0.14.1
+six==1.11.0

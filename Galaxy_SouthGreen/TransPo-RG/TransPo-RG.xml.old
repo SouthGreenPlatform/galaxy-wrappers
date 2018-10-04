@@ -1,0 +1,33 @@
+<tool id="TransPo-RG" name="TransPo-RG" version="0.1.0">
+    <requirements>
+    </requirements>
+    <stdio>
+        <exit_code range="1:" />
+    </stdio>
+    <command><![CDATA[
+    	module load bioinfo/bwa/0.7.15 ;
+    	module load bioinfo/bedtools/2.24.0 ;
+    	source $__tool_directory__/venv/bin/activate ;
+        python $__tool_directory__/transpo-rg.py -f1 $f1 -f2 $f2 -ti $ti -i -o $outFile > 
+        sdqk
+        if $ti.is_of_type("bed") :
+        	cp -rf sortie.bed $outFile
+        #else if $ti.is_of_type("vcf") :
+        	cp -rf sortie.vcf $outFile
+        #else :
+        	cp -rf sortie.gff3 $outFile
+       	#end if
+    ]]></command>
+    <inputs>
+        <param name="f1" type="data" format="fasta" label="Fasta file F1" />
+        <param name="f2" type="data" format="fasta" label="Fasta file F2" />
+	<param name="ti" type="data" format="tabular" label="Coordinate file" />
+    </inputs>
+    <outputs>
+	<data format="tabular" name="outFile" label="${tool.name}" />
+	<data format="tabular" name="stdout" label="stdout" />
+    </outputs>
+    <help><![CDATA[
+        TODO: Fill in help.
+    ]]></help>
+</tool>
