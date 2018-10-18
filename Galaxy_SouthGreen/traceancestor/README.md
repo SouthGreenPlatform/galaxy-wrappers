@@ -27,8 +27,6 @@ The first column names schould be :
 - GST = value of GST (inter-population differentiation parameter) (With 1,2,3 the ancestors names)
 - F = Alternative allele frequency for each ancestor (With 1,2,3 the ancestors names)
 
-example : <http://montreuillois.cirad.fr/acomte/gbnomique/blob/master/data/MatriceDSNPs.csv>
-
 	-g | --gst : maximum value of the GST of a DSNP to be a marker (default = 0.9). 
 
 	-m | --missing : maximum value of missing data frequence for a DSNP to be a marker (default = 0.3) 
@@ -63,11 +61,7 @@ The first column names schould be :
 - position = Position of the DSNP marker
 - allele = Base of the ancestral allele
 
-example : <http://montreuillois.cirad.fr/acomte/gbnomique/blob/master/data/Diagnosis_matrix>
-
 	-v | --vcf : vcf of the hybrid population
-
-example : <http://montreuillois.cirad.fr/acomte/gbnomique/blob/master/data/Citrus.vcf>
 
 	-c | --color : color file
 
@@ -75,7 +69,6 @@ Color file where the user can choose one color for each ancestor for the paintin
 Indeterminations (NA) will always be grey.
 If you use the ideogram output of all the hybrids, the bands between chromosoms will always be black.
 
-example : <http://montreuillois.cirad.fr/acomte/gbnomique/blob/master/data/color>
 
 	-p | --ploidy : ploidy of the hybrid population (2, 3 or 4).
 
