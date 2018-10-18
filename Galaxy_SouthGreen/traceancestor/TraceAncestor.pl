@@ -340,7 +340,7 @@ for my$parent (sort keys(%blocspos)){
 		my%indivs; #hash of focus file : key = individu name , value = number
 		while (my $li = <Findivs>){
 			chomp($li);
-			my@i=split(/\t/,$li);
+			my@i=split(/\s+/,$li);
 			$indivs{$i[1]} = $i[0];
 		}
 		close Findivs;
@@ -729,10 +729,13 @@ while (my $li = <Fcolor>){
 	$color{$paint[0]}=$paint[1];
 	$count_col++;
 }
-$color{"NA"} = "#B9B9B9"; # grey for NA
-$color{"separator"} = "#ffffff"; # white for zones inter-chromosomes
-if (scalar(@ref) != $count_col){
-	print "The color file and the matrix do not contain the same number of ancestors\n";
+#$color{"NA"} = "#B9B9B9"; # grey for NA
+$color{"separator"} = "#000000"; # black for zones inter-chromosomes
+if (scalar(@ref)+1 != $count_col){
+	print "The color file and the matrix do not contain the same number of ancestors (+ the NA color)\n";
+	if(scalar(@ref) == $count_col){
+		$color{"NA"} = "#B9B9B9"; # grey for NA --> if the user have not chosen the NA color in the color file
+	}
 }
 close Fcolor;
 
@@ -956,7 +959,7 @@ else{ # If there is no focus on an hybrid: same things but on every individuals
 		my%indivs; #hash of focus file : key = individu name , value = number
 		while (my $li = <Findivs>){
 			chomp($li);
-			my@i=split(/\t/,$li);
+			my@i=split(/\s+/,$li);
 			$indivs{$i[1]} = $i[0];
 		}
 		close Findivs;
@@ -1076,7 +1079,7 @@ else{ # If there is no focus on an hybrid: same things but on every individuals
 		my%indivs; #hash of focus file : key = individu name , value = number
 		while (my $li = <Findivs>){
 			chomp($li);
-			my@i=split(/\t/,$li);
+			my@i=split(/\s+/,$li);
 			$indivs{$i[1]} = $i[0];
 		}
 		close Findivs;

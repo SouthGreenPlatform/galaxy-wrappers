@@ -97,7 +97,7 @@ matrice table
 
 ::
 
-	#CHROM	POS	REF	ALT	%Nref	GSTM	GSTP	GSTC	GSTmic	FM	FP	FC	Fmic
+	#CHROM	POS	REF	ALT	%Nref	GSTA1	GSTA2	GSTA3	GSTA4	FA1	FA2	FA3	FA4
 	1	85524	A	G	0.3103448276	0.2	0.2	0.2	1	0	0	0	1
 	1	108710	A	T	0.6206896552	0.2	1	0.2	0.2	0	1	0	0
 	1	108741	T	A	0.2413793103	0.2	0.2	1	0.2	0	0	1	0
@@ -111,10 +111,10 @@ Ancestral markers matrix
 ::
 
 	ancestor	chromosome	position	allele
-	C	1	108741	A
-	C	1	111092	T
-	C	1	111095	C
-	C	1	112523	A
+	A1	1	108741	A
+	A2	1	111092	T
+	A3	1	111095	C
+	A4	1	112523	A
 
     ]]></help>
 </tool>

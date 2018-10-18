@@ -6,7 +6,7 @@
     </stdio>
     <command><![CDATA[
 	source $__tool_directory__/module.sh;
-        perl $__tool_directory__/traceancestor.pl 
+        perl $__tool_directory__/TraceAncestor.pl 
 		-t $matrice
 		-v $vcf
 		-c $color
@@ -19,14 +19,14 @@
 		#else if str($focus.focus) == "Several":
 			-f $focus.Focus_file
 		#end if
-                -k $windowSize;
-                cp -rf "ancestorFreq" $ancestorFreq;
+  -k $windowSize;
+  cp -rf "ancestorFreq" $ancestorFreq;
 		#if str($focus.focus) == "One":
-			cp -rf "ideogram_hybrid" $ideogram;
-			cp -rf "len_ideogram_hybrid" $len_ideogram;
+			cp -rf ideogram_* $ideogram;
+			cp -rf len_ideogram_* $len_ideogram;
 		#else:
 			cp -rf "ideogram_allInd" $ideogram_allInd;
-                        cp -rf "len_allInd_Ideogram" $len_allInd_ideogram;
+   cp -rf "len_allInd_Ideogram" $len_allInd_ideogram;
 			cp -rf "circos" $circos;
 			cp -rf "len_allInd_Circos" $len_allInd_Circos;			
 		#end if
@@ -191,10 +191,10 @@ matrix table
 ::
 
 	ancestor	chromosome	position	allele
-	C	1	108741	A
-	C	1	111092	T
-	C	1	111095	C
-	C	1	112523	A
+	A1	1	108741	A
+	A1	1	111092	T
+	A1	1	111095	C
+	A1	1	112523	A
 
 
 color file
@@ -202,10 +202,10 @@ color file
 
 ::
 
-	C #677E52
-	M #B9121B
-	P #046380
-	mic #8CC6D7
+	A1 #DF0101
+	A2 #0000FF
+	A3 #FFFF00
+	A4 #292A0A
 
 
 focus file
@@ -213,16 +213,10 @@ focus file
 
 ::
 
-	CIb061
-	CIb062
-	CIb063
-	CIb064
-	CIb065
-	CIb066
-	CIb067
-	CIb068
-	CIb069
-	CIb070
+	1	Sample61
+	2	Sample62
+	3	Sample63
+	4	Sample64
 
 
 Output files
@@ -247,16 +241,16 @@ Chromosomes length for ideogram (only for all or several individuals -> ideogram
 
 ::
 
-	CIb061 305908623 012
-	CIb062 305908623 012
-	CIb063 305908623 012
-	CIb064 305908623 012
-	CIb065 305908623 012
-	CIb066 305908623 012
-	CIb067 305908623 012
-	CIb068 305908623 012
-	CIb069 305908623 012
-	CIb070 305908623 012
+	1 305908623 012
+	2 305908623 012
+	3 305908623 012
+	4 305908623 012
+	5 305908623 012
+	6 305908623 012
+	7 305908623 012
+	8 305908623 012
+	9 305908623 012
+	10 305908623 012
 
 
 Chromosomes length for ideogram	(only for one individual -> ideogram = chromosome)
@@ -280,11 +274,11 @@ circos painting (only for all or several individuals)
 
 ::
 
-	1 1 1700000 #677E52 CIb061
-	1 1700001 2200000 #B9B9B9 CIb061
-	1 2200001 2700000 #677E52 CIb061
-	1 2700001 3000000 #B9B9B9 CIb061
-	1 3000001 3300000 #B9121B CIb061
+	1 1 1700000 #677E52 Sample61
+	1 1700001 2200000 #B9B9B9 Sample61
+	1 2200001 2700000 #677E52 Sample61
+	1 2700001 3000000 #B9B9B9 Sample61
+	1 3000001 3300000 #B9121B Sample61
 
 
 chromosomes length for circos (only for all or several individuals)
@@ -309,12 +303,12 @@ Ancestors frequency along the chromosomes
 ::
 
 	Hybrid	Ancestry	Chromosom	Position_Start	Position_End	Frequence
-	CIb061	C	1	1	405824	0.435294117647059
-	CIb061	C	1	405825	542346	0.303630363036304
-	CIb061	C	1	542347	698397	0.27
-	CIb061	C	1	698398	932983	0.373716632443532
-	CIb061	C	1	932984	1676271	0.287671232876712
-	CIb061	C	1	1676272	2097171	0.437710437710438
+	Sample61	C	1	1	405824	0.435294117647059
+	Sample61	C	1	405825	542346	0.303630363036304
+	Sample61	C	1	542347	698397	0.27
+	Sample61	C	1	698398	932983	0.373716632443532
+	Sample61	C	1	932984	1676271	0.287671232876712
+	Sample61	C	1	1676272	2097171	0.437710437710438
 
   ]]></help>
 </tool>
