@@ -122,3 +122,7 @@ If you use the ideogram output of all the hybrids, the bands between chromosoms 
 
 	5- *len_allInd_Circos* : the chromosomes data. An output compatible with circos.js <http://genomeharvest.southgreen.fr/visu/circosJS/demo/index.php>
 
+
+## TAprefilter.xml and TraceAncestor.xml
+
+These are tools wrappers for galaxy.
