@@ -5,7 +5,6 @@
         <exit_code range="1:" />
     </stdio>
     <command><![CDATA[
-	source $__tool_directory__/module.sh;
         perl $__tool_directory__/TAprefilter.pl 
 		-t $matrice
 		-m $missing
