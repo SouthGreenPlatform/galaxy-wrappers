@@ -78,7 +78,7 @@ if ($indivs && $hybrid){
 my%bloc_position; # key 1 = ancestor / key 2 = chromosome / key 3 = position of the end of the window => value = every marker positions in one window separated by a -
 my%endChro; # key = chromosome => value = position of the last marker of every chromosome. We will assume this is the length of the chromosome.
 my@ref; # list of the name of each ancestral genome.
-my%allele_refalt; # key 1 = ancestor / key 2 = chromosome / clékey3 = position of the marker => value = base of the ancestral allele
+my%allele_refalt; # key 1 = ancestor / key 2 = chromosome / key3 = position of the marker => value = base of the ancestral allele
 my%catPos; # key 1 = ancestor / key 2 = chromosome => value = concatenation of every position of a windows separated by a -
 my%hashRef; # marker counter by window
 my@chromosomList; # list of chromosomes in the ancestor matrix
@@ -166,13 +166,20 @@ my$Ancestral = "ANCESTRAL";
 my$Not = "NOT";
 my$base1; # first base for one position in the vcf
 my$base2; # second base for one position in the vcf (can be multiple)
+my@bases2; # list for tue multiple alternative base in the vcf alternative base
 my%frequences; # Frequency of ancestral alleles by marker
-my%NM; # hash counting the number of marker really present in the vcf for each window (could be usefull later). 
+my%NM; # hash counting the number of marker really present in the vcf for each window (could be usefull later).
+my%realEndChro; #real length of each chromosome. We will use these values if they are available.
+my$booEndChro = 0; # if = 0 we use %endChro else we use %realEndChro as end of chromosome
 while (my$li = <F3>){
 	chomp($li);
 	if ($li =~ m/^#.+$/){
 		if ($li =~ m/(#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\tFORMAT.+)$/){
 			@individus = split(/\s/,$li); # List of samples
+		}
+		if ($li =~ m/##contig=<ID=(\S+)\,length=(\d+)\>/){
+			$realEndChro{$1} = $2; # length ($2) for every chromosomes ($1)
+			$booEndChro = 1;
 		}
 	}
 	else{ # for each position / line in the vcf
@@ -187,8 +194,9 @@ while (my$li = <F3>){
 		$pos = $valBlock[1]; # position
 		$base1 = $valBlock[3];
 		$base2 = $valBlock[4];
-		if ($base2 =~ /(\w+),\S+/){ # if base2 is multiple, we consider the first one (the more frequent)
-			$base2 = $1;
+		my@base2;
+		if ($base2 =~ /[\w|\*\,]+/){ # if base2 is multiple, we consider the first one (the more frequent)
+			@bases2 = split(",", $base2);
 		}
 		for my $parent (sort keys %blocs){
 			foreach my $num(sort {$a<=>$b} keys(%{$blocs{$parent}{$chr}})){
@@ -199,32 +207,36 @@ while (my$li = <F3>){
 					for (my$ind = 9; $ind < scalar(@individus); $ind++){
 						if ($hybrid){ # if we have a focus on only one hybrid :
 							if($individus[$ind] eq $hybrid){
-								if ($valBlock[$ind] =~ m/^(\d+|\.)\/(\d+|\.)\w*\:(\-\d+|\d+)\,(\-\d+|\d+)\:.+/){
-									my$refer = $3; # number of reads for the base1
-									my$alter = $4; # number of reads for the base2
-									my$sumreads = $refer + $alter; # number of reads for the for a marqueur (base1 + base2)
+								if ($valBlock[$ind] =~ m/^[\d+\.\/]+\:(\-\d+|\d+)\,([\d+\,\-]+)\:(\d+)\:.+/){
+									my$refer = $1; # number of reads for the base1
+									my@alters = split(",",$2);
+									my$sumreads = $3; # number of reads for the for a marqueur (base1 + base2)
 									if($sumreads > 0){ # if base1 + base2 != 0
-										if ($AlleleRef eq $base1){ # if base1 if the ancestral allele
-											$frequences{$parent}{$individus[$ind]}{$chr}{$num}{$pos} = $refer / ($refer + $alter); # frequency of the ancestral allele for this marker
+										if ($AlleleRef eq $base1){ # if base1 is the ancestral allele
+											$frequences{$parent}{$individus[$ind]}{$chr}{$num}{$pos} = $refer / $sumreads; # frequency of the ancestral allele for this marker
 											if (defined($nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Ancestral})){
 												$nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Ancestral} = $nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Ancestral} + $refer;
-												$nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Not} = $nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Not} + $alter;
+												$nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Not} = $nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Not} + ($sumreads-$refer);
 											}
 											else{
 												$nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Ancestral} = $refer;
-												$nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Not} = $alter;
+												$nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Not} = ($sumreads-$refer);
 											}
 										}
-										elsif ($AlleleRef eq $base2){ # if base1 if the ancestral allele
+										else{
+											for(my$a=0; $a < scalar(@bases2); $a++){
+												if ($AlleleRef eq $bases2[$a]){ # if one of the base2 is the ancestral allele
 
-											$frequences{$parent}{$individus[$ind]}{$chr}{$num}{$pos} = $alter / ($refer + $alter); # frequency of the ancestral allele for this marker		
-											if (defined($nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Ancestral})){
-												$nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Ancestral} = $nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Ancestral} + $alter;
-												$nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Not} = $nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Not} + $refer;
-											}
-											else{
-												$nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Ancestral} = $alter;
-												$nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Not} = $refer;
+													$frequences{$parent}{$individus[$ind]}{$chr}{$num}{$pos} = $alters[$a] / $sumreads; # frequency of the ancestral allele for this marker		
+													if (defined($nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Ancestral})){
+														$nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Ancestral} = $nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Ancestral} + $alters[$a];
+														$nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Not} = $nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Not} + ($sumreads-$alters[$a]);
+													}
+													else{
+														$nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Ancestral} = $alters[$a];
+														$nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Not} = ($sumreads-$alters[$a]);
+													}
+												}
 											}
 										}
 									}
@@ -232,32 +244,35 @@ while (my$li = <F3>){
 							}
 						}
 						else{ # if we have no focus on one hybrid but on all hybrid or on a list of hybrids
-							if ($valBlock[$ind] =~ m/^(\d+|\.)\/(\d+|\.)\w*\:(\-\d+|\d+)\,(\-\d+|\d+)\:.+/){
-								my$refer = $3; # number of reads for the base1
-								my$alter = $4; # number of reads for the base2
-								my$sumreads = $refer + $alter; # number of reads for the for a marqueur (base1 + base2)
-									if($sumreads > 0){ # if base1 + base2 != 0 
-									if ($AlleleRef eq $base1){ # if base1 is the ancestral allele 
-										$frequences{$parent}{$individus[$ind]}{$chr}{$num}{$pos} = $refer / ($refer + $alter); # frequency of the ancestral allele for this marker
+							if ($valBlock[$ind] =~ m/^[\d+\.\/]+\:(\-\d+|\d+)\,([\d+\,\-]+)\:(\d+)\:.+/){
+								my$refer = $1; # number of reads for the base1
+								my@alters = split(",",$2);
+								my$sumreads = $3; # number of reads for the for a marqueur (base1 + base2)
+								if($sumreads > 0){ # if base1 + base2 != 0 
+									if ($AlleleRef eq $base1){ # if base1 if the ancestral allele
+										$frequences{$parent}{$individus[$ind]}{$chr}{$num}{$pos} = $refer / $sumreads; # frequency of the ancestral allele for this marker
 										if (defined($nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Ancestral})){
 											$nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Ancestral} = $nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Ancestral} + $refer;
-											$nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Not} = $nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Not} + $alter;
+											$nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Not} = $nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Not} + ($sumreads-$refer);
 										}
 										else{
 											$nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Ancestral} = $refer;
-											$nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Not} = $alter;
+											$nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Not} = ($sumreads-$refer);
 										}
 									}
-									elsif ($AlleleRef eq $base2){ # if base2 is the ancestral allele
-
-										$frequences{$parent}{$individus[$ind]}{$chr}{$num}{$pos} = $alter / ($refer + $alter); ## frequency of the ancestral allele for this marker
-										if (defined($nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Ancestral})){
-											$nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Ancestral} = $nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Ancestral} + $alter;
-											$nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Not} = $nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Not} + $refer;
-										}
-										else{
-											$nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Ancestral} = $alter;
-											$nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Not} = $refer;
+									else{
+										for(my$a=0; $a < scalar(@bases2); $a++){
+											if ($AlleleRef eq $bases2[$a]){ # if one of the base2 if the ancestral allele
+												$frequences{$parent}{$individus[$ind]}{$chr}{$num}{$pos} = $alters[$a] / $sumreads; # frequency of the ancestral allele for this marker		
+												if (defined($nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Ancestral})){
+													$nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Ancestral} = $nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Ancestral} + $alters[$a];
+													$nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Not} = $nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Not} + ($sumreads-$alters[$a]);
+												}
+												else{
+													$nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Ancestral} = $alters[$a];
+													$nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Not} = ($sumreads-$alters[$a]);
+												}
+											}
 										}
 									}
 								}
@@ -268,11 +283,9 @@ while (my$li = <F3>){
 			}
 		}
 	}
-
 }
 close F3;
 
-print
 
 my%percentage; # frequency of ancestral allele in a given window (ancestral reads / sum of ancestral and non ancestral reads). If there is no marker of a given widow in the vcf --> window is NA (will become NE later).
 for my $parent(sort keys(%blocs)){
@@ -340,8 +353,10 @@ for my$parent (sort keys(%blocspos)){
 		my%indivs; #hash of focus file : key = individu name , value = number
 		while (my $li = <Findivs>){
 			chomp($li);
-			my@i=split(/\s+/,$li);
-			$indivs{$i[1]} = $i[0];
+			if ($li =~ m/\d+\s+\S+/){
+				my@i=split(/\s+/,$li);
+				$indivs{$i[1]} = $i[0];
+			}
 		}
 		close Findivs;
 		for my$ind (sort keys(%indivs)){
@@ -355,7 +370,7 @@ for my$parent (sort keys(%blocspos)){
 						$start_cor = $start + 1;
 					}
 					my$end = $position[1];
-					print Ffreq "$ind\t$parent\t$chro\t$start_cor\t$end\t$percentage{$parent}{$ind}{$chro}{$num}\n"
+					print Ffreq "$ind\t$parent\t$chro\t$start_cor\t$end\t$percentage{$parent}{$ind}{$chro}{$num}\n";
 				}
 			}
 		}
@@ -668,6 +683,11 @@ for my $parent (sort keys %percentage) {
 
 # --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+# Lenght of chromosome determination. 
+if ($booEndChro == 1){
+	%endChro = %realEndChro;
+}
+
 # step of keys inversion (parent/chrom/num) of %blocs to (chrom/parent/num) %blocsInv 
 my%blocsInv;
 for my$parent(sort keys %blocspos){
@@ -725,16 +745,21 @@ open(Fcolor, "$color") or die ("Erreur d'ouverture de Fcolor\n");
 my$count_col = 0; 
 while (my $li = <Fcolor>){
 	chomp($li);
-	my@paint = split(/\s/, $li);
-	$color{$paint[0]}=$paint[1];
-	$count_col++;
+	if ($li =~ m/\S+\s+\S+/){
+		my@paint = split(/\s+/, $li);
+		$color{$paint[0]}=$paint[1];
+		$count_col++;
+	}
 }
 #$color{"NA"} = "#B9B9B9"; # grey for NA
 $color{"separator"} = "#000000"; # black for zones inter-chromosomes
 if (scalar(@ref)+1 != $count_col){
-	print "The color file and the matrix do not contain the same number of ancestors (+ the NA color)\n";
+	print "the NA color will be grey\n";
 	if(scalar(@ref) == $count_col){
 		$color{"NA"} = "#B9B9B9"; # grey for NA --> if the user have not chosen the NA color in the color file
+	}
+	else{
+		print "there is not enougth colors indicated for the number of ancestors\n";
 	}
 }
 close Fcolor;
