@@ -1,0 +1,110 @@
+<tool id="PropAndCovByChr" name="vcf2allPropAndCovByChr" version="0.1.0">
+    <requirements>
+    </requirements>
+    <stdio>
+        <exit_code range="1:" />
+    </stdio>
+    <command><![CDATA[
+        source $__tool_directory__/module_python3.sh;
+        #set $names = ""
+        #for $i in $inputs:
+            #set $names += str($i)
+            #set $names += ","
+        #end for
+        echo -e "$names" > config;
+        sed -i 's/,/\n/g' config;
+        python3 $__tool_directory__/vcf2allPropAndCovByChr.py
+            --conf config
+            --origin $origin
+            --acc $acc
+            --ploidy $ploidy
+            --NoMiss $NoMiss
+            --all $all;
+        rm config;
+    ]]></command>
+    <inputs>
+        <param name="inputs" type="data_collection" collection_type="list" label="vcf collection"/>
+        <param name="origin" type = "data" format="tabular" label="origin --origin" help="A 2 column file containing accession name (col1), origin/group (Col2)"/>
+        <param name="acc" type = "text" label="accessions to work with" help="Several accession names should be separated by a , . If this parameter is omitted, the picture will be drawn for all accessions found in the vcf"/>
+        <param name="ploidy" type = "text" label="ploidy of accessions" value = "2"/>
+        <param name="NoMiss" type = "select" label=" ancestral accessions can't have missing data">
+            <option value = "n">no</option>
+            <option value = "y">yes</option>
+        </param>
+        <param name="all" type = "select" label="all accessions should have the allele">
+            <option value = "y">yes</option>
+            <option value = "n">no</option>
+        </param>
+    </inputs>
+    <outputs>
+        <collection type="list" name="output" label="output">
+            <discover_datasets pattern="(?P&lt;designation&gt;.*)"/>
+        </collection>
+    </outputs>
+    <help><![CDATA[
+    
+.. class:: infomark
+
+**Author**     Guillaume MARTIN : guillaume.martin@cirad.fr, Marion Dupouy : marion.dupouy@cirad.fr, Franc-Christophe Baurens: baurens@cirad.fr
+
+.. class:: infomark
+
+**Galaxy integration** Aurore Comte
+
+.. class:: infomark
+
+**Support** For any questions about Galaxy integration, please send an e-mail to aurore.comte@ird.fr
+
+---------------------------------------------------
+
+======================
+vcf2allPropAndCovByChr
+======================
+
+-----------
+Description
+-----------
+
+This program perform two things based on a vcf.
+
+1) It plots for a chromosome of all accessions in a vcf, the allele coverage alongs its chromosomes.
+
+2) It identify,based on known ancestral accessions in the vcf, the alleles specific to each groups and plot the alleles proportion at a site along chromosomes for all accessions.
+
+--------
+Inputs:
+--------
+
+VCF collection : one per chromosome or a single vcf for all chromosomes
+
+Origin :  A 2 column file containing accession name (col1), origin/group (Col2)
+
+Origin.tab
+------------------------
+
+::
+
+    P2	AA
+    T01	BB
+    T02	BB 
+
+--------
+Outputs:
+--------
+
+prefix_chromosomeN_X_Cov.png: X png files presenting SNP coverage along chromosomeN.
+
+prefix_chromosomeN_X_Ratio.png: X png files presenting ancestral allele proportion at a site along chromosomeN. 
+
+----------------------
+For more informations:
+----------------------
+
+https://github.com/SouthGreenPlatform/VcfHunter
+
+
+    ]]></help>
+    <citations>
+        <citation type="doi">10.1093/molbev/msy199</citation>
+    </citations>
+</tool>

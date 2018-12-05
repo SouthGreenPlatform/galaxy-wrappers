@@ -1,0 +1,119 @@
+<tool id="PropAndCov" name="vcf2allPropAndCov" version="0.1.0">
+    <requirements>
+    </requirements>
+    <stdio>
+        <exit_code range="1:" />
+    </stdio>
+    <command><![CDATA[
+        source $__tool_directory__/module_python3.sh;
+        #set $names = ""
+        #for $i in $inputs:
+            #set $names += str($i)
+            #set $names += ","
+        #end for
+        echo -e "$names" > config;
+        sed -i 's/,/\n/g' config;
+        
+        python3 $__tool_directory__/vcf2allPropAndCov.py
+            --conf config
+            --origin $origin
+            --acc $acc
+            --ploidy $ploidy
+            --NoMiss $NoMiss
+            --all $all;
+            cp -rf *Cov.png $Cov;
+            cp -rf *Ratio.png $Ratio;
+            cp -rf *AlleleOriginAndRatio.tab $AlleleOrigin;
+            cp -rf *stats.tab $stats;
+    ]]></command>
+    <inputs>
+        <param name="inputs" type="data_collection" collection_type="list" label="vcf collection"/>
+        <param name="origin" type = "data" format="data" label="origin --origin" help="A 2 column file containing accession name (col1), origin/group (Col2)"/>
+        <param name="acc" type = "text" label="accession to work with" />
+        <param name="ploidy" type = "text" label="ploidy of the accession" value = "2"/>
+        <param name="NoMiss" type = "select" label=" ancestral accession can't have missing data">
+            <option value = "n">no</option>
+            <option value = "y">yes</option>
+        </param>
+        <param name="all" type = "select" label="all accessions should have the allele">
+            <option value = "y">yes</option>
+            <option value = "n">no</option>
+        </param>
+    </inputs>
+    <outputs>
+        <data format="png" label="${acc}_Cov.png" name="Cov"/>
+        <data format="png" label="${acc}_Ratio.png" name="Ratio"/>
+        <data format="tabular" label="${acc}_AlleleOriginAndRatio.tab" name="AlleleOrigin"/>
+        <data format="tabular" label='${acc}_stats.tab' name="stats"/>
+    </outputs>
+    <help><![CDATA[
+    
+.. class:: infomark
+
+**Author**     Guillaume Martin
+
+.. class:: infomark
+
+**Galaxy integration** Aurore Comte
+
+.. class:: infomark
+
+**Support** For any questions about Galaxy integration, please send an e-mail to aurore.comte@ird.fr
+
+---------------------------------------------------
+
+==================
+vcf2allPropAndCov
+==================
+
+-----------
+Description
+-----------
+
+This program perform two things based on a vcf.
+
+1) It plots for an accession, the allele coverage alongs its chromosomes.
+
+2) It identify, based on known ancestral accessions in the vcf, the alleles specific to each groups and plot the alleles proportion at a site in the accession along chromosomes.
+
+--------
+Inputs:
+--------
+
+VCF collection : one per chromosome or a single vcf for all chromosomes
+
+Origin :  A 2 column file containing accession name (col1), origin/group (Col2)
+
+Origin.tab
+------------------------
+
+::
+
+    P2	AA
+    T01	BB
+    T02	BB 
+
+--------
+Outputs:
+--------
+
+Cov.png: a png file presenting SNP coverage along the chromosomes.
+
+Ratio.png: a png file presenting ancestral allele proportion at a site along the chromosomes.
+
+AlleleOriginAndRatio.tab: a tabulated file repporting for each sites were an ancestral allele has been attributed, its origin and the proportion of reads supporting this allele. This files contains chromosome (col1), position (col2), allele (col3), ancestral origin (col4) and allele ratio (col5).
+
+stats.tab: a tabulated file repporting various statistics on the alleles of the accession.
+
+----------------------
+For more informations:
+----------------------
+
+https://github.com/SouthGreenPlatform/VcfHunter
+
+
+    ]]></help>
+    <citations>
+        <citation type="doi">10.1093/molbev/msy199</citation>
+    </citations>
+</tool>

@@ -1,0 +1,119 @@
+<tool id="vcf2popNew" name="vcf2popNew" version="0.1.0">
+    <requirements>
+    </requirements>
+    <stdio>
+        <exit_code range="1:" />
+    </stdio>
+    <command><![CDATA[
+        source $__tool_directory__/module_python3.sh;
+        
+        bash $__tool_directory__/setSeg.sh $seg > out;
+        python3 $__tool_directory__/vcf2popNew.1.0.py
+            --vcf $vcf
+            --seg `cat out`
+            --MinCov $MinCov
+            --MaxCov $MaxCov
+            --WinFreq $WinFreq
+            --MinAlCov $MinAlCov
+            --addcov $addcov
+            #if str($NoUsed) != "None":
+                --NoUsed $NoUsed
+            #end if
+            #if str($exclude) != "None":
+                --exclude $exclude
+            #end if
+            #if str($ref) != "None":
+                --ref $ref
+            #end if
+            #if str($remove):
+                --remove $remove
+            #end if
+            --miss $miss;
+            rm out;
+    ]]></command>
+    <inputs>
+        <param name="vcf" type="data" format ="vcf" label="The vcf file --vcf"/>
+        <param name="seg" type="text" label="Segregation tested --seg" help="Several segregations can be passed and should be separated by /. A segregation should look like as follows: Name:Parents:MarkerCoding:MarkerSegregation:PvalueForTest. With a real example: SimpleDose:P1,P2:Ho,He@nn,np:0.5,0.5:1e-5/Bridge:P1,P2:Ho,He,Ho@hh,hk,kk:0.25,0.5,0.25:1e-5 (Ho for homozygous, He for heterozygous)"/>
+        <param name="MinCov" type="integer" label="Minimal read coverage for a marker in an accession --MinCOv" help="If a lower value is found data point is converted to missing." value="10"/>
+        <param name="MaxCov" type="integer" label="Maximal read coverage for a marker in an accession --MaxCov" help="If a greater value is found data point is converted to missing." value="1000"/>
+        <param name="WinFreq" type="text" label="Window for minority allele coverage frequency to be insufficient to call a heterozygous but to high to call an homozygous --WinFreq" help='(example: "0.05:0.1"). With the example if minority allele is in ]0.05:0.1] calling will become missing for this data point.' value="0.01:0.1"/>
+        <param name="MinAlCov" type="integer" label = "Minimal read number of minor allele to call variant heterozygous --MinAlCov" value="1"/>
+        <param name="miss" type="text" label="Maximal missing data proportion in the progeny (Excluding parents) --miss" help="greater missing proportion will result in removing the marker." value="0.1"/>
+        <param name="addcov" type="select" label="Add allele coverage information to genotype file --addcov" help="If this option is passed, in addition to genotypes, alleles coverage information is also filled.">
+            <option value="n">no</option>
+            <option value="y">yes</option>
+        </param>
+        <param name="NoUsed" type = "data" format ="tabular" label="accessions to exclude from the filtration --NoUsed" help="A tabultated file containing in one column, names of accessions to exclude from the filtration (based on missing data and p-value) but which will be kept in final files." optional="true"/>
+        <param name="exclude" type = "data" format ="tabular" label="accessions to exclude from the analysis --exclude" help="A tabultated file containing in one column, names of accessions to exclude from the analysis and the files." optional="true"/>
+        <param name="ref" type="data" format="fasta" label="The reference fasta file. --ref" help="If passed, a tag associated to the marker will be outpouted in a fasta file. This tag will contained 125 bases before the marker and 125 bases after." optional="true"/>
+        <param name="remove" type="text" help="For some programs, marker name length is limited. This option helps you to reduce marker names. By default marker name is chromosome name+M+site position. A string can be passed that will be searched and removed from all marker name. This is not neccessary if your chromosome name is not to long." optional="true"/>
+    </inputs>
+    <outputs>
+        <collection type="list" name="output" label="output">
+            <discover_datasets pattern="(?P&lt;designation&gt;.*)"/>
+        </collection>
+    </outputs>
+    <help><![CDATA[
+            
+.. class:: infomark
+
+**Author**     Guillaume MARTIN (guillaume.martin@cirad.fr),Franc-Christophe BAURENS (franc-christophe.baurens@cirad.fr) and Olivier GARSMEUR (olivier.garsmeur@cirad.fr)
+
+.. class:: infomark
+
+**Galaxy integration** Aurore Comte
+
+.. class:: infomark
+
+**Support** For any questions about Galaxy integration, please send an e-mail to aurore.comte@ird.fr
+
+---------------------------------------------------
+
+===========
+vcf2popNew
+===========
+
+-----------
+Description
+-----------
+
+This program will select markers for genetical mapping analysis from a vcf file based on several criterias including segregation ratio. It will outpout coded markers as requested by the user
+
+--------
+Inputs:
+--------
+
+VCF : vcf to work on
+
+--------
+Outputs:
+--------
+
+Pop_tab_Bridge.tab: A .tab file correponding to a simplified joinmap format that contained bridge markers.
+
+Pop_tab_SegregationName_Parent.tab: Two .tab filecorreponding to a simplified joinmap format that contained parent1 and parent2 markers respectively. Only if parent option is filled.
+
+Pop_tab_unknown.tab: A .tab file correponding to a simplified joinmap format that contained unknown parent markers (missing data for both parents). Only if parent option is filled.
+
+Pop_report.tab: A file report.
+
+Pop_sub.vcf: A sub vcf corresponding to the original vcf with only lines corresponding toconserved markers (no filtering applied in this vcf).
+
+Pop.tab: A file containing for aech selected marker, the genotype of each accessions based on filter applied. Two additional values are added at the end of the file: the Khi-Square value and the P-value of the test.
+
+Pop_tags.fasta: A fasta file containing marker tags (to align against another reference genome for example). Only if --ref option is filled.
+
+Pop_tab_unknown.tab: is a marker coded file corresponding to selected marker that cannot be attributed to one of the two parent.
+
+----------------------
+For more informations:
+----------------------
+
+https://github.com/SouthGreenPlatform/VcfHunter
+
+
+    ]]></help>
+    <citations>
+        <citation type="doi">10.1093/molbev/msy199</citation>
+    </citations>
+</tool>

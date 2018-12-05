@@ -1,0 +1,84 @@
+<tool id="RecombCalculatorDDose" name="RecombCalculatorDDose" version="0.1.0">
+    <requirements>
+    </requirements>
+    <stdio>
+        <exit_code range="1:" />
+    </stdio>
+    <command><![CDATA[
+    source $__tool_directory__/module_python3.sh;
+    python3 $__tool_directory__/RecombCalculatorDDose.py
+        --matrix $matrix
+        --output out
+        --phased $phased
+        --steps $steps;
+        #if str($steps) == 'R':
+            cp -rf *REC.tab $rec;
+        #else if str($steps) == 'S':
+            cp -rf *SegDist.tab $seg;
+        #end if
+    ]]></command>
+    <inputs>
+        <param name="matrix" type= "data" format="tabular" label="The marker file matrix" help="output of vcf2popNew"/>
+        <param name="phased" type= "select" label="Are marker phased?">
+            <option value="n">n</option>
+            <option value="y">y</option>
+        </param>
+        <param name="steps" type= "select" label="Analysis to perform" help="R: Calculate recombination rate / S: Calculate segregation distortions">
+            <option value="R">R</option>
+            <option value="S">S</option>
+        </param>
+    </inputs>
+    <outputs>
+         <data format="tabular" label="REC.tab" name="rec">
+            <filter>steps == 'R'</filter>
+         </data>
+         <data format="tabular" label="SegDist.tab" name="seg">
+            <filter>steps == 'S'</filter>
+         </data>
+    </outputs>
+    <help><![CDATA[
+                    
+.. class:: infomark
+
+**Author**     Guillaume MARTIN (guillaume.martin@cirad.fr)
+
+.. class:: infomark
+
+**Galaxy integration** Aurore Comte
+
+.. class:: infomark
+
+**Support** For any questions about Galaxy integration, please send an e-mail to aurore.comte@ird.fr
+
+---------------------------------------------------
+
+======================
+RecombCalculatorDDose
+======================
+
+-----------
+Description
+-----------
+    
+This program perform is designed to calculate frequencies of recombination observed between two pairs of markers. It can also calculate marker segregation distortion.
+
+-------
+Inputs:
+-------
+
+The marker file matrix = Pop_tab_SegregationName_Parent.tab from vcf2popNew
+
+-------
+Output:
+-------
+
+REC.tab: A tabulated file of pairwise marker recombination rate (analysis to perform R).
+
+SegDist.tab: A tabulated file of marker segragtion distortions (analysis to perform S).    
+
+    
+    ]]></help>
+    <citations>
+        <citation type="doi">10.1093/molbev/msy199</citation>
+    </citations>
+</tool>

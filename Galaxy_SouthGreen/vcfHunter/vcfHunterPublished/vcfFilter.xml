@@ -1,0 +1,141 @@
+<tool id="vcfFilter" name="VCF Filter" version="0.1.0">
+    <requirements>
+    </requirements>
+    <command detect_errors="exit_code"><![CDATA[
+    	source $__tool_directory__/module_python3_filter.sh;
+      python3 $__tool_directory__/vcfFilter.1.0.py
+		--vcf $input1
+		--names $names
+		#if $outgroup:
+			--outgroup $outgroup
+		#end if
+		--prefix "Filt"
+		--RmType $RmType
+		#if $RmType:
+			--MinCov $MinCov
+		#end if
+		--MinAl $MinAl
+		--nMiss $nMiss
+		#if $RmAlAlt:
+			--RmAlAlt $RmAlAlt
+		#end if
+		--MaxCov $MaxCov
+		--MinFreq $MinFreq;
+		cp -rf "Filt_filt.vcf" $filter;		
+    ]]></command>
+    <inputs>
+		<param type="data" name="input1" format="vcf" label="VCF file --vcf"/>
+		<param name="names" type="data" format="data" label="names file" help="A one column file containing accession names to treat --names"/>	
+		<param name="outgroup" type="data" format="data" label="outgroup (optional) --outgroup" help="A one column file containing accession names that will not be used for filtering but will remain in the output file." optional="true"/>
+		<param name="MinCov" type="integer" label="Minimal coverage by accession --MinCov" help="Minimal coverage by accession to keep genotype calling. If the value is lower, genotype will be converted to unknown for the concerned accession." value = "10"/>
+		<param name="MaxCov" type="integer" label="Maximal coverage to keep a genotype --MaxCov" value="1000"/>
+                <param name="MinFreq" type="text" label="Minimal frequence to keep a genotype --MinFreq" value="0.05"/>
+		<param name="MinAl" type="integer" label="Minimal allele coverage by accession --MinAl" help="Minimal allele coverage by accession to keep genotype calling. If the value is lower for at least one allele, genotype will be converted to unknown for the concerned accession." value="3"/>
+		<param name="nMiss" type="integer" label="Maximal number of missing genotype --nMiss" help="Maximal number of missing genotype in a line to keep the line" value="0"/>
+		<param name="RmAlAlt" type="text" label="Number of alleles to remove the site (optional) --RmAlAlt" help="Number of alleles at the site in filtered accessions to remove the variant site (several values can be passed and should be sepatated by ':')" optional="true"/>
+		<param name="RmType" type="select" label="Variant status to filter out (Optional) --RmType"  help="A one column file containing accession names to treat" multiple="true" optional="true">
+			<option value="PASS">PASS</option>
+			<option value="DP_FILTER">DP_FILTER</option>
+			<option value="QD_FILTER">QD_FILTER</option>
+			<option value="SnpCluster">SnpCluster</option>
+			<option value="INDELS">INDELS</option>
+			<option value="SNP">SNP</option>
+			<option value="AUTAPO">AUTAPO (accession specific variant site)</option>
+		</param>
+	</inputs>
+	<outputs>
+        	<data format="vcf" name="filter" label="filtered Vcf">
+                	<filter>type['type'] == 'FILTER'</filter>
+        	</data>
+	</outputs>
+<help><![CDATA[
+
+.. class:: infomark
+
+**Author**     Guillaume Martin
+
+.. class:: infomark
+
+**Galaxy integration** Aurore Comte
+
+.. class:: infomark
+
+**Support** For any questions about Galaxy integration, please send an e-mail to aurore.comte@ird.fr
+
+---------------------------------------------------
+
+===========
+VCF Filter
+===========
+
+-----------
+Description
+-----------
+
+This program filters a vcf file based on several parameters such as datapoint coverage and allele coverage, number of variant and variant type.
+
+The script of this tool is available on https:/github.com/SouthGreenPlatform
+
+usage:
+vcfFilter.1.0.py 
+--vcf 
+--names 
+--outgroup 
+--RmType 
+--RmAlAlt 
+--MinCov 
+--MinFreq 
+--MinAl 
+--nMiss 
+--prefix
+
+------
+Inputs
+------
+
+vcf:
+	vcf to filter
+
+names file:
+	A one column file containing accession names to treat 
+
+outgroup:	
+	A one column file containing accession names that will not be used for filtering but will remain in the output file.
+
+-------
+Outputs
+-------
+
+vcf filterd:
+    	the vcf filtered
+
+---------------------------------------------------
+
+---------------
+Working example
+---------------
+
+Input files
+===========
+
+names file
+--------------------------
+
+::
+
+	sample68
+	sample69
+	sample77
+	sample10
+	sample75
+	sample74
+	sample73
+
+]]></help>
+<citations>
+<citation type="bibtex">
+  <citation type="doi">10.1038/s41467-018-05051-5</citation>
+</citation>
+</citations>
+</tool>
+

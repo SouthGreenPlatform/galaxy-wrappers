@@ -1,0 +1,19 @@
+module load system/java/jre8
+module load compiler/gcc/4.9.2
+module load bioinfo/bwa/0.7.12
+module load bioinfo/bamtools/2.3.0
+module load bioinfo/gdal/1.9.2
+module load bioinfo/geos/3.4.2
+module load mpi/openmpi/1.6.5
+module unload bioinfo/R/3.1.3
+module load bioinfo/R/3.2.2
+module load bioinfo/vcftools/0.1.12b
+module load bioinfo/samtools/1.2
+module load bioinfo/picard-tools/2.7.0
+module load bioinfo/STAR/2.5.0b
+module load bioinfo/GATK/3.5-0
+module load system/gnuplot/5.0.1
+module unload system/python/2.7.9
+module load system/python/3.4.3
+
+module load system/perl/5.22.0
