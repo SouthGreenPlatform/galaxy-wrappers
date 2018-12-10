@@ -18,8 +18,8 @@ where <args> are:
 $usage .= "\n";
 
 my ($input,$outfile,$x_axis,$y_axis,$name,$category,$z_axis);
-my $jsondirectory = "/home/galaxy/data/alexis_dereeper/static/json";
-my $json_URL = "http://galaxy-demo.excellenceinbreeding.org/static/json";
+my $jsondirectory = "/home/galaxydev/galaxy/static/json";
+my $json_URL = "http://galaxy.southgreen.fr/galaxy/static/json";
 
 GetOptions(
 		"input=s"    => \$input,
