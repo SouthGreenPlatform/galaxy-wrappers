@@ -1,0 +1,25 @@
+<tool id="highcharts_scatter" name="Highcharts scatter plot" version="1.0.0">
+  <description> displays values from columns of a tabular file</description>
+  <command interpreter="bash">
+./InteractiveScatter.sh $galaxy_tabular_file $out $column_x $column_y $column_z $column_id $column_cat
+</command>
+  <inputs>
+    <param name="galaxy_tabular_file" type="data" format="tab,csv,tabular" label="Tabular or CSV file" help="Must be tabular or CSV" />
+    <param name="column_x" type="data_column" data_ref="galaxy_tabular_file" use_header_names="true" label="Which column values to be used for X axis" help="" value="2" />
+	<param name="column_y" type="data_column" data_ref="galaxy_tabular_file" use_header_names="true" label="Which column values to be used for  Y axis" help="" value="3" />
+	<param name="column_z" type="data_column" data_ref="galaxy_tabular_file" use_header_names="true" label="Optional: Which column values to be used for  Z axis" help="If this field is provided it will generate a 3D plot" optional="true" value="4" />
+	<param name="column_id" type="data_column" data_ref="galaxy_tabular_file" use_header_names="true" label="Which column to be used for naming the points." help="Displayed when the user hovers over a data point. It may be useful to select unique or categorical identifiers here" value="1" />
+	<param name="column_cat" type="data_column" data_ref="galaxy_tabular_file" use_header_names="true"  optional="true" label="Optional: Colorization: Which column to be used for colorization." help="Points will be colorized according to the corresponding category" />
+  </inputs>
+  <outputs>
+    <data name="out" format="html" label="Interactive Scatter Plots" />
+  </outputs> 
+  <help>
+**What it does**
+
+This tool draws Highcharts-based interactive plots using user-defined columns.
+https://www.highcharts.com/
+
+
+  </help>
+</tool>
