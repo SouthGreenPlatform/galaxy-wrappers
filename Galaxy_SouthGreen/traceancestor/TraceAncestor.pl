@@ -20,6 +20,7 @@ my $freq = 0.99;
 my $help = "";
 my $hybrid;
 my $indivs;
+my $merge;
 Getopt::Long::Configure ('bundling');
 GetOptions ('t|input=s' => \$input, ## reference matrix
 	    'v|vcf=s' => \$vcf, ## vcf of hybrids. Hybrids should not have space in their names and no special characters.
@@ -31,6 +32,7 @@ GetOptions ('t|input=s' => \$input, ## reference matrix
 	    'k|cut=i' => \$window_cut, ## number of K bases in one window
 	    'i|ind=s' => \$hybrid, ## particular hybrid you want to focus on (optional). If -f not indicated.
 	    'f|focus=s'=> \$indivs, ## file with several hybrids to focus on (optional). If -i not indicated.
+	    'm|merge!'=> \$merge,	
 	    'h|help!'=> \$help,)
 or die("Error in command line arguments\n");
 if($help) { ## display this help when -help is called
@@ -72,6 +74,49 @@ if ($indivs && $hybrid){
 }
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------
+# STEP 0 : If we work on WGS --> we redo an ancestor matrix with only snp that are also in the vcf file.
+
+if ($merge){
+	my@val;
+	my%mergeAncestor;
+	open(FA,"$input") or die ("Error: matrix of ancestors wont open\n"); #opening of the ancestor matrix
+	while (my $li = <FA>){ # for each marker
+		chomp($li);
+		if ($li !~ m/^ancestor/){
+			my@ligne = split("\t", $li);
+			my$ancetre = $ligne[0];
+			my$chromosome = $ligne[1];
+			my$position = $ligne[2];
+			my$allele = $ligne[3];
+			$mergeAncestor{$ancetre}{$chromosome}{$position} = $allele;
+		}
+	}
+	close FA;
+	open(FX, ">new_AncestorMatrix");
+	print FX "ancestor\tchromosome\tposition\tallele\n";
+	open(FV,"$vcf") or die ("Error: can't open the vcf file\n");
+	while (my $li = <FV>){ # for each marker
+		chomp($li);
+		if ($li !~ m/^#.+$/){
+			@val = split("\t",$li);
+			my$chr = $val[0]; # chromosome
+			my$pos = $val[1]; # position
+			for my$anc (sort keys(%mergeAncestor)){
+				for my$c(sort keys(%{$mergeAncestor{$anc}})){
+					for my$p(sort {$a<=>$b} keys(%{$mergeAncestor{$anc}{$c}})){
+						if(($c eq $chr) && ($p eq $pos)){
+							print FX "$anc\t$c\t$p\t$mergeAncestor{$anc}{$c}{$p}\n";
+						}
+					}
+				}
+			}
+		}
+	}
+	close FV;
+	close FX;
+}
+
+#------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # STEP 1: creation of the not overlapping windows of $window_size (parameter chose by the user) markers
 
@@ -82,7 +127,12 @@ my%allele_refalt; # key 1 = ancestor / key 2 = chromosome / key3 = position of t
 my%catPos; # key 1 = ancestor / key 2 = chromosome => value = concatenation of every position of a windows separated by a -
 my%hashRef; # marker counter by window
 my@chromosomList; # list of chromosomes in the ancestor matrix
-open(F1,"$input") or die ("Error: matrix of ancestors wont open\n"); #opening of the ancestor matrix
+if(!$merge){
+	open(F1,"$input") or die ("Error: matrix of ancestors wont open\n"); #opening of the ancestor matrix
+}
+else{
+	open(F1,"new_AncestorMatrix") or die ("Error: new matrix of ancestors wont open\n"); #opening of the ancestor matrix
+}
 while (my $li = <F1>){ # for each marker
 	chomp($li);
 	# if line is not the header
@@ -125,7 +175,6 @@ while (my $li = <F1>){ # for each marker
 	}
 }
 close F1;
-
 # We are numbering each windows in a hash %blocs.			
 my %blocs;
 my %blocspos;
@@ -683,9 +732,30 @@ for my $parent (sort keys %percentage) {
 
 # --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-# Lenght of chromosome determination. 
-if ($booEndChro == 1){
-	%endChro = %realEndChro;
+# Lenght of chromosome determination.
+my%theEndChr; 
+my%theNumChr; 
+if ($booEndChro == 0){
+	my$n = 0;
+	for my$x(sort keys %endChro){
+		if (grep { $_ eq $x } @chromosomList){
+			$n++;
+			$theEndChr{$x} = $endChro{$x};
+			$theNumChr{$x} = $n;
+		}
+	}
+	%endChro = %theEndChr;
+}
+elsif ($booEndChro == 1){
+	my$n = 0;
+	for my$x(sort keys %realEndChro){
+		if (grep { $_ eq $x } @chromosomList){
+			$n++;
+			$theEndChr{$x} = $realEndChro{$x};
+			$theNumChr{$x} = $n;
+		}
+	}
+	%endChro = %theEndChr;
 }
 
 # step of keys inversion (parent/chrom/num) of %blocs to (chrom/parent/num) %blocsInv 
@@ -769,7 +839,7 @@ if($hybrid){ ## If focus on hybrid
 	my$ind = $hybrid;
 	for my $CHROMOSOMES (sort keys %{$dosbywindows{$ind}}){
 		for my $slice (sort {$a<=>$b} keys %{$dosbywindows{$ind}{$CHROMOSOMES}}){
-			my$booNa = 0; # boolean if NA for at least one ancester in the slice
+			my$booNa = 0; # boolean if NA for at least one ancestor in the slice
 			my%dosparent; # allelic dosage by parent for this slice
 			my$dosBySlice = 0; # sum of allelic dosage for a slice
 			for my $parent (sort keys %{$dosbywindows{$ind}{$CHROMOSOMES}{$slice}}){
@@ -844,6 +914,7 @@ if($hybrid){ ## If focus on hybrid
 	open(F11, ">ideogram_$hybrid") or die ("Error: can't open output for ideogram\n"); # for a particular hybrid. Output = ideogram format.
 	for my$CHROMOSOMES (sort keys %hasher){	
 		my$endC = $endChro{$CHROMOSOMES};
+		my$numchr = $theNumChr{$CHROMOSOMES};
 		for my$p (sort {$a<=>$b} keys %{$hasher{$CHROMOSOMES}}){
 			my$color = "";
 			my$begin = 1;
@@ -857,10 +928,10 @@ if($hybrid){ ## If focus on hybrid
 				if ($color ne $hasher{$CHROMOSOMES}{$p}{$slice}){
 					$endS = $slice;
 					if ($endS <= $endC){
-						print F11 "$CHROMOSOMES $p $begin $endS $color\n";
+						print F11 "$numchr $p $begin $endS $color\n";
 					}
 					else{
-						print F11 "$CHROMOSOMES $p $begin $endC $color\n";
+						print F11 "$numchr $p $begin $endC $color\n";
 					}
 					$begin = $slice + 1;
 				}
@@ -871,20 +942,25 @@ if($hybrid){ ## If focus on hybrid
 				if ($sli + $cut > $endS){
 					if ($sli + $cut >= $endC){ # If the chromosome longer than the end of the last slice -> grey 'til the end 
 						$endS =	$endC;
-						print F11 "$CHROMOSOMES $p $begin $endS $color\n"; #color of the last slices
+						print F11 "$numchr $p $begin $endS $color\n"; #color of the last slices
 					}	
 					else{
-						$endS =	$sli + $cut;
-						print F11 "$CHROMOSOMES $p $begin $endS $color\n"; #color of the last slices
-						$begin = $endS + 1;
-						$color = $color{"NA"};
-						print F11 "$CHROMOSOMES $p $begin $endC $color\n"; #end of chro grey
+						if($color ne $color{"NA"}){
+							$endS =	$sli + $cut;
+							print F11 "$numchr $p $begin $endS $color\n"; #color of the last slices
+							$begin = $endS + 1;
+							$color = $color{"NA"};
+							print F11 "$numchr $p $begin $endC $color\n"; #end of chro grey
+						}
+						else{ #if color = color of NA
+							print F11 "$numchr $p $begin $endC $color\n";
+						}
 					}
 				}
 				else {
 					$begin = $endS + 1;
 					$color = $color{"NA"};
-					print F11 "$CHROMOSOMES $p $begin $endC $color\n"; #end of chro grey
+					print F11 "$numchr $p $begin $endC $color\n"; #end of chro grey
 				}
 			}
 			
@@ -1021,11 +1097,16 @@ else{ # If there is no focus on an hybrid: same things but on every individuals
 								print F12 "$CHROMOSOMES $begin $endS $color $ind\n"; #color of the last slices
 							}	
 							else{
-								$endS =	$sli + $cut;
-								print F12 "$CHROMOSOMES $begin $endS $color $ind\n"; #color of the last slices
-								$begin = $endS + 1;
-								$color = $color{"NA"};
-								print F12 "$CHROMOSOMES $begin $endC $color $ind\n"; #end of chro grey
+								if($color ne $color{"NA"}){
+									$endS =	$sli + $cut;
+									print F12 "$CHROMOSOMES $begin $endS $color $ind\n"; #color of the last slices
+									$begin = $endS + 1;
+									$color = $color{"NA"};
+									print F12 "$CHROMOSOMES $begin $endC $color $ind\n"; #end of chro grey
+								}
+								else{
+									print F12 "$CHROMOSOMES $begin $endC $color $ind\n"; #end of chro grey
+								}
 							}
 						}
 						else {
@@ -1071,11 +1152,16 @@ else{ # If there is no focus on an hybrid: same things but on every individuals
 								print F12 "$CHROMOSOMES $begin $endS $color $ind\n"; #color of the last slices
 							}	
 							else{
-								$endS =	$sli + $cut;
-								print F12 "$CHROMOSOMES $begin $endS $color $ind\n"; #color of the last slices
-								$begin = $endS + 1;
-								$color = $color{"NA"};
-								print F12 "$CHROMOSOMES $begin $endC $color $ind\n"; #end of chro grey
+								if($color ne $color{"NA"}){
+									$endS =	$sli + $cut;
+									print F12 "$CHROMOSOMES $begin $endS $color $ind\n"; #color of the last slices
+									$begin = $endS + 1;
+									$color = $color{"NA"};
+									print F12 "$CHROMOSOMES $begin $endC $color $ind\n"; #end of chro grey
+								}
+								else{
+									print F12 "$CHROMOSOMES $begin $endC $color $ind\n"; #end of chro grey
+								}
 							}
 						}
 						else {

@@ -5,8 +5,12 @@
         <exit_code range="1:" />
     </stdio>
     <command><![CDATA[
+	source $__tool_directory__/moduleperl.sh;
         perl $__tool_directory__/TraceAncestor.pl 
 		-t $matrice
+  #if str($merge) == "yes":
+   -m
+  #end if
 		-v $vcf
 		-c $color
 		-p $ploidy
@@ -33,9 +37,13 @@
     <inputs>
 	<param type="data" name="matrice" format="tabular" label="matrix table -t"/>
 	<param type="data" name="vcf" format="vcf" label="vcf of hybrid population -v"/>
+ <param type="select" name="merge" label="work on common snp -m" help="do you want to work on snp that are only common between matrix and vcf (only for WGS)">
+  <option value="no">no</option>
+  <option value="yes">yes</option>
+	</param>
 	<param type="select" name="ploidy" label="ploidy -p">
-		<option value="2">2</option>
-                <option value="3">3</option>
+  <option value="2">2</option>
+  <option value="3">3</option>
 		<option value="4">4</option>
 	</param>
 	<param type="data" name="color" format="txt" label="color file -c"/>
