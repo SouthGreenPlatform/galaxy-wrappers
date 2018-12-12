@@ -1,0 +1,86 @@
+<tool id="vcf2gst" name="TraceAncestor VCF to GST" version="0.1.0">
+    <requirements>
+    </requirements>
+    <stdio>
+        <exit_code range="1:" />
+    </stdio>
+    <command><![CDATA[
+	perl $__tool_directory__/TAvcf2gst.pl 
+		-v $vcf
+		-a $ancestor
+		-d $depth;
+        cp -rf "GSTmatrice" $output;
+    ]]></command>
+    <inputs>
+	<param type="data" name="vcf" format="tabular" label="vcf -v"/>
+	<param type="data" format="data" name="ancestor" label ="ancestor file -a"/>
+	<param type="integer" name="depth" label ="depth -d" value="5"/>
+    </inputs>
+    <outputs>
+	<data name="output" format="tabular" label="GST matrice"/>
+    </outputs>
+    <help><![CDATA[
+
+.. class:: infomark
+
+**Authors**     Patrick Ollitrault, Aurore Comte
+
+.. class:: infomark
+
+**Galaxy integration** Aurore Comte
+
+.. class:: infomark
+
+**Support** For any questions about Galaxy integration, please send an e-mail to aurore.comte@ird.fr
+
+---------------------------------------------------
+
+===========
+vcf2gst
+===========
+
+-----------
+Description
+-----------
+
+With this tool you can calculate the value of GST for each ancestors
+
+-------
+Inputs
+-------
+
+Ancestors File
+---------------------
+
+ex : A1 = Ancestor 1. On the same line, individuals corresponding to ancestor 1
+
+::
+
+	A1	Ind1	Ind2	Ind3	Ind4	Ind5	Ind6
+	A2	Ind7	Ind8	Ind9	Ind10
+	A3	Ind11	Ind12	Ind13	Ind14	Ind15
+	A4	Ind16	Ind17
+
+VCF File
+---------------------
+
+--------
+Outputs
+--------
+
+GST Matrix
+---------------------
+
+ex: GSTA1 = GST value for ancestor 1 at a given position / FA1 = frequency for the alternative allele at a given postition for the ancestor 1
+
+::
+
+	#CHROM	POS	REF	ALT	%Nref	GSTA1	GSTA2	GSTA3	GSTA4	FA1	FA2	FA3	FA4
+	1	85524	A	G	0.3103448276	0.2	0.2	0.2	1	0	0	0	1
+	1	108710	A	T	0.6206896552	0.2	1	0.2	0.2	0	1	0	0
+	1	108741	T	A	0.2413793103	0.2	0.2	1	0.2	0	0	1	0
+
+
+
+ ]]></help>
+</tool>
