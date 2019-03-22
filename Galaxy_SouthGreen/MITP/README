@@ -1,0 +1,547 @@
+NAME
+====
+
+MITP - miRNA identification and target prediction pipeline
+
+VERSION
+=======
+
+Version 1.1
+
+LICENCE
+=======
+
+Copyright 2013 - Wanfei Liu & Chengqi Xin - Beijing Institute of Genomics, Chinese Academy of Sciences.
+	
+This pipeline is free pipeline; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation.
+
+INTRODUCTION
+============
+
+miRNA is a widely known small non-coding RNA which can mediate gene regulation of most important biological processes in plants and animals. Therefore, identification conserve and novel miRNA and their target genes in model and new sequenced species are inevitable. However, the associated tools are often inconvenient, multi-step and difficult to use, especially for biologists who are short for bioinformatics knowledge. MITP is designed to identify miRNA easily and faster based on sequence mapping result from any mapping software which producing sam format output result, blast result (default output result) or blat result (default output result). The program provide a step praramter (8 steps) which can allow running program from any step and finishing all remaining steps. You also can run step by step using each step program. Please run these step programs at the same directory for running main program MITP.pl. Some steps are optional (read filter, expression, miRNA class and target). When you select the related parameters belong to these optional steps, the program will run these steps. Otherwise, it skip these steps.
+
+PREREQUISITES
+=============
+
+In default, you need these:
+- Perl v5.8.8 (and maybe lower)
+- Perl module: Cwd 'abs_path'; Getopt::Long and File::Basename.
+- RNAfold
+- Blast or - Blat (optional)
+
+If you want to run target prection using non-default programs (default program is blast or blat), you need these:
+- Perl module: File::Temp and Getopt::Std.
+- FASTA36
+- miRanda
+- RNAhybrid
+
+Note: we already packaged some program or script in our softare, such as:
+- b2ct from ViennaRNA
+- epstopdf
+- sir_graph from mfold
+- targetfinder.pl
+
+INSTALLATION
+============
+
+This pipeline don't need install. You can run it using absolute path. If you want to use it without absolute path, you should add the absolute path of MITP directory in PATH of your bash profile.
+
+The program is tested under LINUX systems.
+
+COMMAND LINE
+============
+	
+Run MITP.pl without any parameter, it will print below usage on the screen.
+
+        Author: Wanfei Liu & Chengqi Xin
+        Email: <liuwf@big.ac.cn> & <xinchq@big.ac.cn>
+        Date: Jun 18, 2013
+        Version: 1.1.0 version
+
+        Introduction: miRNA is a widely known small non-coding RNA which can mediate gene regulation of most important biological processes in plants and animals. Therefore, identification conserve and novel miRNA and their target genes in model and new sequenced species are inevitable. However, the associated tools are often inconvenient, multi-step and difficult to use, especially for biologists who are short for bioinformatics knowledge. MITP is designed to identify miRNA easily and faster based on sequence mapping result from any mapping software which producing sam format output result, blast result (default output result) or blat result (default output result). The program provide a step praramter (8 steps) which can allow running program from any step and finishing all remaining steps. You also can run step by step using each step program. Please run these step programs at the same directory for running main program MITP.pl. Some steps are optional (filter, expression, class and target). When you select the related parameters belong to these optional steps, the program will run these steps. Otherwise, it skip these steps.
+
+        Need to Note: for identification miRNA, the parameter for blast and blat should change comparison to long sequence mapping. In our opinion, the blast command should be as "blastall -p blastn -d database -i query -v 1000 -b 1000 -W 7 -o outfile" and the blat command should be as "blat database query -tileSize=8 -oneOff=1 -minMatch=1 -minIdentity=80 -noHead outfile".
+
+        Usage: perl /lustre/liuwf/software/MITP/MITP.pl --step <*> { --sam <*> | --blast <*> | --blat <*> } --genome|-g <*.fa>
+
+        The following options are necessary.
+
+        --step                  :This parameter allow you run program from any step. The details about each step was explained bellow.
+                cluster                 Run all steps from cluster. In cluster step, the program will cluster reads to obtain candidate regions for downsteam process. If you only want to run this step, please run cluster.pl.
+                filter                  Run remaining steps from filter. In filter step, the program will filter all regions in filter file (gff2 format) from candiate regions and calculate expression for filtered regions (adding a new attribute EXPRESS="Read_number" at the end of gff2 file named as *.gff.read). The filter file can including any non-intron region from mRNA, rRNA, tRNA, snoRNA and even known miRNA. Please do not include intron region in this file. Otherwise, it will remove all reads in introns. This step is optional. If you only want to run this step, please run filter.pl.
+                extract_seq             Run remaining steps from extract_seq. In this step, the program will extract candidate sequence and create *.gff file for candidate sequence. If you only want to run this step, please run extract_seq.pl.
+                candidate               Run remaining steps from candidate. In this step, the program can obtain candidate miRNA.
+                candidate_filter        Run remaining steps from candidate_filter. In this step, the program will filter hairpin sequences according to their attribute values and create the final sequence and gff files for candidate miRNA.
+                expression              Run remaining steps from expression. In this step, the program will calculate the expression for candidate miRNA. If you only want to run this step, please run expression.pl.
+                class                   Run remaining steps from class. In this step, the program will extract conserve miRNA from candidate miRNA. If you only want to run this step, please run class.pl.
+                target                  Run the last step which is target. In this step, the program will obtain target genes for candidate miRNA. If you only want to run this step, please run target.pl.
+
+        --sam   <*>     :mapping result file in sam format
+        --blast <*>     :mapping result file in blast default output format
+        --blat  <*>     :mapping result file in blat default output format
+        --genome|-g     <*.fa>  :genome sequence file in fasta format
+
+        The following options are optional.
+        --output_dir|-o         <output_dir>    :default is sample under the current directory, you should change it if you have more than one sample to distinguish different samples
+        --prefix|-p             <prefix=MI>     :prefix for file and miRNA ID, if you want to compare different samples, you should use different prefix, the prefix should be end with letters, default is MI
+        --strand_specific|-ss                   :if you assign this parameter, it means the data is strand specific, if not, as default, it means the data is not strand specific
+        --maxmap|-mm            <maxmap=10>     :maximum mapping position for each sequence, default is 10
+        --mismatch|-m           <mismatch=3>    :maximum mismatch value for mapping result (including indels), default is 3
+        --identity|-i           <identity=90>   :minimum identity percent(%) (in mapped regions), default is 90
+        --minimum|-min          <minimum=18>    :minimum miRNA length, default is 18
+        --maximum|-max          <maximum=25>    :maximum miRNA length, default is 25
+        --alignsoft|-as         <blast|blat>    :in default, blast was used.
+        --help|-h                               :print the usage information
+
+        These parameters belong to cluster step.
+        --oversize|-os          <oversize=16>   :minimum overlap size for read cluster, default is 16
+        --overrate|-or          <overrate=80>   :minimum overlap rate percent(%) for read cluster, default is 80
+
+        These parameters belong to filter step (This step is optional, it will run only when you assign --filter_gff|-fg or --filter_fa parameter). You can provide a gff file (--filter_gff|-fg) or a fasta file (--filter_fa|-fa) for filter.
+        --filter_gff|-fg        <*.gff>         :the filter record file in gff2 format, all clusters overlap with these records will be removed
+        --filter_fa|-ff         <*.fa>          :the filter record file in fasta format, all clusters mapped to these sequences will be removed
+        --filter_rate|-fr       <filter_rate=50>        :minimum filter overlap rate percent(%) between filter region and read cluster, default is 50
+
+        These parameters belong to extract_seq step.
+        --mincov|-mc            <mincov=10>     :minimum miRNA mapping coverage, default is 10 (for conserve miRNA, it should be 1, for novel miRNA from expression, it should be minimum expressed read number)
+
+        These parameters belong to candidate step.
+        --minbasepair|-mbp      <minbasepair=16>        :minimum base-pairs between mature and star of miRNA comparison, default is 16
+        --maxbasebulge|-mbb     <maxbasebulge=3>        :maximum base bulge in mature and star miRNA comparison, default is 3
+        --maxunpairbase|-mub    <maxunpairbase=6>       :maximum unpair base number in mature or star miRNA region, default is 6
+        --matoverrate|-mor      <matoverrate=60>        :minimum redundant mature sequence overlap rate percent(%), default is 60
+
+        These parameters belong to candidate_filter step. You can filter candidate miRNA according to the candidate sequence and structure attribute values. In default, it include the bellowing parameters.
+        --mfei                  <mfei=-0.85>    :the mfei means the minimal folding free energy index (MFEI). In default, keep miRNA which mfei value is equal or lower than -0.85
+        --mfe                   <mfe=-25>       :the mfe means the minimal folding free energy (MFE). In default, keep miRNA which mfe value is equal or lower than -25
+        --hairlen               <len=50>        :in default, keep miRNA which hairpin length is equal or larger than 50
+
+        we also provide other filter parameters if you want to further filter candidate miRNA. In default, these parameters are not used
+
+        --pairbase                              :minimum pair base number
+        --pairpercent                           :minimum pair base percent(%)
+        --amfe                                  :the amfe means adjusted mfe (AMFE) represented the mfe of 100 nucleotides. You can set the maximum amfe value 
+        --minapercent & --maxapercent           :minimum and maximum A base percent(%)
+        --minupercent & --maxapercent           :minimum and maximum U base percent(%)
+        --mingpercent & --maxapercent           :minimum and maximum G base percent(%)
+        --mincpercent & --maxapercent           :minimum and maximum C base percent(%)
+        --minaupercent & --maxapercent          :minimum and maximum AU base percent(%)
+        --mingcpercent & --maxapercent          :minimum and maximum GC base percent(%)
+
+        we can do self alignment for candidate miRNA to filter candidate miRNA with same mature and hairpin sequence, but located in different genome region.
+        --selfalign|-sa                         :if you assign this parameter, it means the program will filter candidate miRNA according to self alignment for mature and hairpin sequence, as default, does not do anything.
+        --selfidentity|-si      <selfidentity=100>      :minimum identity percent(%) for filter self alignment result, default is 100
+        --selfoverrate|-sor     <overrate=80>   :minimum overlap rate percent(%) for read cluster, default is 80
+
+        we can draw second structure for candidate miRNA.
+        --figure                <yes|no>        :default is yes, the program will produce second structure figure in pdf format for all candidate miRNA in a subdirectory named _figure at output directory.
+
+        These parameters belong to expression step. (This step is optional, it will run only when you assign --expression|-e parameter).
+        --expression|-e                         :if you assign this parameter, it means the program will calculate the expression for candidate miRNA, if not, as default, it means the program will not calculate the expression for candidate miRNA
+
+        These parameters belong to class step. (This step is optional, it will run only when you assign --conserveseq|-cs parameter).
+        --conserveseq|-cs       <*.fa>          :The mature sequence of conserve miRNA. If you assign this parameter, the program will extract conserve miRNA from candidate miRNA. This file format must like the mature sequence file in miRBase
+        --triletterabbr|-tla    <triletterabbr=new>     :three letter abbreviation for studied species, it used to compare miRNA conservation in multiple species, default is new
+
+        These parameters belong to target step. (This step is optional, it will run only when you assign --target_seq|-ts parameter).
+        --target_seq|-ts        <*.fa>          :The target sequence file. If you assign this parameter, the program will do target prediction for candidate miRNA.
+        --target_tool|-tt       <*>             :The program for target prediction (blast, blat, targetfinder, miranda and RNAhybrid). In default, it will run using the program assigned by --alignsoft|-as parameter. For plant, you can identify target genes by our rule set according to blast or blat alignment (in default) or by targetfinder; for animal, you can use miranda or RNAhybrid.
+	--dataset|-ds	<dataset=3utr_fly|3utr_worm|3utr_human>	:three data set name in RNAhybird program for target prediction, in default is 3utr_human. This parameter is only need when you use RNAhybrid to predict target
+
+	Note: for conserve miRNA identification, --mincov|-mc should be 1; for novel miRNA identification, --mincov|-mc should be the minimum read number for expression. For --filter_gff|-fg or --filter_fa|-ff parameter, please only inculde region or sequence you want to removed (for example, do not include intron in animal).
+
+STEPPROGRAM
+===========
+	
+For easily redo any part of MITP.pl, we also provide step programs. You can run these programs step by step. We recommend that you run these step programs in the same directory for running MIP.pl and using same common parameters.
+
+Step 1:
+cluster.pl
+This step program can cluster mapping result to obtain candidate regions for downsteam process.
+
+Step 2:
+filter.pl
+This step is optional. This step program can filter clusters overlaped with filter regions in filter file and calculate expression for filter regions (adding a new attribute EXPRESS=\"Read_number\" at the end of gff2 file named as *.gff.read or creaate *.fa.read file which including filter region name and read number for all filter regions in same directory of *.gff or *.fa). The filter file can including any non-intron region from mRNA, rRNA, tRNA, snoRNA and even known miRNA. Please do not include intron region in this file. Otherwise, it will remove all reads in introns.
+
+Setp 3:
+extract_seq.pl
+This step program can create precursor and mature sequence and gff file for candidate clusters.
+
+Step 4:
+candidate.pl
+This step program can obtain candidate miRNA.
+
+Step 5:
+candidate_filter.pl
+This step program can filter candidate miRNA based on candidate miRNA (hairpin) sequence and structure attribute values and create the final sequence and gff files for candidate miRNA.
+
+Step 6:
+expression.pl
+This step is optional. This step program can calculate expression value for candidate miRNA.
+
+Step 7:
+class.pl
+This step is optional. This step program can obtain the conserve miRNA in candidate miRNA.
+
+Step 8:
+target.pl
+This step is optional. This step program can obtain target genes of candidate miRNA.
+
+OTHERPROGRAM
+============
+
+We also provide some perl programs to help processing and understanding the analysis result. Some of them are also used in MITP.pl.
+
+1. blat2sam.pl
+This program can convert blat result (psl format file) into sam format (Note: It can only process single-end reads and the mismatch (NM:i:mismatch) was calculated by adding mismatch in alignment region and the gap bases in query and target region).
+
+2. EblastN.pl
+This program can transfer the BLAST default result into a tab splited table file, which can be easily read and processed in microsoft excel.
+
+The example of output file is like this:
+
+Query name      Letter  QueryX  QueryY  SbjctX  SbjctY  Length  Score   E value Overlap/total   Identity        Sbject Name     Anontation
+MI756   22      1       22      1       22      22      44.1    9e-09   22/22   100     MI756   15307
+MI1751  24      1       24      1       24      24      48.1    7e-10   24/24   100     MI1751  35781
+MI1751  24      1       22      1       22      24      44.1    1e-08   22/22   100     MI709353        10127824
+MI1751  24      13      24      3       14      24      24.3    0.010   12/12   100     MI145615        2428875
+
+3. eblastn2sam.pl
+This program can convert eblastn result (produced by EblastN.pl) into sam format (Note: It can only process single-end reads and the mismatch (NM:i:mismatch) was calculated by adding mismatch in alignment region and the unmapped bases in query region).
+
+4. fish.pl
+This program can fishing in one file according to bait in another file among fa file, gff file and list file. It can deal with all file formats used in MIP program (fa, gff and list). List file is just like excel tables which have several colums and rows. The program gets the baits (key that is universal in both bait and fish file) from the bait file at first, and then searches the baits in the fish file. If -contrary is specifed, retrive those items which are not exist in the bait file.
+
+5. pick_common_miRNA_in_multiple_samples.pl
+The program picks common miRNA according to the genome position file of miRNA hairpin or mature sequence in gff format. Before you run it, you must make sure that different sample has different accession number for miRNA. Then you should cat all gff files of candidate miRNAs in different samples into one single file as input file. This program also can be used to identify conserve miRNA in candidate miRNA by comparing gff file of conserve miRNA with gff file of candidate miRNA.
+
+If you want to modify the prefix of miRNA accession (the prefix of miRNA accession was assigned by "--prefix|-p" parameter in MITP.pl program), you can use the replace function of vi program in linux system (for example, ":%s/MI/S1_MI/g" can replace "MI" by "S1_MI" in the whole file). 
+
+TEST & EXAMPLE
+==============
+
+When you get into the example directory, you can test the program by following command.
+
+For conserve miRNA identification:
+
+Before running, we got the blast result for mature miRNA sequence of miRBase comparing to chr22.fa using command "blastall -p blastn -d chr22.fa -i mature.fa.new -v 1000 -b 1000 -W 7 -o conserve_chr22.blast".
+perl ../MITP.pl --step cluster --blast conserve_chr22.blast -g chr22.fa -fg hsa_rna.gff -mc 1 -e -cs mature.fa -ts hsa_rna.fa -o conserve
+This command will run cluster for conserve_chr22.blast, filter for cluster (removing clusters overlapped with hsa_rna.gff), extract_seq, candidate, candidate_filter, expression, class and target using blast. The test result is located in the conserve directory of example directory.
+
+For novel miRNA identification:
+
+perl ../MITP.pl --step cluster --sam test.sam -g chr22.fa -fg hsa_rna.gff -mc 1 -e -cs mature.fa -ts hsa_rna.fa -o novel
+This command will run cluster for test.sam, filter for cluster (removing clusters overlapped with hsa_rna.gff), extract_seq, candidate, candidate_filter, expression, class and target using blast. The test result is located in the novel directory of example directory.
+
+For novel miRNA identification step by step:
+
+perl ../cluster.pl --sam test.sam -g chr22.fa
+perl ../filter.pl -rc ./sample/MI_read.cluster -fg hsa_rna.gff
+perl ../extract_seq.pl -g chr22.fa -fc ./sample/MI_read.cluster_filter -mc 1
+perl ../candidate.pl -mf ./sample/MI_mature.fa -mg ./sample/MI_mature.gff -pf ./sample/MI_pre.fa -pg ./sample/MI_pre.gff
+perl ../candidate_filter.pl -hr ./sample/MI_hairpin_unique.RNAfold -mf ./sample/MI_mature.fa -mg ./sample/MI_mature.gff -hf ./sample/MI_hairpin.fa -hg ./sample/MI_hairpin.gff
+perl ../expression.pl --statistics ./sample/MI.statistics -cf ./sample/MI_candidate_mature.fa -pg ./sample/MI_pre.gff -pf ./sample/MI_pre.filter -rc ./sample/MI_read.cluster_filter
+perl ../class.pl -cs mature.fa -cm ./sample/MI_candidate_mature.fa
+perl ../target.pl -ts hsa_rna.fa -cm ./sample/MI_candidate_mature.fa
+perl ../target.pl -ts hsa_rna.fa -cm ./sample/MI_candidate_mature.fa -tt blat
+perl ../target.pl -ts hsa_rna.fa -cm ./sample/MI_candidate_mature.fa -tt RNAhybrid -ds 3utr_human
+perl ../target.pl -ts hsa_rna.fa -cm ./sample/MI_candidate_mature.fa -tt miranda
+perl ../target.pl -ts hsa_rna.fa -cm ./sample/MI_candidate_mature.fa -tt targetfinder
+
+These step commands will run all steps for test.sam. The test result is located in the step directory of example directory.
+
+Some other command line examples are shown in the following. 
+
+perl ../MITP.pl --step cluster --sam test.sam -g chr22.fa
+Identify miRNA in chr22 according to mapping result in test.sam file. no filter, no expression, no class and no target step in candidate miRNA.
+
+perl ../MITP.pl --step cluster --sam test.sam -g chr22.fa -fg *.gff|-ff *.fa
+You can filter non-miRNA before identification if you assign -fg|-ff parameter (This parameter provides a gff|fasta file which have non-miRNA records in study species. Please don't include intron regions in this file if you do not want to filter intron regions). If you assign -fg, it will remove all clusters which are overlapped with records in gff file. If you assign -ff, It will remove all reads mapped to sequence in this fasta file.
+
+perl ../MITP.pl --step expression --sam test.sam -g chr22.fa -e
+You can get expression result for candidate miRNA if you assign -e parameter.
+
+perl ../MITP.pl --step target --sam test.sam -g chr22.fa -ts <*>
+You can get target for candidate miRNA if you assign -ts parameter.
+
+perl ../MITP.pl --step target --sam test.sam -g chr22.fa -ss
+If the data is strand specific, you must assign -ss parameter. if not, it will process as strand non-specific data.
+
+OUTPUT
+======
+
+Global output files
+
+A. log file (only exist when you use MITP.pl program)
+Log file for recording the command line and every processing procedure.
+
+B. MI.statistics
+Output some statistics for MITP.pl program.
+
+Step output files
+
+Step 1: cluster.pl
+
+a. MI_read.cluster
+Read cluster file recording the read cluster regions like the following example list:
+
+#ID     QLength QStart  Qend    TStart  Tend    Length  Score   E-value Overlap/Total   Identity        Subject_Name    Read_num
+1       18      1       18      16123627        16123644        51304566        .       .       18/18   100     chr22   1
+2       18      1       18      17010869        17010886        51304566        .       .       18/18   100     chr22   1
+3       18      1       18      17090093        17090110        51304566        .       .       18/18   100     chr22   1
+4       20      1       20      17090899        17090918        51304566        .       .       20/20   100     chr22   1
+
+Step 2: filter.pl
+
+b. MI_read.cluster_filter
+Read cluster file after removing the clusters which are overlaped with filter record in *.gff file or mapped to sequence in filter *.fa file.
+
+We also produce a file which name is composed by filter file name and a ".read" suffix. We add the expressed read number at the end of every filter record.
+
+Step 3: extract_seq.pl
+
+c. MI_mature.fa
+The candidate mature miRNA sequence created according to the read cluster file.
+
+The example file for MI_mature.fa is like this:
+
+>MI1 1
+AGGCTCTGTGGATAGCAA
+>MI2 1
+TTGCTATCCACAGAGCCT
+>MI3 2
+tccctgtccctgtccctg
+>MI4 2
+cagggacagggacaggga
+
+Note: the title of each fasta sequence stands for miRNA_ID and read_cluster_ID.
+
+d. MI_mature.gff
+The candidate mature miRNA gff file created according to the read cluster file.
+
+The example file for MI_mature.gff is like this:
+
+chr22   MIP     miRNA   16123627        16123644        .       +       .       ACC="MI1"; ID="1,+"; EXPRESS="1";
+chr22   MIP     miRNA   16123627        16123644        .       -       .       ACC="MI2"; ID="1,+"; EXPRESS="1";
+chr22   MIP     miRNA   17010869        17010886        .       +       .       ACC="MI3"; ID="2,+"; EXPRESS="1";
+chr22   MIP     miRNA   17010869        17010886        .       -       .       ACC="MI4"; ID="2,+"; EXPRESS="1";
+
+Note: the three attribute values stand for miRNA_ID, read_cluster_ID and expression_value.
+
+e. MI_pre.fa
+The candidate precursor miRNA sequence created according to the read cluster file.
+f. MI_pre.gff
+The candidate precursor miRNA gff file created according to the read cluster file.
+
+Setp 4: candidate.pl
+
+g. MI_pre.RNAfold
+The RNAfold result for precursor miRNA sequences.
+
+The example file for MI_pre.RNAfold is like this:
+
+>MI1 1
+TGCAGGTGGGTGTGGATTTTCAGGCCAGCACAAGGATGCAGGATACCAGCGTCTCCTTCGGGTACCAGCTGGACCTGCCCAAGGCCAACCTCCTCTTCAAAGGCTCTGTGGATAGCAACTGGATCGTGGGTGCCACGCTGGAGAAGAAGCTCCAGCTCCTGCCCCTGACGCTGGCCCTTGGGGCCTTCCTGAATCACCGCAAGAACAAGTTCCAGTGT
+(((.(((((....(((.((((((((((((...(((..((((((..(((((....((....)).....)))))..(((((((.((((...............)))).)).)).))).........(((((...)))))((((((......)))))).)))))).)))...)))))))..)))))...)))....))))))))................. (-77.20)
+>MI2 1
+ACACTGGAACTTGTTCTTGCGGTGATTCAGGAAGGCCCCAAGGGCCAGCGTCAGGGGCAGGAGCTGGAGCTTCTTCTCCAGCGTGGCACCCACGATCCAGTTGCTATCCACAGAGCCTTTGAAGAGGAGGTTGGCCTTGGGCAGGTCCAGCTGGTACCCGAAGGAGACGCTGGTATCCTGCATCCTTGTGCTGGCCTGAAAATCCACACCCACCTGCA
+.(((((.((.......)).)))))...((((..((......(((((((((.((((((((((((((((.((((((((.(((((.(((.(((...(.(((((..((((........((((((.....)))))))))).)))))).))))))))))).....))))))).).))))).))))))..))))))))))))))...........))..)))).. (-83.40)
+
+h. MI_pre.filter
+The filtered precursor miRNA record according to the RNAfold result.
+
+The example file for MI_pre.filter is like this:
+
+#miRNA  MFE     Pair    Mature_unpair   Star_unpair     Mature_start    Mature_end      Star_start      Star_end
+MI9     -98.30  17      3       1       101     120     173     190
+MI11    -98.40  17      2       5       101     119     36      57
+MI19    -58.00  17      5       1       101     122     195     212
+MI83    -59.10  17      6       4       101     123     72      92
+
+i. MI_pre.all
+The precursor miRNA record according to the RNAfold result. This file record all precursor miRNA. The file is like MI_pre.filter.
+j. MI_hairpin.fa
+The hairpin sequence of miRNA extracted according to the precursor filter miRNA record.
+k. MI_hairpin.gff
+The hairpin gff file of miRNA extracted according to the precursor filter miRNA record.
+l. MI_mature_unique.fa
+The unique mature sequence of miRNA. We removed the redundant mature sequence of miRNA according to the genome position of miRNA mature sequence.
+m. MI_mature_unique.gff
+The unique mature gff file of miRNA. We removed the redundant mature record of miRNA according to the genome position of miRNA mature sequence.
+n. MI_hairpin_unique.fa
+The unique hairpin sequence of miRNA. We removed the redundant hairpin sequence of miRNA according to the genome position of miRNA hairpin sequence.
+o. MI_hairpin_unique.gff
+The unique hairpin gff file of miRNA. We removed the redundant hairpin record of miRNA according to the genome position of miRNA hairpin sequence.
+p. MI_hairpin_unique.RNAfold
+The RNAfold result for unique hairpin sequence of miRNA.
+
+Step 5: candidate_filter.pl
+
+q. MI_hairpin_unique.attribute
+The attribute values for unique hairpin sequence of miRNA.
+
+The example file for MI_hairpin_unique.attribute is like this:
+
+#miRNA  Hairpin_length     Pair_base*       Pair_percent(%) A_content(%)    U_content(%)    G_content(%)    C_content(%)    AU_content(%)   GC_content(%)   MFE**     AMFE***    MFEI****
+MI9     90      66      73.33   16.67   16.67   41.11   25.56   33.33   66.67   -41.80  -46.44  -0.70
+MI19    112     72      64.29   27.68   25.00   28.57   18.75   52.68   47.32   -25.90  -23.12  -0.49
+MI83    52      34      65.38   30.77   25.00   25.00   19.23   55.77   44.23   -15.10  -29.04  -0.66
+MI90    53      32      60.38   24.53   22.64   35.85   16.98   47.17   52.83   -17.20  -32.45  -0.61
+MI125   42      34      80.95   16.67   26.19   35.71   21.43   42.86   57.14   -16.00  -38.10  -0.67
+
+Note: Pair_base*: total pair bases; MEF**: minimal folding free energy; AMFE***: adjusted mfe (AMFE) represented the mfe of 100 nucleotides; MFEI****: the minimal folding free energy index, it was calculated by the equation MFEI = AMFE/(G+C)%.
+
+r. MI_hairpin_unique.filter
+The attribute value file for unique hairpin sequence of miRNA after filtered by some attribute values.
+s. MI_candidate_hairpin.fa
+The final candidate hairpin sequence file.
+t. MI_candidate_hairpin.gff
+The final candidate hairpin gff file.
+u. MI_candidate_mature.fa
+The final candidate mature sequence file.
+v. MI_candidate_mature.gff
+The final candidate mature gff file.
+w. MI_figure directory. This directory contain all second structures for candidate miRNA in PDF format
+
+If you assign --selfalign|-sa parameter, it produces additional intermedidate file to filter redundant miRNA record in sequence level.
+
+MI_mature_unique_filter.fa
+MI_hairpin_unique_filter.fa
+(MI_mature_unique_filter.blast and MI_mature_unique_filter.eblastn) or MI_mature_unique_filter.blat
+(MI_hairpin_unique_filter.blast and MI_hairpin_unique_filter.eblastn) or MI_hairpin_unique_filter.blat
+MI_hairpin_unique.filter2
+
+Step 6: expression.pl
+
+x. MI_candidate.expression
+The expression file for candidate miRNA.
+
+The example for MI_candidate.expression file is like this:
+
+#miRNA  chr     strand  hairpin_start   hairpin_end     hairpin_read    hairpin_express(read_number/total_read*1M)      mature_start    mature_end      mature_read     mature_express  star_start      star_end        star_read       star_express
+MI157   chr22   +       19945168        19945232        1       455.37  19945212        19945232        1       455.37  19945168        19945191        0       0.00
+MI163   chr22   +       19951278        19951355        3       1366.12 19951278        19951298        2       910.75  19951336        19951355        1       455.37
+MI183   chr22   +       20020676        20020729        26      11839.71        20020676        20020700        19      8652.09 20020707        20020729        7       3187.61
+MI487   chr22   +       24573503        24573553        1       455.37  24573503        24573521        1       455.37  24573535        24573553        0       0.00
+
+Step 7: class.pl
+
+y. MI_candidate.class
+The candidate miRNA classification (conserve miRNA and novel miRNA).
+
+The example for MI_candidate.class file is like this:
+
+#Conserve miRNA 3
+#ID     #conserveID
+MI2057  hsa-let-7b-5p,
+MI183   hsa-miR-185-5p,
+...	...
+
+#Novel miRNA 18
+#ID
+MI645
+MI2053
+...
+
+z. MI_multiple_species.compare
+the statistic table for known conserve miRNA and the conserve miRNA in this sample.
+
+The example of output file is like this:
+
+Species 156    160     ...    Total
+ath    10(2.96)   3(0.89)    ...    338
+osa    19(2.68)   7(0.99)    ...    708
+Total  29(2.77)   10(0.96)   ...    1046
+
+Note: row: miRNA families; column: species; number: miRNA number in specific miRNA family of specific species and the percent(%) in specific species).
+
+This step also produces additional intermedidate file to class miRNA.
+
+(MI_candidate_mature.blast and MI_candidate_mature.eblastn) or MI_candidate_mature.blat
+
+Step 8: target.pl
+
+aa. MI_miRNA.target.blast or MI_miRNA.target.blat or MI_miRNA.target.targetfinder or MI_miRNA.target.miranda or MI_miRNA.target.RNAhybrid
+The target genes for candidate miRNA. The suffix stands for target gene prediction method used.
+
+The example file for each method is like below:
+
+MI_miRNA.target.blast or MI_miRNA.target.blat
+>MI97   gi|42794621|ref|NM_203374.1|    Homo sapiens zinc finger protein 784 (ZNF784), mRNA
+
+Target     1176 CGCCCACACAGCACCUCUGCC      1196
+                 ::::::::::::::: ..:           
+ miRNA       21 ACGGGUGUGUCGUGGACGUGU         1
+>MI97   gi|310832379|ref|NM_175931.2|   Homo sapiens core-binding factor, runt domain, alpha subunit 2; translocated to, 3 (CBFA2T3
+), transcript variant 2, mRNA
+
+Target      434 UGUCCACACAGCACCUGCCCC       454
+                ::.::::::::::::::: :           
+ miRNA       21 ACGGGUGUGUCGUGGACGUGU         1
+
+MI_miRNA.target.targetfinder
+query=query, target=gi|262205597|ref|NR_029479.1| Homo sapiens microRNA let-7b (MIRLET7B), microRNA, score=3, range=58-79, strand=1
+
+target  5' AACUAUACAACCUACUGCCUUC 3'
+           ::::::::::::::::.:::. 
+query   3' UUGAUAUGUUGGAUGAUGGAGU 5'
+
+query=query, target=gi|224450999|ref|NR_027033.1| Homo sapiens MIRLET7B host gene (non-protein coding) (MIRLET7BHG, score=3, range=4532-4553, strand=1
+
+target  5' AACUAUACAACCUACUGCCUUC 3'
+           ::::::::::::::::.:::. 
+query   3' UUGAUAUGUUGGAUGAUGGAGU 5'
+
+MI_miRNA.target.miranda
+#Query  Target  Tot Score       Tot Energy      Max Score       Max Energy      Strand  Len1    Len2    Positions
+>MI97   gi|389886562|ref|NR_046018.2| Homo sapiens DEAD/H (Asp-Glu-Ala-Asp/His) box helicase 11 like 1 (DDX11L1), non-coding RNA(1652 nt)
+MI97    gi|389886562|ref|NR_046018.2|   149.00  -27.21  149.00  -27.21  1       21      1652     1589
+>MI97   gi|215277009|ref|NR_024540.1| Homo sapiens WAS protein family homolog 7 pseudogene (WASH7P), non-coding RNA(1786 nt)
+MI97    gi|215277009|ref|NR_024540.1|   436.00  -81.86  150.00  -30.50  2       21      1786     159 1646 326
+
+MI_miRNA.target.RNAhybrid
+target: gi|389886562|ref|NR_046018.2|
+length: 1652
+miRNA : hsa-let-7a-5p
+length: 22
+
+mfe: -22.6 kcal/mol
+p-value: 0.968581
+
+position  720
+target 5' U   AG       GCACC       G  3'
+           GAC   GCAGCU     ACUGCCU     
+           UUG   UGUUGG     UGAUGGA     
+miRNA  3'     AUA      A           GU 5'
+
+
+target: gi|215277009|ref|NR_024540.1|
+length: 1786
+miRNA : hsa-let-7a-5p
+length: 22
+
+mfe: -24.7 kcal/mol
+p-value: 0.755484
+
+position  1506
+target 5' A     CUCA        U    G 3'
+           AGCUG    GACCUACU CCUU    
+           UUGAU    UUGGAUGA GGAG    
+miRNA  3'       AUG         U    U 5'
+
+This step also produces additional intermedidate file to predict target genes.
+
+(MI_target.blast and MI_target.eblastn) or MI_target.blat
+
+NOTE
+====
+
+For conserve miRNA identification, --mincov|-mc should be 1; for novel miRNA identification, --mincov|-mc should be the minimum read number for expression. For --filter_gff|-fg or --filter_fa|-ff parameter, please only inculde region or sequence you want to removed (for example, do not include intron in animal). According to our test, blast is better than blat as alignment software. For target prediction, blast and blat are the fastest methods, the other methods are slow.
+
+CONTACT
+=======
+
+If you have any question or suggestion, please contact us.
+
+Wanfei Liu & Chengqi Xin
+Email: <liuwf@big.ac.cn> & <xinchq@big.ac.cn>

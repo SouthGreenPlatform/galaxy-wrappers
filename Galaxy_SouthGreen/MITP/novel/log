@@ -1,0 +1,7 @@
+Wed Nov 14 09:24:16 CET 2018
+
+>>> /gs7k1/home/summo/MITP-1.1/MITP.pl <<<
+
+/gs7k1/home/summo/MITP-1.1/MITP.pl --step cluster --sam /gs7k1/home/summo/MITP-1.1/test.sam -g /gs7k1/home/summo/MITP-1.1/chr22.fa -o /gs7k1/home/summo/MITP-1.1/novel -p MI -mm 10 -m 3 -i 90 -min 18 -max 25 -as blast -os 16 -or 80 -fg /gs7k1/home/summo/MITP-1.1/hsa_rna.gff -fr 50 -mc 1 -mbp 16 -mbb 3 -mub 6 -mor 60 --mfei -0.85 --mfe -25 --hairlen 50 -si 100 -sor 80 --figure yes -e 1 -cs /gs7k1/home/summo/MITP-1.1/mature.fa -tla new -ts /gs7k1/home/summo/MITP-1.1/hsa_rna.fa -tt blast -ds 3utr_human
+
+Obtain chromosome sequence and length.

@@ -1,0 +1,92 @@
+<tool id="mitp" name="mitp" version="0.1.0">
+    <description>conserve and novel miRNA identification and target prediction tool</description>
+    <requirements>
+    </requirements>
+    <stdio>
+        <exit_code range="1:" />
+    </stdio>
+    <command><![CDATA[
+        source $__tool_directory__/module_mitp.sh;
+		perl $__tool_directory__/MITP.pl --step cluster
+		#if $mapping_result_format.selector == 'sam':
+			--sam $mapping_sam
+		#end if
+		#if $mapping_result_format.selector == 'blast':
+			--blast $mapping_blast
+		#end if
+		#if $mapping_result_format.selector == 'blat':
+			--blast $mapping_blat
+		#end if
+		#if $genome_fasta
+			-g $genome_fasta
+		#end if
+		#if $filter_gff
+			-fg $filter_gff
+		#end if
+		#if $conserve_seq
+			-cs $conserve_seq
+		#end if
+		#if $target_seq
+			-ts $target_seq
+		#end if
+			-mc 1 -e
+			-o output
+    ]]></command>
+	<inputs>
+		<conditional name="mapping_result_format">
+			<param name="selector" type="select" label="mapping result file format">
+				<option value="sam">sam format</option>
+				<option value="blast">blast default output format</option>
+				<option value="blat">blat default output format</option>
+			</param>
+			<when value="sam">
+				<param type="data" format="sam" name="mapping_sam" label="mapping result file in sam format" help="required"/>
+			</when>
+			<when value="blast">
+				<param type="data" format="blast" name="mapping_blast" label="mapping result file in blast default output format" help="required"/>
+			</when>
+			<when value="blat">
+				<param type="data" format="blat" name="mapping_blat" label="mapping result file in blat default output format" help="required"/>
+			</when>
+			
+			
+		</conditional>
+		<param type="data" format="fasta" name="genome_fasta" optional="false" help="optional" label="genome sequence file in fasta format" />
+        <param type="data" format="gff" name="filter_gff" optional="true" help="optional" label="the filter record file in gff2 format, all clusters overlap with these records will be removed" />
+        <param type="text" name="mincov" value="10" label="minimum miRNA mapping coverage, default is 10 (for conserve miRNA, it should be 1, for novel miRNA from expression, it should be minimum expressed read number)" />
+		<param type="data" format="fasta" optional="true" name="conserve_seq" help="optional" label="The mature sequence of conserve miRNA. If you assign this parameter, the program will extract conserve miRNA from candidate miRNA. This file format must like the mature sequence file in miRBase" />
+        <param type="data" format="fasta" optional="true" name="target_seq" help="optional" label="The target sequence file. If you assign this parameter, the program will do target prediction for candidate miRNA." />
+        
+	</inputs>
+    <outputs>
+		<data name="log" format="txt" label="logfile" directory="output" />
+        <collection name="figures" type="list" label="MITP figures output">
+			<discover_datasets directory="output/MI_figure" visible="false" pattern="(?P&lt;designation&gt;.*)" ext="pdf" />
+        </collection>
+		<collection name="output" type="list" label="MITP output">
+            <discover_datasets directory="output" visible="false" pattern="(?P&lt;designation&gt;.*)" ext="txt"/>
+        </collection>
+    </outputs>
+  <help> 
+
+
+.. class:: infomark
+
+**Program encapsulated in Galaxy by Southgreen**
+
+.. class:: infomark
+
+**MITP 1.1**
+
+-----
+
+==============
+ Licence : 
+==============
+		
+Copyright 2013, Wanfei Liu and Chengqi Xin, Beijing Institute of Genomics, Chinese Academy of Sciences.
+	
+This pipeline is free pipeline; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation.
+
+    </help>
+</tool>
