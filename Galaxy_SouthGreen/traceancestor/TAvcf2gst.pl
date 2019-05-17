@@ -74,6 +74,9 @@ my%Nref;
 my$nbOfN;
 my$nbOfInd;
 
+my%FormatHash;
+my@format;
+
 open(F1,"$vcf") or die ("Error: vcf wont open\n"); #opening of the ancestor matrix
 while (my $li = <F1>){ # for each marker
 	chomp($li);
@@ -82,7 +85,7 @@ while (my $li = <F1>){ # for each marker
 			@individus = split(/\s+/,$li); # List of samples
 		}
 	}
-	elsif($li =~ m/^\S+\t\S+\t\S+\t\w\t\w\t/){
+	else{
 		$nbOfInd = 0;
 		$nbOfN = 0;
 		@valBlock = split(/\t/,$li);
@@ -90,13 +93,20 @@ while (my $li = <F1>){ # for each marker
 		$pos = $valBlock[1]; # position
 		$refalt{$chr}{$pos}{"REF"} = $valBlock[3]; # ref
 		$refalt{$chr}{$pos}{"ALT"} = $valBlock[4]; # alt
-		for (my$ind = 9; $ind < scalar(@individus); $ind++){
+		@format = split(":",$valBlock[8]);
+		for (my$ind = 9; $ind < scalar(@individus); $ind++){ 
+			my@formatIND = split(":", $valBlock[$ind]);
+			for (my$f = 0; $f < scalar(@format); $f++){ 
+				$FormatHash{$individus[$ind]}{$format[$f]} = $formatIND[$f];
+			}
+		}
+		for my$formInd(sort keys %FormatHash){
 			foreach my$indan(@individusAncestraux){
-				if ($individus[$ind] eq $indan){
-					$nbOfInd ++;
+				if ($formInd eq $indan){
+					$nbOfInd++;
 					my$het;
-					if ($valBlock[$ind] =~ m/^(1|0)\/(1|0)\:(\-\d+|\d+)\,([\d+\,\-]+)\:(\d+)\:.+/){
-						if($5 >= $profondeur){
+					if ($FormatHash{$formInd}{"GT"} =~ m/^(1|0)\/(1|0)/){
+						if($FormatHash{$formInd}{"DP"} >= $profondeur){
 							if ($1 == 1){
 								if($2 == 1){ #homozygote identique ref
 									$het = 1;
@@ -128,7 +138,13 @@ while (my $li = <F1>){ # for each marker
 				}
 			}
 		}
-		$Nref{$chr}{$pos} = $nbOfN / $nbOfInd;
+		if($nbOfInd == 0){
+			print"Error: Check your ancestors file. No match found.\n";
+			exit;
+		}
+		else{
+			$Nref{$chr}{$pos} = $nbOfN / $nbOfInd;
+		}
 	}
 }
 close F1;
@@ -161,6 +177,7 @@ for my$ancetre (sort keys %heterozygotie){
 	}
 }
 
+
 ### calcul Fréquences de tous les autres ancètres que celui auquel on s'interresse
 
 my%freqSfAncetre; #F-M
@@ -190,6 +207,8 @@ for my$chr (sort keys %freqParAncetre){
 	}
 }
 
+
+
 ### calcul des fréquences totales + H
 # HM = 1 - (FM² + (1-FM²))
 ### calcul diversité de tous les autres ancètres que celui auquel on s'interresse H-M
@@ -202,6 +221,7 @@ for my$chr (sort keys %freqParAncetre){
 		foreach my$anc(@especesAncestrales){
 			if ($freqParAncetre{$chr}{$pos}{$anc} ne "NA" ){
 				$H{$chr}{$pos}{$anc} = 1-(($freqParAncetre{$chr}{$pos}{$anc}*$freqParAncetre{$chr}{$pos}{$anc}) + (1-$freqParAncetre{$chr}{$pos}{$anc})*(1-$freqParAncetre{$chr}{$pos}{$anc}));
+
 			}
 			else{
 				$H{$chr}{$pos}{$anc} = "NA";
@@ -221,7 +241,6 @@ for my$chr (sort keys %freqParAncetre){
 		}
 	}
 }
-
 
 ## Calcul diersité totale HMTot et GST
 # GSTM = (HMtot - (HM + H-M)/2) / HMtot
