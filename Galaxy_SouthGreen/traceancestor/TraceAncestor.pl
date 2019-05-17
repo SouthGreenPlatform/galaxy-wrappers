@@ -215,11 +215,14 @@ my$Ancestral = "ANCESTRAL";
 my$Not = "NOT";
 my$base1; # first base for one position in the vcf
 my$base2; # second base for one position in the vcf (can be multiple)
-my@bases2; # list for tue multiple alternative base in the vcf alternative base
 my%frequences; # Frequency of ancestral alleles by marker
 my%NM; # hash counting the number of marker really present in the vcf for each window (could be usefull later).
 my%realEndChro; #real length of each chromosome. We will use these values if they are available.
 my$booEndChro = 0; # if = 0 we use %endChro else we use %realEndChro as end of chromosome
+
+my%FormatHash;
+my@format;
+
 while (my$li = <F3>){
 	chomp($li);
 	if ($li =~ m/^#.+$/){
@@ -243,7 +246,14 @@ while (my$li = <F3>){
 		$pos = $valBlock[1]; # position
 		$base1 = $valBlock[3];
 		$base2 = $valBlock[4];
-		my@base2;
+		@format = split(":",$valBlock[8]);
+		for (my$ind = 9; $ind < scalar(@individus); $ind++){ 
+			my@formatIND = split(":", $valBlock[$ind]);
+			for (my$f = 0; $f < scalar(@format); $f++){ 
+				$FormatHash{$individus[$ind]}{$format[$f]} = $formatIND[$f];
+			}
+		}
+		my@bases2; # list for tue multiple alternative base in the vcf alternative base
 		if ($base2 =~ /[\w|\*\,]+/){ # if base2 is multiple, we consider the first one (the more frequent)
 			@bases2 = split(",", $base2);
 		}
@@ -253,37 +263,40 @@ while (my$li = <F3>){
 				if (grep { $_ == $pos } @allpos){ # We check that the snp is in the reference marker list.
 					$NM{$parent}{$chr}{$num}++; # incrementation of the number of existing markers by windows.
 					$AlleleRef = $allele_refalt{$parent}{$chr}{$pos};
-					for (my$ind = 9; $ind < scalar(@individus); $ind++){
+					
+					for my$formInd(sort keys %FormatHash){
 						if ($hybrid){ # if we have a focus on only one hybrid :
-							if($individus[$ind] eq $hybrid){
-								if ($valBlock[$ind] =~ m/^[\d+\.\/]+\:(\-\d+|\d+)\,([\d+\,\-]+)\:(\d+)\:.+/){
-									my$refer = $1; # number of reads for the base1
-									my@alters = split(",",$2);
-									my$sumreads = $3; # number of reads for the for a marqueur (base1 + base2)
-									if($sumreads > 0){ # if base1 + base2 != 0
-										if ($AlleleRef eq $base1){ # if base1 is the ancestral allele
-											$frequences{$parent}{$individus[$ind]}{$chr}{$num}{$pos} = $refer / $sumreads; # frequency of the ancestral allele for this marker
-											if (defined($nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Ancestral})){
-												$nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Ancestral} = $nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Ancestral} + $refer;
-												$nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Not} = $nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Not} + ($sumreads-$refer);
+							if($formInd eq $hybrid){
+								if($FormatHash{$formInd}{"DP"} ne "."){
+									if($FormatHash{$formInd}{"AD"} =~ m/^(\-\d+|\d+)\,([\d+\,\-]+)/){
+										my$refer = $1; # number of reads for the base1
+										my@alters = split(",",$2);
+										my$sumreads = $FormatHash{$formInd}{"DP"}; # number of reads for the for a marqueur (base1 + base2)
+										if($sumreads > 0){ # if base1 + base2 != 0
+											if ($AlleleRef eq $base1){ # if base1 is the ancestral allele
+												$frequences{$parent}{$formInd}{$chr}{$num}{$pos} = $refer / $sumreads; # frequency of the ancestral allele for this marker
+												if (defined($nbAncestralOrNot{$parent}{$formInd}{$chr}{$num}{$Ancestral})){
+													$nbAncestralOrNot{$parent}{$formInd}{$chr}{$num}{$Ancestral} = $nbAncestralOrNot{$parent}{$formInd}{$chr}{$num}{$Ancestral} + $refer;
+													$nbAncestralOrNot{$parent}{$formInd}{$chr}{$num}{$Not} = $nbAncestralOrNot{$parent}{$formInd}{$chr}{$num}{$Not} + ($sumreads-$refer);
+												}
+												else{
+													$nbAncestralOrNot{$parent}{$formInd}{$chr}{$num}{$Ancestral} = $refer;
+													$nbAncestralOrNot{$parent}{$formInd}{$chr}{$num}{$Not} = ($sumreads-$refer);
+												}
 											}
 											else{
-												$nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Ancestral} = $refer;
-												$nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Not} = ($sumreads-$refer);
-											}
-										}
-										else{
-											for(my$a=0; $a < scalar(@bases2); $a++){
-												if ($AlleleRef eq $bases2[$a]){ # if one of the base2 is the ancestral allele
+												for(my$a=0; $a < scalar(@bases2); $a++){
+													if ($AlleleRef eq $bases2[$a]){ # if one of the base2 is the ancestral allele
 
-													$frequences{$parent}{$individus[$ind]}{$chr}{$num}{$pos} = $alters[$a] / $sumreads; # frequency of the ancestral allele for this marker		
-													if (defined($nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Ancestral})){
-														$nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Ancestral} = $nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Ancestral} + $alters[$a];
-														$nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Not} = $nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Not} + ($sumreads-$alters[$a]);
-													}
-													else{
-														$nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Ancestral} = $alters[$a];
-														$nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Not} = ($sumreads-$alters[$a]);
+														$frequences{$parent}{$formInd}{$chr}{$num}{$pos} = $alters[$a] / $sumreads; # frequency of the ancestral allele for this marker		
+														if (defined($nbAncestralOrNot{$parent}{$formInd}{$chr}{$num}{$Ancestral})){
+															$nbAncestralOrNot{$parent}{$formInd}{$chr}{$num}{$Ancestral} = $nbAncestralOrNot{$parent}{$formInd}{$chr}{$num}{$Ancestral} + $alters[$a];
+															$nbAncestralOrNot{$parent}{$formInd}{$chr}{$num}{$Not} = $nbAncestralOrNot{$parent}{$formInd}{$chr}{$num}{$Not} + ($sumreads-$alters[$a]);
+														}
+														else{
+															$nbAncestralOrNot{$parent}{$formInd}{$chr}{$num}{$Ancestral} = $alters[$a];
+															$nbAncestralOrNot{$parent}{$formInd}{$chr}{$num}{$Not} = ($sumreads-$alters[$a]);
+														}
 													}
 												}
 											}
@@ -293,33 +306,35 @@ while (my$li = <F3>){
 							}
 						}
 						else{ # if we have no focus on one hybrid but on all hybrid or on a list of hybrids
-							if ($valBlock[$ind] =~ m/^[\d+\.\/]+\:(\-\d+|\d+)\,([\d+\,\-]+)\:(\d+)\:.+/){
-								my$refer = $1; # number of reads for the base1
-								my@alters = split(",",$2);
-								my$sumreads = $3; # number of reads for the for a marqueur (base1 + base2)
-								if($sumreads > 0){ # if base1 + base2 != 0 
-									if ($AlleleRef eq $base1){ # if base1 if the ancestral allele
-										$frequences{$parent}{$individus[$ind]}{$chr}{$num}{$pos} = $refer / $sumreads; # frequency of the ancestral allele for this marker
-										if (defined($nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Ancestral})){
-											$nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Ancestral} = $nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Ancestral} + $refer;
-											$nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Not} = $nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Not} + ($sumreads-$refer);
+							if($FormatHash{$formInd}{"DP"} ne "."){
+								if ($FormatHash{$formInd}{"AD"} =~ m/^(\-\d+|\d+)\,([\d+\,\-]+)/){
+									my$refer = $1; # number of reads for the base1
+									my@alters = split(",",$2);
+									my$sumreads = $FormatHash{$formInd}{"DP"}; # number of reads for the for a marqueur (base1 + base2)
+									if($sumreads > 0){ # if base1 + base2 != 0 
+										if ($AlleleRef eq $base1){ # if base1 if the ancestral allele
+											$frequences{$parent}{$formInd}{$chr}{$num}{$pos} = $refer / $sumreads; # frequency of the ancestral allele for this marker
+											if (defined($nbAncestralOrNot{$parent}{$formInd}{$chr}{$num}{$Ancestral})){
+												$nbAncestralOrNot{$parent}{$formInd}{$chr}{$num}{$Ancestral} = $nbAncestralOrNot{$parent}{$formInd}{$chr}{$num}{$Ancestral} + $refer;
+												$nbAncestralOrNot{$parent}{$formInd}{$chr}{$num}{$Not} = $nbAncestralOrNot{$parent}{$formInd}{$chr}{$num}{$Not} + ($sumreads-$refer);
+											}
+											else{
+												$nbAncestralOrNot{$parent}{$formInd}{$chr}{$num}{$Ancestral} = $refer;
+												$nbAncestralOrNot{$parent}{$formInd}{$chr}{$num}{$Not} = ($sumreads-$refer);
+											}
 										}
 										else{
-											$nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Ancestral} = $refer;
-											$nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Not} = ($sumreads-$refer);
-										}
-									}
-									else{
-										for(my$a=0; $a < scalar(@bases2); $a++){
-											if ($AlleleRef eq $bases2[$a]){ # if one of the base2 if the ancestral allele
-												$frequences{$parent}{$individus[$ind]}{$chr}{$num}{$pos} = $alters[$a] / $sumreads; # frequency of the ancestral allele for this marker		
-												if (defined($nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Ancestral})){
-													$nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Ancestral} = $nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Ancestral} + $alters[$a];
-													$nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Not} = $nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Not} + ($sumreads-$alters[$a]);
-												}
-												else{
-													$nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Ancestral} = $alters[$a];
-													$nbAncestralOrNot{$parent}{$individus[$ind]}{$chr}{$num}{$Not} = ($sumreads-$alters[$a]);
+											for(my$a=0; $a < scalar(@bases2); $a++){
+												if ($AlleleRef eq $bases2[$a]){ # if one of the base2 if the ancestral allele
+													$frequences{$parent}{$formInd}{$chr}{$num}{$pos} = $alters[$a] / $sumreads; # frequency of the ancestral allele for this marker		
+													if (defined($nbAncestralOrNot{$parent}{$formInd}{$chr}{$num}{$Ancestral})){
+														$nbAncestralOrNot{$parent}{$formInd}{$chr}{$num}{$Ancestral} = $nbAncestralOrNot{$parent}{$formInd}{$chr}{$num}{$Ancestral} + $alters[$a];
+														$nbAncestralOrNot{$parent}{$formInd}{$chr}{$num}{$Not} = $nbAncestralOrNot{$parent}{$formInd}{$chr}{$num}{$Not} + ($sumreads-$alters[$a]);
+													}
+													else{
+														$nbAncestralOrNot{$parent}{$formInd}{$chr}{$num}{$Ancestral} = $alters[$a];
+														$nbAncestralOrNot{$parent}{$formInd}{$chr}{$num}{$Not} = ($sumreads-$alters[$a]);
+													}
 												}
 											}
 										}
