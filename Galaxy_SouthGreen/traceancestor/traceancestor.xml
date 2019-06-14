@@ -5,12 +5,8 @@
         <exit_code range="1:" />
     </stdio>
     <command><![CDATA[
-	source $__tool_directory__/moduleperl.sh;
         perl $__tool_directory__/TraceAncestor.pl 
 		-t $matrice
-  #if str($merge) == "yes":
-   -m
-  #end if
 		-v $vcf
 		-c $color
 		-p $ploidy
@@ -31,19 +27,16 @@
 			cp -rf "ideogram_allInd" $ideogram_allInd;
    cp -rf "len_allInd_Ideogram" $len_allInd_ideogram;
 			cp -rf "circos" $circos;
-			cp -rf "len_allInd_Circos" $len_allInd_Circos;			
+			cp -rf "len_allInd_Circos" $len_allInd_Circos;
+			cp -rf "windows" $windows;	
 		#end if
     ]]></command>
     <inputs>
 	<param type="data" name="matrice" format="tabular" label="matrix table -t"/>
 	<param type="data" name="vcf" format="vcf" label="vcf of hybrid population -v"/>
- <param type="select" name="merge" label="work on common snp -m" help="do you want to work on snp that are only common between matrix and vcf (only for WGS)">
-  <option value="no">no</option>
-  <option value="yes">yes</option>
-	</param>
 	<param type="select" name="ploidy" label="ploidy -p">
-  <option value="2">2</option>
-  <option value="3">3</option>
+		<option value="2">2</option>
+                <option value="3">3</option>
 		<option value="4">4</option>
 	</param>
 	<param type="data" name="color" format="txt" label="color file -c"/>
@@ -81,6 +74,9 @@
         <data format="tabular" name="circos" label="circos painting">
                 <filter>focus['focus'] != 'One'</filter>
         </data>
+	<data format="tabular" name="windows" label="Dosage per window">
+		<filter>focus['focus'] != 'One'</filter>
+	</data>
         <data format="tabular" name="len_allInd_Circos" label="Chromosomes length for circos">
                 <filter>focus['focus'] != 'One'</filter>
         </data>
@@ -145,7 +141,7 @@ LOD value :
 	lod value to conclude for one hypothesis or an other (default = 3)
 
 threshold of the calcul of LOD score: 
-	threshold for the calcul of LOD score. Acceptable sequencage error rate (default = 0.99)
+	threshold for the calcul of LOD score. (default = 0.99 (For an acceptable sequencage error rate of 0.01))
 
 Window size (in k-bases): 
 	number of K bases for one window (default = 100)
