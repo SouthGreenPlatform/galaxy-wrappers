@@ -28,7 +28,7 @@ Must be used on pure breed. If there is introgressed part on the genome of the i
 | A3 | Ind11 | Ind12 | Ind13 | Ind14 | Ind15 | 
 | A4 | Ind16 | Ind17 |
 
-	-d | --depth : minimal depth for a snp to be used in the analysis (defalut = 5)
+	-d | --depth : minimal depth for a snp to be used in the analysis (default = 5)
 
 ### Ouputs
 
@@ -147,7 +147,7 @@ If you use the ideogram output for all or several hybrids, the bands between chr
 
 	-l | --lod : lod value to conclude for one hypothesis or an other (default = 3)
 
-	-s | --threshold : threshold for the calcul of LOD score (default = 0.99)
+	-s | --threshold : threshold for the calcul of LOD score (default = 0.99 (For an acceptable sequencage error rate of 0.01))
 
 	-k | --cut : number of K bases for one window (default = 100)
 
