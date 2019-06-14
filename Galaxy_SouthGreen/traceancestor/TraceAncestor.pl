@@ -790,6 +790,9 @@ my$startslice=1;
 my$endslice=$cut;
 my%dosbywindows;
 my$sum;
+open(W,">windows");
+print W "Sample	Chr	Window	Ancestor	Dose\n";
+for my$ind (sort keys %dosageAllelique){
 for my$ind (sort keys %dosageAllelique){
 	for my$CHROMOSOMES(sort keys %blocsInv){
 		$startslice=1;
@@ -803,6 +806,7 @@ for my$ind (sort keys %dosageAllelique){
 					my$end = $markers[1];
 					if($startslice >= $start && $startslice < $end){
 						$dosbywindows{$ind}{$CHROMOSOMES}{$startslice}{$parent} = $dosageAllelique{$ind}{$parent}{$CHROMOSOMES}{$num};
+						print W "$ind   $CHROMOSOMES    $startslice     $parent $dosbywindows{$ind}{$CHROMOSOMES}{$startslice}{$parent}\n"; 
 					}
 				}
 			}
@@ -812,6 +816,7 @@ for my$ind (sort keys %dosageAllelique){
 	}
 
 }
+close(W);
 
 for my$ind (sort keys %dosbywindows){
 	for my$CHROMOSOMES(sort keys %{$dosbywindows{$ind}}){
