@@ -395,7 +395,7 @@ for my $parent(sort keys(%blocs)){
 }
 
 open (Ffreq, ">ancestorFreq") or die ("cant write ancestorFreq\n"); # output => frequency of ancestral alleles along chromosomes
-print Ffreq "Hybrid\tAncestry\tChromosom\tPosition_Start\tPosition_End\tFrequence\n"; # header of ancestorfreq
+print Ffreq "Hybrid\tAncestry\tChromosome\tPosition_Start\tPosition_End\tFrequence\n"; # header of ancestorfreq
 for my$parent (sort keys(%blocspos)){
 	if ($hybrid){ # focus on one particular hybrid
 		for my$chro (sort keys(%{$blocspos{$parent}})){
