@@ -745,6 +745,21 @@ for my $parent (sort keys %percentage) {
     }
 }
 
+open(W2,">dosage1.txt");
+print W2 "Hybrid	Ancestry	Chromosome	Window_num	Dosage\n";
+for my $ind (sort keys %dosageAllelique) {
+	for my $parent (sort keys %percentage) {
+		for my $chr (sort keys %{$percentage{$parent}{$ind}}) {
+			for my $num (sort {$a<=>$b} keys %{$percentage{$parent}{$ind}{$chr}}) {
+				my $dose = $dosageAllelique{$ind}{$parent}{$chr}{$num};
+				print W2 "$ind	$parent	$chr	$num	$dose\n";
+			}
+		}
+	}
+}
+close(W2);
+
+
 # --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # Lenght of chromosome determination.

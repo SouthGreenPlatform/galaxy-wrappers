@@ -28,7 +28,8 @@
    cp -rf "len_allInd_Ideogram" $len_allInd_ideogram;
 			cp -rf "circos" $circos;
 			cp -rf "len_allInd_Circos" $len_allInd_Circos;
-			cp -rf "windows" $windows;	
+			cp -rf "windows" $windows2;
+			cp -rf "dosage1.txt" $windows1;	
 		#end if
     ]]></command>
     <inputs>
@@ -74,8 +75,11 @@
         <data format="tabular" name="circos" label="circos painting">
                 <filter>focus['focus'] != 'One'</filter>
         </data>
-	<data format="tabular" name="windows" label="Dosage per window">
+	<data format="tabular" name="windows2" label="Dosage per window (step 4)">
 		<filter>focus['focus'] != 'One'</filter>
+	</data>
+	<data format="tabular" name="windows1" label="Dosage per window (step 3)">
+	                <filter>focus['focus'] != 'One'</filter>
 	</data>
         <data format="tabular" name="len_allInd_Circos" label="Chromosomes length for circos">
                 <filter>focus['focus'] != 'One'</filter>
