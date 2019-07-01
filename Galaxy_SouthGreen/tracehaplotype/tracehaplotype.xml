@@ -16,6 +16,7 @@
    cp -rf "output.chrom_length.txt" $len_ideogram;
    cp -rf "output.haplotypes.blocks.txt" $blocks;
    cp -rf "output.haplotypes.genes.txt" $genes;
+   cp -rf $vcf".rephased.vcf" $phasedvcf;
     ]]></command>
     <inputs>
 	<param type="data" name="vcf" format="vcf" label="VCF input file" help="Optionnaly, VCF can be preliminarily annotated by snpEff (to be filtered by genes)"/>
@@ -33,6 +34,7 @@
         <data format="txt" name="len_ideogram" label="Chromosomes length for ideogram"/>
         <data format="txt" name="blocks" label="Haplotype blocks"/>
         <data format="txt" name="genes" label="Haplotype genes"/>
+        <data format="vcf" name="phasedvcf" label="Phased VCF" />
         <data format="txt" name="log" label="Logfile"/>
     </outputs>
 	
