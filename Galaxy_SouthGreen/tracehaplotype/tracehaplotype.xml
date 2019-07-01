@@ -1,0 +1,62 @@
+<tool id="tracehaplotype" name="TraceHaplotype" version="0.1.0">
+    <requirements>
+    </requirements>
+<!--    <code file="find_indiv.py"/>-->
+    <stdio>
+        <exit_code range="1:" />
+    </stdio>
+    <code file="find_indiv.py"/>
+    <command><![CDATA[
+        perl $__tool_directory__/TraceHaplotypes.pl 
+		-v $vcf
+		-w $window
+		-h $hybrid,$parent1,$parent2
+		-s $nwin
+		-o output >>$log 2>&1;
+   cp -rf "output.chrom_length.txt" $len_ideogram;
+   cp -rf "output.haplotypes.blocks.txt" $blocks;
+   cp -rf "output.haplotypes.genes.txt" $genes;
+    ]]></command>
+    <inputs>
+	<param type="data" name="vcf" format="vcf" label="VCF input file" help="Optionnaly, VCF can be preliminarily annotated by snpEff (to be filtered by genes)"/>
+	<param name="hybrid" type="select" label="Hybrid" multiple="false" dynamic_options="get_field_samples_options(vcf)" />
+	<param name="parent1" type="select" label="Parent1" multiple="false" dynamic_options="get_field_samples_options(vcf)" />
+	<param name="parent2" type="select" label="Parent2" multiple="false" dynamic_options="get_field_samples_options(vcf)" />
+	<param name="window" type="text" label="Size for window (in bp)" value="500000"/>
+	<param name="nwin" type="text" label="Number of windows to summarize incompatibilities" value="4"/>
+	<param name="filter" type="select" label="Use only variants located in genes (possible if an annotated VCF file is provided)">
+		<option value="no">no</option>	
+		<option value="yes">yes</option>
+	</param>
+    </inputs>
+    <outputs>
+        <data format="txt" name="len_ideogram" label="Chromosomes length for ideogram"/>
+        <data format="txt" name="blocks" label="Haplotype blocks"/>
+        <data format="txt" name="genes" label="Haplotype genes"/>
+        <data format="txt" name="log" label="Logfile"/>
+    </outputs>
+	
+    <help><![CDATA[
+
+.. class:: infomark
+
+**Authors**     Patrick Ollitrault, Alexis Dereeper
+
+.. class:: infomark
+
+**Galaxy integration** Alexis Dereeper
+
+.. class:: infomark
+
+**Support** For any questions about Galaxy integration, please send an e-mail to alexis.dereeper@ird.fr
+
+---------------------------------------------------
+
+-----------
+Description
+-----------
+
+Build haplotype blocks for triplet (hybrid/parent1/parent2) from a VCF file
+
+  ]]></help>
+</tool>
