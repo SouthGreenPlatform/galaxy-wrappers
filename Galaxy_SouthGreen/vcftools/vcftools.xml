@@ -1,0 +1,228 @@
+<tool id="vcftools" name="VCFtools" version="0.1.14" force_history_refresh="True">
+    <description>Utilities for the variant call format (VCF) and binary variant call format (BCF)</description>
+        <requirements>
+            <requirement type="package" version="0.1.14">vcftools</requirement>
+        </requirements>
+    <command>
+    vcftools
+    #if str($basic) == "gzvcf":
+        --gzvcf
+    #elif str($basic) == "bcf":
+        --bcf
+    #else: 
+        --vcf
+    #end if
+    $input
+
+    ##Genotype Filtering Options
+    #set $section = $sec_genotype
+    #if str($section.minDP) != "":
+        --minDP $section.minDP
+    #end if 
+    #if str($section.maxDP) != "":
+        --maxDP $section.maxDP
+    #end if
+    #if str($section.minGQ) != "":
+        --minGQ $section.minGQ
+    #end if 
+
+    ##Site Filtering Options
+    #set $section = $sec_site
+    #if $section.filtre_pos.set_filtre_pos == 'exclude'
+        #if str($section.filtre_pos.exclude_positions) != "":
+            --exclude-positions $section.filtre_pos.exclude_positions
+        #end if
+    #elif $section.filtre_pos.set_filtre_pos == 'include'
+        #if str($section.filtre_pos.include_positions) != "":
+            --positions $section.filtre_pos.include_positions
+        #end if
+    #end if 
+    #if str($section.maf) != "":
+        --maf $section.maf
+    #end if
+    #if str($section.max_missing) != "":
+        --max-missing $section.max_missing
+    #end if 
+    #if $section.alleles.set_alleles == 'yes':
+        #if str($section.alleles.alleles_min) != "":
+            --min-alleles $section.alleles.alleles_min
+        #end if 
+        #if str($section.alleles.alleles_max) != "":
+            --max-alleles $section.alleles.alleles_max
+        #end if 
+    #end if
+    #if $section.meanDP.set_meanDP == 'yes':
+        #if str($section.meanDP.meanDP_min) != "":
+            --min-meanDP $section.meanDP.meanDP_min
+        #end if 
+        #if str($section.meanDP.meanDP_max) != "":
+            --max-meanDP $section.meanDP.meanDP_max
+        #end if 
+    #end if
+
+    #if str($output_format) == "vcf":
+        --recode --recode-INFO-all
+    #elif str($output_format) == "bcf":
+        --recode
+    #end if
+    -c
+    --stdout 
+    > out.recode.vcf 2>/dev/null;
+    #if str($output_format) == "bcf":
+        cat out.recode.vcf | gzip -c > out.recode.vcf.gz 2>/dev/null
+    #end if
+    </command>
+    <inputs>
+        <param name="input" type="data" label="Input vcf file" format="vcf" />
+        <param name="basic" type="select" label="Basic Options" value="vcf">
+            <option value="vcf">Decompressed vcf file (default)</option>
+            <option value="gzvcf">Compressed (gzipped) vcf file</option>
+            <option value="bcf">Compressed (bgzf) bcf file</option>
+        </param>
+        <section name="sec_genotype" expanded="true" title="Genotype Filtering Options">
+            <param name="minDP" optional="true"  type="integer" value="" label="Minimum minor allele count: require 'DP' FORMAT tag. (--minDP)" />
+            <param name="maxDP" optional="true"  type="integer" value="" label="Maximum minor allele count: require 'DP' FORMAT tag. (--maxDP)" />
+            <param name="minGQ" optional="true"  type="integer" value="" label="Minimum genotype quality: require 'GQ' FORMAT tag. (--minGQ)" />
+        </section>
+        <section name="sec_site" expanded="false" title="Site Filtering Options">
+            <conditional name="filtre_pos">
+                <param name="set_filtre_pos" type="select" label="Include or exclude a set of sites on the basis of a list of positions in a file. Each line of the input file should contain a (tab-separated) chromosome and position. The file can have comment lines that start with a '#', they will be ignored.">
+                    <option value="no">Nothing to change</option>
+                    <option value="include">Include a set of sites</option>
+                    <option value="exclude">Exclude a set of sites</option>
+                </param>
+                <when value="no"/>
+                <when value="include">
+                    <param name="include_positions" optional="true"  type="data" format="txt,tabular" multiple="true" label="Include a set of sites on the basis of a list of positions in a file. (--positions)" />
+                </when>
+                <when value="exclude">
+                    <param name="exclude_positions" optional="true"  type="data" format="txt,tabular" multiple="true" label="Exclude a set of sites on the basis of a list of positions in a file. (--exclude-positions)" />
+                </when>
+            </conditional>
+            <param name="maf" optional="true"  type="float" value="" label="Minor Allele Frequency (--maf)" />
+            <conditional name="alleles">
+                        <param name="set_alleles" type="select" label="Include only sites with a number of alleles greater than or equal to the '--min-alleles' value and less than or equal to the '--max-alleles' value. One of these options may be used without the other.">
+                                <option value="no">Nothing to change</option>
+                                <option value="yes">Set a filter on the number of alleles</option>
+                        </param>
+                        <when value="no"/>
+                        <when value="yes">
+                                <param name="alleles_min" optional="true" type="integer" value="" label="Alleles min (--min-alleles)"/>
+                                <param name="alleles_max" optional="true" type="integer" value="" label="Alleles max (--max-alleles)" />
+                        </when>
+                    </conditional>
+            <conditional name="meanDP">
+                        <param name="set_meanDP" type="select" label="Includes only sites with mean depth values (over all included individuals) greater than or equal to the '--min-meanDP' value and less than or equal to the '--max-meanDP' value. One of these options may be used without the other. These options require that the 'DP' FORMAT tag is included for each site.">
+                                <option value="no">Nothing to change</option>
+                                <option value="yes">Set a filter on the mean depth values</option>
+                        </param>
+                        <when value="no"/>
+                        <when value="yes">
+                                <param name="meanDP_min" optional="true" type="integer" value="" label="Mean depth min (--min-meanDP)"/>
+                                <param name="meanDP_max" optional="true" type="integer" value="" label="Mean Depth max (--max-meanDP)" />
+                        </when>
+                    </conditional>
+            <param name="max_missing" optional="true"  type="float" value="" label="Exclude sites on the basis of the proportion of missing data (defined to be between 0 and 1, where 0 allows sites that are completely missing and 1 indicates no missing data allowed). ( --max-missing)" />
+        </section>        
+        <param name="output_format" type="select" label="Output VCF format" value="vcf">
+            <option value="vcf">Decompressed vcf file (default)</option> 
+            <option value="bcf">Compressed (bgzf) bcf file</option>
+        </param> 
+      </inputs>
+    <outputs>
+        <data format="vcf" name="output" from_work_dir="out.recode.vcf"> 
+               <change_format>
+                <when input="output_format" value="bcf" format="vcf" from_work_dir="out.recode.vcf.gz" />
+               </change_format>
+           </data>
+      </outputs> 
+      <help>
+  .. class:: infomark
+
+**Program encapsulated in Galaxy by South Green**
+
+.. class:: infomark 
+
+-----
+
+=====================================
+**VCFtools**
+=====================================
+
+SYNOPSIS
+--------
+vcftools [ --vcf FILE | --gzvcf FILE | --bcf FILE] [ FILTERING OPTIONS ] [ OUTPUT FILE OPTIONS ]
+
+
+
+BASIC OPTIONS
+-------------
+
+These options are used to specify the input and output files.
+
+**INPUT FILE OPTIONS**
+
+    --vcf 'input_filename'
+        This option defines the VCF file to be processed. VCFtools expects files in VCF format v4.0, v4.1 or v4.2. The latter two are supported with some small limitations. If the user provides a dash character '-' as a file name, the program expects a VCF file to be piped in through standard in.
+    --gzvcf 'input_filename'
+        This option can be used in place of the --vcf option to read compressed (gzipped) VCF files directly.
+    --bcf 'input_filename'
+        This option can be used in place of the --vcf option to read BCF2 files directly. You do not need to specify if this file is compressed with BGZF encoding. If the user provides a dash character '-' as a file name, the program expects a BCF2 file to be piped in through standard in.
+
+**OUTPUT FILE OPTIONS**
+
+    --stdout , -c
+        These options direct the vcftools output to standard out so it can be piped into another program or written directly to a filename of choice. However, a select few output functions cannot be written to standard out.
+
+    
+SITE FILTERING OPTIONS
+----------------------
+
+These options are used to include or exclude certain sites from any analysis being performed by the program.
+
+**POSITION FILTERING**
+
+    --positions 'filename' , --exclude-positions 'filename'
+        Include or exclude a set of sites on the basis of a list of positions in a file. Each line of the input file should contain a (tab-separated) chromosome and position. The file can have comment lines that start with a "#", they will be ignored.
+
+
+**ALLELE FILTERING**
+
+    --maf 'float'
+        Include only sites with a Minor Allele Frequency greater than or equal to the "--maf" value. Allele frequency is defined as the number of times an allele appears over all individuals at that site, divided by the total number of non-missing alleles at that site.
+    --min-alleles 'integer' , --max-alleles 'integer'
+        Include only sites with a number of alleles greater than or equal to the "--min-alleles" value and less than or equal to the "--max-alleles" value. One of these options may be used without the other.
+        For example, to include only bi-allelic sites, one could use: vcftools --vcf file1.vcf --min-alleles 2 --max-alleles 2
+
+
+**GENOTYPE VALUE FILTERING**
+
+    --min-meanDP 'float' , --max-meanDP 'float'
+        Includes only sites with mean depth values (over all included individuals) greater than or equal to the "--min-meanDP" value and less than or equal to the "--max-meanDP" value. One of these options may be used without the other. These options require that the "DP" FORMAT tag is included for each site.
+    --max-missing 'float'
+        Exclude sites on the basis of the proportion of missing data (defined to be between 0 and 1, where 0 allows sites that are completely missing and 1 indicates no missing data allowed).
+
+    
+GENOTYPE FILTERING OPTIONS
+--------------------------
+
+These options are used to exclude genotypes from any analysis being performed by the program. If excluded, these values will be treated as missing.
+
+    --minGQ 'float'
+        Exclude all genotypes with a quality below the threshold specified. This option requires that the "GQ" FORMAT tag is specified for all sites.
+    --minDP 'float' , --maxDP 'float'
+        Includes only genotypes greater than or equal to the "--minDP" value and less than or equal to the "--maxDP" value. This option requires that the "DP" FORMAT tag is specified for all sites.
+
+-----
+
+For further informations, please visite the website of VCFtools_
+
+.. _VCFtools: http://vcftools.sourceforge.net/
+
+
+
+    </help>
+    <citations>
+        <citation type="doi">10.1093/bioinformatics/btr330</citation> 
+      </citations>
+</tool>
