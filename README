@@ -1,6 +1,18 @@
 galaxy-wrappers
 ===============
 
+
+
+# Galaxy wrappers of tools developed by South Green platform 
+
+Web application to explore bacterial pangenomes
+
+**Homepage:**: [https://itrop-galaxy.ird.fr/]) (temporary)
+
+
+
+## Introduction
+
 This directory contains wrappers for the Galaxy platform 
 (http://galaxyproject.org/) contributed by members of the South Green 
 bioinformatics platform in Montpellier, France (http://southgreen.fr/).
