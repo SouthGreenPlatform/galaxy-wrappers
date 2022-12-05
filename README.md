@@ -1,8 +1,7 @@
 # Galaxy wrappers of tools developed by South Green platform 
 
-Web application to explore bacterial pangenomes
 
-**Homepage:**: [https://itrop-galaxy.ird.fr/]) (temporary)
+**Homepage:** [https://itrop-galaxy.ird.fr/](https://itrop-galaxy.ird.fr/) (temporary)
 
 
 
